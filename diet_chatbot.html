@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>شات بوت التغذية باللهجة السورية</title>
+<style>
+  :root{
+    --bg:#0f172a;        /* slate-900 */
+    --panel:#111827;     /* gray-900 */
+    --muted:#94a3b8;     /* slate-400 */
+    --text:#e5e7eb;      /* gray-200 */
+    --accent:#22c55e;    /* green-500 */
+    --accent-2:#06b6d4;  /* cyan-500 */
+    --danger:#ef4444;    /* red-500 */
+    --card:#0b1220;
+    --border:#1f2937;
+    --chip:#1e293b;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0; background:linear-gradient(135deg,#0b1020,#0e1224 45%,#0b1424);
+    color:var(--text); font:16px/1.6 system-ui, -apple-system, "Segoe UI", Roboto, "Noto Kufi Arabic", "Tajawal", Arial, sans-serif;
+    min-height:100svh; display:flex; align-items:center; justify-content:center; padding:20px;
+  }
+  .app{
+    width:min(1000px,100%); background:rgba(17,24,39,.65); border:1px solid var(--border);
+    border-radius:20px; overflow:hidden; box-shadow:0 10px 35px rgba(0,0,0,.35), inset 0 0 180px rgba(34,197,94,.05);
+    backdrop-filter: blur(6px);
+  }
+  header{
+    padding:14px 18px; display:flex; gap:14px; align-items:center; border-bottom:1px solid var(--border);
+    background:linear-gradient(180deg, rgba(34,197,94,.09), transparent);
+  }
+  .logo{
+    width:40px; height:40px; display:grid; place-items:center; border-radius:12px; background:radial-gradient(55% 55% at 50% 50%, rgba(34,197,94,.2), rgba(6,182,212,.15));
+    border:1px solid var(--border);
+  }
+  h1{font-size:18px; margin:0}
+  .sub{color:var(--muted); font-size:13px}
+  .controls{margin-inline-start:auto; display:flex; gap:10px; flex-wrap:wrap}
+  .select, .btn{
+    appearance:none; border:1px solid var(--border); background:var(--chip); color:var(--text);
+    padding:10px 12px; border-radius:12px; font:inherit;
+  }
+  .btn{background:linear-gradient(180deg, #1f2937, #111827); cursor:pointer; transition:.2s ease; border:1px solid #263244}
+  .btn:hover{transform:translateY(-1px)}
+  .btn.primary{background:linear-gradient(180deg, #16a34a, #15803d); border-color:#166534}
+  .btn.secondary{background:linear-gradient(180deg, #0891b2, #0e7490); border-color:#155e75}
+  .btn.ghost{background:var(--chip)}
+  .btn:disabled{opacity:.5; cursor:not-allowed; transform:none}
+  main{display:grid; grid-template-rows:auto 1fr auto; height:min(72svh,640px)}
+  .chat{
+    padding:14px; overflow:auto; background:
+      radial-gradient(1000px 420px at 100% 0%, rgba(6,182,212,.05), transparent),
+      radial-gradient(800px 360px at 0% 0%, rgba(34,197,94,.06), transparent);
+  }
+  .msg{display:flex; gap:10px; margin:10px 0; align-items:flex-start}
+  .msg .avatar{
+    width:36px; height:36px; flex:none; display:grid; place-items:center; border-radius:10px; background:var(--panel); border:1px solid var(--border);
+  }
+  .bubble{
+    background:var(--card); border:1px solid var(--border); padding:10px 12px; border-radius:14px; max-width:85%;
+    box-shadow:0 6px 16px rgba(0,0,0,.18);
+    white-space:pre-wrap;
+  }
+  .me .bubble{background:linear-gradient(180deg,#0f172a,#0b1322); border-color:#213048}
+  .bot .bubble{background:linear-gradient(180deg,#0a1424,#0b1628); border-color:#22324a}
+  .meta{font-size:12px; color:var(--muted); margin-top:4px}
+  .composer{display:flex; gap:10px; padding:12px; border-top:1px solid var(--border); background:rgba(15,23,42,.6)}
+  .input{
+    flex:1; padding:12px 14px; border-radius:12px; border:1px solid var(--border); background:#0b1220; color:var(--text);
+  }
+  .plan-box{
+    margin-top:10px; padding:12px; border-radius:12px; background:rgba(34,197,94,.06); border:1px dashed #1f8f55;
+  }
+  .chips{display:flex; gap:6px; flex-wrap:wrap}
+  .chip{font-size:12px; padding:6px 8px; border:1px solid var(--border); border-radius:999px; background:var(--chip); color:var(--text)}
+  footer{padding:10px 16px; font-size:12px; color:var(--muted)}
+  @media (max-width:640px){
+    header{flex-wrap:wrap; gap:8px}
+    .controls{width:100%}
+  }
+</style>
+</head>
+<body>
+  <div class="app" id="app">
+    <header>
+      <div class="logo">🧮</div>
+      <div>
+        <h1>شات بوت التغذية</h1>
+        <div class="sub">بيحكي سوري — بيسألك كام سؤال وبيركّب خطة <span style="color:#86efac">تنحيف</span> أو <span style="color:#67e8f9">تسمين</span></div>
+      </div>
+      <div class="controls">
+        <label class="chip">عدد الأسئلة:
+          <select id="qCount" class="select">
+            <option value="10" selected>10</option>
+            <option value="20">20</option>
+          </select>
+        </label>
+        <label class="chip">الهدف:
+          <select id="goal" class="select">
+            <option>تنحيف</option>
+            <option>تسمين</option>
+          </select>
+        </label>
+        <button class="btn primary" id="startBtn">بلّش الأسئلة</button>
+        <button class="btn ghost" id="resetBtn" disabled>إعادة ضبط</button>
+        <button class="btn secondary" id="saveBtn" disabled>حفظ الخطة TXT</button>
+      </div>
+    </header>
+
+    <main>
+      <div class="chat" id="chat"></div>
+
+      <div class="composer">
+        <input id="input" class="input" type="text" placeholder="اكتب جوابك هون واضغط Enter…" disabled />
+        <button class="btn" id="sendBtn" disabled>إرسال</button>
+      </div>
+      <footer>تذكير: هالمعلومات للإرشاد العام، مو بديل عن استشارة مختص خصوصي بوجود أمراض مزمنة.</footer>
+    </main>
+  </div>
+
+<script>
+/* ---------- Utilities ---------- */
+const $ = sel => document.querySelector(sel);
+const chat = $("#chat");
+const input = $("#input");
+const sendBtn = $("#sendBtn");
+const startBtn = $("#startBtn");
+const resetBtn = $("#resetBtn");
+const saveBtn = $("#saveBtn");
+const qCountSel = $("#qCount");
+const goalSel = $("#goal");
+
+function nowTime(){ const d = new Date(); return d.toLocaleTimeString('ar', {hour:'2-digit', minute:'2-digit'}); }
+function addMsg(who, text, extraHtml=null){
+  const wrap = document.createElement("div");
+  wrap.className = "msg " + (who === "bot" ? "bot" : "me");
+  wrap.innerHTML = `
+    <div class="avatar">${who==="bot"?"🤖":"👤"}</div>
+    <div class="bubble">
+      ${text.replace(/\n/g,'<br>')}
+      ${extraHtml? `<div class="plan-box">${extraHtml}</div>`: ""}
+      <div class="meta">${who==="bot"?"البوت":"إنت"} • ${nowTime()}</div>
+    </div>`;
+  chat.appendChild(wrap);
+  chat.scrollTop = chat.scrollHeight;
+}
+
+const clamp = (v, lo, hi) => Math.max(lo, Math.min(hi, v));
+const parseNum = (v, def=null) => {
+  if (v==null) return def;
+  const n = parseFloat(String(v).replace(",", "."));
+  return Number.isFinite(n) ? n : def;
+};
+const r = (x, n=0) => Number.isFinite(x) ? (Math.round(x*10**n)/10**n) : x;
+
+function mifflinStJeor(sex, weight, height, age){
+  return (sex === "أنثى")
+    ? 10*weight + 6.25*height - 5*age - 161
+    : 10*weight + 6.25*height - 5*age + 5;
+}
+function activityFactor(level){
+  const map = { "قليل كتير":1.2, "خفيف":1.375, "متوسط":1.55, "عال":1.725, "عال جداً":1.9 };
+  return map[level] ?? 1.2;
+}
+
+/* ---------- Questions Pool (20) ---------- */
+const pool = [
+  ["الاسم", "خبرني باسمك؟"],
+  ["العمر", "قدّي عمرك؟ (بالسنين)"],
+  ["الطول", "قدّيش طولك بالسنتيمتر؟"],
+  ["الوزن", "قدّيش وزنك بالكيلو؟"],
+  ["الجنس", "ذكَر ولا أنثى؟ (اكتب: ذكر / أنثى)"],
+  ["نشاط", "قدّيش نشاطك اليومي؟ (قليل كتير/خفيف/متوسط/عال/عال جداً)"],
+  ["هدف_دقيق", "بدّك تنحّف ولا تسمن؟ (تنحيف/تسمين) إذا مو متأكد خلّيني قرر من BMI."],
+  ["سرعة", "حاب/حابة تمشي بسرعة ولا على مهلك؟ (سريع/متوسط/هادئ)"],
+  ["أمراض", "في أمراض مزمنة أو أدوية مهمّة؟ (إذا لا اكتب: لا)"],
+  ["حساسية", "عندك تحسّس من أكل معيّن؟ (اكتب الأصناف إن وُجدت)"],
+  ["نظام_غذائي", "بتفضّل أكل عادي ولا نباتي ولا نباتي-بيسمك (بسكيتاري)؟"],
+  ["وجبات", "كم وجبة ناوي/ة تأكل باليوم؟ (مثلاً 3 رئيسية + 1 سناك)"],
+  ["ماء", "قدّيش بتشرب مي باليوم تقريباً؟ (لتر)"],
+  ["نوم", "قدّيش ساعات نومك؟"],
+  ["تمارين", "بتقدر تتمرّن؟ (بيت/نادي/مشي/لا)"],
+  ["خطوات", "متوسط خطواتك باليوم؟ (إذا ما بتعرف تقدير تقريبي)"],
+  ["صوم", "بتصوم متقطع أو صوم ديني بيأثّر على الوجبات؟ (نعم/لا + تفاصيل)"],
+  ["وقت_طبخ", "قدّيش عندك وقت للطبخ يومياً؟ (قصير/متوسط/مرتاح)"],
+  ["ميزانية", "ميزانيتك للأكل الصحي تقريباً؟ (منخفضة/متوسطة/مرتفعة)"],
+  ["أذواق", "أكلات بتحبها أو بتحب تتجنّبها؟ (اختياري)"],
+];
+
+/* ---------- State ---------- */
+let questions = [];
+let answers = {};
+let currentIdx = -1;
+let planText = "";
+
+/* ---------- Flow ---------- */
+function welcome(){
+  addMsg("bot", "أهلا وسهلا! أنا شات بوت تغذية عالخفيف، بحكي معك باللهجة السورية. 👋");
+  addMsg("bot", "اختار من فوق عدد الأسئلة وحدّد هدفك، وبس تضغط «بلّش الأسئلة» منمشي خطوة بخطوة.");
+}
+welcome();
+
+function startChat(){
+  const n = (qCountSel.value === "20") ? 20 : 10;
+  questions = pool.slice(0, n);
+  answers = {"الهدف_مبدئي": goalSel.value};
+  currentIdx = -1;
+  planText = "";
+  chat.innerHTML = "";
+  addMsg("bot", "يلا نبلّش! جاوب بأقصر شكل ممكن، وإذا ما بتعرف اكتب تقديري.");
+
+  input.disabled = false; sendBtn.disabled = false;
+  startBtn.disabled = true; resetBtn.disabled = false; saveBtn.disabled = true;
+  askNext();
+}
+
+function askNext(){
+  currentIdx += 1;
+  if(currentIdx < questions.length){
+    const [, q] = questions[currentIdx];
+    addMsg("bot", q);
+  } else {
+    finishAndPlan();
+  }
+}
+
+function onSend(){
+  const msg = input.value.trim();
+  if(!msg) return;
+  addMsg("me", msg);
+  const [key] = questions[currentIdx];
+  answers[key] = msg;
+  input.value = "";
+  setTimeout(askNext, 200);
+}
+
+function resetAll(){
+  questions = [];
+  answers = {};
+  currentIdx = -1;
+  planText = "";
+  chat.innerHTML = "";
+  welcome();
+  input.disabled = true; sendBtn.disabled = true;
+  startBtn.disabled = false; resetBtn.disabled = true; saveBtn.disabled = true;
+}
+
+function savePlan(){
+  if(!planText) return;
+  const blob = new Blob([planText], {type:"text/plain;charset=utf-8"});
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = "خطة_تغذية.txt";
+  document.body.appendChild(a);
+  a.click();
+  URL.revokeObjectURL(a.href);
+  a.remove();
+}
+
+/* ---------- Planning ---------- */
+function mealOptions(dietType, goalType, budgetLevel){
+  let base;
+  const d = (dietType||"").toLowerCase();
+  if(d.includes("نباتي") && !d.includes("بسمك") && !d.includes("بيسمك")){
+    base = [
+      "فطور: شوفان بحليب نباتي + موز + مكسرات",
+      "غداء: عدس/فاصوليا مع رز وخضار سوتيه",
+      "عشاء: سلطة كبيرة مع حمص/فول + خبز أسمر",
+      "سناك: فواكه/لبنة نباتية/مكسرات"
+    ];
+  } else if(d.includes("بسمك") || d.includes("بيسمك")){
+    base = [
+      "فطور: بيضتين + خبز أسمر + خضار",
+      "غداء: سمك مشوي + رز + سلطة",
+      "عشاء: تونة لايت + ذرة + خضار ورقية",
+      "سناك: لبن/لبنة + خيار أو مكسرات"
+    ];
+  } else {
+    base = [
+      "فطور: بيضتين/لبنة + خبز عربي أسمر + خضار",
+      "غداء: دجاج/لحم مشوي + رز أو برغل + سلطة",
+      "عشاء: لبن/جبنة + خضار + خبز أسمر",
+      "سناك: فواكه/مكسرات/زبادي"
+    ];
+  }
+
+  const tips = (goalType==="تنحيف")
+    ? "ركّز على حصص أصغر، خفّض الزيوت، وزّع البروتين عالوجبات."
+    : "كبّر الحصص تدريجي، زيد كربوهيدرات مع كل وجبة، وركّز على البروتين.";
+
+  let extra;
+  if((budgetLevel||"").includes("منخفضة")) extra = "بدائل أوفر: فول/حمص/عدس، رز/برغل، بيض، خضار موسمية.";
+  else if((budgetLevel||"").includes("مرتفعة")) extra = "ممكن تضيف: سلمون، لحم خالي دهن، أفوكادو، توت.";
+  else extra = "حافظ على تنويع معتدل ضمن المتاح.";
+
+  return {base, tips, extra};
+}
+
+function finishAndPlan(){
+  const name   = answers["الاسم"] || "صديقنا/صديقتنا";
+  const age    = parseNum(answers["العمر"], 30);
+  const height = parseNum(answers["الطول"], 170);
+  const weight = parseNum(answers["الوزن"], 75);
+  let sex      = (answers["الجنس"]||"ذكر").trim();
+  sex = sex.includes("أنث") || sex.includes("انث") ? "أنثى" : (sex.includes("ذك") ? "ذكر" : "ذكر");
+  const act    = answers["نشاط"] || "خفيف";
+  const preciseGoal = (answers["هدف_دقيق"]||"").trim();
+  const initialGoal = answers["الهدف_مبدئي"] || "تنحيف";
+  const goal   = preciseGoal.includes("تنح") || preciseGoal.includes("نحف") ? "تنحيف"
+               : preciseGoal.includes("تسم") ? "تسمين"
+               : initialGoal;
+
+  const speed  = answers["سرعة"] || "متوسط";
+  const conds  = answers["أمراض"] || "لا";
+  const allergy = (answers["حساسية"]||"").trim();
+  const diet   = (answers["نظام_غذائي"]||"عادي");
+  const meals  = answers["وجبات"] || "3 + 1 سناك";
+  const waterL = parseNum(answers["ماء"], 2.0);
+  const sleepH = parseNum(answers["نوم"], 7.0);
+  const place  = (answers["تمارين"]||"مشي").toLowerCase();
+  const steps  = parseNum(answers["خطوات"], 5000);
+  const fasting = answers["صوم"] || "لا";
+  const cook   = answers["وقت_طبخ"] || "متوسط";
+  const budget = answers["ميزانية"] || "متوسطة";
+  const tastes = answers["أذواق"] || "";
+
+  // Safety hints
+  const safety = [];
+  if(Number.isFinite(sleepH) && sleepH < 6) safety.push("نومك قليل، جرّب توصله لـ 7–9 ساعات.");
+  if(Number.isFinite(waterL) && waterL < 1.5) safety.push("ميّك قليلة، خلّيها حوالي 2 لتر يومياً (حسب الحاجة).");
+
+  // Calcs
+  const bmr = mifflinStJeor(sex, weight, height, age);
+  const tdee = bmr * activityFactor(act);
+  const bmi = weight && height ? weight / ((height/100)**2) : null;
+
+  const speedMap = { "سريع":0.25, "متوسط":0.18, "هادئ":0.12 };
+  const adj = speedMap[speed] ?? 0.18;
+  let targetCal;
+  if(goal === "تنحيف"){
+    targetCal = tdee * (1 - adj);
+    targetCal = clamp(targetCal, sex==="أنثى"?1200:1400, tdee - 200);
+  }else{
+    targetCal = tdee * (1 + adj);
+    targetCal = clamp(targetCal, tdee + 150, tdee + 600);
+  }
+
+  // Macros
+  const prot_g = 2.0 * weight;
+  const prot_k = prot_g * 4;
+  const fat_g  = Math.max(0.8 * weight, 40);
+  const fat_k  = fat_g * 9;
+  const carbs_k = Math.max(targetCal - (prot_k + fat_k), 0);
+  const carbs_g = carbs_k / 4;
+
+  // Training
+  let train;
+  if(place.includes("نادي")){
+    train = [
+      "اليوم 1: صدر + كتاف + تراي (3–4 تمارين × 3 مجموعات × 8–12)",
+      "اليوم 2: ظهر + باي (3–4 تمارين × 3 مجموعات × 8–12)",
+      "اليوم 3: أرجل + كور (سكوات/لونج + بلانك)",
+      "اليوم 4: كارديو 20–30 دقيقة + مشي 8–10 آلاف خطوة",
+      "اليوم 5: فول بادي خفيف أو راحة نشطة",
+      "اليوم 6–7: راحة/مشي خفيف"
+    ];
+  } else if(place.includes("بيت")){
+    train = [
+      "اليوم 1: وزن جسم (بوش-أب، سكوات، بلانك) 20–25 دقيقة",
+      "اليوم 2: مشي سريع 30–40 دقيقة",
+      "اليوم 3: مطّ وتوازن + كور",
+      "اليوم 4: مقاومة بأشرطة/دمبل خفيف",
+      "اليوم 5: مشي 30 دقيقة",
+      "اليوم 6–7: راحة/نشاط خفيف"
+    ];
+  } else {
+    train = [
+      "5 أيام مشي 30–45 دقيقة",
+      "هدف خطوات يومي حسب قدرتك (مثلاً 7000–9000 خطوة).",
+      "جلسة إطالات 10 د بعد المشي."
+    ];
+  }
+
+  const {base: mealsBase, tips: mealsTip, extra: mealsExtra} = mealOptions(diet, goal, budget);
+  const weekMenu = Array.from({length:7}).map((_,i)=>{
+    const portion = goal==="تنحيف" ? "حصص معتدلة + صحن سلطة كبير" : "حصص أكبر شوي + كربوهيدرات إضافية";
+    return `- اليوم ${i+1}: ${mealsBase[0]} | ${mealsBase[1]} | ${mealsBase[2]} | سناك: ${mealsBase[3].replace("سناك: ","")} (${portion})`;
+  });
+
+  const medNote = (conds && conds.trim() && conds.trim()!=="لا") ? "ملاحظة: بما إنك ذكرت أمراض/أدوية، يُفضّل تستشير طبيب قبل أي تغيير كبير." : "";
+  const allergNote = allergy ? `تنبيه حساسية: تجنّب الأصناف التالية: ${allergy}.` : "";
+  const fastingNote = (String(fasting).includes("نعم") || String(fasting).includes("صوم")) ? "تم مراعاة إمكانية الصوم: ركّز على إفطار متوازن وسحور غني بالبروتين والألياف." : "";
+  const stepsNote = `هدف خطوات مقترح: ${Math.trunc(clamp((steps||0) + (goal==='تنحيف'?1000:500), 4000, 12000))} خطوة/اليوم.`;
+
+  // Assemble plan text
+  const lines = [];
+  lines.push(`خطة ${goal==='تنحيف'?'تنحيف':'تسمين'} مخصصة — ${name}`);
+  lines.push("==================================================");
+  lines.push("🔎 الملخّص السريع:");
+  lines.push(`- الطول: ${r(height)} سم | الوزن: ${r(weight)} كغ | العمر: ${r(age)} | الجنس: ${sex}`);
+  if(bmi) lines.push(`- مؤشر كتلة الجسم (BMI): ${r(bmi,2)}`);
+  lines.push(`- النشاط: ${act}`);
+  lines.push(`- BMR تقديري: ${r(bmr)} سعرة | TDEE تقديري: ${r(tdee)} سعرة`);
+  lines.push(`- الهدف: ${goal} | السرعة: ${speed}`);
+  lines.push("");
+  lines.push("🍽️ السعرات والماكروز:");
+  lines.push(`- سعرات مستهدفة يومياً: ${r(targetCal)} سعرة`);
+  lines.push(`- بروتين: ${r(prot_g)} غ (${r(prot_k)} سعرة)`);
+  lines.push(`- دهون: ${r(fat_g)} غ (${r(fat_k)} سعرة)`);
+  lines.push(`- كارب: ${r(carbs_g)} غ (${r(carbs_k)} سعرة)`);
+  lines.push("");
+  lines.push("📅 برنامج تمارين أسبوعي (مرن):");
+  train.forEach(t => lines.push(`  • ${t}`));
+  lines.push(stepsNote);
+  lines.push("");
+  lines.push("🥗 خطة أكل نموذجية لأسبوع (بدّل بين الأيام براحتك):");
+  weekMenu.forEach(d => lines.push(d));
+  lines.push("");
+  lines.push("💡 ملاحظات مهمة:");
+  lines.push(`- توزيع الوجبات المقترح: ${meals}`);
+  lines.push(`- شرب المي: ${r(waterL,1)} لتر/اليوم (زيد/ي حسب العطش والنشاط).`);
+  lines.push(`- النوم: ${r(sleepH)} ساعات/اليوم.`);
+  if(fastingNote) lines.push(`- ${fastingNote}`);
+  if(medNote) lines.push(`- ${medNote}`);
+  if(allergNote) lines.push(`- ${allergNote}`);
+  if(tastes) lines.push(`- تفضيلاتك/تجنّب: ${tastes}`);
+  lines.push(`- نصيحة: ${mealsTip} | ${mealsExtra}`);
+  safety.forEach(s => lines.push(`- ⚠️ ${s}`));
+  lines.push("");
+  lines.push("📌 تذكير: هالخطة إرشادية عامة، مو بديل عن استشارة مختص، خصوصي بحالات مرضية.");
+
+  planText = lines.join("\n");
+
+  // Show in chat
+  addMsg("bot", "خلصنا الأسئلة! عم حضّرلك الخلاصة والخطة…");
+  addMsg("bot", "👇 هي الخطة المقترحة حسب أجوبتك:", `<pre style="margin:0;white-space:pre-wrap">${escapeHtml(planText)}</pre>`);
+
+  input.disabled = true; sendBtn.disabled = true; saveBtn.disabled = false;
+}
+
+function escapeHtml(s){
+  return s.replace(/[&<>]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
+}
+
+/* ---------- Events ---------- */
+startBtn.addEventListener("click", startChat);
+resetBtn.addEventListener("click", resetAll);
+saveBtn.addEventListener("click", savePlan);
+sendBtn.addEventListener("click", onSend);
+input.addEventListener("keydown", (e)=>{
+  if(e.key === "Enter"){ e.preventDefault(); onSend(); }
+});
+</script>
+</body>
+</html>
