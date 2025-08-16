@@ -1,0 +1,667 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>حكيم — العظام والمفاصل | تقييمات ذكية + PDF</title>
+  <meta name="description" content="حكيم — العظام والمفاصل: أسفل الظهر/عرق النسا، آلام العنق، الكتف (الكفة المدورة/الكتف المتجمّد)، الركبة (فُصال/هلالة)، التواء الكاحل، ألم الكعب، النفق الرسغي، نقرس حاد، التهاب مفصل إنتاني، وتر أخيل، هشاشة، ألم الورك، كسر مشتبه.">
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;800&display=swap" rel="stylesheet">
+  <!-- PDF libs -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" referrerpolicy="no-referrer"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js" referrerpolicy="no-referrer"></script>
+
+  <style>
+    :root{
+      --bg:#07090f; --txt:#e8ecff; --muted:#aab2d8;
+      --primary:#7aa2ff; --primary-2:#00e0ff; --accent:#a855f7;
+      --glass:rgba(255,255,255,.06); --border:rgba(255,255,255,.12);
+    }
+    *{box-sizing:border-box}
+    body{margin:0; font-family:'Cairo',system-ui,'Noto Sans Arabic',sans-serif; background:#07090f; color:var(--txt); line-height:1.9}
+    header{position:sticky; top:0; z-index:50; display:flex; align-items:center; justify-content:space-between; padding:14px 20px; backdrop-filter:saturate(140%) blur(8px); background:linear-gradient(180deg, rgba(15,16,40,.85), rgba(15,16,40,.45)); border-bottom:1px solid var(--border)}
+    .brand{display:flex; gap:12px; align-items:center}
+    .logo{width:42px; height:42px; border-radius:12px; display:grid; place-items:center; font-weight:800; background: radial-gradient(120% 120% at 0% 0%, var(--primary), var(--accent)); box-shadow: 0 0 24px rgba(122,162,255,.35), inset 0 0 18px rgba(255,255,255,.15)}
+    .brand-text strong{display:block; font-size:18px}
+    .brand-text span{display:block; font-size:12px; color:var(--muted)}
+    .container{width:min(1180px,94vw); margin-inline:auto}
+    h1{font-size:clamp(22px,4vw,34px); margin:22px 0 6px}
+    .sub{color:#cfd6ff; margin:0 0 12px}
+    .glass{background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03)); border:1px solid var(--border); border-radius:22px; padding:22px; box-shadow:0 30px 60px rgba(0,10,40,.35)}
+    .grid{display:grid; gap:16px}
+    .grid-2{grid-template-columns:1fr}
+    @media(min-width:1000px){.grid-2{grid-template-columns:1fr 1fr}}
+    .choose{display:grid; gap:12px; grid-template-columns:repeat(2,1fr)}
+    @media(min-width:960px){.choose{grid-template-columns:repeat(4,1fr)}}
+    .opt{background:rgba(255,255,255,.04); border:1px solid var(--border); border-radius:16px; padding:14px; text-align:center; cursor:pointer; transition:transform .18s ease, border-color .18s ease; min-height:110px; display:grid; place-items:center; font-weight:700}
+    .opt:hover{transform:translateY(-3px); border-color:rgba(122,162,255,.6)}
+    .card{border:1px solid var(--border); border-radius:18px; background:rgba(255,255,255,0.04); padding:18px}
+    label{font-weight:600}
+    select, input[type="number"], input[type="text"]{width:100%; padding:10px 12px; border-radius:12px; border:1px solid var(--border); background:rgba(255,255,255,0.03); color:var(--txt)}
+    .row{display:grid; gap:12px; grid-template-columns:1fr}
+    @media(min-width:680px){.row{grid-template-columns:repeat(2,1fr)}}
+    .row-3{display:grid; gap:12px; grid-template-columns:repeat(3,1fr)}
+    .actions{display:flex; gap:10px; flex-wrap:wrap; margin-top:12px}
+    .btn{padding:10px 14px; border-radius:12px; border:1px solid var(--border); background:var(--glass); color:var(--txt); cursor:pointer; font-weight:700; transition:transform .2s ease, background .2s ease}
+    .btn.primary{background:linear-gradient(135deg, var(--primary), var(--primary-2)); border-color:transparent}
+    .btn:hover{transform:translateY(-2px)}
+    .result{padding:14px; border:1px solid var(--border); border-radius:14px; background:rgba(255,255,255,.03)}
+    .hint{font-size:13px; color:#b8c0ef}
+    footer{text-align:center; padding:22px; color:#aab2d8; font-size:13px; border-top:1px solid var(--border); margin-top:24px}
+    .mt{margin-top:10px}.hide{display:none}
+  </style>
+</head>
+<body>
+<header>
+  <div class="brand">
+    <div class="logo">حكيم</div>
+    <div class="brand-text">
+      <strong>حكيم — العظام والمفاصل</strong>
+      <span>تقييمات مؤتمتة دقيقة + PDF</span>
+    </div>
+  </div>
+  <nav class="actions" style="margin:0">
+    <a class="btn" href="index.html">الصفحة الرئيسية</a>
+  </nav>
+</header>
+
+<main class="container">
+  <section class="glass">
+    <h1>العظام والمفاصل — اختر القسم</h1>
+    <p class="sub">أدخل بياناتك ثم اختر الحالة. ستظهر <b>خطة إرشادية + أمثلة أدوية (بدون جرعات)</b> للمراجعة مع الطبيب.</p>
+
+    <div class="row">
+      <div><label>الاسم:</label><input id="pat-name" type="text" placeholder="مثال: يمان فتال"></div>
+      <div><label>العمر (سنوات):</label><input id="pat-age" type="number" min="0" max="120" placeholder="35"></div>
+    </div>
+    <div class="row">
+      <div>
+        <label>الجنس:</label>
+        <select id="pat-sex">
+          <option value="male">ذكر</option>
+          <option value="female">أنثى</option>
+          <option value="pregnant">حامل/محتمل الحمل</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="choose" id="chooser">
+      <div class="opt" data-target="lbp">ألم أسفل الظهر (ميكانيكي)</div>
+      <div class="opt" data-target="sciatica">عرق النسا/اعتلال جذري</div>
+      <div class="opt" data-target="neck">ألم العنق ± جذري</div>
+      <div class="opt" data-target="rotator">كتف — وتر الكفّة المدورة</div>
+      <div class="opt" data-target="frozen">كتف متجمّد</div>
+      <div class="opt" data-target="knee-oa">الركبة — فُصال عظمي</div>
+      <div class="opt" data-target="meniscus">إصابة غضروف هلالي</div>
+      <div class="opt" data-target="ankle">التواء كاحل</div>
+      <div class="opt" data-target="heel">ألم كعب (لفافة أخمصية)</div>
+      <div class="opt" data-target="carpal">متلازمة النفق الرسغي</div>
+      <div class="opt" data-target="gout">نقرس حاد</div>
+      <div class="opt" data-target="septic">التهاب مفصل إنتاني</div>
+      <div class="opt" data-target="achilles">وتر أخيل — اعتلال/التهاب</div>
+      <div class="opt" data-target="osteoporosis">هشاشة العظام — خطر كسور</div>
+      <div class="opt" data-target="hip">ألم الورك (كبار السن/سقوط)</div>
+      <div class="opt" data-target="fracture">كسر مشتبه/إصابة إسعافية</div>
+    </div>
+    <p class="hint mt">أعلام طارئة: <b>عجز تحمّل وزن بعد سقوط، تشوّه واضح، فقد حس/قوة تدريجي شديد، خدر سرجي/سلس بولي (ذيل الفرس)، مفصل حار مؤلم مع حمّى، ألم ليل شديد لا يهدأ</b> — راجع الإسعاف فورًا.</p>
+  </section>
+
+  <section class="grid grid-2 mt">
+    <!-- 1) Low back pain -->
+    <div class="card hide" id="sec-lbp">
+      <h2>ألم أسفل الظهر (ميكانيكي) — فرز أعلام حمراء</h2>
+      <div class="row">
+        <div><label>ألم ميكانيكي يتحسّن بالحركة</label><select id="lbMech"><option value="0">لا/غير واضح</option><option value="1">نعم</option></select></div>
+        <div><label>ألم ليلي مستمر/فقد وزن/سرطان سابق</label><select id="lbRed1"><option value="0">لا</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="row">
+        <div><label>رضّ حديث/سقوط/عمر ≥ 65</label><select id="lbRed2"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>حمّى/تعاطي وريدي/التهاب</label><select id="lbRed3"><option value="0">لا</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="actions">
+        <button class="btn primary" onclick="calcLBP()">تقييم الظهر</button>
+        <button class="btn" onclick="exportPDF('low-back-pain')">تصدير PDF</button>
+      </div>
+      <div class="result mt" id="lbp-res"></div>
+    </div>
+
+    <!-- 2) Sciatica -->
+    <div class="card hide" id="sec-sciatica">
+      <h2>عرق النسا/اعتلال جذري — فرز</h2>
+      <div class="row">
+        <div><label>ألم يمتد أسفل الركبة/خدر/نمل</label><select id="scRad"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>ضعف قدم/هبوط قدم/تفاقم سريع</label><select id="scWeak"><option value="0">لا</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="row">
+        <div><label>خدر سرجي/سلس بولي/برازي</label><select id="scCauda"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>ألم ليلي شديد أو إصابة حديثة</label><select id="scRed"><option value="0">لا</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="actions">
+        <button class="btn primary" onclick="calcSciatica()">تقييم الجذر العصبي</button>
+        <button class="btn" onclick="exportPDF('sciatica')">تصدير PDF</button>
+      </div>
+      <div class="result mt" id="sciatica-res"></div>
+    </div>
+
+    <!-- 3) Neck pain -->
+    <div class="card hide" id="sec-neck">
+      <h2>ألم العنق ± جذري — فرز</h2>
+      <div class="row">
+        <div><label>ألم مع حركة/تيبّس</label><select id="neMech"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>ألم ينتشر للذراع/وخز</label><select id="neRad"><option value="0">لا</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="row">
+        <div><label>رض/سقوط/أعمار كبيرة</label><select id="neTrauma"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>حمّى/تيبّس نقري شديد (سحائي؟)</label><select id="neRed"><option value="0">لا</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="actions">
+        <button class="btn primary" onclick="calcNeck()">تقييم العنق</button>
+        <button class="btn" onclick="exportPDF('neck-pain')">تصدير PDF</button>
+      </div>
+      <div class="result mt" id="neck-res"></div>
+    </div>
+
+    <!-- 4) Rotator cuff -->
+    <div class="card hide" id="sec-rotator">
+      <h2>كتف — وتر الكفّة المدورة</h2>
+      <div class="row">
+        <div><label>ألم عند رفع الذراع/قوس مؤلم</label><select id="roArc"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>ضعف دوران خارجي/ليلي</label><select id="roWeakNight"><option value="0">لا</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="actions">
+        <button class="btn primary" onclick="calcRotator()">تقييم الكتف</button>
+        <button class="btn" onclick="exportPDF('rotator-cuff')">تصدير PDF</button>
+      </div>
+      <div class="result mt" id="rotator-res"></div>
+    </div>
+
+    <!-- 5) Frozen shoulder -->
+    <div class="card hide" id="sec-frozen">
+      <h2>الكتف المتجمّد — تيبّس مؤلم</h2>
+      <div class="row">
+        <div><label>تحديد شديد للدوران الخارجي</label><select id="frER"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>سكري/قصور درقي</label><select id="frRisk"><option value="0">لا/غير معروف</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="actions">
+        <button class="btn primary" onclick="calcFrozen()">تقييم التجمّد</button>
+        <button class="btn" onclick="exportPDF('frozen-shoulder')">تصدير PDF</button>
+      </div>
+      <div class="result mt" id="frozen-res"></div>
+    </div>
+
+    <!-- 6) Knee OA -->
+    <div class="card hide" id="sec-knee-oa">
+      <h2>الركبة — فُصال عظمي (خشونة)</h2>
+      <div class="row">
+        <div><label>ألم مع الجهد/هبوط الدرج/طقطقة</label><select id="koMech"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>تيبّس صباحي &lt; 30 دقيقة</label><select id="koStiff"><option value="0">لا</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="actions">
+        <button class="btn primary" onclick="calcKneeOA()">تقييم الركبة</button>
+        <button class="btn" onclick="exportPDF('knee-oa')">تصدير PDF</button>
+      </div>
+      <div class="result mt" id="knee-oa-res"></div>
+    </div>
+
+    <!-- 7) Meniscus -->
+    <div class="card hide" id="sec-meniscus">
+      <h2>إصابة غضروف هلالي</h2>
+      <div class="row">
+        <div><label>التواء/لفّة مع ألم خط المفصل</label><select id="meTwist"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>انقفال/قبقبة/تورّم</label><select id="meLocking"><option value="0">لا</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="actions">
+        <button class="btn primary" onclick="calcMeniscus()">تقييم الهلالي</button>
+        <button class="btn" onclick="exportPDF('meniscus')">تصدير PDF</button>
+      </div>
+      <div class="result mt" id="meniscus-res"></div>
+    </div>
+
+    <!-- 8) Ankle sprain -->
+    <div class="card hide" id="sec-ankle">
+      <h2>التواء كاحل — قواعد أوتاوا مبسّطة</h2>
+      <div class="row">
+        <div><label>عجز تحمّل وزن فورًا وبعد 4 خطوات</label><select id="anWeight"><option value="0">لا</option><option value="1">نعم/عجز</option></select></div>
+        <div><label>إيلام قاعدة المشط الخامس/الزورقي</label><select id="anBone"><option value="0">لا</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="row">
+        <div><label>تورّم/كدمة جانبية</label><select id="anSw"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>إصابة شديدة/فرقعة</label><select id="anSev"><option value="0">لا</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="actions">
+        <button class="btn primary" onclick="calcAnkle()">تقييم الكاحل</button>
+        <button class="btn" onclick="exportPDF('ankle-sprain')">تصدير PDF</button>
+      </div>
+      <div class="result mt" id="ankle-res"></div>
+    </div>
+
+    <!-- 9) Heel pain -->
+    <div class="card hide" id="sec-heel">
+      <h2>ألم الكعب — لفافة أخمصية</h2>
+      <div class="row">
+        <div><label>أسوأ عند الخطوات الأولى صباحًا</label><select id="heMorning"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>حذاء/زيادة وزن/وقوف طويل</label><select id="heRisk"><option value="0">لا/غير معروف</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="actions">
+        <button class="btn primary" onclick="calcHeel()">تقييم الكعب</button>
+        <button class="btn" onclick="exportPDF('plantar-fasciitis')">تصدير PDF</button>
+      </div>
+      <div class="result mt" id="heel-res"></div>
+    </div>
+
+    <!-- 10) Carpal tunnel -->
+    <div class="card hide" id="sec-carpal">
+      <h2>متلازمة النفق الرسغي</h2>
+      <div class="row">
+        <div><label>خدر/نمل ليلًا بالإبهام-الوسطى يخف بهز اليد</label><select id="caNight"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>مهن/تكرار يدوي/سكري/قصور درقي</label><select id="caRisk"><option value="0">لا/غير معروف</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="actions">
+        <button class="btn primary" onclick="calcCarpal()">تقييم الرسغ</button>
+        <button class="btn" onclick="exportPDF('carpal-tunnel')">تصدير PDF</button>
+      </div>
+      <div class="result mt" id="carpal-res"></div>
+    </div>
+
+    <!-- 11) Gout -->
+    <div class="card hide" id="sec-gout">
+      <h2>نقرس حاد — مفصل أحمر مؤلم</h2>
+      <div class="row">
+        <div><label>بدء فجائي ليلًا بمفصل القدم/الإبهام</label><select id="goToepod"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>حمّى خفيفة/خمر/لحوم/مدرّات</label><select id="goRisk"><option value="0">لا/غير معروف</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="row">
+        <div><label>شكّ بعدوى مفصل/جرح حديث</label><select id="goSepticSus"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>حامل/مرض كلوي شديد</label><select id="goContra"><option value="0">لا</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="actions">
+        <button class="btn primary" onclick="calcGout()">تقييم النقرس</button>
+        <button class="btn" onclick="exportPDF('gout')">تصدير PDF</button>
+      </div>
+      <div class="result mt" id="gout-res"></div>
+    </div>
+
+    <!-- 12) Septic arthritis -->
+    <div class="card hide" id="sec-septic">
+      <h2>التهاب مفصل إنتاني — إسعافي</h2>
+      <div class="row">
+        <div><label>مفصل حار متورّم مؤلم جدًا</label><select id="seHot"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>حمّى/قشعريرة</label><select id="seFever"><option value="0">لا</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="row">
+        <div><label>جرح/حقن/إجراءات حديثة</label><select id="seProc"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>مناعة ضعيفة/سكري</label><select id="seImm"><option value="0">لا</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="actions">
+        <button class="btn primary" onclick="calcSeptic()">تقييم المفصل الإنتاني</button>
+        <button class="btn" onclick="exportPDF('septic-arthritis')">تصدير PDF</button>
+      </div>
+      <div class="result mt" id="septic-res"></div>
+    </div>
+
+    <!-- 13) Achilles -->
+    <div class="card hide" id="sec-achilles">
+      <h2>وتر أخيل — اعتلال/التهاب</h2>
+      <div class="row">
+        <div><label>ألم/تيبّس صباحي عند وتر أخيل</label><select id="acPain"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>قفز/ركض/أحذية قاسية</label><select id="acRisk"><option value="0">لا/غير معروف</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="actions">
+        <button class="btn primary" onclick="calcAchilles()">تقييم وتر أخيل</button>
+        <button class="btn" onclick="exportPDF('achilles-tendinopathy')">تصدير PDF</button>
+      </div>
+      <div class="result mt" id="achilles-res"></div>
+    </div>
+
+    <!-- 14) Osteoporosis -->
+    <div class="card hide" id="sec-osteoporosis">
+      <h2>هشاشة العظام — تقدير أولي</h2>
+      <div class="row">
+        <div><label>كسور هشاشة سابقة/قصر قامة حديث</label><select id="osFrag"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>سن ≥ 65 (نساء) أو ≥ 70 (رجال)</label><select id="osAge"><option value="0">لا</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="row">
+        <div><label>ستيرويدات مزمنة/أمراض مزمنة</label><select id="osSter"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>نقص وزن/تدخين/كحول</label><select id="osRisk"><option value="0">لا</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="actions">
+        <button class="btn primary" onclick="calcOsteoporosis()">تقييم الهشاشة</button>
+        <button class="btn" onclick="exportPDF('osteoporosis')">تصدير PDF</button>
+      </div>
+      <div class="result mt" id="osteoporosis-res"></div>
+    </div>
+
+    <!-- 15) Hip pain -->
+    <div class="card hide" id="sec-hip">
+      <h2>ألم الورك (كبار السن/سقوط)</h2>
+      <div class="row">
+        <div><label>سقوط حديث/عجز تحمّل وزن</label><select id="hiFall"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>قصر/استدارة الطرف/تشوّه</label><select id="hiDeform"><option value="0">لا</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="actions">
+        <button class="btn primary" onclick="calcHip()">تقييم الورك</button>
+        <button class="btn" onclick="exportPDF('hip-pain')">تصدير PDF</button>
+      </div>
+      <div class="result mt" id="hip-res"></div>
+    </div>
+
+    <!-- 16) Fracture -->
+    <div class="card hide" id="sec-fracture">
+      <h2>كسر مشتبه/إصابة إسعافية</h2>
+      <div class="row">
+        <div><label>تشوّه واضح/فرقعة/ألم عظيمي موضّع</label><select id="frDef"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>جرح مفتوح/نزف/نقص تروية/خدر</label><select id="frOpen"><option value="0">لا</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="actions">
+        <button class="btn primary" onclick="calcFracture()">تقييم الكسر</button>
+        <button class="btn" onclick="exportPDF('suspected-fracture')">تصدير PDF</button>
+      </div>
+      <div class="result mt" id="fracture-res"></div>
+    </div>
+  </section>
+
+  <section class="glass mt">
+    <p class="hint">هذه الصفحة للتثقيف والفرز الأولي. عند الشك بحالة إسعافية — تواصل مع الإسعاف فورًا.</p>
+  </section>
+</main>
+
+<footer>© <span id="year"></span> حكيم — جميع الحقوق محفوظة.</footer>
+
+<script>
+  // ====== عام ======
+  document.getElementById('year').textContent = new Date().getFullYear();
+  document.querySelectorAll('#chooser .opt').forEach(el=>{
+    el.addEventListener('click', ()=>{
+      document.querySelectorAll('.card').forEach(c=>c.classList.add('hide'));
+      const sec = document.getElementById('sec-'+el.getAttribute('data-target'));
+      if (sec){ sec.classList.remove('hide'); sec.scrollIntoView({behavior:'smooth', block:'start'}); }
+    });
+  });
+
+  // المستخدم
+  function nameVal(){ return document.getElementById('pat-name').value?.trim() || 'بدون اسم'; }
+  function ageVal(){ const n=parseInt(document.getElementById('pat-age').value,10); return isNaN(n)? null : Math.min(120, Math.max(0,n)); }
+  function sexVal(){
+    const v=document.getElementById('pat-sex').value;
+    return {code:v, label:(v==='male'?'ذكر': (v==='female'?'أنثى':'حامل/محتمل الحمل'))};
+  }
+  function userContext(){
+    const age=ageVal(), sex=sexVal();
+    return {
+      name:nameVal(), age, sex,
+      child: age!=null && age<14,
+      older: age!=null && age>=65,
+      pregnant: sex.code==='pregnant',
+      male: sex.code==='male', female: sex.code!=='male'
+    };
+  }
+  function yes(id){ return document.getElementById(id).value==='1'; }
+  function lines(arr){ return `<ul>${arr.map(x=>`<li>${x}</li>`).join('')}</ul>`; }
+  function setLast(obj){ window._last = obj; }
+
+  // ====== صانع الخطط للعظام والمفاصل ======
+  function buildPlanOrtho(domain, ctx, u){
+    const plan=[], rec=[], pharm=[], flags = ctx.flags? [...ctx.flags] : [];
+    if (u.child) rec.push('الفئة طفل: الجرعات/التصوير والتثبيت تختلف — يلزم اختصاص أطفال/جرّاح عظام أطفال.');
+    if (u.older) rec.push('العمر ≥65: انتبه لهشاشة/كسور خفيّة وخطر التخثر والسقوط.');
+    if (u.pregnant) rec.push('حمل/احتمال حمل: تجنّب تصوير شعاعي/أدوية معيّنة — يقرّر الاختصاصي.');
+
+    switch(domain){
+      case 'lbp': {
+        if (ctx.red1 || ctx.red2 || ctx.red3) flags.push('أعلام حمراء لأسفل الظهر — يلزم تقييم عاجل.');
+        plan.push('نشاط تدريجي وتجنّب الراحة التامة بالفراش، حرارة موضعية، تمارين إطالة وتقوية وسط/قلب.');
+        rec.push('العلاج الفيزيائي (مكافحة الألم + تقوية القطنية/العضلات العميقة)، تصحيح بيئة العمل.');
+        pharm.push('مسكن بسيط/باراسيتامول، مضاد التهاب غير ستيرويدي عند اللزوم (إن لم توجد موانع) — قرار الطبيب.');
+        pharm.push('مرخٍ عضلي قصير المدى، علاج اعتلال جذور عند اللزوم — قرار الطبيب.');
+        return {plan, rec, pharm, flags, assess:'ألم أسفل ظهر ميكانيكي محتمل'};
+      }
+      case 'sciatica': {
+        if (ctx.cauda) flags.push('شبهة متلازمة ذيل الفرس — طارئ.');
+        if (ctx.weak) rec.push('عجز عصبي تقدّمي — يلزم تقييم سريع وتصوير.');
+        plan.push('نشاط مدروس، تجنّب الرفع والالتواء، تمارين موجهة للجذور العصبية.');
+        pharm.push('NSAIDs/مسكنات؛ أدوية عصبية للألم الجذري (غابابنتين/بريغابالين) — قرار الطبيب.');
+        rec.push('تصوير (MRI) عند الشدة/العجز/عدم التحسن؛ حقن فوق الجافية لبعض الحالات — قرار اختصاصي.');
+        return {plan, rec, pharm, flags, assess:'اعتلال جذري محتمل'};
+      }
+      case 'neck': {
+        if (ctx.red || ctx.trauma) flags.push('أعلام حمراء للعنق/رض — يلزم تقييم عاجل.');
+        plan.push('إطالات تدريجية، تصحيح وضعية الشاشة والهاتف، تقوية العضلات العميقة للعنق.');
+        pharm.push('مسكنات/NSAIDs، مرخٍ عضلي قصير المدى — قرار الطبيب.');
+        rec.push('علاج فيزيائي، حقن موضعية/تصوير عند اللزوم.');
+        return {plan, rec, pharm, flags, assess:'ألم عنق ميكانيكي ± جذري'};
+      }
+      case 'rotator': {
+        plan.push('راحة نسبية (لا تثبيت كامل)، تمارين الكتف: تقوية الكفّة/تثبيت الكتف، علاج فيزيائي.');
+        pharm.push('NSAIDs/مسكنات موضعية/فموية — قرار الطبيب.');
+        rec.push('حقن تحت الأخرم/سونار تشخيصي عند الشك بالتمزّق الكبير — قرار اختصاصي.');
+        return {plan, rec, pharm, flags, assess:'متلازمة انحشار/وتر الكفّة'};
+      }
+      case 'frozen': {
+        plan.push('برنامج إطالة منظّم (Pendulum, ER stretch) + حرارة قبل التمارين.');
+        pharm.push('NSAIDs لتسكين الألم — قرار الطبيب.');
+        rec.push('حقن ستيرويد داخل المفصل أو تلاعب تحت التخدير للحالات المقاومة — قرار اختصاصي.');
+        return {plan, rec, pharm, flags, assess:'كتف متجمّد محتمل'};
+      }
+      case 'knee-oa': {
+        plan.push('إنقاص وزن، تقوية رباعية الرؤوس، مساعدات مشي/دعامة؛ تعديل نشاط.');
+        pharm.push('NSAIDs موضعي أولًا؛ يمكن فموي عند الحاجة (إن لم توجد موانع) — قرار الطبيب.');
+        pharm.push('حقن ستيرويد/هيالورونات داخل المفصل لحالات مختارة — قرار اختصاصي.');
+        rec.push('صور أشعة عند الحاجة؛ برنامج تمارين منزلية منتظم.');
+        return {plan, rec, pharm, flags, assess:'خشونة ركبة محتملة'};
+      }
+      case 'meniscus': {
+        if (ctx.locking) flags.push('انقفال حقيقي/قفل ميكانيكي — إحالة لجراحة تنظيرية.');
+        plan.push('RICE (راحة نسبية/تبريد/ضغط/رفع)، عكازات قصيرة، علاج فيزيائي تدريجي.');
+        pharm.push('مسكن/NSAIDs — قرار الطبيب.');
+        rec.push('MRI عند استمرار الأعراض/انقفال؛ تجنّب الحركات اللولبية.');
+        return {plan, rec, pharm, flags, assess:'أذية هلالة محتملة'};
+      }
+      case 'ankle': {
+        if (ctx.weight || ctx.bone) flags.push('قواعد أوتاوا إيجابية — يلزم تصوير شعاعي.');
+        plan.push('PEACE & LOVE: حماية/رفع/ضغط/تبريد أول 48 ساعة ثم تحميل تدريجي، تمارين توازن.');
+        pharm.push('NSAIDs/مسكن؛ رباط داعم/جبيرة هوائية — قرار الطبيب.');
+        rec.push('إعادة تأهيل مبكر لتقليل النكس.');
+        return {plan, rec, pharm, flags, assess:'التواء كاحل'};
+      }
+      case 'heel': {
+        plan.push('شدّ الساق/اللفافة 3–5 مرات يوميًا، دعامات كعب، تعديل حذاء، تقليل الوقوف المديد.');
+        pharm.push('NSAIDs موضعي/فموي — قرار الطبيب.');
+        rec.push('حقن موضعي/موجات صادمة للحالات المقاومة — قرار اختصاصي.');
+        return {plan, rec, pharm, flags, assess:'لفافة أخمصية محتملة'};
+      }
+      case 'carpal': {
+        plan.push('جبيرة رسغ ليلية، فواصل عمل، تعديل لوحة المفاتيح/الفأرة.');
+        pharm.push('NSAIDs؛ حقن ستيرويد موضعي للحالات المتوسطة — قرار الطبيب.');
+        rec.push('تخطيط أعصاب/تحرّي أسباب ثانوية؛ جراحة تحرّر عند الفشل.');
+        return {plan, rec, pharm, flags, assess:'نفق رسغي محتمل'};
+      }
+      case 'gout': {
+        if (ctx.septic) flags.push('لا تستبعد التهابًا إنتانيًا — اسحب سائل مفصلي عند الشك.');
+        plan.push('راحة ورفع الطرف، كمادات باردة، تجنّب كحول/لحوم/مدرّات إن أمكن.');
+        if (!u.pregnant) {
+          pharm.push('NSAIDs أو كولشيسين لنوبة حادة — قرار الطبيب.');
+          pharm.push('كورتيكوستيرويد فموي/حقن داخل المفصل لحالات مختارة — قرار الطبيب.');
+        } else {
+          pharm.push('الحمل: بدائل أكثر أمانًا حسب الاختصاصي.');
+        }
+        rec.push('لا تبدأ خافض حمض البول أثناء النوبة؛ ضبط عوامل الخطورة؛ علاج وقائي لاحقًا (ألوبورينول/فيبوكسوستات) — قرار اختصاصي.');
+        return {plan, rec, pharm, flags, assess:'نقرس حاد محتمل'};
+      }
+      case 'septic': {
+        flags.push('التهاب مفصل إنتاني مشتبه — طارئ.');
+        plan.push('عدم تأخير الشفط المَفصلي؛ إرسال سائل للزرع والخلايا؛ غسيل/تنظير حسب المكان.');
+        pharm.push('مضادّات وريدية تغطي المسببات الشائعة بعد الشفط — قرار اختصاصي.');
+        rec.push('قبول بالمشفى ومراقبة قريبة.');
+        return {plan, rec, pharm, flags, assess:'التهاب مفصل إنتاني مشتبه'};
+      }
+      case 'achilles': {
+        plan.push('تمارين إطالة/تقوية ليفية غلوتية وسلسلة خلفية، بروتوكول إكسنتريك لوتر أخيل، تقليل الجري/القفز مؤقتًا.');
+        pharm.push('NSAIDs موضعي/فموي للألم — قرار الطبيب.');
+        rec.push('تجنّب الحقن داخل الوتر؛ تقييم حذاء/كعب؛ سونار عند اللزوم.');
+        return {plan, rec, pharm, flags, assess:'اعتلال وتر أخيل محتمل'};
+      }
+      case 'osteoporosis': {
+        plan.push('تمارين تحمّل وزن وتوازن، فيتامين D وكالسيوم كغذاء/مكمّلات وفق الحاجة.');
+        pharm.push('بيسفوسفونات/دينوسوماب/خيارات أخرى — قرار اختصاصي وفق DXA/FRAX.');
+        rec.push('DXA للنساء ≥65 والرجال ≥70 أو مع عوامل خطر؛ الوقاية من السقوط في المنزل.');
+        return {plan, rec, pharm, flags, assess:'خطر هشاشة/كسور — تقييم مطلوب'};
+      }
+      case 'hip': {
+        if (ctx.deform || ctx.fall) flags.push('اشتباه كسر/خَلَع — تصوير ونقل عاجل.');
+        plan.push('عدم التحميل حتى التقييم؛ مُسكّن مناسب؛ منع الجفاف والخثار في المسنين.');
+        rec.push('صور شعاعية/CT عند الحاجة؛ القبول بالمشفى في أغلب الحالات.');
+        return {plan, rec, pharm, flags, assess:'ألم ورك عند مسن بعد سقوط — كسر محتمل'};
+      }
+      case 'fracture': {
+        if (ctx.open) flags.push('جرح مفتوح/نقص تروية/خدر — إسعافي.');
+        plan.push('تثبيت الطرف بوضع مريح، إيقاف نزف، تقييم أعصاب وأوعية، عدم ردّ الكسر خارج المستشفى.');
+        pharm.push('مسكنات مناسبة؛ وقاية كزاز عند الجروح — قرار الطبيب.');
+        rec.push('تصوير ونقل عاجل إلى جرّاح العظام.');
+        return {plan, rec, pharm, flags, assess:'كسر/خلع مشتبه'};
+      }
+    }
+    return {plan, rec, pharm, flags};
+  }
+
+  // ====== عرض موحّد ======
+  function showResult(elId, obj){
+    const u = userContext();
+    const header = `<p>الاسم: <b>${u.name}</b>${u.age!=null? ` — العمر: <b>${u.age}</b>`:''} — الجنس: <b>${u.sex.label}</b></p>`;
+    const assess = obj.assess ? `<p><b>التقييم:</b> ${obj.assess}</p>` : '';
+    const sev = obj.severity ? `<p><b>الشدة:</b> ${obj.severity}</p>` : '';
+    const score = (obj.score!==undefined) ? `<p><b>قيمة/درجة:</b> ${obj.score}</p>` : '';
+    const flagsHtml = obj.flags?.length? `<p><b>تنبيهات:</b></p>${lines(obj.flags)}` : '';
+    const planHtml = obj.plan?.length? `<p><b>خطة عامة:</b></p>${lines(obj.plan)}` : '';
+    const recHtml = obj.rec?.length? `<p><b>توصيات موجّهة:</b></p>${lines(obj.rec)}` : '';
+    const pharmHtml = obj.pharm?.length? `<p><b>أمثلة أدوية (قرار الطبيب):</b></p>${lines(obj.pharm)}<p class="hint">لا تبدأ/توقف أي دواء دون طبيب. اعتبارات خاصة للحمل/الأطفال/كبار السن.</p>` : '';
+    document.getElementById(elId).innerHTML = header + score + sev + assess + flagsHtml + planHtml + recHtml + pharmHtml;
+    setLast({...obj, user:u});
+  }
+
+  // ====== الحسابات ======
+  function calcLBP(){
+    const mech=yes('lbMech'), red1=yes('lbRed1'), red2=yes('lbRed2'), red3=yes('lbRed3');
+    const {plan, rec, pharm, flags, assess} = buildPlanOrtho('lbp', {red1, red2, red3}, userContext());
+    showResult('lbp-res', {title:'ألم أسفل الظهر', assess: mech? assess: 'ألم ظهر غير نوعي', plan, rec, pharm, flags});
+  }
+  function calcSciatica(){
+    const rad=yes('scRad'), weak=yes('scWeak'), cauda=yes('scCauda'), red=yes('scRed');
+    const {plan, rec, pharm, flags, assess} = buildPlanOrtho('sciatica', {weak, cauda, red}, userContext());
+    showResult('sciatica-res', {title:'عرق النسا/اعتلال جذري', assess: rad? assess:'أعراض غير مكتملة', plan, rec, pharm, flags});
+  }
+  function calcNeck(){
+    const mech=yes('neMech'), rad=yes('neRad'), trauma=yes('neTrauma'), red=yes('neRed');
+    const {plan, rec, pharm, flags, assess} = buildPlanOrtho('neck', {trauma, red}, userContext());
+    showResult('neck-res', {title:'ألم العنق', assess: mech? (rad? 'عنقي جذري محتمل':'ألم عنق ميكانيكي'):'غير نوعي', plan, rec, pharm, flags});
+  }
+  function calcRotator(){
+    const arc=yes('roArc'), wk=yes('roWeakNight');
+    const {plan, rec, pharm, flags, assess} = buildPlanOrtho('rotator', {}, userContext());
+    showResult('rotator-res', {title:'وتر الكفّة المدورة', assess: arc||wk? assess:'غير واضح', plan, rec, pharm, flags});
+  }
+  function calcFrozen(){
+    const er=yes('frER'), risk=yes('frRisk');
+    const {plan, rec, pharm, flags, assess} = buildPlanOrtho('frozen', {}, userContext());
+    showResult('frozen-res', {title:'كتف متجمّد', assess: er? assess:'غير واضح', plan, rec, pharm, flags});
+  }
+  function calcKneeOA(){
+    const mech=yes('koMech'), st=yes('koStiff');
+    const {plan, rec, pharm, flags, assess} = buildPlanOrtho('knee-oa', {}, userContext());
+    showResult('knee-oa-res', {title:'فُصال عظمي ركبة', assess: (mech&&st)? assess:'ألم ركبة غير نوعي', plan, rec, pharm, flags});
+  }
+  function calcMeniscus(){
+    const tw=yes('meTwist'), lo=yes('meLocking');
+    const {plan, rec, pharm, flags, assess} = buildPlanOrtho('meniscus', {locking:lo}, userContext());
+    showResult('meniscus-res', {title:'أذية هلالة', assess: tw? assess:'غير واضح', plan, rec, pharm, flags});
+  }
+  function calcAnkle(){
+    const weight=yes('anWeight'), bone=yes('anBone'), sw=yes('anSw'), sev=yes('anSev');
+    const {plan, rec, pharm, flags, assess} = buildPlanOrtho('ankle', {weight, bone}, userContext());
+    showResult('ankle-res', {title:'التواء كاحل', assess, plan, rec, pharm, flags});
+  }
+  function calcHeel(){
+    const mo=yes('heMorning'), ri=yes('heRisk');
+    const {plan, rec, pharm, flags, assess} = buildPlanOrtho('heel', {}, userContext());
+    showResult('heel-res', {title:'اللفافة الأخمصية', assess: mo? assess:'غير واضح', plan, rec, pharm, flags});
+  }
+  function calcCarpal(){
+    const ni=yes('caNight'), ri=yes('caRisk');
+    const {plan, rec, pharm, flags, assess} = buildPlanOrtho('carpal', {}, userContext());
+    showResult('carpal-res', {title:'نفق رسغي', assess: ni? assess:'غير واضح', plan, rec, pharm, flags});
+  }
+  function calcGout(){
+    const to=yes('goToepod'), risk=yes('goRisk'), septic=yes('goSepticSus'), contra=yes('goContra');
+    const {plan, rec, pharm, flags, assess} = buildPlanOrtho('gout', {septic}, userContext());
+    if (contra) flags.push('حمل/قصور كلوي شديد — قيود دوائية.');
+    showResult('gout-res', {title:'نقرس حاد', assess: to? assess:'غير واضح', plan, rec, pharm, flags});
+  }
+  function calcSeptic(){
+    const hot=yes('seHot'), fe=yes('seFever'), pr=yes('seProc'), im=yes('seImm');
+    const {plan, rec, pharm, flags, assess} = buildPlanOrtho('septic', {}, userContext());
+    showResult('septic-res', {title:'التهاب مفصل إنتاني', assess: (hot&& (fe||pr||im))? assess:'غير كافٍ — لكن لا تهمل إذا كان المفصل حارًا جدًا', plan, rec, pharm, flags});
+  }
+  function calcAchilles(){
+    const pa=yes('acPain'), ri=yes('acRisk');
+    const {plan, rec, pharm, flags, assess} = buildPlanOrtho('achilles', {}, userContext());
+    showResult('achilles-res', {title:'وتر أخيل', assess: pa? assess:'غير واضح', plan, rec, pharm, flags});
+  }
+  function calcOsteoporosis(){
+    const fr=yes('osFrag'), ag=yes('osAge'), st=yes('osSter'), ri=yes('osRisk');
+    const {plan, rec, pharm, flags, assess} = buildPlanOrtho('osteoporosis', {}, userContext());
+    showResult('osteoporosis-res', {title:'هشاشة العظام', assess: (fr||ag||st||ri)? assess:'خطر منخفض مبدئيًا — لكن يعتمد على عوامل أخرى', plan, rec, pharm, flags});
+  }
+  function calcHip(){
+    const fall=yes('hiFall'), def=yes('hiDeform');
+    const {plan, rec, pharm, flags, assess} = buildPlanOrtho('hip', {fall, deform:def}, userContext());
+    showResult('hip-res', {title:'ألم الورك', assess, plan, rec, pharm, flags});
+  }
+  function calcFracture(){
+    const def=yes('frDef'), open=yes('frOpen');
+    const {plan, rec, pharm, flags, assess} = buildPlanOrtho('fracture', {open}, userContext());
+    showResult('fracture-res', {title:'كسر مشتبه', assess: def? assess:'غير واضح — إن كان الألم عظميًا موضّعًا بعد رضّ فصوّر', plan, rec, pharm, flags});
+  }
+
+  // ====== PDF ======
+  async function exportPDF(section){
+    const { jsPDF } = window.jspdf;
+    const m = window._last || {title:section, user:userContext(), plan:[], rec:[], pharm:[], flags:[]};
+    const u = m.user || userContext();
+
+    const box = document.createElement('div');
+    box.dir = 'rtl';
+    box.style.cssText = 'width:800px;padding:24px;background:#fff;color:#111;font-family:Cairo,Arial,sans-serif;line-height:1.9;border:1px solid #ddd;border-radius:12px';
+    box.innerHTML = `
+      <h2 style="margin:0 0 10px;font-weight:800">حكيم — ${m.title||section}</h2>
+      <p><b>الاسم:</b> ${u.name || 'بدون اسم'}${u.age!=null? ` — <b>العمر:</b> ${u.age}`:''} — <b>الجنس:</b> ${u.sex? u.sex.label : 'غير محدد'}</p>
+      ${m.score!==undefined? `<p><b>قيمة/درجة:</b> ${m.score}</p>`:''}
+      ${m.severity? `<p><b>الشدة:</b> ${m.severity}</p>`:''}
+      ${m.assess? `<p><b>التقييم:</b> ${m.assess}</p>`:''}
+      ${m.flags && m.flags.length? `<p><b>تنبيهات:</b></p><ul>${m.flags.map(x=>`<li>${x}</li>`).join('')}</ul>`:''}
+      ${m.plan && m.plan.length? `<p><b>خطة عامة:</b></p><ul>${m.plan.map(x=>`<li>${x}</li>`).join('')}</ul>`:''}
+      ${m.rec && m.rec.length? `<p><b>توصيات موجّهة:</b></p><ul>${m.rec.map(x=>`<li>${x}</li>`).join('')}</ul>`:''}
+      ${m.pharm && m.pharm.length? `<p><b>أمثلة دوائية (قرار الطبيب):</b></p><ul>${m.pharm.map(x=>`<li>${x}</li>`).join('')}</ul><p style="font-size:12px;color:#555">تنبيه: لا تبدأ/توقف أي دواء دون طبيب. اعتبارات خاصة للحمل/الأطفال/كبار السن.</p>`:''}
+      <hr style="margin:12px 0;border:0;border-top:1px solid #ddd"/>
+      <p style="font-size:13px;color:#444">ملف تثقيفي — لا يُغني عن تقييم الطبيب المختص. في الطوارئ يُرجى التواصل الفوري مع الإسعاف.</p>
+    `;
+    document.body.appendChild(box);
+    const canvas = await html2canvas(box, {scale:2, backgroundColor:'#ffffff', useCORS:true});
+    document.body.removeChild(box);
+
+    const pdf = new jsPDF({orientation:'p', unit:'pt', format:'a4'});
+    const pageW = pdf.internal.pageSize.getWidth(), pageH = pdf.internal.pageSize.getHeight(), margin=40;
+    let imgW = pageW - margin*2, imgH = canvas.height * imgW / canvas.width;
+    if (imgH > pageH - margin*2){ const r = (pageH - margin*2) / imgH; imgH*=r; imgW*=r; }
+    pdf.addImage(canvas.toDataURL('image/png'), 'PNG', (pageW-imgW)/2, (pageH-imgH)/2, imgW, imgH);
+    pdf.save(`Hakim-Ortho-${(m.title||section).replace(/\s+/g,'_')}-${Date.now()}.pdf`);
+  }
+</script>
+
+<!--
+  الأقسام:
+  - أسفل الظهر، عرق النسا، العنق، الكفة المدورة، الكتف المتجمّد،
+    خشونة الركبة، هلالة، التواء الكاحل، لفافة أخمصية، نفق رسغي،
+    نقرس حاد، التهاب مفصل إنتاني، وتر أخيل، هشاشة، ألم ورك، كسر مشتبه.
+  - أمثلة أدوية دون جرعات وبصيغة "قرار الطبيب" التزامًا بالسلامة.
+-->
+</body>
+</html>

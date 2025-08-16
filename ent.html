@@ -1,0 +1,589 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>حكيم — الأنف والأذن والحنجرة | تقييمات ذكية + PDF</title>
+  <meta name="description" content="حكيم — ENT: التهاب أذن وسطى/خارجية، التهاب حلق/لوزات (سنتر)، التهاب جيوب حاد، تحسس أنفي، نزف أنف، دوار (BPPV/التهاب دهليزي)، نقص سمع مفاجئ، ثقب غشاء طبل، أجسام غريبة، بحة/التهاب حنجرة، شخير/انقطاع نفس.">
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;800&display=swap" rel="stylesheet">
+  <!-- PDF libs -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" referrerpolicy="no-referrer"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js" referrerpolicy="no-referrer"></script>
+
+  <style>
+    :root{
+      --bg:#07090f; --txt:#e8ecff; --muted:#aab2d8;
+      --primary:#7aa2ff; --primary-2:#00e0ff; --accent:#a855f7;
+      --glass:rgba(255,255,255,.06); --border:rgba(255,255,255,.12);
+    }
+    *{box-sizing:border-box}
+    body{margin:0; font-family:'Cairo',system-ui,'Noto Sans Arabic',sans-serif; background:#07090f; color:var(--txt); line-height:1.9}
+    header{position:sticky; top:0; z-index:50; display:flex; align-items:center; justify-content:space-between; padding:14px 20px; backdrop-filter:saturate(140%) blur(8px); background:linear-gradient(180deg, rgba(15,16,40,.85), rgba(15,16,40,.45)); border-bottom:1px solid var(--border)}
+    .brand{display:flex; gap:12px; align-items:center}
+    .logo{width:42px; height:42px; border-radius:12px; display:grid; place-items:center; font-weight:800; background: radial-gradient(120% 120% at 0% 0%, var(--primary), var(--accent)); box-shadow: 0 0 24px rgba(122,162,255,.35), inset 0 0 18px rgba(255,255,255,.15)}
+    .brand-text strong{display:block; font-size:18px}
+    .brand-text span{display:block; font-size:12px; color:var(--muted)}
+    .container{width:min(1180px,94vw); margin-inline:auto}
+    h1{font-size:clamp(22px,4vw,34px); margin:22px 0 6px}
+    .sub{color:#cfd6ff; margin:0 0 12px}
+    .glass{background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03)); border:1px solid var(--border); border-radius:22px; padding:22px; box-shadow:0 30px 60px rgba(0,10,40,.35)}
+    .grid{display:grid; gap:16px}
+    .grid-2{grid-template-columns:1fr}
+    @media(min-width:1000px){.grid-2{grid-template-columns:1fr 1fr}}
+    .choose{display:grid; gap:12px; grid-template-columns:repeat(2,1fr)}
+    @media(min-width:1000px){.choose{grid-template-columns:repeat(4,1fr)}}
+    .opt{background:rgba(255,255,255,.04); border:1px solid var(--border); border-radius:16px; padding:14px; text-align:center; cursor:pointer; transition:transform .18s ease, border-color .18s ease; min-height:110px; display:grid; place-items:center; font-weight:700}
+    .opt:hover{transform:translateY(-3px); border-color:rgba(122,162,255,.6)}
+    .card{border:1px solid var(--border); border-radius:18px; background:rgba(255,255,255,0.04); padding:18px}
+    label{font-weight:600}
+    select, input[type="number"], input[type="text"]{width:100%; padding:10px 12px; border-radius:12px; border:1px solid var(--border); background:rgba(255,255,255,0.03); color:var(--txt)}
+    .row{display:grid; gap:12px; grid-template-columns:1fr}
+    @media(min-width:680px){.row{grid-template-columns:repeat(2,1fr)}}
+    .row-3{display:grid; gap:12px; grid-template-columns:repeat(3,1fr)}
+    .actions{display:flex; gap:10px; flex-wrap:wrap; margin-top:12px}
+    .btn{padding:10px 14px; border-radius:12px; border:1px solid var(--border); background:var(--glass); color:var(--txt); cursor:pointer; font-weight:700; transition:transform .2s ease, background .2s ease}
+    .btn.primary{background:linear-gradient(135deg, var(--primary), var(--primary-2)); border-color:transparent}
+    .btn:hover{transform:translateY(-2px)}
+    .result{padding:14px; border:1px solid var(--border); border-radius:14px; background:rgba(255,255,255,.03)}
+    .hint{font-size:13px; color:#b8c0ef}
+    footer{text-align:center; padding:22px; color:#aab2d8; font-size:13px; border-top:1px solid var(--border); margin-top:24px}
+    .mt{margin-top:10px}.hide{display:none}
+  </style>
+</head>
+<body>
+<header>
+  <div class="brand">
+    <div class="logo">حكيم</div>
+    <div class="brand-text">
+      <strong>حكيم — الأنف والأذن والحنجرة</strong>
+      <span>تقييمات مؤتمتة دقيقة + PDF</span>
+    </div>
+  </div>
+  <nav class="actions" style="margin:0">
+    <a class="btn" href="index.html">الصفحة الرئيسية</a>
+  </nav>
+</header>
+
+<main class="container">
+  <section class="glass">
+    <h1>الأنف والأذن والحنجرة — اختر الحالة</h1>
+    <p class="sub">أدخل بياناتك ثم اختر الحالة. ستظهر <b>خطة إرشادية + أمثلة أدوية (بدون جرعات)</b> للمراجعة مع الطبيب.</p>
+
+    <div class="row">
+      <div><label>الاسم:</label><input id="pat-name" type="text" placeholder="مثال: يمان"/></div>
+      <div><label>العمر (سنوات):</label><input id="pat-age" type="number" min="1" max="100" placeholder="32"/></div>
+    </div>
+    <div class="row">
+      <div>
+        <label>الجنس:</label>
+        <select id="pat-sex"><option value="male">ذكر</option><option value="female">أنثى</option></select>
+      </div>
+      <div>
+        <label>أمراض مزمنة (اختياري):</label>
+        <input id="pat-hx" type="text" placeholder="ضغط/سكري/تحسس/ربو/مميّعات..."/>
+      </div>
+    </div>
+
+    <div class="choose" id="chooser">
+      <div class="opt" data-target="aom">ألم أذن — التهاب أذن وسطى حاد (AOM)</div>
+      <div class="opt" data-target="oe">ألم أذن مع تحريك الصيوان — التهاب أذن خارجية</div>
+      <div class="opt" data-target="ph">التهاب حلق/لوزات — تقدير سنتر</div>
+      <div class="opt" data-target="sinus">التهاب جيوب أنفية حاد</div>
+      <div class="opt" data-target="allergic">تحسس أنفي/عطاس وسيلان</div>
+      <div class="opt" data-target="epistaxis">نزف أنف</div>
+      <div class="opt" data-target="vertigo">دوار (BPPV/التهاب دهليزي)</div>
+      <div class="opt" data-target="ssnhl">نقص سمع مفاجئ أحادي</div>
+      <div class="opt" data-target="tm">رضّ/ثقب غشاء الطبل</div>
+      <div class="opt" data-target="fb">جسم غريب (أذن/أنف)</div>
+      <div class="opt" data-target="laryngitis">بحة صوت/التهاب حنجرة</div>
+      <div class="opt" data-target="osa">شخير/انقطاع نفس أثناء النوم</div>
+    </div>
+
+    <p class="hint mt">
+      أعلام طارئة: صعوبة تنفس/بلع أو سيلان لعاب مع انحراف العُنق، نزف لا يتوقف >20 دقيقة، نقص سمع مفاجئ أحادي خلال 72 ساعة، دوار مع عجز عصبي، ألم أذن مع احمرار خلف الأذن/انحراف الأذن للخارج، مادة كاوية/بطارية زرية، جسم غريب حاد، صرير/اختناق.
+    </p>
+  </section>
+
+  <section class="grid grid-2 mt">
+    <!-- 1) AOM -->
+    <div class="card hide" id="sec-aom">
+      <h2>التهاب أذن وسطى حاد (AOM)</h2>
+      <div class="row">
+        <div><label>ألم أذن حاد</label><select id="aomPain"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>حمّى/توّعك</label><select id="aomFever"><option value="0">لا</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="row">
+        <div><label>نقص سمع/امتلاء أذن</label><select id="aomHL"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>مفرزات أذنية</label><select id="aomOtorrhea"><option value="0">لا</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="row">
+        <div><label>ألم/تورّم خلف الأذن</label><select id="aomMastoid"><option value="0">لا</option><option value="1">نعم/احمرار</option></select></div>
+        <div><label>طفل &lt; 2 سنوات</label><select id="aomChild"><option value="0">لا</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="actions">
+        <button class="btn primary" onclick="calcAOM()">تقييم AOM</button>
+        <button class="btn" onclick="exportPDF('acute-otitis-media')">تصدير PDF</button>
+      </div>
+      <div class="result mt" id="aom-res"></div>
+    </div>
+
+    <!-- 2) Otitis externa -->
+    <div class="card hide" id="sec-oe">
+      <h2>التهاب أذن خارجية</h2>
+      <div class="row">
+        <div><label>ألم عند تحريك الصيوان/ضغط على ذُدَيبة الأذن</label><select id="oeTragus"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>مفرزات/حكّة</label><select id="oeDisItch"><option value="0">لا</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="row">
+        <div><label>سباحة/رطوبة حديثة</label><select id="oeSwim"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>سكّري/مناعة ضعيفة/ألم شديد ليلي</label><select id="oeRisk"><option value="0">لا</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="actions">
+        <button class="btn primary" onclick="calcOE()">تقييم الأذن الخارجية</button>
+        <button class="btn" onclick="exportPDF('otitis-externa')">تصدير PDF</button>
+      </div>
+      <div class="result mt" id="oe-res"></div>
+    </div>
+
+    <!-- 3) Pharyngitis -->
+    <div class="card hide" id="sec-ph">
+      <h2>التهاب حلق/لوزات — درجة سنتر المعدّلة</h2>
+      <div class="row-3">
+        <div><label>حمّى</label><select id="phFever"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>غياب السعال</label><select id="phNoCough"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>عقد إمام عنقية مؤلمة</label><select id="phNodes"><option value="0">لا</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="row">
+        <div><label>قيح/توّرم لوزات</label><select id="phExud"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>صعوبة فتح الفم/سيلان لعاب/صوت مكتوم</label><select id="phPTA"><option value="0">لا</option><option value="1">نعم (خُراج برتزّي؟)</option></select></div>
+      </div>
+      <div class="actions">
+        <button class="btn primary" onclick="calcPharyngitis()">حساب سنتر</button>
+        <button class="btn" onclick="exportPDF('pharyngitis-tonsillitis')">تصدير PDF</button>
+      </div>
+      <div class="result mt" id="ph-res"></div>
+    </div>
+
+    <!-- 4) Sinusitis -->
+    <div class="card hide" id="sec-sinus">
+      <h2>التهاب جيوب أنفية حاد</h2>
+      <div class="row">
+        <div><label>احتقان/انسداد أنف</label><select id="siCong"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>مفرزات قيحية/لون أصفر-أخضر</label><select id="siPur"><option value="0">لا</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="row">
+        <div><label>ألم/ضغط وجهي/سني</label><select id="siPain"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>مدة &gt; 10 أيام أو تحسّن ثم تدهور</label><select id="siDuration"><option value="0">لا</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="actions">
+        <button class="btn primary" onclick="calcSinus()">تقييم الجيوب</button>
+        <button class="btn" onclick="exportPDF('acute-rhinosinusitis')">تصدير PDF</button>
+      </div>
+      <div class="result mt" id="sinus-res"></div>
+    </div>
+
+    <!-- 5) Allergic rhinitis -->
+    <div class="card hide" id="sec-allergic">
+      <h2>تحسس أنفي</h2>
+      <div class="row">
+        <div><label>عطاس/حكّة/سيلان مائي</label><select id="alTriad"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>حكة عيون/دُماع</label><select id="alEyes"><option value="0">لا</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="row">
+        <div><label>موسمي/غُبار/حيوان</label><select id="alTrigger"><option value="0">لا</option><option value="1">نعم/محتمل</option></select></div>
+        <div><label>ربو/أكزيما/سوابق تحسس</label><select id="alAtopy"><option value="0">لا</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="actions">
+        <button class="btn primary" onclick="calcAllergic()">تقييم التحسّس</button>
+        <button class="btn" onclick="exportPDF('allergic-rhinitis')">تصدير PDF</button>
+      </div>
+      <div class="result mt" id="allergic-res"></div>
+    </div>
+
+    <!-- 6) Epistaxis -->
+    <div class="card hide" id="sec-epistaxis">
+      <h2>نزف أنف</h2>
+      <div class="row">
+        <div><label>نزف من منخر واحد</label><select id="epUni"><option value="0">لا/كلاهما</option><option value="1">نعم (أمامي غالبًا)</option></select></div>
+        <div><label>يستمر &gt; 20 دقيقة رغم الضغط</label><select id="epLong"><option value="0">لا</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="row">
+        <div><label>مميّعات/ضغط مرتفع</label><select id="epAnticoag"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>رضّ/تنقيط خلفي واضح</label><select id="epTrauma"><option value="0">لا</option><option value="1">نعم/خلفي</option></select></div>
+      </div>
+      <div class="actions">
+        <button class="btn primary" onclick="calcEpistaxis()">خطة النزف</button>
+        <button class="btn" onclick="exportPDF('epistaxis')">تصدير PDF</button>
+      </div>
+      <div class="result mt" id="epistaxis-res"></div>
+    </div>
+
+    <!-- 7) Vertigo -->
+    <div class="card hide" id="sec-vertigo">
+      <h2>دوار (BPPV/التهاب دهليزي)</h2>
+      <div class="row">
+        <div><label>دوار مع تغيّر الوضعية (نهوض/استدارة)</label><select id="vePos"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>غثيان/إقياء</label><select id="veNV"><option value="0">لا</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="row">
+        <div><label>طنين/امتلاء/نقص سمع</label><select id="veEar"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>علامات عصبية (ازدواج/ضعف/ترنّح)</label><select id="veNeuro"><option value="0">لا</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="actions">
+        <button class="btn primary" onclick="calcVertigo()">تقييم الدوار</button>
+        <button class="btn" onclick="exportPDF('vertigo-bppv-neuritis')">تصدير PDF</button>
+      </div>
+      <div class="result mt" id="vertigo-res"></div>
+    </div>
+
+    <!-- 8) SSNHL -->
+    <div class="card hide" id="sec-ssnhl">
+      <h2>نقص سمع مفاجئ أحادي (خلال 72 ساعة)</h2>
+      <div class="row">
+        <div><label>بداية مفاجئة &lt; 72 ساعة</label><select id="snSudden"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>طنين/امتلاء بالأذن</label><select id="snTin"><option value="0">لا</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="row">
+        <div><label>ألم شديد/حمّى (أقرب للوسطى)</label><select id="snPain"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>دوار شديد/علامات عصبية</label><select id="snNeuro"><option value="0">لا</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="actions">
+        <button class="btn primary" onclick="calcSSNHL()">تقييم النقص المفاجئ</button>
+        <button class="btn" onclick="exportPDF('sudden-sensorineural-hearing-loss')">تصدير PDF</button>
+      </div>
+      <div class="result mt" id="ssnhl-res"></div>
+    </div>
+
+    <!-- 9) TM perforation -->
+    <div class="card hide" id="sec-tm">
+      <h2>رضّ/ثقب غشاء الطبل</h2>
+      <div class="row">
+        <div><label>بعد صفعة/انفجار/غوص/طيران</label><select id="tmBaro"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>نقص سمع/طنين</label><select id="tmHLTin"><option value="0">لا</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="row">
+        <div><label>دوار/غثيان</label><select id="tmVert"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>مفرزات دموية/مائية</label><select id="tmOtorr"><option value="0">لا</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="actions">
+        <button class="btn primary" onclick="calcTM()">تقييم الغشاء</button>
+        <button class="btn" onclick="exportPDF('tympanic-membrane-perforation')">تصدير PDF</button>
+      </div>
+      <div class="result mt" id="tm-res"></div>
+    </div>
+
+    <!-- 10) Foreign body -->
+    <div class="card hide" id="sec-fb">
+      <h2>جسم غريب (أذن/أنف)</h2>
+      <div class="row">
+        <div><label>أنف مع رائحة كريهة/مفرزات أحادية (أطفال)</label><select id="fbNose"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>أذن: طنين/ألم/نقص سمع</label><select id="fbEar"><option value="0">لا</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="row">
+        <div><label>اشتبه بطارية زرية/مغناطيس</label><select id="fbDanger"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>حشرة في الأذن</label><select id="fbInsect"><option value="0">لا</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="actions">
+        <button class="btn primary" onclick="calcFB()">خطة الجسم الغريب</button>
+        <button class="btn" onclick="exportPDF('ear-nose-foreign-body')">تصدير PDF</button>
+      </div>
+      <div class="result mt" id="fb-res"></div>
+    </div>
+
+    <!-- 11) Laryngitis -->
+    <div class="card hide" id="sec-laryngitis">
+      <h2>بحة صوت/التهاب حنجرة</h2>
+      <div class="row">
+        <div><label>بداية بعد زكام/إجهاد صوتي</label><select id="laURI"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>ألم حلق/سعال جاف</label><select id="laCough"><option value="0">لا</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="row">
+        <div><label>ارتجاع/حموضة</label><select id="laGERD"><option value="0">لا</option><option value="1">نعم/محتمل</option></select></div>
+        <div><label>بحة &gt; 3 أسابيع/مُدخّن/نقص وزن</label><select id="laRed"><option value="0">لا</option><option value="1">نعم (إنذار)</option></select></div>
+      </div>
+      <div class="actions">
+        <button class="btn primary" onclick="calcLaryngitis()">تقييم البحة</button>
+        <button class="btn" onclick="exportPDF('laryngitis-hoarseness')">تصدير PDF</button>
+      </div>
+      <div class="result mt" id="laryngitis-res"></div>
+    </div>
+
+    <!-- 12) OSA -->
+    <div class="card hide" id="sec-osa">
+      <h2>شخير/انقطاع نفس أثناء النوم (STOP-Bang مبسّط)</h2>
+      <div class="row">
+        <div><label>شخير عالٍ متكرر</label><select id="osS"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>نعاس نهاري/نوم أثناء الجلوس</label><select id="osT"><option value="0">لا</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="row">
+        <div><label>شُوهد توقف تنفّس</label><select id="osO"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>ضغط دم مرتفع</label><select id="osP"><option value="0">لا</option><option value="1">نعم/على علاج</option></select></div>
+      </div>
+      <div class="row">
+        <div><label>BMI أعلى (تقريبي ≥ 35)</label><select id="osB"><option value="0">لا/غير معروف</option><option value="1">نعم</option></select></div>
+        <div><label>العمر ≥ 50</label><select id="osA"><option value="0">لا</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="row">
+        <div><label>الجنس ذكر</label><select id="osG"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>رقبة عريضة/لحمية (تقديري)</label><select id="osN"><option value="0">لا</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="actions">
+        <button class="btn primary" onclick="calcOSA()">تقييم STOP-Bang</button>
+        <button class="btn" onclick="exportPDF('obstructive-sleep-apnea')">تصدير PDF</button>
+      </div>
+      <div class="result mt" id="osa-res"></div>
+    </div>
+  </section>
+
+  <section class="glass mt">
+    <p class="hint">معلومة: في نزف الأنف الأمامي — اضغط على الجزء اللين من الأنف مع إمالة الرأس للأمام 10–15 دقيقة دون توقف. تجنّب الاستلقاء للخلف.</p>
+  </section>
+</main>
+
+<footer>© <span id="year"></span> حكيم — جميع الحقوق محفوظة.</footer>
+
+<script>
+  // ====== عام ======
+  document.getElementById('year').textContent = new Date().getFullYear();
+  document.querySelectorAll('#chooser .opt').forEach(el=>{
+    el.addEventListener('click', ()=>{
+      document.querySelectorAll('.card').forEach(c=>c.classList.add('hide'));
+      const sec = document.getElementById('sec-'+el.getAttribute('data-target'));
+      if (sec){ sec.classList.remove('hide'); sec.scrollIntoView({behavior:'smooth', block:'start'}); }
+    });
+  });
+
+  // ====== بيانات المستخدم ======
+  function nameVal(){ return document.getElementById('pat-name').value?.trim() || 'بدون اسم'; }
+  function ageVal(){ const n=parseInt(document.getElementById('pat-age').value,10); return isNaN(n)? null : Math.min(100, Math.max(1,n)); }
+  function sexVal(){ const v=document.getElementById('pat-sex').value; return {code:v, label:(v==='male'?'ذكر':'أنثى')}; }
+  function userContext(){
+    const age=ageVal(), sex=sexVal();
+    return { name:nameVal(), age, sex, older: age!=null && age>=50 };
+  }
+  function yes(id){ return document.getElementById(id).value==='1'; }
+  function lines(arr){ return `<ul>${arr.map(x=>`<li>${x}</li>`).join('')}</ul>`; }
+  function setLast(obj){ window._last = obj; }
+
+  // ====== صانع الخطط — ENT ======
+  function buildPlanENT(domain, ctx, u){
+    const plan=[], rec=[], pharm=[], flags=[];
+    switch(domain){
+      case 'aom': {
+        if (ctx.mastoid) flags.push('اشتباه التهاب خُشاء (ألم/تورّم خلف الأذن) — تقييم إسعافي.');
+        plan.push('مسكنات، سوائل، متابعة 48–72 ساعة، تقييم أذن بمنظار عند الإمكان.');
+        if (ctx.child || ctx.fever || ctx.otorrhea) rec.push('البدء بمضاد حيوي حسب قرار الطبيب (خاصة الأطفال/حمّى/مفرزات).');
+        pharm.push('أموكسيسيلين أو أموكسيسيلين-كلافولانات — قرار الطبيب.');
+        pharm.push('بديل التحسّس للبنسلين: ماكروليد مناسب — قرار الطبيب.');
+        rec.push('أنبوب تهوية عند النكس/إسهال العلاج.');
+        return {plan, rec, pharm, flags, assess:'التهاب أذن وسطى حاد محتمل'};
+      }
+      case 'oe': {
+        if (ctx.risk) flags.push('اشتباه أذن خارجية خبيثة لدى السكّري/المناعة — إحالة عاجلة.');
+        plan.push('تجفيف القناة، تجنّب السباحة/العيدان، تنظيف لطيف على يد اختصاصي.');
+        pharm.push('قطرات مضاد حيوي/ستيرويد موضعي حسب قرار الطبيب (أوفلوكساسين/سيبروفلوكساسين...).');
+        rec.push('إذا اشتبه ثقب الغشاء، يُفضّل قطرات آمنة للغشاء (أوفلوكساسين).');
+        return {plan, rec, pharm, flags, assess:'التهاب أذن خارجية'};
+      }
+      case 'ph': {
+        // Centor: fever +1, no cough +1, tender ant nodes +1, tonsillar exudate +1, age 3-14 +1, 15-44 +0, >=45 -1
+        const age = u.age ?? 30;
+        let centor = (ctx.fever?1:0) + (ctx.noCough?1:0) + (ctx.nodes?1:0) + (ctx.exud?1:0) + (age<=14?1:(age>=45?-1:0));
+        if (ctx.pta) flags.push('إنذار: خُراج برتزّي (سيلان لعاب/تريزمس/صوت مكتوم) — طوارئ.');
+        if (centor<=1) { plan.push('ترجيح فيروسي — راحة/سوائل/مسكنات.'); }
+        else if (centor===2 || centor===3) { rec.push('إجراء مسحة سريعة للمكورات العقدية أو زرع قبل إعطاء مضاد.'); }
+        else { rec.push('احتمال عقديات مرتفع — اختبار/علاج وفق بروتوكول طبي.'); }
+        pharm.push('بنسلين V/أموكسيسيلين إن ثبُتت العقديات — قرار الطبيب. بدائل التحسّس: ماكروليد.');
+        return {plan, rec, pharm, flags, assess:`التهاب حلق — درجة سنتر: ${centor}`, score:centor};
+      }
+      case 'sinus': {
+        if (ctx.duration && (ctx.pur || ctx.pain)) rec.push('اشتباه جرثومي (مدة >10 أيام/تحسّن ثم تدهور).');
+        plan.push('غسول ملحي أنفي منتظم، إرواء، راحة، مسكنات.');
+        pharm.push('ستيرويد أنفي موضعي (فلوتيكازون/بوديزونيد) — قرار الطبيب.');
+        if (ctx.pur && ctx.duration) pharm.push('أموكسيسيلين-كلافولانات عند الشدّة/الاستمرارية — قرار الطبيب.');
+        rec.push('تجنّب مزيلات احتقان فموية طويلة خاصة مع ضغط/قلب؛ بخّاخ موضعي قصير المدى عند اللزوم — قرار الطبيب.');
+        return {plan, rec, pharm, flags, assess:'التهاب جيوب — دعم/± مضاد عند المعايير'};
+      }
+      case 'allergic': {
+        plan.push('تجنّب المحرّضات (غبار/وبر/عفن)، تهوية/تنقية هواء، غسل أنف ملحي.');
+        pharm.push('ستيرويد أنفي موضعي أساس العلاج.');
+        pharm.push('مضاد هيستامين فموي/أنفي؛ كرومونات/أزيلاستين — قرار الطبيب.');
+        rec.push('مناعيّة (إزالة التحسس) للحالات المزمنة بعد اختبار تحسّس.');
+        return {plan, rec, pharm, flags, assess:'تحسس أنفي محتمل'};
+      }
+      case 'epistaxis': {
+        if (ctx.long || ctx.trauma) flags.push('نزف مستمر/خلفي أو رضّ — قد يلزم خِفّان/حشوة أنفية بالمشفى.');
+        plan.push('الجلوس للأمام والضغط على الجزء اللين 10–15 دقيقة دون توقف؛ كمادات باردة على الأنف.');
+        rec.push('تجنّب نفخ الأنف/الانحناء 24 ساعة؛ مرطّب/فازلين خفيف داخل الأنف.');
+        if (ctx.anticoag) rec.push('مراجعة أدوية المميّعات وضبط ضغط الدم مع الطبيب.');
+        pharm.push('مقبّض أوعية موضعي بالعيادة (قرار الطبيب).');
+        return {plan, rec, pharm, flags, assess:'نزف أنف — أمامي غالبًا'};
+      }
+      case 'vertigo': {
+        if (ctx.neuro) flags.push('علامات عصبية — تقييم سكتة/سبب مركزي عاجل.');
+        if (ctx.pos && !ctx.ear) { plan.push('يرجّح BPPV: جرّب/ة مناورة إيبلي بإشراف أو دليل موثوق.'); }
+        if (ctx.ear) { rec.push('امتلاء/طنين/نقص سمع: فكّر بمرض منيير/التهاب دهليزي — إحالة ENT.'); }
+        pharm.push('مهدّئات دهليزية قصيرة المدى (ميكليزين/ديمينهيدرينات) — قرار الطبيب، تُجنب لمدى طويل.');
+        rec.push('تمارين دهليزية/BRANDT–DAROFF عند استمرار الدوار.');
+        return {plan, rec, pharm, flags, assess:'دوار طرفي محتمل (BPPV/دهليزي)'};
+      }
+      case 'ssnhl': {
+        flags.push('نقص سمع مفاجئ أحادي — طارئ ENT خلال 24–48 ساعة.');
+        if (!ctx.pain) rec.push('تمييز توصيلي مقابل حسّي عصبي باختبارات السِّماعات/الشوكة الرنّانة.');
+        if (ctx.neuro) flags.push('إنذار عصبي مركزي — تقييم عاجل.');
+        pharm.push('ستيرويد جهازي/داخل الطبل بإشراف اختصاصي إن لزم.');
+        rec.push('تصوير MRI للسلسلة السمعية/الزاوية الجسريّة حسب الاشتباه — قرار اختصاصي.');
+        return {plan, rec, pharm, flags, assess:'SSNHL مشتبه — نافذة علاجية قصيرة'};
+      }
+      case 'tm': {
+        if (ctx.vert) flags.push('رضّ شديد مع دوار — احتمال أذية أذن باطنية؛ إحالة.');
+        plan.push('إبقاء الأذن جافة، تجنّب السباحة/إدخال سوائل/محاليل، عدم تنظيف بالعيدان.');
+        pharm.push('قطرات أوفلوكساسين عند المفرزات — قرار الطبيب. تجنّب الأمينوغليكوزيد إذا ثقب.');
+        rec.push('معظم الثقوب الصغيرة تشفى تلقائيًا؛ إحالة إذا لم تُشفَ خلال أسابيع/نقص سمع شديد.');
+        return {plan, rec, pharm, flags, assess:'ثقب غشاء الطبل/باروترما'};
+      }
+      case 'fb': {
+        if (ctx.danger) flags.push('بطارية زرّية/مغناطيس — طارئ فوري.');
+        if (ctx.insect) plan.push('يمكن إغراق قناة الأذن بزيت معدني/ماء فاتر لإيقاف حركة الحشرة إن لم يُشتبه ثقب الغشاء — ثم إزالة لدى اختصاصي.');
+        plan.push('تجنّب المحاولات المنزلية/العيدان/الملاقط داخل الأذن/الأنف.');
+        rec.push('إزالة لدى اختصاصي؛ تصوير عند اللزوم.');
+        return {plan, rec, pharm, flags, assess:'جسم غريب — أولوية للسلامة'};
+      }
+      case 'laryngitis': {
+        if (ctx.red) flags.push('إنذار: بحة >3 أسابيع/مدخّن/نقص وزن — تنظير حنجرة.');
+        plan.push('راحة صوتية، ترطيب، تبخير، تجنب الهمس/الصراخ، معالجة التحسّس/الزكام.');
+        if (ctx.gerd) pharm.push('مثبّط مضخة بروتون تجربة — قرار الطبيب.');
+        rec.push('لا تُستخدم المضادات/الستيرويدات غالبًا إلا بمؤشّر واضح.');
+        return {plan, rec, pharm, flags, assess:'التهاب حنجرة وظيفي/فيروسي محتمل'};
+      }
+      case 'osa': {
+        const score = (ctx.S?1:0)+(ctx.T?1:0)+(ctx.O?1:0)+(ctx.P?1:0)+(ctx.B?1:0)+(ctx.A?1:0)+(ctx.N?1:0)+(ctx.G?1:0);
+        plan.push('تنظيم نوم، إنقاص وزن، نوم جانبي، تجنّب المهدئات/الكحول مساءً.');
+        rec.push('اختبار نوم (Polysomnography) عند الاشتباه المتوسط/الشديد.');
+        pharm.push('علاج CPAP/أجهزة فموية حسب نتيجة الاختبار — قرار اختصاصي.');
+        return {plan, rec, pharm, flags, assess:`تقييم STOP-Bang: ${score} من 8`, score};
+      }
+    }
+    return {plan, rec, pharm, flags, assess:'غير محدد'};
+  }
+
+  // ====== عرض موحّد ======
+  function showResult(elId, obj){
+    const u = userContext();
+    const header = `<p>الاسم: <b>${u.name}</b>${u.age!=null? ` — العمر: <b>${u.age}</b>`:''} — الجنس: <b>${u.sex.label}</b>${u.older?' — ≥50 سنة':''}</p>`;
+    const assess = obj.assess ? `<p><b>التقييم:</b> ${obj.assess}</p>` : '';
+    const score = (obj.score!==undefined) ? `<p><b>قيمة/درجة:</b> ${obj.score}</p>` : '';
+    const flagsHtml = obj.flags?.length? `<p><b>تنبيهات:</b></p>${lines(obj.flags)}` : '';
+    const planHtml = obj.plan?.length? `<p><b>خطة عامة:</b></p>${lines(obj.plan)}` : '';
+    const recHtml = obj.rec?.length? `<p><b>توصيات موجّهة:</b></p>${lines(obj.rec)}` : '';
+    const pharmHtml = obj.pharm?.length? `<p><b>أمثلة أدوية (قرار الطبيب):</b></p>${lines(obj.pharm)}<p class="hint">لا تبدأ/توقف أي دواء دون طبيب. تختلف الخيارات حسب العمر والحمل والأمراض المزمنة.</p>` : '';
+    document.getElementById(elId).innerHTML = header + score + assess + flagsHtml + planHtml + recHtml + pharmHtml;
+    setLast({...obj, user:u});
+  }
+
+  // ====== الحسابات ======
+  function calcAOM(){
+    const pain=yes('aomPain'), fever=yes('aomFever'), hl=yes('aomHL'), otorrhea=yes('aomOtorrhea'), mastoid=yes('aomMastoid'), child=yes('aomChild');
+    const {plan, rec, pharm, flags, assess} = buildPlanENT('aom', {pain, fever, hl, otorrhea, mastoid, child}, userContext());
+    showResult('aom-res', {title:'التهاب أذن وسطى حاد', assess, plan, rec, pharm, flags});
+  }
+  function calcOE(){
+    const tragus=yes('oeTragus'), disitch=yes('oeDisItch'), swim=yes('oeSwim'), risk=yes('oeRisk');
+    const {plan, rec, pharm, flags, assess} = buildPlanENT('oe', {tragus, disitch, swim, risk}, userContext());
+    showResult('oe-res', {title:'التهاب أذن خارجية', assess, plan, rec, pharm, flags});
+  }
+  function calcPharyngitis(){
+    const fever=yes('phFever'), noCough=yes('phNoCough'), nodes=yes('phNodes'), exud=yes('phExud'), pta=yes('phPTA');
+    const {plan, rec, pharm, flags, assess, score} = buildPlanENT('ph', {fever, noCough, nodes, exud, pta}, userContext());
+    showResult('ph-res', {title:'التهاب حلق/لوزات', assess, plan, rec, pharm, flags, score});
+  }
+  function calcSinus(){
+    const cong=yes('siCong'), pur=yes('siPur'), pain=yes('siPain'), duration=yes('siDuration');
+    const {plan, rec, pharm, flags, assess} = buildPlanENT('sinus', {cong, pur, pain, duration}, userContext());
+    showResult('sinus-res', {title:'التهاب جيوب حاد', assess, plan, rec, pharm, flags});
+  }
+  function calcAllergic(){
+    const triad=yes('alTriad'), eyes=yes('alEyes'), trigger=yes('alTrigger'), atopy=yes('alAtopy');
+    const {plan, rec, pharm, flags, assess} = buildPlanENT('allergic', {triad, eyes, trigger, atopy}, userContext());
+    showResult('allergic-res', {title:'تحسّس أنفي', assess, plan, rec, pharm, flags});
+  }
+  function calcEpistaxis(){
+    const uni=yes('epUni'), longB=yes('epLong'), ant=yes('epAnticoag'), trauma=yes('epTrauma');
+    const {plan, rec, pharm, flags, assess} = buildPlanENT('epistaxis', {uni, long:longB, anticoag:ant, trauma}, userContext());
+    showResult('epistaxis-res', {title:'نزف أنف', assess, plan, rec, pharm, flags});
+  }
+  function calcVertigo(){
+    const pos=yes('vePos'), nv=yes('veNV'), ear=yes('veEar'), neuro=yes('veNeuro');
+    const {plan, rec, pharm, flags, assess} = buildPlanENT('vertigo', {pos, nv, ear, neuro}, userContext());
+    showResult('vertigo-res', {title:'دوار', assess, plan, rec, pharm, flags});
+  }
+  function calcSSNHL(){
+    const sudden=yes('snSudden'), tin=yes('snTin'), pain=yes('snPain'), neuro=yes('snNeuro');
+    const {plan, rec, pharm, flags, assess} = buildPlanENT('ssnhl', {sudden, tin, pain, neuro}, userContext());
+    showResult('ssnhl-res', {title:'نقص سمع مفاجئ', assess, plan, rec, pharm, flags});
+  }
+  function calcTM(){
+    const baro=yes('tmBaro'), hltin=yes('tmHLTin'), vert=yes('tmVert'), otorr=yes('tmOtorr');
+    const {plan, rec, pharm, flags, assess} = buildPlanENT('tm', {baro, hltin, vert, otorr}, userContext());
+    showResult('tm-res', {title:'ثقب الغشاء', assess, plan, rec, pharm, flags});
+  }
+  function calcFB(){
+    const nose=yes('fbNose'), ear=yes('fbEar'), danger=yes('fbDanger'), insect=yes('fbInsect');
+    const {plan, rec, pharm, flags, assess} = buildPlanENT('fb', {nose, ear, danger, insect}, userContext());
+    showResult('fb-res', {title:'جسم غريب', assess, plan, rec, pharm, flags});
+  }
+  function calcLaryngitis(){
+    const uri=yes('laURI'), cough=yes('laCough'), gerd=yes('laGERD'), red=yes('laRed');
+    const {plan, rec, pharm, flags, assess} = buildPlanENT('laryngitis', {uri, cough, gerd, red}, userContext());
+    showResult('laryngitis-res', {title:'التهاب حنجرة', assess, plan, rec, pharm, flags});
+  }
+  function calcOSA(){
+    const S=yes('osS'), T=yes('osT'), O=yes('osO'), P=yes('osP'), B=yes('osB'), A=yes('osA'), N=yes('osN'), G=yes('osG');
+    const {plan, rec, pharm, flags, assess, score} = buildPlanENT('osa', {S,T,O,P,B,A,N,G}, userContext());
+    showResult('osa-res', {title:'انقطاع نفس انسدادي', assess, plan, rec, pharm, flags, score});
+  }
+
+  // ====== PDF ======
+  async function exportPDF(section){
+    const { jsPDF } = window.jspdf;
+    const m = window._last || {title:section, user:userContext(), plan:[], rec:[], pharm:[], flags:[]};
+    const u = m.user || userContext();
+
+    const box = document.createElement('div');
+    box.dir = 'rtl';
+    box.style.cssText = 'width:800px;padding:24px;background:#fff;color:#111;font-family:Cairo,Arial,sans-serif;line-height:1.9;border:1px solid #ddd;border-radius:12px';
+    box.innerHTML = `
+      <h2 style="margin:0 0 10px;font-weight:800">حكيم — ${m.title||section}</h2>
+      <p><b>الاسم:</b> ${u.name || 'بدون اسم'}${u.age!=null? ` — <b>العمر:</b> ${u.age}`:''} — <b>الجنس:</b> ${u.sex? u.sex.label : 'غير محدد'}${u.older?' — ≥50 سنة':''}</p>
+      ${m.score!==undefined? `<p><b>قيمة/درجة:</b> ${m.score}</p>`:''}
+      ${m.assess? `<p><b>التقييم:</b> ${m.assess}</p>`:''}
+      ${m.flags && m.flags.length? `<p><b>تنبيهات:</b></p><ul>${m.flags.map(x=>`<li>${x}</li>`).join('')}</ul>`:''}
+      ${m.plan && m.plan.length? `<p><b>خطة عامة:</b></p><ul>${m.plan.map(x=>`<li>${x}</li>`).join('')}</ul>`:''}
+      ${m.rec && m.rec.length? `<p><b>توصيات موجّهة:</b></p><ul>${m.rec.map(x=>`<li>${x}</li>`).join('')}</ul>`:''}
+      ${m.pharm && m.pharm.length? `<p><b>أمثلة دوائية (قرار الطبيب):</b></p><ul>${m.pharm.map(x=>`<li>${x}</li>`).join('')}</ul><p style="font-size:12px;color:#555">تنبيه: لا تبدأ/توقف أي دواء دون طبيب.</p>`:''}
+      <hr style="margin:12px 0;border:0;border-top:1px solid #ddd"/>
+      <p style="font-size:13px;color:#444">ملف تثقيفي — لا يُغني عن تقييم الطبيب المختص. في الطوارئ يُرجى التواصل الفوري مع الإسعاف.</p>
+    `;
+    document.body.appendChild(box);
+    const canvas = await html2canvas(box, {scale:2, backgroundColor:'#ffffff', useCORS:true});
+    document.body.removeChild(box);
+
+    const pdf = new jsPDF({orientation:'p', unit:'pt', format:'a4'});
+    const pageW = pdf.internal.pageSize.getWidth(), pageH = pdf.internal.pageSize.getHeight(), margin=40;
+    let imgW = pageW - margin*2, imgH = canvas.height * imgW / canvas.width;
+    if (imgH > pageH - margin*2){ const r = (pageH - margin*2) / imgH; imgH*=r; imgW*=r; }
+    pdf.addImage(canvas.toDataURL('image/png'), 'PNG', (pageW-imgW)/2, (pageH-imgH)/2, imgW, imgH);
+    pdf.save(`Hakim-ENT-${(m.title||section).replace(/\s+/g,'_')}-${Date.now()}.pdf`);
+  }
+</script>
+
+<!--
+  الحالات المغطّاة (12):
+  - AOM، أذن خارجية، التهاب حلق (سنتر)، جيوب حاد، تحسس أنفي،
+    نزف أنف، دوار (BPPV/دهليزي)، SSNHL، ثقب غشاء الطبل،
+    أجسام غريبة، بحة/التهاب حنجرة، شخير/OSA.
+  - أمثلة الأدوية بلا جرعات وبصيغة "قرار الطبيب" التزامًا بالسلامة.
+-->
+</body>
+</html>

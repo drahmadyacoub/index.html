@@ -1,0 +1,671 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>حكيم — الجهاز الهضمي | تقييمات ذكية + PDF</title>
+  <meta name="description" content="حكيم — الجهاز الهضمي: ارتداد/حرقة (GERD)، قرحة وهليكوباكتر، نزف علوي (GBS مبسّط)، نزف سفلي/بواسير/شق، التهاب زائدة (Alvarado مبسّط)، مرارة/التهاب حويصلة، التهاب بنكرياس (BISAP مبسّط)، إسهال حاد/مزمن، IBS مقابل IBD، عسر بلع، إمساك، يرقان/تشمع.">
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;800&display=swap" rel="stylesheet">
+  <!-- PDF -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" referrerpolicy="no-referrer"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js" referrerpolicy="no-referrer"></script>
+
+  <style>
+    :root{
+      --bg:#07090f; --txt:#e8ecff; --muted:#aab2d8;
+      --primary:#7aa2ff; --primary-2:#00e0ff; --accent:#a855f7;
+      --glass:rgba(255,255,255,.06); --border:rgba(255,255,255,.12);
+    }
+    *{box-sizing:border-box}
+    body{margin:0; font-family:'Cairo',system-ui,'Noto Sans Arabic',sans-serif; background:#07090f; color:var(--txt); line-height:1.9}
+    header{position:sticky; top:0; z-index:50; display:flex; align-items:center; justify-content:space-between; padding:14px 20px; backdrop-filter:saturate(140%) blur(8px); background:linear-gradient(180deg, rgba(15,16,40,.85), rgba(15,16,40,.45)); border-bottom:1px solid var(--border)}
+    .brand{display:flex; gap:12px; align-items:center}
+    .logo{width:42px; height:42px; border-radius:12px; display:grid; place-items:center; font-weight:800; background: radial-gradient(120% 120% at 0% 0%, var(--primary), var(--accent)); box-shadow: 0 0 24px rgba(122,162,255,.35), inset 0 0 18px rgba(255,255,255,.15)}
+    .brand-text strong{display:block; font-size:18px}
+    .brand-text span{display:block; font-size:12px; color:var(--muted)}
+    .container{width:min(1180px,94vw); margin-inline:auto}
+    h1{font-size:clamp(22px,4vw,34px); margin:22px 0 6px}
+    .sub{color:#cfd6ff; margin:0 0 12px}
+    .glass{background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03)); border:1px solid var(--border); border-radius:22px; padding:22px; box-shadow:0 30px 60px rgba(0,10,40,.35)}
+    .grid{display:grid; gap:16px}
+    .grid-2{grid-template-columns:1fr}
+    @media(min-width:980px){.grid-2{grid-template-columns:1fr 1fr}}
+    .choose{display:grid; gap:12px; grid-template-columns:repeat(2,1fr)}
+    @media(min-width:920px){.choose{grid-template-columns:repeat(4,1fr)}}
+    .opt{background:rgba(255,255,255,.04); border:1px solid var(--border); border-radius:16px; padding:14px; text-align:center; cursor:pointer; transition:transform .18s ease, border-color .18s ease; min-height:100px; display:grid; place-items:center; font-weight:700}
+    .opt:hover{transform:translateY(-3px); border-color:rgba(122,162,255,.6)}
+    .card{border:1px solid var(--border); border-radius:18px; background:rgba(255,255,255,0.04); padding:18px}
+    label{font-weight:600}
+    select, input[type="number"], input[type="text"]{width:100%; padding:10px 12px; border-radius:12px; border:1px solid var(--border); background:rgba(255,255,255,0.03); color:var(--txt)}
+    .row{display:grid; gap:12px; grid-template-columns:1fr}
+    @media(min-width:680px){.row{grid-template-columns:repeat(2,1fr)}}
+    .row-3{display:grid; gap:12px; grid-template-columns:repeat(3,1fr)}
+    .actions{display:flex; gap:10px; flex-wrap:wrap; margin-top:12px}
+    .btn{padding:10px 14px; border-radius:12px; border:1px solid var(--border); background:var(--glass); color:var(--txt); cursor:pointer; font-weight:700; transition:transform .2s ease, background .2s ease}
+    .btn.primary{background:linear-gradient(135deg, var(--primary), var(--primary-2)); border-color:transparent}
+    .btn:hover{transform:translateY(-2px)}
+    .result{padding:14px; border:1px solid var(--border); border-radius:14px; background:rgba(255,255,255,.03)}
+    .hint{font-size:13px; color:#b8c0ef}
+    footer{text-align:center; padding:22px; color:#aab2d8; font-size:13px; border-top:1px solid var(--border); margin-top:24px}
+    .mt{margin-top:10px}.hide{display:none}
+  </style>
+</head>
+<body>
+<header>
+  <div class="brand">
+    <div class="logo">حكيم</div>
+    <div class="brand-text">
+      <strong>حكيم — الجهاز الهضمي</strong>
+      <span>تقييمات مؤتمتة دقيقة + PDF</span>
+    </div>
+  </div>
+  <nav class="actions" style="margin:0">
+    <a class="btn" href="index.html">الصفحة الرئيسية</a>
+  </nav>
+</header>
+
+<main class="container">
+  <section class="glass">
+    <h1>الجهاز الهضمي — اختر القسم</h1>
+    <p class="sub">أدخل بياناتك ثم اختر الحالة. ستظهر <b>خطة إرشادية + أمثلة أدوية (بدون جرعات)</b> للمراجعة مع الطبيب.</p>
+
+    <div class="row">
+      <div><label>الاسم:</label><input id="pat-name" type="text" placeholder="مثال: ليلى خالد"></div>
+      <div><label>العمر (سنوات):</label><input id="pat-age" type="number" min="10" max="120" placeholder="45"></div>
+    </div>
+    <div class="row">
+      <div>
+        <label>الجنس:</label>
+        <select id="pat-sex">
+          <option value="male">ذكر</option>
+          <option value="female">أنثى</option>
+          <option value="pregnant">حامل/يُحتمل الحمل</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="choose" id="chooser">
+      <div class="opt" data-target="gerd">ارتداد/حرقة (GERD)</div>
+      <div class="opt" data-target="pud">قرحة معدية/عفجية & H. pylori</div>
+      <div class="opt" data-target="ugib">نزف علوي (GBS مبسّط)</div>
+      <div class="opt" data-target="lgib">نزف سفلي/بواسير/شق</div>
+      <div class="opt" data-target="appendix">التهاب زائدة (Alvarado مبسّط)</div>
+      <div class="opt" data-target="biliary">مرارة/التهاب حويصلة</div>
+      <div class="opt" data-target="pancreas">التهاب بنكرياس (BISAP مبسّط)</div>
+      <div class="opt" data-target="acute-diarrhea">إسهال حاد</div>
+      <div class="opt" data-target="ibs-ibd">IBS مقابل IBD</div>
+      <div class="opt" data-target="dysphagia">عسر بلع</div>
+      <div class="opt" data-target="constipation">إمساك</div>
+      <div class="opt" data-target="jaundice">يرقان/تشمع — تفاقم</div>
+    </div>
+    <p class="hint mt">أعلام طارئة: قيء دموي أو مَيلَنة غزيرة، صدمة/دوخة، ألم بطن شديد مستمر، يرقان مع حرارة وألم ربع علوي أيمن (ثلاثية شاركو)، ألم شرسوفي شديد ممتد للظهر، صعوبة بلع مع اختناق — اتصل بالإسعاف فورًا.</p>
+  </section>
+
+  <section class="grid grid-2 mt">
+    <!-- 1) GERD -->
+    <div class="card hide" id="sec-gerd">
+      <h2>ارتداد معدي مريئي (GERD) — فرز وتنبيه</h2>
+      <div class="row">
+        <div><label>حرقة/ارتجاع حمضي متكرر</label><select id="geTypical"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>أعراض ليلية/إيقاظ من النوم</label><select id="geNight"><option value="0">لا</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="row">
+        <div><label>منبّهات (دهون/قهوة/نعناع/تدخين)</label><select id="geTriggers"><option value="0">لا/غير واضح</option><option value="1">نعم</option></select></div>
+        <div><label>أعراض إنذارية (نقص وزن/قيء متكرر/عسر بلع/نزف)</label><select id="geAlarm"><option value="0">لا</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="actions">
+        <button class="btn primary" onclick="calcGERD()">تقييم GERD</button>
+        <button class="btn" onclick="exportPDF('gerd')">تصدير PDF</button>
+      </div>
+      <div class="result mt" id="gerd-res"></div>
+    </div>
+
+    <!-- 2) PUD / H. pylori -->
+    <div class="card hide" id="sec-pud">
+      <h2>قرحة معدية/عفجية & H. pylori — فرز</h2>
+      <div class="row">
+        <div><label>ألم حارق شرسوفي مرتبط بالطعام</label><select id="puPain"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>استعمال NSAIDs/أسبرين</label><select id="puNSAID"><option value="0">لا</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="row">
+        <div><label>غثيان/قيء/شبع باكر</label><select id="puNV"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>سوابق H. pylori/اختبار إيجابي</label><select id="puHP"><option value="0">لا/غير معروف</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="actions">
+        <button class="btn primary" onclick="calcPUD()">تقييم القرحة</button>
+        <button class="btn" onclick="exportPDF('pud')">تصدير PDF</button>
+      </div>
+      <div class="result mt" id="pud-res"></div>
+    </div>
+
+    <!-- 3) UGIB -->
+    <div class="card hide" id="sec-ugib">
+      <h2>نزف هضمي علوي — Glasgow-Blatchford (مبسّط)</h2>
+      <div class="row">
+        <div><label>ميلَنة/قيء دموي</label><select id="ugMelena"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>إغماء/دوخة شديدة</label><select id="ugSyncope"><option value="0">لا</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="row">
+        <div><label>ضغط انقباضي &lt; 100</label><select id="ugSBP"><option value="0">لا</option><option value="2">نعم</option></select></div>
+        <div><label>نبض &gt; 100/د</label><select id="ugHR"><option value="0">لا</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="row">
+        <div><label>هيموغلوبين منخفض</label><select id="ugHb"><option value="0">لا/غير معروف</option><option value="3">نعم</option></select></div>
+        <div><label>يوريا مرتفعة</label><select id="ugBUN"><option value="0">لا/غير معروف</option><option value="2">نعم</option></select></div>
+      </div>
+      <div class="row">
+        <div><label>مرض كبدي/قلب معروف</label><select id="ugComorb"><option value="0">لا</option><option value="2">نعم</option></select></div>
+      </div>
+      <div class="actions">
+        <button class="btn primary" onclick="calcUGIB()">حساب GBS (مبسّط)</button>
+        <button class="btn" onclick="exportPDF('ugib')">تصدير PDF</button>
+      </div>
+      <div class="result mt" id="ugib-res"></div>
+    </div>
+
+    <!-- 4) LGIB / Hemorrhoids / Fissure -->
+    <div class="card hide" id="sec-lgib">
+      <h2>نزف سفلي/بواسير/شق — فرز</h2>
+      <div class="row">
+        <div><label>دم أحمر فاتح على البراز/المناديل</label><select id="lgBright"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>ألم شديد مع التبرز (يوحي بشق)</label><select id="lgPainful"><option value="0">لا</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="row">
+        <div><label>إمساك/شدّ مزمن</label><select id="lgConst"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>نزف غزير/دوخة/فقر دم</label><select id="lgSev"><option value="0">لا</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="actions">
+        <button class="btn primary" onclick="calcLGIB()">تقييم النزف السفلي</button>
+        <button class="btn" onclick="exportPDF('lgib')">تصدير PDF</button>
+      </div>
+      <div class="result mt" id="lgib-res"></div>
+    </div>
+
+    <!-- 5) Appendix (Alvarado simplified) -->
+    <div class="card hide" id="sec-appendix">
+      <h2>التهاب الزائدة — Alvarado (مبسّط)</h2>
+      <div class="row">
+        <div><label>انتقال الألم إلى الحفرة الحرقفية اليمنى</label><select id="apMigr"><option value="0">لا</option><option value="1">نعم (+1)</option></select></div>
+        <div><label>قهم/غثيان/إقياء</label><select id="apNV"><option value="0">لا</option><option value="1">نعم (+1)</option></select></div>
+      </div>
+      <div class="row">
+        <div><label>إيلام شديد RLQ/مضاددة مرتدة</label><select id="apRLQ"><option value="0">لا</option><option value="2">نعم (+2)</option></select></div>
+        <div><label>حمّى</label><select id="apFever"><option value="0">لا</option><option value="1">نعم (+1)</option></select></div>
+      </div>
+      <div class="row">
+        <div><label>الكريات مرتفعة</label><select id="apWBC"><option value="0">لا/غير معروف</option><option value="2">نعم (+2)</option></select></div>
+        <div><label>انحراف عصوي/عدلات</label><select id="apNeut"><option value="0">لا/غير معروف</option><option value="1">نعم (+1)</option></select></div>
+      </div>
+      <div class="actions">
+        <button class="btn primary" onclick="calcAppendix()">حساب Alvarado</button>
+        <button class="btn" onclick="exportPDF('appendix')">تصدير PDF</button>
+      </div>
+      <div class="result mt" id="appendix-res"></div>
+    </div>
+
+    <!-- 6) Biliary / Cholecystitis -->
+    <div class="card hide" id="sec-biliary">
+      <h2>مرارة/التهاب حويصلة — فرز</h2>
+      <div class="row">
+        <div><label>ألم ربع علوي أيمن بعد وجبة دسمة</label><select id="biRUQ"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>حمّى/قشعريرة</label><select id="biFever"><option value="0">لا</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="row">
+        <div><label>يرقان/بول داكن</label><select id="biJaundice"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>إيلام مورفي الموجِب (إن معروف)</label><select id="biMurphy"><option value="0">لا/غير معروف</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="actions">
+        <button class="btn primary" onclick="calcBiliary()">تقييم المرارة</button>
+        <button class="btn" onclick="exportPDF('biliary')">تصدير PDF</button>
+      </div>
+      <div class="result mt" id="biliary-res"></div>
+    </div>
+
+    <!-- 7) Pancreatitis (BISAP simplified) -->
+    <div class="card hide" id="sec-pancreas">
+      <h2>التهاب بنكرياس — BISAP (مبسّط)</h2>
+      <div class="row">
+        <div><label>ألم شرسوفي شديد ممتد للظهر</label><select id="paPain"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>عمر &gt; 60</label><select id="paAge"><option value="0">لا</option><option value="1">نعم (+1)</option></select></div>
+      </div>
+      <div class="row">
+        <div><label>BUN مرتفع</label><select id="paBUN"><option value="0">لا/غير معروف</option><option value="1">نعم (+1)</option></select></div>
+        <div><label>وعي مضطرب</label><select id="paAMS"><option value="0">لا</option><option value="1">نعم (+1)</option></select></div>
+      </div>
+      <div class="row">
+        <div><label>دلائل SIRS (حمى/نبض/تنفس)</label><select id="paSIRS"><option value="0">لا/غير معروف</option><option value="1">نعم (+1)</option></select></div>
+        <div><label>انصباب جنب</label><select id="paPleura"><option value="0">لا/غير معروف</option><option value="1">نعم (+1)</option></select></div>
+      </div>
+      <div class="actions">
+        <button class="btn primary" onclick="calcPancreas()">حساب BISAP</button>
+        <button class="btn" onclick="exportPDF('pancreas')">تصدير PDF</button>
+      </div>
+      <div class="result mt" id="pancreas-res"></div>
+    </div>
+
+    <!-- 8) Acute Diarrhea -->
+    <div class="card hide" id="sec-acute-diarrhea">
+      <h2>إسهال حاد — فرز شدة</h2>
+      <div class="row">
+        <div><label>إسهال مائي متكرر</label><select id="adWatery"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>دم في البراز/حمّى عالية</label><select id="adBloody"><option value="0">لا</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="row">
+        <div><label>جفاف (عطش شديد/دوار/قلة بول)</label><select id="adDehyd"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>سفر حديث/طعام ملوث</label><select id="adTravel"><option value="0">لا</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="actions">
+        <button class="btn primary" onclick="calcAcuteDiarrhea()">تقييم الإسهال الحاد</button>
+        <button class="btn" onclick="exportPDF('acute-diarrhea')">تصدير PDF</button>
+      </div>
+      <div class="result mt" id="acute-diarrhea-res"></div>
+    </div>
+
+    <!-- 9) IBS vs IBD -->
+    <div class="card hide" id="sec-ibs-ibd">
+      <h2>IBS مقابل IBD — تفريق أولي</h2>
+      <div class="row">
+        <div><label>ألم بطني مرتبط بالتبرز/يتحسن بعده</label><select id="iiRome"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>تغيّر تناوب إمساك/إسهال</label><select id="iiAlt"><option value="0">لا</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="row">
+        <div><label>أعلام إنذارية (نزف/نقص وزن/حمّى/إسهال ليلي)</label><select id="iiAlarm"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>قصة عائلية IBD/سيلياك</label><select id="iiFH"><option value="0">لا</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="actions">
+        <button class="btn primary" onclick="calcIBSIBD()">تقييم IBS/IBD</button>
+        <button class="btn" onclick="exportPDF('ibs-ibd')">تصدير PDF</button>
+      </div>
+      <div class="result mt" id="ibs-ibd-res"></div>
+    </div>
+
+    <!-- 10) Dysphagia -->
+    <div class="card hide" id="sec-dysphagia">
+      <h2>عسر بلع — تفريق (فموي بلعومي/مريئي)</h2>
+      <div class="row">
+        <div><label>صعوبة مع السوائل والصلب من البداية</label><select id="dyBoth"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>بداية تدريجية تتفاقم</label><select id="dyProgress"><option value="0">لا</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="row">
+        <div><label>ألم/انحشار طعام/نقص وزن</label><select id="dyAlarm"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>حرقة/ارتداد مرافق</label><select id="dyGERD"><option value="0">لا</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="actions">
+        <button class="btn primary" onclick="calcDysphagia()">تقييم عسر البلع</button>
+        <button class="btn" onclick="exportPDF('dysphagia')">تصدير PDF</button>
+      </div>
+      <div class="result mt" id="dysphagia-res"></div>
+    </div>
+
+    <!-- 11) Constipation -->
+    <div class="card hide" id="sec-constipation">
+      <h2>إمساك — فرز وتنبيه</h2>
+      <div class="row">
+        <div><label>قلة مرات التبرز/براز قاسٍ/شدّ</label><select id="coTypical"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>دم/نقص وزن/فقر دم</label><select id="coAlarm"><option value="0">لا</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="row">
+        <div><label>أدوية مسببة (أفيونات/حديد/مدرات…)</label><select id="coDrugs"><option value="0">لا/غير معروف</option><option value="1">نعم</option></select></div>
+        <div><label>ألم شرجي/شق شرجي معروف</label><select id="coFissure"><option value="0">لا</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="actions">
+        <button class="btn primary" onclick="calcConstipation()">تقييم الإمساك</button>
+        <button class="btn" onclick="exportPDF('constipation')">تصدير PDF</button>
+      </div>
+      <div class="result mt" id="constipation-res"></div>
+    </div>
+
+    <!-- 12) Jaundice / Cirrhosis -->
+    <div class="card hide" id="sec-jaundice">
+      <h2>يرقان/تشمع — تفاقم</h2>
+      <div class="row">
+        <div><label>حُمّى + ألم RUQ + يرقان (ثلاثية شاركو)</label><select id="jaCharcot"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>حكة/بول داكن/براز فاتح</label><select id="jaChol"><option value="0">لا</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="row">
+        <div><label>استسقاء/وذمات</label><select id="jaAsc"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>تخليط ذهني/نعاس (اعتلال دماغي)</label><select id="jaHE"><option value="0">لا</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="actions">
+        <button class="btn primary" onclick="calcJaundice()">تقييم اليرقان/التشمع</button>
+        <button class="btn" onclick="exportPDF('jaundice')">تصدير PDF</button>
+      </div>
+      <div class="result mt" id="jaundice-res"></div>
+    </div>
+  </section>
+
+  <section class="glass mt">
+    <p class="hint">هذه الصفحة للتثقيف والفرز الأولي. عند الشك بطارئ هضمي — تواصل مع الإسعاف فورًا.</p>
+  </section>
+</main>
+
+<footer>© <span id="year"></span> حكيم — جميع الحقوق محفوظة.</footer>
+
+<script>
+  // ====== عام ======
+  document.getElementById('year').textContent = new Date().getFullYear();
+  document.querySelectorAll('#chooser .opt').forEach(el=>{
+    el.addEventListener('click', ()=>{
+      document.querySelectorAll('.card').forEach(c=>c.classList.add('hide'));
+      const sec = document.getElementById('sec-'+el.getAttribute('data-target'));
+      if (sec){ sec.classList.remove('hide'); sec.scrollIntoView({behavior:'smooth', block:'start'}); }
+    });
+  });
+
+  function nameVal(){ return document.getElementById('pat-name').value?.trim() || 'بدون اسم'; }
+  function ageVal(){ const n=parseInt(document.getElementById('pat-age').value,10); return isNaN(n)? null : Math.min(120, Math.max(10,n)); }
+  function sexVal(){ const v=document.getElementById('pat-sex').value; return {code:v, label:(v==='male'?'ذكر':(v==='female'?'أنثى':'حامل/محتمل الحمل'))}; }
+  function userContext(){ const age=ageVal(), sex=sexVal(); return {name:nameVal(), age, sex, minor: age!=null && age<18, older: age!=null && age>=65, pregnant: sex.code==='pregnant'}; }
+  function lines(arr){ return `<ul>${arr.map(x=>`<li>${x}</li>`).join('')}</ul>`; }
+  function setLast(obj){ window._last = obj; }
+  function yes(id){ return document.getElementById(id).value==='1' || document.getElementById(id).value==='yes'; }
+
+  // ====== مولّد الخطط الهضمية ======
+  function buildPlanGI(domain, ctx, u){
+    const plan=[], rec=[], pharm=[], flags = ctx.flags? [...ctx.flags] : [];
+    if (u.minor) rec.push('العمر أقل من 18: هذه الصفحة موجّهة للبالغين — يُفضّل تقييم اختصاص أطفال.');
+    if (u.older) rec.push('العمر ≥65: الحذر من الجفاف/التداخلات؛ خطط محافظة ومراقبة وظائف.');
+    if (u.pregnant) rec.push('حمل/احتمال حمل: أدوية معيّنة محظورة؛ يلزم تقييم اختصاصي.');
+
+    switch(domain){
+      case 'gerd': {
+        if (ctx.alarm) flags.push('أعراض إنذارية — تحتاج تنظير عاجل.');
+        plan.push('رفع رأس السرير، تجنّب الوجبات المتأخرة/الدسم/الكافيين/النعناع والتدخين، إنقاص وزن إن لزم.');
+        if (!u.pregnant){
+          pharm.push('مثال: PPI (مثل omeprazole) أو H2 blocker؛ مضاد ارتجاع/ألجينات — قرار طبي.');
+        } else {
+          pharm.push('الحمل: تعديل نمط حياة؛ مضادات حموضة/ألجينات بعد تقييم الطبيب.');
+        }
+        rec.push('إن استمرت الأعراض أو ظهرت إنذارات — إحالة لتنظير/اختبارات متمّمة.');
+        break;
+      }
+      case 'pud': {
+        plan.push('تجنّب NSAIDs إن أمكن؛ اختبار H. pylori (مستضد براز/تنفّس) مع إيقاف PPI قبل الاختبار وفق الإرشاد الطبي.');
+        if (!u.pregnant){
+          pharm.push('قرحة مرتبطة بـH. pylori: معالجة استئصال (PPI + مضادين حيويين) أو رباعية مع بزموت — قرار طبي.');
+          pharm.push('قرحة NSAIDs: PPI واستراتيجية تقليل/إيقاف NSAID — قرار طبي.');
+        } else {
+          pharm.push('الحمل: خيارات محدودة — قرار اختصاصي بعد اختبار السلامة.');
+        }
+        if (ctx.nsaid) rec.push('استخدم أقل جرعة فعّالة من NSAID/بدائل؛ وقاية بـPPI حسب الحاجة.');
+        break;
+      }
+      case 'ugib': {
+        if (ctx.score>=7) flags.push('خطورة عالية لنزف علوي — إسعاف وتنظير مبكّر.');
+        plan.push('لا تتناول طعامًا/شرابًا حتى تقييم الطوارئ؛ جمع فصيلة الدم وتحاليل حسب الإرشاد.');
+        if (!u.pregnant){
+          pharm.push('PPI وريدي/فموي بعد تقييم؛ معالجة سبب النزف بالتنظير — قرار اختصاصي.');
+        }
+        rec.push(`تقدير GBS المبسّط: ${ctx.score} — ${ctx.risk}.`);
+        break;
+      }
+      case 'lgib': {
+        if (ctx.severe) flags.push('نزف سفلي مهم/لاستقرار — تقييم عاجل.');
+        plan.push('ألياف وسوائل وتجنّب الشدّ؛ حمّامات مقعدة دافئة.');
+        if (!u.pregnant){
+          pharm.push('بواسير: مراهم/تحاميل هيدروكورتيزون موضعي؛ ألياف — قرار طبي.');
+          pharm.push('شقّ شرجي: مرهم نيتروغليسيرين/ديلتيازيم موضعي؛ مسكنات — قرار طبي.');
+        }
+        rec.push('إن تكرر النزف أو ترافق مع إنذارات — تنظير سفلي وفق الإرشاد.');
+        break;
+      }
+      case 'appendix': {
+        if (ctx.score>=7) flags.push('احتمال مرتفع لالتهاب الزائدة — تقييم جراحي عاجل.');
+        plan.push('صيام عن الطعام، صور (إيكو/طبقي) حسب الإرشاد؛ تجنّب المسكنات المثبطة للتشخيص دون إشراف.');
+        if (!u.pregnant){
+          pharm.push('مضادّات حيوية قبل الجراحة حسب البروتوكول — قرار اختصاصي.');
+        }
+        rec.push(`Alvarado المبسّط: ${ctx.score}/10 — ${ctx.risk}.`);
+        break;
+      }
+      case 'biliary': {
+        if (ctx.charcot) flags.push('ثلاثية شاركو (يرقان + حمّى + ألم RUQ) — شكّ بالتهاب طرق صفراوية: طارئ.');
+        if (ctx.cholecystitis) rec.push('التهاب حويصلة محتمل — يلزم تصوير بالأمواج فوق الصوتية.');
+        plan.push('صيام، سوائل وريدية إن لزم، تصوير مرارة/قنوات؛ تجنّب الأطعمة الدسمة مؤقتًا.');
+        if (!u.pregnant){
+          pharm.push('مسكنات؛ مضادّات حيوية في حالات الالتهاب — قرار طبي.');
+        }
+        break;
+      }
+      case 'pancreas': {
+        if (ctx.score>=3) flags.push('BISAP مرتفع — خطر اختلاطات؛ يحتاج مراقبة لصيقة.');
+        plan.push('إرواء وريدي مبكّر، صيام عن الطعام في البداية، مسكنات مناسبة، معالجة السبب (حصاة/كحول/دواء).');
+        if (!u.pregnant){
+          pharm.push('مسكنات ملائمة؛ مضادّات حيوية فقط عند وجود نخور مُصاب — قرار اختصاصي.');
+        }
+        rec.push(`BISAP المبسّط: ${ctx.score}/5 — ${ctx.risk}.`);
+        break;
+      }
+      case 'acute-diarrhea': {
+        if (ctx.dehyd || ctx.bloody) flags.push('جفاف/دم بالبراز — تقييم أسرع.');
+        plan.push('محاليل إماهة فموية، نظام غذائي خفيف، تجنّب مضادات الحركة عند وجود دم/حمّى عالية.');
+        if (!u.pregnant){
+          pharm.push('مجموعة خيارات بحسب السبب: مضادّات إسهال غير أفيونية؛ مضادّات حيوية لبعض سياقات المسافر الشديد — قرار طبي.');
+        }
+        rec.push('أرسل زرع/PCR عند الشدّة/المناعات/الحمّى المستمرة.');
+        break;
+      }
+      case 'ibs-ibd': {
+        if (ctx.alarm) flags.push('إنذارات لصالح IBD/سبب عضوي — يلزم تنظير/تحاليل.');
+        if (ctx.ibs) rec.push('سمات IBS (وفق Rome مبسّط) بعد استبعاد الإنذارات.');
+        plan.push('نمط حياة: نوم/رياضة/تقليل توتر؛ تجربة حمية Low-FODMAP بإشراف؛ ألياف ذائبة.');
+        if (!u.pregnant){
+          pharm.push('IBS: مضادّات تشنج (mebeverine/hyoscine) أو زيت النعناع؛ بروبيوتيك — قرار طبي.');
+          pharm.push('IBD: أمينوسالسيلات/ستيرويدات/معدّلات مناعة/بيولوجيات — قرار اختصاصي.');
+        }
+        break;
+      }
+      case 'dysphagia': {
+        if (ctx.alarm) flags.push('عسر بلع مع إنذارات — تنظير عاجل.');
+        if (ctx.both) rec.push('فموي بلعومي محتمل (سوائل وصلب من البداية).');
+        if (ctx.progress) rec.push('انسدادي/تليّفي/ورمي محتمل (تدرّجي).');
+        if (ctx.gerd) rec.push('التهاب مري/تضيّق حمضي محتمل.');
+        plan.push('تنظير هضمي علوي ± تصوير بلع؛ تقييم نطقي/بلعومي عند الشك الفموي.');
+        if (!u.pregnant){
+          pharm.push('PPI؛ محفّزات حركية عند الحاجة — قرار طبي.');
+        }
+        break;
+      }
+      case 'constipation': {
+        if (ctx.alarm) flags.push('إنذارات مع إمساك — تقييم تنظيري/مخبري.');
+        plan.push('ألياف 20–30غ يوميًا (غذائيًا)، سوائل كافية، نشاط بدني، جدول حمّام منتظم.');
+        if (!u.pregnant){
+          pharm.push('ملينات أسموزية (polyethylene glycol/lactulose)؛ منبّهات قصيرة — قرار طبي.');
+          pharm.push('مليّنات مزلِّقة/مليّنات براز؛ معالجة سبب دوائي إن وُجد — قرار طبي.');
+        } else {
+          pharm.push('الحمل: يفضَّل ألياف/سوائل؛ أدوية محدّدة فقط بقرار الطبيب.');
+        }
+        break;
+      }
+      case 'jaundice': {
+        if (ctx.charcot) flags.push('التهاب طرق صفراوية محتمل — إسعاف وERCP وفق الإرشاد.');
+        if (ctx.HE) flags.push('اعتلال دماغي كبدي — يحتاج علاج فوري.');
+        plan.push('تحاليل كبد شاملة وصورة بطن بالأمواج فوق الصوتية؛ معالجة السبب (انسداد/التهاب/كبد دهني/فيروسي).');
+        if (!u.pregnant){
+          pharm.push('اعتلال دماغي: lactulose ± rifaximin — قرار طبي.');
+          pharm.push('استسقاء: مدرّات (spironolactone ± furosemide) وضبط ملح — قرار طبي.');
+          pharm.push('إنتان صفراوي: مضادّات حيوية واسعة + تدخّل ERCP — قرار اختصاصي.');
+        }
+        rec.push('تجنّب الكحول/الأسيتامينوفين الزائد/الأعشاب غير الموثوقة.');
+        break;
+      }
+    }
+    return {plan, rec, pharm, flags};
+  }
+
+  // ====== عرض موحّد ======
+  function showResult(elId, obj){
+    const u = userContext();
+    const header = `<p>الاسم: <b>${u.name}</b>${u.age? ` — العمر: <b>${u.age}</b>`:''} — الجنس: <b>${u.sex.label}</b></p>`;
+    const assess = obj.assess ? `<p><b>التقييم:</b> ${obj.assess}</p>` : '';
+    const sev = obj.severity ? `<p><b>الشدة:</b> ${obj.severity}</p>` : '';
+    const score = (obj.score!==undefined) ? `<p><b>قيمة/درجة:</b> ${obj.score}</p>` : '';
+    const flagsHtml = obj.flags?.length? `<p><b>تنبيهات:</b></p>${lines(obj.flags)}` : '';
+    const planHtml = obj.plan?.length? `<p><b>خطة عامة:</b></p>${lines(obj.plan)}` : '';
+    const recHtml = obj.rec?.length? `<p><b>توصيات موجّهة:</b></p>${lines(obj.rec)}` : '';
+    const pharmHtml = obj.pharm?.length? `<p><b>أمثلة دوائية (قرار الطبيب):</b></p>${lines(obj.pharm)}<p class="hint">لا تبدأ/توقف أي دواء دون طبيب. قد توجد موانع/تداخلات خاصة بالحمل وكبار السن والأمراض المرافقة.</p>` : '';
+    document.getElementById(elId).innerHTML = header + score + sev + assess + flagsHtml + planHtml + recHtml + pharmHtml;
+    setLast({...obj, user:u});
+  }
+
+  // ====== الحسابات لكل قسم ======
+  function calcGERD(){
+    const typical=yes('geTypical'), night=yes('geNight'), trig=yes('geTriggers'), alarm=yes('geAlarm');
+    const assess = typical ? 'GERD محتمل' : 'أعراض غير نوعية للارتداد';
+    const {plan, rec, pharm, flags} = buildPlanGI('gerd', {alarm, trig}, userContext());
+    showResult('gerd-res', {title:'GERD', assess: alarm? assess+' مع إنذارات': assess, plan, rec, pharm, flags});
+  }
+
+  function calcPUD(){
+    const pain=yes('puPain'), nsaid=yes('puNSAID'), nv=yes('puNV'), hp=yes('puHP');
+    let assess = pain ? 'قرحة/عُسْر هضم وظيفي محتمل' : 'غير نوعي';
+    if (hp) assess += ' — سوابق H. pylori';
+    const {plan, rec, pharm, flags} = buildPlanGI('pud', {nsaid, hp}, userContext());
+    showResult('pud-res', {title:'قرحة معدية/عفجية', assess, plan, rec, pharm, flags});
+  }
+
+  function calcUGIB(){
+    const vals = [
+      parseInt(document.getElementById('ugSBP').value)||0, // 0 أو 2
+      parseInt(document.getElementById('ugHR').value)||0,  // 0 أو 1
+      parseInt(document.getElementById('ugHb').value)||0,  // 0 أو 3
+      parseInt(document.getElementById('ugBUN').value)||0, // 0 أو 2
+      parseInt(document.getElementById('ugComorb').value)||0 // 0 أو 2
+    ];
+    let score = vals.reduce((a,b)=>a+b,0);
+    if (yes('ugMelena')) score += 1;
+    if (yes('ugSyncope')) score += 1;
+    const risk = score>=7 ? 'عالٍ' : (score>=3 ? 'متوسط' : 'منخفض');
+    const {plan, rec, pharm, flags} = buildPlanGI('ugib', {score, risk}, userContext());
+    showResult('ugib-res', {title:'نزف علوي', assess:'نزف علوي محتمل', score:`GBS مبسّط = ${score}`, plan, rec, pharm, flags});
+  }
+
+  function calcLGIB(){
+    const bright = yes('lgBright'), painful = yes('lgPainful'), sev = yes('lgSev'), cons = yes('lgConst');
+    let assess = bright ? 'نزف سفلي بسيط محتمل' : 'أعراض غير نوعية';
+    if (painful) assess = 'شقّ شرجي محتمل';
+    if (bright && cons && !painful) assess = 'بواسير محتملة';
+    const {plan, rec, pharm, flags} = buildPlanGI('lgib', {severe: sev}, userContext());
+    showResult('lgib-res', {title:'نزف سفلي/بواسير/شق', assess, plan, rec, pharm, flags});
+  }
+
+  function calcAppendix(){
+    const migr = parseInt(document.getElementById('apMigr').value)||0;
+    const nv = parseInt(document.getElementById('apNV').value)||0;
+    const rlq = parseInt(document.getElementById('apRLQ').value)||0;
+    const fever = parseInt(document.getElementById('apFever').value)||0;
+    const wbc = parseInt(document.getElementById('apWBC').value)||0;
+    const neut = parseInt(document.getElementById('apNeut').value)||0;
+    const score = migr + nv + rlq + fever + wbc + neut; // /10
+    const risk = score>=7 ? 'مرتفع' : (score>=5 ? 'متوسط' : 'منخفض');
+    const {plan, rec, pharm, flags} = buildPlanGI('appendix', {score, risk}, userContext());
+    showResult('appendix-res', {title:'التهاب الزائدة', assess:'التهاب زائدة محتمل', score:`Alvarado = ${score}/10`, plan, rec, pharm, flags});
+  }
+
+  function calcBiliary(){
+    const ruq=yes('biRUQ'), fever=yes('biFever'), jau=yes('biJaundice'), mur=yes('biMurphy');
+    const charcot = ruq && fever && jau;
+    const cholecystitis = ruq && (fever || mur);
+    const {plan, rec, pharm, flags} = buildPlanGI('biliary', {charcot, cholecystitis}, userContext());
+    let assess = cholecystitis ? 'التهاب حويصلة/مغص صفراوي محتمل' : 'أعراض غير نوعية';
+    if (charcot) assess = 'التهاب طرق صفراوية محتمل (طارئ)';
+    showResult('biliary-res', {title:'مرارة/حويصلة', assess, plan, rec, pharm, flags});
+  }
+
+  function calcPancreas(){
+    const age = yes('paAge')?1:0, bun = yes('paBUN')?1:0, ams = yes('paAMS')?1:0, sirs = yes('paSIRS')?1:0, pleura = yes('paPleura')?1:0;
+    const score = age + bun + ams + sirs + pleura; // 0-5
+    const risk = score>=3 ? 'عالٍ' : (score===2 ? 'متوسط' : 'منخفض');
+    const {plan, rec, pharm, flags} = buildPlanGI('pancreas', {score, risk}, userContext());
+    showResult('pancreas-res', {title:'التهاب بنكرياس', assess:'التهاب بنكرياس محتمل (يتطلب تحاليل/تصوير لتأكيده)', score:`BISAP = ${score}/5`, plan, rec, pharm, flags});
+  }
+
+  function calcAcuteDiarrhea(){
+    const watery=yes('adWatery'), bloody=yes('adBloody'), dehyd=yes('adDehyd'), travel=yes('adTravel');
+    let assess = watery ? 'إسهال حاد غير مدمّى' : 'أعراض غير نوعية';
+    if (bloody) assess = 'إسهال حاد مدمّى محتمل';
+    const {plan, rec, pharm, flags} = buildPlanGI('acute-diarrhea', {bloody, dehyd}, userContext());
+    showResult('acute-diarrhea-res', {title:'إسهال حاد', assess: travel? (assess+' — سياق سفر') : assess, plan, rec, pharm, flags});
+  }
+
+  function calcIBSIBD(){
+    const rome=yes('iiRome'), alt=yes('iiAlt'), alarm=yes('iiAlarm'), fh=yes('iiFH');
+    const ibs = rome && alt && !alarm;
+    const {plan, rec, pharm, flags} = buildPlanGI('ibs-ibd', {ibs, alarm, fh}, userContext());
+    let assess = ibs ? 'IBS مرجّح (بعد استبعاد الإنذارات)' : 'قد يكون IBD/سبب عضوي';
+    if (alarm) assess = 'إنذارات لصالح IBD/سبب عضوي';
+    showResult('ibs-ibd-res', {title:'IBS مقابل IBD', assess, plan, rec, pharm, flags});
+  }
+
+  function calcDysphagia(){
+    const both=yes('dyBoth'), progress=yes('dyProgress'), alarm=yes('dyAlarm'), gerd=yes('dyGERD');
+    const {plan, rec, pharm, flags} = buildPlanGI('dysphagia', {both, progress, alarm, gerd}, userContext());
+    let assess = both ? 'عسر بلع فموي بلعومي محتمل' : 'عسر بلع مريئي محتمل';
+    if (progress) assess += ' — نمط انسدادي متدرّج';
+    if (alarm) assess += ' — مع إنذارات';
+    showResult('dysphagia-res', {title:'عسر بلع', assess, plan, rec, pharm, flags});
+  }
+
+  function calcConstipation(){
+    const typical=yes('coTypical'), alarm=yes('coAlarm'), drugs=yes('coDrugs'), fiss=yes('coFissure');
+    let assess = typical ? 'إمساك وظيفي محتمل' : 'أعراض غير نوعية';
+    if (fiss) assess += ' — شق شرجي مرافق محتمل';
+    const {plan, rec, pharm, flags} = buildPlanGI('constipation', {alarm}, userContext());
+    showResult('constipation-res', {title:'إمساك', assess, plan, rec, pharm, flags});
+  }
+
+  function calcJaundice(){
+    const charcot=yes('jaCharcot'), chol=yes('jaChol'), asc=yes('jaAsc'), he=yes('jaHE');
+    const {plan, rec, pharm, flags} = buildPlanGI('jaundice', {charcot, HE:he}, userContext());
+    let assess = chol ? 'انسداد صفراوي محتمل' : 'يرقان غير محدد';
+    if (asc || he) assess += ' — تفاقم تشمّع محتمل';
+    if (charcot) assess = 'التهاب طرق صفراوية محتمل (طارئ)';
+    showResult('jaundice-res', {title:'يرقان/تشمع', assess, plan, rec, pharm, flags});
+  }
+
+  // ====== PDF ======
+  async function exportPDF(section){
+    const { jsPDF } = window.jspdf;
+    const m = window._last || {title:section, user:userContext(), plan:[], rec:[], pharm:[], flags:[]};
+    const u = m.user || userContext();
+
+    const box = document.createElement('div');
+    box.dir = 'rtl';
+    box.style.cssText = 'width:800px;padding:24px;background:#fff;color:#111;font-family:Cairo,Arial,sans-serif;line-height:1.9;border:1px solid #ddd;border-radius:12px';
+    box.innerHTML = `
+      <h2 style="margin:0 0 10px;font-weight:800">حكيم — ${m.title||section}</h2>
+      <p><b>الاسم:</b> ${u.name || 'بدون اسم'}${u.age? ` — <b>العمر:</b> ${u.age}`:''} — <b>الجنس:</b> ${u.sex? u.sex.label : 'غير محدد'}</p>
+      ${m.score!==undefined? `<p><b>قيمة/درجة:</b> ${m.score}</p>`:''}
+      ${m.severity? `<p><b>الشدة:</b> ${m.severity}</p>`:''}
+      ${m.assess? `<p><b>التقييم:</b> ${m.assess}</p>`:''}
+      ${m.flags && m.flags.length? `<p><b>تنبيهات:</b></p><ul>${m.flags.map(x=>`<li>${x}</li>`).join('')}</ul>`:''}
+      ${m.plan && m.plan.length? `<p><b>خطة عامة:</b></p><ul>${m.plan.map(x=>`<li>${x}</li>`).join('')}</ul>`:''}
+      ${m.rec && m.rec.length? `<p><b>توصيات موجّهة:</b></p><ul>${m.rec.map(x=>`<li>${x}</li>`).join('')}</ul>`:''}
+      ${m.pharm && m.pharm.length? `<p><b>أمثلة دوائية (قرار الطبيب):</b></p><ul>${m.pharm.map(x=>`<li>${x}</li>`).join('')}</ul><p style="font-size:12px;color:#555">تنبيه: لا تبدأ/توقف أي دواء دون طبيب. قد توجد موانع/تداخلات خاصة بالحمل وكبار السن.</p>`:''}
+      <hr style="margin:12px 0;border:0;border-top:1px solid #ddd"/>
+      <p style="font-size:13px;color:#444">ملف تثقيفي — لا يُغني عن تقييم الطبيب المختص. في الطوارئ يُرجى التواصل الفوري مع الإسعاف.</p>
+    `;
+    document.body.appendChild(box);
+    const canvas = await html2canvas(box, {scale:2, backgroundColor:'#ffffff', useCORS:true});
+    document.body.removeChild(box);
+
+    const pdf = new jsPDF({orientation:'p', unit:'pt', format:'a4'});
+    const pageW = pdf.internal.pageSize.getWidth(), pageH = pdf.internal.pageSize.getHeight(), margin=40;
+    let imgW = pageW - margin*2, imgH = canvas.height * imgW / canvas.width;
+    if (imgH > pageH - margin*2){ const r = (pageH - margin*2) / imgH; imgH*=r; imgW*=r; }
+    pdf.addImage(canvas.toDataURL('image/png'), 'PNG', (pageW-imgW)/2, (pageH-imgH)/2, imgW, imgH);
+    pdf.save(`Hakim-GI-${(m.title||section).replace(/\s+/g,'_')}-${Date.now()}.pdf`);
+  }
+</script>
+
+<!--
+  محتويات الصفحة:
+  - GERD، قرحة/H. pylori، نزف علوي (GBS مبسّط)، نزف سفلي/بواسير/شق،
+    التهاب زائدة (Alvarado مبسّط)، مرارة/حويصلة (ثلاثية شاركو)،
+    التهاب بنكرياس (BISAP مبسّط)، إسهال حاد، IBS مقابل IBD،
+    عسر بلع، إمساك، يرقان/تشمع.
+  - أمثلة دوائية دون جرعات وبصيغة "قرار الطبيب" التزامًا بالسلامة.
+-->
+</body>
+</html>

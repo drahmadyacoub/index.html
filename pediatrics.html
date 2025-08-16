@@ -1,0 +1,651 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>حكيم — طب الأطفال | تقييمات ذكية + PDF</title>
+  <meta name="description" content="حكيم — طب الأطفال: حمى بدون بؤرة، أذن وسطى، التهاب حلق بكتيري، خُناق/كروب، التهاب قصيبات، ربو حاد، ذات رئة، إسهال/تجفاف، ألم بطني/زائدة، عدوى بولية، كاواساكي، اختلاج حراري، تسمم، ألم أذن خارجي.">
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;800&display=swap" rel="stylesheet">
+  <!-- PDF libs -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" referrerpolicy="no-referrer"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js" referrerpolicy="no-referrer"></script>
+
+  <style>
+    :root{
+      --bg:#07090f; --txt:#e8ecff; --muted:#aab2d8;
+      --primary:#7aa2ff; --primary-2:#00e0ff; --accent:#a855f7;
+      --glass:rgba(255,255,255,.06); --border:rgba(255,255,255,.12);
+    }
+    *{box-sizing:border-box}
+    body{margin:0; font-family:'Cairo',system-ui,'Noto Sans Arabic',sans-serif; background:#07090f; color:var(--txt); line-height:1.9}
+    header{position:sticky; top:0; z-index:50; display:flex; align-items:center; justify-content:space-between; padding:14px 20px; backdrop-filter:saturate(140%) blur(8px); background:linear-gradient(180deg, rgba(15,16,40,.85), rgba(15,16,40,.45)); border-bottom:1px solid var(--border)}
+    .brand{display:flex; gap:12px; align-items:center}
+    .logo{width:42px; height:42px; border-radius:12px; display:grid; place-items:center; font-weight:800; background: radial-gradient(120% 120% at 0% 0%, var(--primary), var(--accent)); box-shadow: 0 0 24px rgba(122,162,255,.35), inset 0 0 18px rgba(255,255,255,.15)}
+    .brand-text strong{display:block; font-size:18px}
+    .brand-text span{display:block; font-size:12px; color:var(--muted)}
+    .container{width:min(1180px,94vw); margin-inline:auto}
+    h1{font-size:clamp(22px,4vw,34px); margin:22px 0 6px}
+    .sub{color:#cfd6ff; margin:0 0 12px}
+    .glass{background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03)); border:1px solid var(--border); border-radius:22px; padding:22px; box-shadow:0 30px 60px rgba(0,10,40,.35)}
+    .grid{display:grid; gap:16px}
+    .grid-2{grid-template-columns:1fr}
+    @media(min-width:1000px){.grid-2{grid-template-columns:1fr 1fr}}
+    .choose{display:grid; gap:12px; grid-template-columns:repeat(2,1fr)}
+    @media(min-width:980px){.choose{grid-template-columns:repeat(4,1fr)}}
+    .opt{background:rgba(255,255,255,.04); border:1px solid var(--border); border-radius:16px; padding:14px; text-align:center; cursor:pointer; transition:transform .18s ease, border-color .18s ease; min-height:110px; display:grid; place-items:center; font-weight:700}
+    .opt:hover{transform:translateY(-3px); border-color:rgba(122,162,255,.6)}
+    .card{border:1px solid var(--border); border-radius:18px; background:rgba(255,255,255,0.04); padding:18px}
+    label{font-weight:600}
+    select, input[type="number"], input[type="text"]{width:100%; padding:10px 12px; border-radius:12px; border:1px solid var(--border); background:rgba(255,255,255,0.03); color:var(--txt)}
+    .row{display:grid; gap:12px; grid-template-columns:1fr}
+    @media(min-width:680px){.row{grid-template-columns:repeat(2,1fr)}}
+    .row-3{display:grid; gap:12px; grid-template-columns:repeat(3,1fr)}
+    .actions{display:flex; gap:10px; flex-wrap:wrap; margin-top:12px}
+    .btn{padding:10px 14px; border-radius:12px; border:1px solid var(--border); background:var(--glass); color:var(--txt); cursor:pointer; font-weight:700; transition:transform .2s ease, background .2s ease}
+    .btn.primary{background:linear-gradient(135deg, var(--primary), var(--primary-2)); border-color:transparent}
+    .btn:hover{transform:translateY(-2px)}
+    .result{padding:14px; border:1px solid var(--border); border-radius:14px; background:rgba(255,255,255,.03)}
+    .hint{font-size:13px; color:#b8c0ef}
+    footer{text-align:center; padding:22px; color:#aab2d8; font-size:13px; border-top:1px solid var(--border); margin-top:24px}
+    .mt{margin-top:10px}.hide{display:none}
+  </style>
+</head>
+<body>
+<header>
+  <div class="brand">
+    <div class="logo">حكيم</div>
+    <div class="brand-text">
+      <strong>حكيم — طب الأطفال</strong>
+      <span>تقييمات مؤتمتة دقيقة + PDF</span>
+    </div>
+  </div>
+  <nav class="actions" style="margin:0">
+    <a class="btn" href="index.html">الصفحة الرئيسية</a>
+  </nav>
+</header>
+
+<main class="container">
+  <section class="glass">
+    <h1>طب الأطفال — اختر الحالة</h1>
+    <p class="sub">أدخل بيانات الطفل ثم اختر الحالة. ستظهر <b>خطة إرشادية + أمثلة أدوية (بدون جرعات)</b> للمراجعة مع الطبيب.</p>
+
+    <div class="row">
+      <div><label>اسم الطفل:</label><input id="pat-name" type="text" placeholder="مثال: يمان الصغير"></div>
+      <div><label>العمر (سنوات، يمكن كسر مثل 0.5):</label><input id="pat-age" type="number" min="0" max="17.99" step="0.1" placeholder="4.0"></div>
+    </div>
+    <div class="row">
+      <div>
+        <label>الجنس:</label>
+        <select id="pat-sex">
+          <option value="male">ذكر</option>
+          <option value="female">أنثى</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="choose" id="chooser">
+      <div class="opt" data-target="fws">حمّى بدون بؤرة</div>
+      <div class="opt" data-target="aom">التهاب أذن وسطى حاد</div>
+      <div class="opt" data-target="strep">التهاب حلق بكتيري (Strep)</div>
+      <div class="opt" data-target="croup">خُناق/كروب</div>
+      <div class="opt" data-target="bronchiolitis">التهاب قصيبات (رضّع)</div>
+      <div class="opt" data-target="asthma">ربو — هجمة حادة</div>
+      <div class="opt" data-target="pneumonia">ذات رئة مشتبهة</div>
+      <div class="opt" data-target="gastro">إسهال/إقياء — تقدير التجفاف</div>
+      <div class="opt" data-target="appendicitis">ألم بطني — استبعاد الزائدة</div>
+      <div class="opt" data-target="uti">عدوى بولية (UTI)</div>
+      <div class="opt" data-target="kawasaki">كاواساكي — تحرّي</div>
+      <div class="opt" data-target="febrile-seizure">اختلاج حراري</div>
+      <div class="opt" data-target="otitis-externa">ألم أذن خارجي</div>
+      <div class="opt" data-target="poisoning">تسمّم منزلي محتمل</div>
+    </div>
+
+    <p class="hint mt">
+      أعلام طارئة: رضيع &lt; 3 أشهر مع حرارة ≥ 38°م، زرقة/توقف تنفّس، صعوبة تنفس شديدة (انخماص/شروع)، تيبّس رقبة، طفح نقطي أرجواني، خمول واضح/رفض رضاعة، تجفاف شديد (نعاس/غياب دموع/غياب بول &gt; 8 ساعات)، اختلاج &gt; 5 دقائق أو متكرر، ألم بطني شديد مستمر.
+    </p>
+  </section>
+
+  <section class="grid grid-2 mt">
+    <!-- 1) Fever Without Source -->
+    <div class="card hide" id="sec-fws">
+      <h2>حمّى بدون بؤرة — فرز</h2>
+      <div class="row">
+        <div><label>الحرارة ≥ 38°م</label><select id="fwFever"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>العمر &lt; 3 أشهر</label><select id="fwAge3m"><option value="0">لا</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="row">
+        <div><label>مظهر تسمّمي/فتور شديد</label><select id="fwToxic"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>طفح نقطي أرجواني/تيبّس رقبة</label><select id="fwMening"><option value="0">لا</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="actions">
+        <button class="btn primary" onclick="calcFWS()">تقييم الحمى</button>
+        <button class="btn" onclick="exportPDF('fever-no-source')">تصدير PDF</button>
+      </div>
+      <div class="result mt" id="fws-res"></div>
+    </div>
+
+    <!-- 2) Acute Otitis Media -->
+    <div class="card hide" id="sec-aom">
+      <h2>التهاب أذن وسطى حاد</h2>
+      <div class="row">
+        <div><label>ألم أذن/بكاء/شدّ للأذن</label><select id="aoPain"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>حمّى/إقياء/إسهال مرافق</label><select id="aoFeverGI"><option value="0">لا</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="row">
+        <div><label>عمر &lt; سنتين أو ثنائي الجانب</label><select id="aoUnder2"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>سيلان قيحي من الأذن</label><select id="aoOtorrhea"><option value="0">لا</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="actions">
+        <button class="btn primary" onclick="calcAOM()">تقييم الأذن الوسطى</button>
+        <button class="btn" onclick="exportPDF('acute-otitis-media')">تصدير PDF</button>
+      </div>
+      <div class="result mt" id="aom-res"></div>
+    </div>
+
+    <!-- 3) Strep Pharyngitis -->
+    <div class="card hide" id="sec-strep">
+      <h2>التهاب حلق بكتيري (Strep)</h2>
+      <div class="row-3">
+        <div><label>حمّى</label><select id="stFever"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>غياب السعال</label><select id="stNoCough"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>قيح لوزي/تورّم عقد</label><select id="stExudLN"><option value="0">لا</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="actions">
+        <button class="btn primary" onclick="calcStrep()">تقييم الحلق</button>
+        <button class="btn" onclick="exportPDF('strep-throat')">تصدير PDF</button>
+      </div>
+      <div class="result mt" id="strep-res"></div>
+    </div>
+
+    <!-- 4) Croup -->
+    <div class="card hide" id="sec-croup">
+      <h2>خُناق/كروب — سعال نباحي</h2>
+      <div class="row">
+        <div><label>سعال نباحي/بحّة</label><select id="crBark"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>صرير شهيقي (راحة؟)</label><select id="crStridor"><option value="0">لا</option><option value="1">نعم/في الراحة</option></select></div>
+      </div>
+      <div class="row">
+        <div><label>انخماصات/زُرقة/تعب تنفسي</label><select id="crDistress"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>عمر 6–36 شهرًا</label><select id="crAgeBand"><option value="0">خارج الفئة</option><option value="1">ضمن الفئة</option></select></div>
+      </div>
+      <div class="actions">
+        <button class="btn primary" onclick="calcCroup()">تقييم الكروب</button>
+        <button class="btn" onclick="exportPDF('croup')">تصدير PDF</button>
+      </div>
+      <div class="result mt" id="croup-res"></div>
+    </div>
+
+    <!-- 5) Bronchiolitis -->
+    <div class="card hide" id="sec-bronchiolitis">
+      <h2>التهاب قصيبات (رضّع)</h2>
+      <div class="row">
+        <div><label>عمر &lt; 24 شهرًا</label><select id="brUnder2"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>صفير/سعال/صعوبة رضاعة</label><select id="brWheezeFeed"><option value="0">لا</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="row">
+        <div><label>توقف تنفّس/زُرقة/سابق خُداج</label><select id="brRisk"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>تجفاف/قلة بول</label><select id="brDehyd"><option value="0">لا</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="actions">
+        <button class="btn primary" onclick="calcBronchiolitis()">تقييم القصيبات</button>
+        <button class="btn" onclick="exportPDF('bronchiolitis')">تصدير PDF</button>
+      </div>
+      <div class="result mt" id="bronchiolitis-res"></div>
+    </div>
+
+    <!-- 6) Asthma exacerbation -->
+    <div class="card hide" id="sec-asthma">
+      <h2>ربو — هجمة حادة</h2>
+      <div class="row">
+        <div><label>صفير/سعال/ضيق نفس</label><select id="asWheeze"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>يتكلم كلمات فقط/انخماصات</label><select id="asSevere"><option value="0">لا</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="row">
+        <div><label>استجابة ضعيفة لموسّع خلال 20-30د</label><select id="asPoorResp"><option value="0">لا/غير مجرّب</option><option value="1">نعم</option></select></div>
+        <div><label>سوابق تنويم/عناية مشددة</label><select id="asICU"><option value="0">لا</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="actions">
+        <button class="btn primary" onclick="calcAsthma()">تقييم الربو</button>
+        <button class="btn" onclick="exportPDF('asthma-exacerbation')">تصدير PDF</button>
+      </div>
+      <div class="result mt" id="asthma-res"></div>
+    </div>
+
+    <!-- 7) Pneumonia -->
+    <div class="card hide" id="sec-pneumonia">
+      <h2>ذات رئة مشتبهة</h2>
+      <div class="row">
+        <div><label>حمّى/سعال + تسرّع نفس/سُحُب قفص</label><select id="pnFast"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>أزيز أم خرخشة موضعية/ألم صدري</label><select id="pnFocal"><option value="0">لا</option><option value="1">نعم/بؤري</option></select></div>
+      </div>
+      <div class="row">
+        <div><label>عمر &lt; 5 سنوات</label><select id="pnUnder5"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>صعوبة شرب/تجفاف</label><select id="pnDehyd"><option value="0">لا</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="actions">
+        <button class="btn primary" onclick="calcPneumonia()">تقييم ذات الرئة</button>
+        <button class="btn" onclick="exportPDF('pneumonia')">تصدير PDF</button>
+      </div>
+      <div class="result mt" id="pneumonia-res"></div>
+    </div>
+
+    <!-- 8) Gastroenteritis & Dehydration -->
+    <div class="card hide" id="sec-gastro">
+      <h2>إسهال/إقياء — تقدير التجفاف</h2>
+      <div class="row-3">
+        <div><label>عيون غائرة/دموع غائبة</label><select id="gaEyesTears"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>جفاف فم/عطش شديد</label><select id="gaMouth"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>بول منذ &gt; 8 ساعات</label><select id="gaUrine"><option value="0">لا</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="row">
+        <div><label>ترجيع متكرر يمنع الشرب</label><select id="gaVomiting"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>دم في البراز/حمّى عالية</label><select id="gaBloodFever"><option value="0">لا</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="actions">
+        <button class="btn primary" onclick="calcGastro()">تقييم التجفاف</button>
+        <button class="btn" onclick="exportPDF('gastroenteritis')">تصدير PDF</button>
+      </div>
+      <div class="result mt" id="gastro-res"></div>
+    </div>
+
+    <!-- 9) Appendicitis screen -->
+    <div class="card hide" id="sec-appendicitis">
+      <h2>ألم بطني — استبعاد الزائدة</h2>
+      <div class="row">
+        <div><label>ألم مهاجر حول السرة → يمين سفلي</label><select id="apMigr"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>نقص شهية/قياء ثم ألم</label><select id="apAnorexVom"><option value="0">لا</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="row">
+        <div><label>إيلام نقري/قفز يزيد الألم</label><select id="apRebHop"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>حمّى/إسهال شديد</label><select id="apFeverDiarr"><option value="0">لا</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="actions">
+        <button class="btn primary" onclick="calcAppendicitis()">تقييم الزائدة</button>
+        <button class="btn" onclick="exportPDF('appendicitis-screen')">تصدير PDF</button>
+      </div>
+      <div class="result mt" id="appendicitis-res"></div>
+    </div>
+
+    <!-- 10) UTI -->
+    <div class="card hide" id="sec-uti">
+      <h2>عدوى بولية (UTI)</h2>
+      <div class="row">
+        <div><label>حرقة/تكرار/ألم بطني سفلي</label><select id="utDysuria"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>حمّى بدون بؤرة (خاصة &lt; عامين)</label><select id="utFeverNoSrc"><option value="0">لا</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="row">
+        <div><label>نكسات/شذوذ بولي معروف</label><select id="utAnom"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>ألم خاصرة/إقياء (بيرلونفرايت؟)</label><select id="utFlankVom"><option value="0">لا</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="actions">
+        <button class="btn primary" onclick="calcUTI()">تقييم UTI</button>
+        <button class="btn" onclick="exportPDF('pediatric-uti')">تصدير PDF</button>
+      </div>
+      <div class="result mt" id="uti-res"></div>
+    </div>
+
+    <!-- 11) Kawasaki -->
+    <div class="card hide" id="sec-kawasaki">
+      <h2>كاواساكي — تحرّي</h2>
+      <div class="row">
+        <div><label>حمّى ≥ 5 أيام</label><select id="kwFever5"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>عينان محمرتان دون قيح</label><select id="kwEye"><option value="0">لا</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="row">
+        <div><label>طفح متعدد الأشكال</label><select id="kwRash"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>فم أحمر/لسان فراولي/تشقق شفتين</label><select id="kwMouth"><option value="0">لا</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="row">
+        <div><label>تورّم/احمرار كفّين/قدمين</label><select id="kwExt"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>عقدة عنقية &gt; 1.5 سم</label><select id="kwLN"><option value="0">لا</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="actions">
+        <button class="btn primary" onclick="calcKawasaki()">تقييم كاواساكي</button>
+        <button class="btn" onclick="exportPDF('kawasaki')">تصدير PDF</button>
+      </div>
+      <div class="result mt" id="kawasaki-res"></div>
+    </div>
+
+    <!-- 12) Febrile Seizure -->
+    <div class="card hide" id="sec-febrile-seizure">
+      <h2>اختلاج حراري</h2>
+      <div class="row">
+        <div><label>مدّة ≤ 15 دقيقة (نموذجي بسيط)</label><select id="fsSimple"><option value="0">لا/أطول</option><option value="1">نعم</option></select></div>
+        <div><label>مرة واحدة خلال 24 ساعة</label><select id="fsOnce"><option value="0">لا/متكرر</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="row">
+        <div><label>عمر 6–60 شهرًا</label><select id="fsAge"><option value="0">خارج الفئة</option><option value="1">ضمن الفئة</option></select></div>
+        <div><label>أعراض سحائية/نقص وعي بعد النوبة</label><select id="fsRed"><option value="0">لا</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="actions">
+        <button class="btn primary" onclick="calcFebrileSeizure()">تقييم الاختلاج الحراري</button>
+        <button class="btn" onclick="exportPDF('febrile-seizure')">تصدير PDF</button>
+      </div>
+      <div class="result mt" id="febrile-seizure-res"></div>
+    </div>
+
+    <!-- 13) Otitis externa -->
+    <div class="card hide" id="sec-otitis-externa">
+      <h2>ألم أذن خارجي (التهاب مجرى السمع)</h2>
+      <div class="row">
+        <div><label>ألم مع سحب الصيوان/سباحة مؤخّرًا</label><select id="oxPullSwim"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>إفرازات/حكّة</label><select id="oxDisItch"><option value="0">لا</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="actions">
+        <button class="btn primary" onclick="calcOtitisExterna()">تقييم الأذن الخارجية</button>
+        <button class="btn" onclick="exportPDF('otitis-externa')">تصدير PDF</button>
+      </div>
+      <div class="result mt" id="otitis-externa-res"></div>
+    </div>
+
+    <!-- 14) Poisoning -->
+    <div class="card hide" id="sec-poisoning">
+      <h2>تسمّم منزلي محتمل</h2>
+      <div class="row">
+        <div><label>ابتلاع دواء/منظف/مبيد محتمل</label><select id="poIngest"><option value="0">لا/غير مؤكد</option><option value="1">نعم/مرجّح</option></select></div>
+        <div><label>أعراض: قياء شديد/نعاس/اختلاجات</label><select id="poSymptoms"><option value="0">لا</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="row">
+        <div><label>زمن &lt; 1 ساعة</label><select id="poTime"><option value="0">أكثر</option><option value="1">أقل من ساعة</option></select></div>
+        <div><label>مادّة معروفة / غير معروفة</label><select id="poKnown"><option value="0">غير معروفة</option><option value="1">معروفة</option></select></div>
+      </div>
+      <div class="actions">
+        <button class="btn primary" onclick="calcPoisoning()">تقييم التسمّم</button>
+        <button class="btn" onclick="exportPDF('poisoning')">تصدير PDF</button>
+      </div>
+      <div class="result mt" id="poisoning-res"></div>
+    </div>
+  </section>
+
+  <section class="glass mt">
+    <p class="hint">هذه الصفحة للتثقيف والفرز الأولي. عند الشك بحالة إسعافية — تواصل مع الإسعاف فورًا.</p>
+  </section>
+</main>
+
+<footer>© <span id="year"></span> حكيم — جميع الحقوق محفوظة.</footer>
+
+<script>
+  // ====== عام ======
+  document.getElementById('year').textContent = new Date().getFullYear();
+  document.querySelectorAll('#chooser .opt').forEach(el=>{
+    el.addEventListener('click', ()=>{
+      document.querySelectorAll('.card').forEach(c=>c.classList.add('hide'));
+      const sec = document.getElementById('sec-'+el.getAttribute('data-target'));
+      if (sec){ sec.classList.remove('hide'); sec.scrollIntoView({behavior:'smooth', block:'start'}); }
+    });
+  });
+
+  // المستخدم
+  function nameVal(){ return document.getElementById('pat-name').value?.trim() || 'بدون اسم'; }
+  function ageVal(){ const n=parseFloat(document.getElementById('pat-age').value); return isNaN(n)? null : Math.min(17.99, Math.max(0,n)); }
+  function sexVal(){
+    const v=document.getElementById('pat-sex').value;
+    return {code:v, label:(v==='male'?'ذكر':'أنثى')};
+  }
+  function userContext(){
+    const age=ageVal(), sex=sexVal();
+    const months = age!=null ? Math.round(age*12) : null;
+    return {
+      name:nameVal(), age, sex, months,
+      neonate: months!=null && months < 1*1, // <1 شهر
+      infant: months!=null && months >=1 && months < 12,
+      toddler: age!=null && age >=1 && age < 3,
+      child: age!=null && age >=3 && age < 12,
+      adolescent: age!=null && age >=12 && age < 18
+    };
+  }
+  function yes(id){ return document.getElementById(id).value==='1'; }
+  function lines(arr){ return `<ul>${arr.map(x=>`<li>${x}</li>`).join('')}</ul>`; }
+  function setLast(obj){ window._last = obj; }
+
+  // ====== صانع الخطط للأطفال ======
+  function buildPlanPeds(domain, ctx, u){
+    const plan=[], rec=[], pharm=[], flags=[];
+    // ملاحظات عمرية عامة
+    if (u.neonate) flags.push('رضيع حديث الولادة: أي حرارة أو خمول — تقييم إسعافي.');
+    if (u.infant && ctx.needHydration) rec.push('رضيع مع علامات تجفاف: قد يحتاج سوائل وريدية — قرار اختصاصي/طوارئ.');
+
+    switch(domain){
+      case 'fws': {
+        if (ctx.age3m) flags.push('حمّى < 3 أشهر — بروتوكول sepsis workup.');
+        if (ctx.mening || ctx.toxic) flags.push('علامات إنتان/سحايا — طارئ.');
+        plan.push('سوائل فموية كافية، ملابس خفيفة، متابعة الحرارة، مراقبة اليقظة والتنفس.');
+        pharm.push('خافض حرارة مناسب للعمر (قرار الطبيب/الصيدلي).');
+        rec.push('تحرّي مصدر: أذن/حلق/بول/صدر؛ راجع فورًا عند تدهور.');
+        return {plan, rec, pharm, flags, assess:'حمّى بدون بؤرة — مراقبة نشطة/تحرّي'};
+      }
+      case 'aom': {
+        const likely = (ctx.under2 || ctx.otorrhea);
+        plan.push('مسكنات ألم مناسبة للعمر، إبقاء الأنف مفتوحًا بمحلول ملحي.');
+        if (likely) pharm.push('مضاد حيوي مبدئي في الفئات عالية الاختطار (قرار الطبيب).');
+        else rec.push('المراقبة 48–72 ساعة مع مسكن ثم إعادة التقييم.');
+        rec.push('عودة فورية عند تورّم خلف الأذن/ميل الرأس (خُشاء).');
+        return {plan, rec, pharm, flags, assess:'التهاب أذن وسطى محتمل — '+(likely?'يميل للعلاج':'قد يراقب')};
+      }
+      case 'strep': {
+        const score = (ctx.fever?1:0)+(ctx.noCough?1:0)+(ctx.exud?1:0)+(u.child?1:0); // مكساك مبسّط
+        plan.push('عزل نسبي حتى 24 ساعة من بدء المضاد إن ثبت التشخيص، سوائل دافئة/غرغرة ملحية.');
+        pharm.push('بنسلين/أموكسيسيلين عند الإيجابية المؤكدة — قرار الطبيب.');
+        pharm.push('حساسية بنسلين: ماكرولايد (أزيثروميسين) — قرار الطبيب.');
+        rec.push('اختبار سريع/زرع حلق لتأكيد التشخيص قبل المضاد.');
+        return {plan, rec, pharm, flags, score, assess:'التهاب حلق عقدي محتمل (درجة مبسّطة: '+score+')'};
+      }
+      case 'croup': {
+        if (ctx.distress) flags.push('صعوبة تنفّس/صرير راحة — قد يحتاج أكسجين/أدرينالين رذاذ.');
+        plan.push('جو رطب/بارد معتدل، تهدئة الطفل، إبقاءه بوضعية مريحة.');
+        pharm.push('ديكساميثازون/بوديزونيد رذاذ للحالات المناسبة — قرار الطبيب.');
+        if (ctx.stridor) pharm.push('أدرينالين رذاذ في القسم الإسعافي عند الشدة — قرار الطبيب.');
+        rec.push('عودة فورًا عند ازرقاق/تفاقم الصرير.');
+        return {plan, rec, pharm, flags, assess:'كروب محتمل'};
+      }
+      case 'bronchiolitis': {
+        if (ctx.risk) flags.push('خداج/انقطاع نفس/زرقة — قد يلزم قبول.');
+        plan.push('غسل أنف ملحي متكرر، تقسيم الرضعات، سوائل كافية، مراقبة التنفس.');
+        rec.push('قياس أكسجة إن أمكن؛ تجنّب مضادات حيوية روتينية.');
+        pharm.push('موسّعات قصبية قد تُجرَّب ويُتابع تأثيرها — قرار الطبيب.');
+        return {plan, rec, pharm, flags, assess:'التهاب قصيبات (الرضّع)'};
+      }
+      case 'asthma': {
+        if (ctx.severe || ctx.icu || ctx.poor) flags.push('هجمة ربو متوسطة-شديدة — بروتوكول قسم طوارئ.');
+        plan.push('خطة إنقاذ: بخّاخ موسّع سريع المفعول عبر حجيرة، تكرار وفق الاستجابة.');
+        pharm.push('SABA (موسّع قصبي سريع)، كورتيكوستيرويد فموي قصير للحالات المتوسطة/الشديدة — قرار الطبيب.');
+        rec.push('مراجعة خطة السيطرة المنزلية/مقياس ذروة الجريان لاحقًا.');
+        return {plan, rec, pharm, flags, assess:'هجمة ربو'};
+      }
+      case 'pneumonia': {
+        if (ctx.dehyd) rec.push('اشتباه تجفاف — سوائل فموية/وريدية بحسب الشدة.');
+        if (ctx.focal) pharm.push('مضاد حيوي مجتمعي التوصية عند الاشتباه الجرثومي — قرار الطبيب.');
+        plan.push('راحة نسبية، خافض حرارة، سوائل، متابعة التنفّس.');
+        flags.push('تسرّع نفس شديد/انخماصات/زُرقة — تقييم عاجل.');
+        return {plan, rec, pharm, flags, assess:'ذات رئة مشتبهة (فيروسي/جرثومي حسب الصورة)'};
+      }
+      case 'gastro': {
+        const signs = (ctx.eyes + ctx.mouth + ctx.urine + ctx.vom + ctx.blood);
+        const severity = signs>=4 ? 'تجفاف شديد' : signs>=2 ? 'تجفاف متوسط' : 'تجفاف خفيف/لا يوجد';
+        if (severity!=='تجفاف خفيف/لا يوجد') flags.push('انتبِه للتجفاف — قد يلزم تقييم سوائل.');
+        plan.push('محلول الإماهة الفموية (ORS) رشفة كل 2–3 دقائق، زيادة تدريجية.');
+        if (ctx.vom) pharm.push('أوندانسيترون تحت إشراف لتسهيل الإماهة — قرار الطبيب.');
+        rec.push('زنك لفترة وجيزة في الإسهال (وفق العمر) — قرار الطبيب.');
+        rec.push('تجنّب مضادات إسهال ممنوعة للأطفال الصغار.');
+        if (ctx.blood) flags.push('دم بالبراز/حمّى عالية — تحرّي جرثومي.');
+        return {plan, rec, pharm, flags, severity, assess:'التهاب معدة/أمعاء مع تقدير التجفاف'};
+      }
+      case 'appendicitis': {
+        const points = (ctx.migr?1:0)+(ctx.anorex?1:0)+(ctx.rebound?1:0)+(ctx.fever?1:0);
+        if (points>=3) flags.push('اشتباه مرتفع بالزائدة — تصوير/جراحة عاجلة.');
+        plan.push('الامتناع عن الطعام والشراب حتى التقييم؛ مسكن مناسب بإشراف.');
+        rec.push('لا مضادّات دون تقييم جراحي؛ تحاليل/إيكو/تصوير.');
+        return {plan, rec, pharm, flags, score:points, assess:'استبعاد الزائدة (درجة مبسّطة: '+points+')'};
+      }
+      case 'uti': {
+        plan.push('تحليل بول مع زراعة قبل المضاد إن أمكن.');
+        if (ctx.flank) flags.push('بيرلونفرايت محتملة — تقييم عاجل.');
+        pharm.push('أموكسيسيلين-كلافولانات/سيفالكسين/تريميثوبريم-سلفا حسب الحساسية المحلية — قرار الطبيب.');
+        rec.push('إيكو كلوي بعد أول UTI في &lt; 2 سنة حسب التوصيات المحلية.');
+        return {plan, rec, pharm, flags, assess:'UTI محتملة'};
+      }
+      case 'kawasaki': {
+        const major = (ctx.eye?1:0)+(ctx.rash?1:0)+(ctx.mouth?1:0)+(ctx.ext?1:0)+(ctx.ln?1:0);
+        if (ctx.fever5 && major>=4) flags.push('معايير كاواساكي كلاسيكية — يحتاج IVIG وتقييم قلبي عاجل.');
+        plan.push('تحاليل التهابية/بولية؛ إيكو قلب مبكر عند الاشتباه.');
+        pharm.push('IVIG + أسبرين بجرعات بروتوكولية — قرار اختصاص قلبية أطفال/أطفال.');
+        rec.push('متابعة قلبية لاحقة لتقييم الشرايين التاجية.');
+        return {plan, rec, pharm, flags, score:major, assess:'تحرّي كاواساكي (عدد المعايير: '+major+')'};
+      }
+      case 'febrile-seizure': {
+        if (!ctx.simple || !ctx.once || !ctx.ageOK || ctx.red) flags.push('اختلاج غير نموذجي/علامات خطورة — تقييم عاجل.');
+        plan.push('إبعاد الأجسام حول الطفل، وضع آمن جانبي، عدم إدخال شيء في الفم.');
+        pharm.push('ديازيبام شرجي/ميدازولام بخاخ للنوبات المطوّلة بإشراف — قرار الطبيب.');
+        rec.push('خافض حرارة لراحة الطفل؛ تثقيف حول النكس؛ تقييم سبب الحمى.');
+        return {plan, rec, pharm, flags, assess: ctx.simple&&ctx.once&&ctx.ageOK&&!ctx.red ? 'اختلاج حراري بسيط' : 'يحتاج تقييم موسّع'};
+      }
+      case 'otitis-externa': {
+        plan.push('تجفيف القناة بلطف، تجنّب السباحة حتى التحسّن.');
+        pharm.push('قطرات مضادّة/كورتيكوستيرويد موضعي للقناة — قرار الطبيب.');
+        rec.push('عدم استخدام عيدان؛ مراجعة عند ألم شديد أو امتداد للوجه.');
+        return {plan, rec, pharm, flags, assess:'التهاب أذن خارجية'};
+      }
+      case 'poisoning': {
+        if (ctx.ingest && ctx.sympt) flags.push('تسمّم عرضي مشتبه — طوارئ/مركز سموم.');
+        plan.push('عدم إحداث الإقياء؛ الاحتفاظ بعبوة المادة؛ تهوية المكان.');
+        pharm.push('فحم منشّط ضمن ساعة لبعض السموم — قرار الطوارئ/مركز السموم.');
+        rec.push('اتصل بمركز السموم واذكر العمر/الوزن/المادة/الزمن.');
+        return {plan, rec, pharm, flags, assess:'تعرّض محتمل لمادة سامة'};
+      }
+    }
+    return {plan, rec, pharm, flags};
+  }
+
+  // ====== عرض موحّد ======
+  function showResult(elId, obj){
+    const u = userContext();
+    const header = `<p>الاسم: <b>${u.name}</b>${u.age!=null? ` — العمر: <b>${u.age.toFixed(1)}</b> سنة`:''} — الجنس: <b>${u.sex.label}</b></p>`;
+    const assess = obj.assess ? `<p><b>التقييم:</b> ${obj.assess}</p>` : '';
+    const sev = obj.severity ? `<p><b>الشدة:</b> ${obj.severity}</p>` : '';
+    const score = (obj.score!==undefined) ? `<p><b>قيمة/درجة:</b> ${obj.score}</p>` : '';
+    const flagsHtml = obj.flags?.length? `<p><b>تنبيهات:</b></p>${lines(obj.flags)}` : '';
+    const planHtml = obj.plan?.length? `<p><b>خطة عامة:</b></p>${lines(obj.plan)}` : '';
+    const recHtml = obj.rec?.length? `<p><b>توصيات موجّهة:</b></p>${lines(obj.rec)}` : '';
+    const pharmHtml = obj.pharm?.length? `<p><b>أمثلة أدوية (قرار الطبيب):</b></p>${lines(obj.pharm)}<p class="hint">لا تبدأ/توقف أي دواء دون طبيب. تختلف الخيارات حسب العمر/الوزن/التحسس.</p>` : '';
+    document.getElementById(elId).innerHTML = header + score + sev + assess + flagsHtml + planHtml + recHtml + pharmHtml;
+    setLast({...obj, user:u});
+  }
+
+  // ====== الحسابات ======
+  function calcFWS(){
+    const fever=yes('fwFever'), age3m=yes('fwAge3m'), toxic=yes('fwToxic'), mening=yes('fwMening');
+    const {plan, rec, pharm, flags, assess} = buildPlanPeds('fws', {age3m, toxic, mening}, userContext());
+    showResult('fws-res', {title:'حمّى بدون بؤرة', assess: fever? assess:'لا توجد حمى حالياً', plan, rec, pharm, flags});
+  }
+  function calcAOM(){
+    const pain=yes('aoPain'), feverGI=yes('aoFeverGI'), under2=yes('aoUnder2'), otorrhea=yes('aoOtorrhea');
+    const {plan, rec, pharm, flags, assess} = buildPlanPeds('aom', {under2, otorrhea}, userContext());
+    showResult('aom-res', {title:'التهاب أذن وسطى', assess: pain? assess:'غير واضح', plan, rec, pharm, flags});
+  }
+  function calcStrep(){
+    const fever=yes('stFever'), noCough=yes('stNoCough'), exud=yes('stExudLN');
+    const {plan, rec, pharm, flags, score, assess} = buildPlanPeds('strep', {fever, noCough, exud}, userContext());
+    showResult('strep-res', {title:'التهاب حلق بكتيري', assess, score, plan, rec, pharm, flags});
+  }
+  function calcCroup(){
+    const bark=yes('crBark'), stridor=yes('crStridor'), distress=yes('crDistress'), ageBand=yes('crAgeBand');
+    const {plan, rec, pharm, flags, assess} = buildPlanPeds('croup', {stridor, distress}, userContext());
+    showResult('croup-res', {title:'خُناق/كروب', assess: bark? assess:'غير واضح', plan, rec, pharm, flags});
+  }
+  function calcBronchiolitis(){
+    const under2=yes('brUnder2'), wheeze=yes('brWheezeFeed'), risk=yes('brRisk'), dehyd=yes('brDehyd');
+    const {plan, rec, pharm, flags, assess} = buildPlanPeds('bronchiolitis', {risk, needHydration:dehyd}, userContext());
+    showResult('bronchiolitis-res', {title:'التهاب قصيبات', assess: (under2&&wheeze)? assess:'غير واضح', plan, rec, pharm, flags});
+  }
+  function calcAsthma(){
+    const wheeze=yes('asWheeze'), severe=yes('asSevere'), poor=yes('asPoorResp'), icu=yes('asICU');
+    const {plan, rec, pharm, flags, assess} = buildPlanPeds('asthma', {severe, poor, icu}, userContext());
+    showResult('asthma-res', {title:'ربو — هجمة', assess: wheeze? assess:'غير واضح', plan, rec, pharm, flags});
+  }
+  function calcPneumonia(){
+    const fast=yes('pnFast'), focal=yes('pnFocal'), under5=yes('pnUnder5'), dehyd=yes('pnDehyd');
+    const {plan, rec, pharm, flags, assess} = buildPlanPeds('pneumonia', {focal, dehyd}, userContext());
+    showResult('pneumonia-res', {title:'ذات رئة', assess: fast? assess:'غير واضح', plan, rec, pharm, flags});
+  }
+  function calcGastro(){
+    const eyes=yes('gaEyesTears'), mouth=yes('gaMouth'), urine=yes('gaUrine'), vom=yes('gaVomiting'), blood=yes('gaBloodFever');
+    const {plan, rec, pharm, flags, severity, assess} = buildPlanPeds('gastro', {eyes:+eyes, mouth:+mouth, urine:+urine, vom:+vom, blood:+blood, needHydration:(+vom + +eyes + +mouth + +urine)>=2}, userContext());
+    showResult('gastro-res', {title:'إسهال/إقياء', assess, severity, plan, rec, pharm, flags});
+  }
+  function calcAppendicitis(){
+    const migr=yes('apMigr'), anorex=yes('apAnorexVom'), rebound=yes('apRebHop'), fever=yes('apFeverDiarr');
+    const {plan, rec, pharm, flags, score, assess} = buildPlanPeds('appendicitis', {migr, anorex, rebound, fever}, userContext());
+    showResult('appendicitis-res', {title:'استبعاد الزائدة', assess, score, plan, rec, pharm, flags});
+  }
+  function calcUTI(){
+    const dys=yes('utDysuria'), fever=noUndefined('utFeverNoSrc'), anom=yes('utAnom'), flank=yes('utFlankVom');
+    const {plan, rec, pharm, flags, assess} = buildPlanPeds('uti', {flank}, userContext());
+    showResult('uti-res', {title:'عدوى بولية', assess: (dys||fever)? assess:'غير واضح', plan, rec, pharm, flags});
+    function noUndefined(id){ return document.getElementById(id).value==='1'; }
+  }
+  function calcKawasaki(){
+    const fever5=yes('kwFever5'), eye=yes('kwEye'), rash=yes('kwRash'), mouth=yes('kwMouth'), ext=yes('kwExt'), ln=yes('kwLN');
+    const {plan, rec, pharm, flags, score, assess} = buildPlanPeds('kawasaki', {fever5, eye, rash, mouth, ext, ln}, userContext());
+    showResult('kawasaki-res', {title:'كاواساكي', assess, score, plan, rec, pharm, flags});
+  }
+  function calcFebrileSeizure(){
+    const simple=yes('fsSimple'), once=yes('fsOnce'), ageOK=yes('fsAge'), red=yes('fsRed');
+    const {plan, rec, pharm, flags, assess} = buildPlanPeds('febrile-seizure', {simple, once, ageOK, red}, userContext());
+    showResult('febrile-seizure-res', {title:'اختلاج حراري', assess, plan, rec, pharm, flags});
+  }
+  function calcOtitisExterna(){
+    const pull=yes('oxPullSwim'), dis=yes('oxDisItch');
+    const {plan, rec, pharm, flags, assess} = buildPlanPeds('otitis-externa', {}, userContext());
+    showResult('otitis-externa-res', {title:'أذن خارجية', assess: (pull||dis)? assess:'غير واضح', plan, rec, pharm, flags});
+  }
+  function calcPoisoning(){
+    const ingest=yes('poIngest'), sympt=yes('poSymptoms'), timeLt1=yes('poTime'), known=yes('poKnown');
+    const {plan, rec, pharm, flags, assess} = buildPlanPeds('poisoning', {ingest, sympt, timeLt1, known}, userContext());
+    showResult('poisoning-res', {title:'تسمّم منزلي', assess, plan, rec, pharm, flags});
+  }
+
+  // ====== PDF ======
+  async function exportPDF(section){
+    const { jsPDF } = window.jspdf;
+    const m = window._last || {title:section, user:userContext(), plan:[], rec:[], pharm:[], flags:[]};
+    const u = m.user || userContext();
+
+    const box = document.createElement('div');
+    box.dir = 'rtl';
+    box.style.cssText = 'width:800px;padding:24px;background:#fff;color:#111;font-family:Cairo,Arial,sans-serif;line-height:1.9;border:1px solid #ddd;border-radius:12px';
+    box.innerHTML = `
+      <h2 style="margin:0 0 10px;font-weight:800">حكيم — ${m.title||section}</h2>
+      <p><b>اسم الطفل:</b> ${u.name || 'بدون اسم'}${u.age!=null? ` — <b>العمر:</b> ${u.age.toFixed(1)} سنة`:''} — <b>الجنس:</b> ${u.sex? u.sex.label : 'غير محدد'}</p>
+      ${m.score!==undefined? `<p><b>قيمة/درجة:</b> ${m.score}</p>`:''}
+      ${m.severity? `<p><b>الشدة:</b> ${m.severity}</p>`:''}
+      ${m.assess? `<p><b>التقييم:</b> ${m.assess}</p>`:''}
+      ${m.flags && m.flags.length? `<p><b>تنبيهات:</b></p><ul>${m.flags.map(x=>`<li>${x}</li>`).join('')}</ul>`:''}
+      ${m.plan && m.plan.length? `<p><b>خطة عامة:</b></p><ul>${m.plan.map(x=>`<li>${x}</li>`).join('')}</ul>`:''}
+      ${m.rec && m.rec.length? `<p><b>توصيات موجّهة:</b></p><ul>${m.rec.map(x=>`<li>${x}</li>`).join('')}</ul>`:''}
+      ${m.pharm && m.pharm.length? `<p><b>أمثلة دوائية (قرار الطبيب):</b></p><ul>${m.pharm.map(x=>`<li>${x}</li>`).join('')}</ul><p style="font-size:12px;color:#555">تنبيه: لا تبدأ/توقف أي دواء دون طبيب. تختلف الخيارات حسب العمر/الوزن/التحسس.</p>`:''}
+      <hr style="margin:12px 0;border:0;border-top:1px solid #ddd"/>
+      <p style="font-size:13px;color:#444">ملف تثقيفي — لا يُغني عن تقييم الطبيب المختص. في الطوارئ يُرجى التواصل الفوري مع الإسعاف.</p>
+    `;
+    document.body.appendChild(box);
+    const canvas = await html2canvas(box, {scale:2, backgroundColor:'#ffffff', useCORS:true});
+    document.body.removeChild(box);
+
+    const pdf = new jsPDF({orientation:'p', unit:'pt', format:'a4'});
+    const pageW = pdf.internal.pageSize.getWidth(), pageH = pdf.internal.pageSize.getHeight(), margin=40;
+    let imgW = pageW - margin*2, imgH = canvas.height * imgW / canvas.width;
+    if (imgH > pageH - margin*2){ const r = (pageH - margin*2) / imgH; imgH*=r; imgW*=r; }
+    pdf.addImage(canvas.toDataURL('image/png'), 'PNG', (pageW-imgW)/2, (pageH-imgH)/2, imgW, imgH);
+    pdf.save(`Hakim-Pediatrics-${(m.title||section).replace(/\s+/g,'_')}-${Date.now()}.pdf`);
+  }
+</script>
+
+<!--
+  الأقسام:
+  - حمّى بدون بؤرة، أذن وسطى، حلق عقدي، كروب، قصيبات،
+    ربو حاد، ذات رئة، إسهال/تجفاف، استبعاد الزائدة، UTI،
+    كاواساكي، اختلاج حراري، أذن خارجية، تسمّم.
+  - أمثلة أدوية دون جرعات وبصيغة "قرار الطبيب" التزامًا بالسلامة.
+-->
+</body>
+</html>

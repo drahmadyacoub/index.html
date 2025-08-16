@@ -1,0 +1,710 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>حكيم — النساء والتوليد | تقييمات ذكية + PDF</title>
+  <meta name="description" content="حكيم — النساء والتوليد: نزف/ألم الثلث الأول من الحمل، ما قبل الإرجاج، نزول سائل/حركة الجنين، فرط قياء حملي، UTI حامل، التهاب مهبل/إفرازات، اضطراب الدورة/PCOS، ألم حوض/انتباذ بطانة، كيس مبيضي، عسرة جماع، نزف بين الدورات، سن الإياس، تنظيم الأسرة، إنذارات ما بعد الولادة.">
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;800&display=swap" rel="stylesheet">
+  <!-- PDF libs -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" referrerpolicy="no-referrer"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js" referrerpolicy="no-referrer"></script>
+
+  <style>
+    :root{
+      --bg:#07090f; --txt:#e8ecff; --muted:#aab2d8;
+      --primary:#7aa2ff; --primary-2:#00e0ff; --accent:#a855f7;
+      --glass:rgba(255,255,255,.06); --border:rgba(255,255,255,.12);
+    }
+    *{box-sizing:border-box}
+    body{margin:0; font-family:'Cairo',system-ui,'Noto Sans Arabic',sans-serif; background:#07090f; color:var(--txt); line-height:1.9}
+    header{position:sticky; top:0; z-index:50; display:flex; align-items:center; justify-content:space-between; padding:14px 20px; backdrop-filter:saturate(140%) blur(8px); background:linear-gradient(180deg, rgba(15,16,40,.85), rgba(15,16,40,.45)); border-bottom:1px solid var(--border)}
+    .brand{display:flex; gap:12px; align-items:center}
+    .logo{width:42px; height:42px; border-radius:12px; display:grid; place-items:center; font-weight:800; background: radial-gradient(120% 120% at 0% 0%, var(--primary), var(--accent)); box-shadow: 0 0 24px rgba(122,162,255,.35), inset 0 0 18px rgba(255,255,255,.15)}
+    .brand-text strong{display:block; font-size:18px}
+    .brand-text span{display:block; font-size:12px; color:var(--muted)}
+    .container{width:min(1180px,94vw); margin-inline:auto}
+    h1{font-size:clamp(22px,4vw,34px); margin:22px 0 6px}
+    .sub{color:#cfd6ff; margin:0 0 12px}
+    .glass{background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03)); border:1px solid var(--border); border-radius:22px; padding:22px; box-shadow:0 30px 60px rgba(0,10,40,.35)}
+    .grid{display:grid; gap:16px}
+    .grid-2{grid-template-columns:1fr}
+    @media(min-width:1000px){.grid-2{grid-template-columns:1fr 1fr}}
+    .choose{display:grid; gap:12px; grid-template-columns:repeat(2,1fr)}
+    @media(min-width:1000px){.choose{grid-template-columns:repeat(4,1fr)}}
+    .opt{background:rgba(255,255,255,.04); border:1px solid var(--border); border-radius:16px; padding:14px; text-align:center; cursor:pointer; transition:transform .18s ease, border-color .18s ease; min-height:110px; display:grid; place-items:center; font-weight:700}
+    .opt:hover{transform:translateY(-3px); border-color:rgba(122,162,255,.6)}
+    .card{border:1px solid var(--border); border-radius:18px; background:rgba(255,255,255,0.04); padding:18px}
+    label{font-weight:600}
+    select, input[type="number"], input[type="text"], input[type="date"]{width:100%; padding:10px 12px; border-radius:12px; border:1px solid var(--border); background:rgba(255,255,255,0.03); color:var(--txt)}
+    .row{display:grid; gap:12px; grid-template-columns:1fr}
+    @media(min-width:680px){.row{grid-template-columns:repeat(2,1fr)}}
+    .row-3{display:grid; gap:12px; grid-template-columns:repeat(3,1fr)}
+    .actions{display:flex; gap:10px; flex-wrap:wrap; margin-top:12px}
+    .btn{padding:10px 14px; border-radius:12px; border:1px solid var(--border); background:var(--glass); color:var(--txt); cursor:pointer; font-weight:700; transition:transform .2s ease, background .2s ease}
+    .btn.primary{background:linear-gradient(135deg, var(--primary), var(--primary-2)); border-color:transparent}
+    .btn:hover{transform:translateY(-2px)}
+    .result{padding:14px; border:1px solid var(--border); border-radius:14px; background:rgba(255,255,255,.03)}
+    .hint{font-size:13px; color:#b8c0ef}
+    footer{text-align:center; padding:22px; color:#aab2d8; font-size:13px; border-top:1px solid var(--border); margin-top:24px}
+    .mt{margin-top:10px}.hide{display:none}
+  </style>
+</head>
+<body>
+<header>
+  <div class="brand">
+    <div class="logo">حكيم</div>
+    <div class="brand-text">
+      <strong>حكيم — النساء والتوليد</strong>
+      <span>تقييمات مؤتمتة دقيقة + PDF</span>
+    </div>
+  </div>
+  <nav class="actions" style="margin:0">
+    <a class="btn" href="index.html">الصفحة الرئيسية</a>
+  </nav>
+</header>
+
+<main class="container">
+  <section class="glass">
+    <h1>النساء والتوليد — اختر الحالة</h1>
+    <p class="sub">أدخلي بياناتك ثم اختاري الحالة. ستظهر <b>خطة إرشادية + أمثلة أدوية (بدون جرعات)</b> للمراجعة مع الطبيب.</p>
+
+    <div class="row">
+      <div><label>الاسم:</label><input id="pat-name" type="text" placeholder="مثال: يمانة"/></div>
+      <div><label>العمر (سنوات):</label><input id="pat-age" type="number" min="10" max="70" placeholder="28"/></div>
+    </div>
+
+    <div class="row">
+      <div>
+        <label>الحالة الإنجابية:</label>
+        <select id="rep-status">
+          <option value="not_pregnant">غير حامل</option>
+          <option value="pregnant">حامل</option>
+          <option value="postpartum">نِفاس (≤ 6 أسابيع بعد الولادة)</option>
+        </select>
+      </div>
+      <div id="lmp-wrap" class="hide">
+        <label>تاريخ آخر دورة (LMP):</label>
+        <input id="lmp" type="date"/>
+      </div>
+    </div>
+
+    <div class="row">
+      <div id="lact-wrap" class="hide">
+        <label>إرضاع طبيعي؟</label>
+        <select id="lactating">
+          <option value="0">لا</option>
+          <option value="1">نعم</option>
+        </select>
+      </div>
+      <div>
+        <label>حالات سابقة مهمة (اختياري):</label>
+        <input id="hx" type="text" placeholder="ضغط/سكري/صداع نصفي/جلطات..."/>
+      </div>
+    </div>
+
+    <div class="choose" id="chooser">
+      <div class="opt" data-target="ft1b">حمل — نزف/ألم الثلث الأول</div>
+      <div class="opt" data-target="preeclampsia">حمل — ارتفاع ضغط/وذم/صداع (ما قبل الإرجاج)</div>
+      <div class="opt" data-target="prom">حمل — نزول سائل/حركة جنين قليلة</div>
+      <div class="opt" data-target="hyperemesis">حمل — فرط قياء حملي</div>
+      <div class="opt" data-target="uti-preg">حمل — عدوى بولية</div>
+      <div class="opt" data-target="vaginitis">التهاب مهبل/إفرازات</div>
+      <div class="opt" data-target="irreg-pcos">اضطراب دورة/تكيس مبايض</div>
+      <div class="opt" data-target="pelvic-pain">ألم حوض مزمن/انتباذ بطانة</div>
+      <div class="opt" data-target="ovarian-cyst">كيس مبيضي (غير حامل)</div>
+      <div class="opt" data-target="dyspareunia">عُسرة الجماع</div>
+      <div class="opt" data-target="abn-bleeding">نزف بين الدورات/بعد الجماع</div>
+      <div class="opt" data-target="menopause">سن الإياس وأعراضه</div>
+      <div class="opt" data-target="contraception">تنظيم الأسرة — اختيار مانع حمل</div>
+      <div class="opt" data-target="postpartum">ما بعد الولادة — إنذارات وخطة</div>
+    </div>
+
+    <p class="hint mt">
+      أعلام طارئة في أي وقت: نزف شديد متواصل، إغماء/دوخة شديدة، ألم حاد وحيد الجانب، حرارة ≥ 38°م، نزول سائل غزير مع نقص حركة الجنين، صداع شديد مفاجئ/زغللة، ألم شديد أعلى البطن الأيمن، ضيق نفس/ألم صدري/تورم ساق أحادي، أفكار إيذاء النفس بعد الولادة.
+    </p>
+  </section>
+
+  <section class="grid grid-2 mt">
+    <!-- 1) First-trimester bleeding/pain -->
+    <div class="card hide" id="sec-ft1b">
+      <h2>حمل — نزف/ألم بالثلث الأول</h2>
+      <div class="row">
+        <div><label>نزف مهبلي</label><select id="ftbBleed"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>ألم وحيد الجانب بالحوض</label><select id="ftbUni"><option value="0">لا</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="row">
+        <div><label>دوار/إغماء</label><select id="ftbSyn"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>تمرير خثرات/أنسجة</label><select id="ftbTissue"><option value="0">لا</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="actions">
+        <button class="btn primary" onclick="calcFT1B()">تقييم الثلث الأول</button>
+        <button class="btn" onclick="exportPDF('first-trimester-bleeding')">تصدير PDF</button>
+      </div>
+      <div class="result mt" id="ft1b-res"></div>
+    </div>
+
+    <!-- 2) Preeclampsia screen -->
+    <div class="card hide" id="sec-preeclampsia">
+      <h2>حمل — ما قبل الإرجاج (بعد 20 أسبوع)</h2>
+      <div class="row">
+        <div><label>قياس ضغط مرتفع</label><select id="prHTN"><option value="0">لا/غير معروف</option><option value="1">نعم</option></select></div>
+        <div><label>صداع شديد/زغللة</label><select id="prNeuro"><option value="0">لا</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="row">
+        <div><label>ألم أعلى البطن الأيمن/غثيان مفاجئ</label><select id="prRUQ"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>تورّم مفاجئ بالوجه/اليدين</label><select id="prEdema"><option value="0">لا</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="actions">
+        <button class="btn primary" onclick="calcPreeclampsia()">تقييم ما قبل الإرجاج</button>
+        <button class="btn" onclick="exportPDF('preeclampsia-screen')">تصدير PDF</button>
+      </div>
+      <div class="result mt" id="preeclampsia-res"></div>
+    </div>
+
+    <!-- 3) PROM / decreased movements -->
+    <div class="card hide" id="sec-prom">
+      <h2>حمل — نزول سائل/قلة حركة جنين</h2>
+      <div class="row">
+        <div><label>نزول سائل مهبلي مستمر</label><select id="pmLeak"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>حركة جنين قليلة</label><select id="pmMovesLow"><option value="0">لا</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="row">
+        <div><label>نزف/مغص منتظم</label><select id="pmBleedPain"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>حرارة/رائحة كريهة</label><select id="pmFeverOdor"><option value="0">لا</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="actions">
+        <button class="btn primary" onclick="calcPROM()">تقييم السائل/الحركة</button>
+        <button class="btn" onclick="exportPDF('prom-movements')">تصدير PDF</button>
+      </div>
+      <div class="result mt" id="prom-res"></div>
+    </div>
+
+    <!-- 4) Hyperemesis -->
+    <div class="card hide" id="sec-hyperemesis">
+      <h2>حمل — فرط قياء حملي</h2>
+      <div class="row">
+        <div><label>قياء ≥ 3 مرات/يوم</label><select id="hyFreq"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>فقدان وزن/قلّة بول/بول غامق</label><select id="hyDehyd"><option value="0">لا</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="row">
+        <div><label>دوخة/إغماء</label><select id="hySyn"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>عدم تحمّل سوائل</label><select id="hyNoPO"><option value="0">لا</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="actions">
+        <button class="btn primary" onclick="calcHyperemesis()">تقييم القياء</button>
+        <button class="btn" onclick="exportPDF('hyperemesis')">تصدير PDF</button>
+      </div>
+      <div class="result mt" id="hyperemesis-res"></div>
+    </div>
+
+    <!-- 5) UTI in pregnancy -->
+    <div class="card hide" id="sec-uti-preg">
+      <h2>حمل — عدوى بولية</h2>
+      <div class="row">
+        <div><label>حرقة/تكرار البول</label><select id="upDys"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>ألم خاصرة/حرارة (بيرلونفرايت؟)</label><select id="upFlankFever"><option value="0">لا</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="row">
+        <div><label>نزف بولي</label><select id="upHem"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>انتكاسات سابقة</label><select id="upRecur"><option value="0">لا</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="actions">
+        <button class="btn primary" onclick="calcUTIPreg()">تقييم UTI</button>
+        <button class="btn" onclick="exportPDF('pregnancy-uti')">تصدير PDF</button>
+      </div>
+      <div class="result mt" id="uti-preg-res"></div>
+    </div>
+
+    <!-- 6) Vaginitis -->
+    <div class="card hide" id="sec-vaginitis">
+      <h2>التهاب مهبل/إفرازات</h2>
+      <div class="row">
+        <div><label>إفرازات غير طبيعية</label><select id="vgDis"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>رائحة كريهة</label><select id="vgOdor"><option value="0">لا</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="row">
+        <div><label>حكّة/حرقة مهبلية</label><select id="vgItch"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>ألم بالجماع</label><select id="vgDysp"><option value="0">لا</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="actions">
+        <button class="btn primary" onclick="calcVaginitis()">تقييم الإفرازات</button>
+        <button class="btn" onclick="exportPDF('vaginitis')">تصدير PDF</button>
+      </div>
+      <div class="result mt" id="vaginitis-res"></div>
+    </div>
+
+    <!-- 7) Irregular cycles / PCOS -->
+    <div class="card hide" id="sec-irreg-pcos">
+      <h2>اضطراب دورة/تكيس مبايض (غير حامل)</h2>
+      <div class="row">
+        <div><label>دورات &gt; 35 يوم أو &lt; 21 يوم</label><select id="pcIrreg"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>حب شباب/شعرانية</label><select id="pcHyper"><option value="0">لا</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="row">
+        <div><label>زيادة وزن/مقاومة أنسولين</label><select id="pcMet"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>رغبة بحمل قريب</label><select id="pcFert"><option value="0">لا</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="actions">
+        <button class="btn primary" onclick="calcPCOS()">تقييم الاضطراب</button>
+        <button class="btn" onclick="exportPDF('irregular-cycles-pcos')">تصدير PDF</button>
+      </div>
+      <div class="result mt" id="irreg-pcos-res"></div>
+    </div>
+
+    <!-- 8) Pelvic pain / Endometriosis -->
+    <div class="card hide" id="sec-pelvic-pain">
+      <h2>ألم حوض مزمن/انتباذ بطانة</h2>
+      <div class="row">
+        <div><label>ألم دوري شديد يسبق الطمث</label><select id="ppCyclic"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>ألم بالجماع العميق</label><select id="ppDeepDysp"><option value="0">لا</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="row">
+        <div><label>عقم/تأخر حمل</label><select id="ppInf"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>نزف غزير/تكتلات</label><select id="ppHeavy"><option value="0">لا</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="actions">
+        <button class="btn primary" onclick="calcPelvicPain()">تقييم الألم</button>
+        <button class="btn" onclick="exportPDF('pelvic-pain-endometriosis')">تصدير PDF</button>
+      </div>
+      <div class="result mt" id="pelvic-pain-res"></div>
+    </div>
+
+    <!-- 9) Ovarian cyst -->
+    <div class="card hide" id="sec-ovarian-cyst">
+      <h2>كيس مبيضي (غير حامل)</h2>
+      <div class="row">
+        <div><label>ألم حاد أحادي الجانب</label><select id="ocUnilat"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>غثيان/إقياء شديد (التواء؟)</label><select id="ocNV"><option value="0">لا</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="row">
+        <div><label>ألم بعد جهد/جماع</label><select id="ocAfter"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>انتفاخ/امتلاء حوض</label><select id="ocFull"><option value="0">لا</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="actions">
+        <button class="btn primary" onclick="calcOvarianCyst()">تقييم الكيس</button>
+        <button class="btn" onclick="exportPDF('ovarian-cyst')">تصدير PDF</button>
+      </div>
+      <div class="result mt" id="ovarian-cyst-res"></div>
+    </div>
+
+    <!-- 10) Dyspareunia -->
+    <div class="card hide" id="sec-dyspareunia">
+      <h2>عُسرة الجماع</h2>
+      <div class="row">
+        <div><label>ألم سطحي عند المدخل</label><select id="dySurf"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>ألم عميق</label><select id="dyDeep"><option value="0">لا</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="row">
+        <div><label>جفاف/حكّة</label><select id="dyDry"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>قلق/توتر/تشنّج عضلات قاع الحوض</label><select id="dyPF"><option value="0">لا</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="actions">
+        <button class="btn primary" onclick="calcDyspareunia()">تقييم العسرة</button>
+        <button class="btn" onclick="exportPDF('dyspareunia')">تصدير PDF</button>
+      </div>
+      <div class="result mt" id="dyspareunia-res"></div>
+    </div>
+
+    <!-- 11) Abnormal bleeding -->
+    <div class="card hide" id="sec-abn-bleeding">
+      <h2>نزف بين الدورات/بعد الجماع (غير حامل)</h2>
+      <div class="row">
+        <div><label>نزف بعد الجماع</label><select id="abPostCoit"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>دورات غير منتظمة/غزيرة</label><select id="abIrHeavy"><option value="0">لا</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="row">
+        <div><label>ألم حوض/إفرازات غير طبيعية</label><select id="abPainDis"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>عوامل خطورة (سن &gt; 45/سمنة/تكيس)</label><select id="abRisk"><option value="0">لا</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="actions">
+        <button class="btn primary" onclick="calcAbnBleeding()">تقييم النزف</button>
+        <button class="btn" onclick="exportPDF('abnormal-uterine-bleeding')">تصدير PDF</button>
+      </div>
+      <div class="result mt" id="abn-bleeding-res"></div>
+    </div>
+
+    <!-- 12) Menopause -->
+    <div class="card hide" id="sec-menopause">
+      <h2>سن الإياس/ما حول الإياس</h2>
+      <div class="row">
+        <div><label>هبات سخنة/تعرّق ليلي</label><select id="mnHot"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>اضطراب نوم/مزاج</label><select id="mnSleepMood"><option value="0">لا</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="row">
+        <div><label>جفاف مهبلي/ألم بالجماع</label><select id="mnGSM"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>موانع هرمونات (جلطات/سرطان ثدي...)</label><select id="mnContra"><option value="0">لا/غير معروف</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="actions">
+        <button class="btn primary" onclick="calcMenopause()">تقييم الإياس</button>
+        <button class="btn" onclick="exportPDF('menopause')">تصدير PDF</button>
+      </div>
+      <div class="result mt" id="menopause-res"></div>
+    </div>
+
+    <!-- 13) Contraception -->
+    <div class="card hide" id="sec-contraception">
+      <h2>تنظيم الأسرة — اختيار مانع حمل</h2>
+      <div class="row">
+        <div><label>مدخنة ≥ 35 سنة</label><select id="ctSmoke35"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>شقيقة مع أورة</label><select id="ctAura"><option value="0">لا</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="row">
+        <div><label>سوابق جلطة/ضغط مرتفع غير مضبوط</label><select id="ctVTE"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>نِفاس وإرضاع</label><select id="ctLact"><option value="0">لا</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="actions">
+        <button class="btn primary" onclick="calcContraception()">اقتراح مبدئي</button>
+        <button class="btn" onclick="exportPDF('contraception')">تصدير PDF</button>
+      </div>
+      <div class="result mt" id="contraception-res"></div>
+    </div>
+
+    <!-- 14) Postpartum -->
+    <div class="card hide" id="sec-postpartum">
+      <h2>ما بعد الولادة — إنذارات وخطة</h2>
+      <div class="row">
+        <div><label>نزف شديد/خثرات كبيرة</label><select id="ppHem"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>حرارة/قشعريرة/رائحة كريهة للنفاس</label><select id="ppFeverOdor"><option value="0">لا</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="row">
+        <div><label>ألم ساق أحادي/تورّم</label><select id="ppDVT"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>حزن شديد/أفكار مؤذية</label><select id="ppMood"><option value="0">لا</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="actions">
+        <button class="btn primary" onclick="calcPostpartum()">تقييم النفاس</button>
+        <button class="btn" onclick="exportPDF('postpartum')">تصدير PDF</button>
+      </div>
+      <div class="result mt" id="postpartum-res"></div>
+    </div>
+  </section>
+
+  <section class="glass mt">
+    <p class="hint">هذه الصفحة للتثقيف والفرز الأولي. عند الشك بحالة إسعافية — تواصلي مع الإسعاف فورًا.</p>
+  </section>
+</main>
+
+<footer>© <span id="year"></span> حكيم — جميع الحقوق محفوظة.</footer>
+
+<script>
+  // ====== عام/واجهة ======
+  document.getElementById('year').textContent = new Date().getFullYear();
+  const rep = document.getElementById('rep-status');
+  const lmpWrap = document.getElementById('lmp-wrap');
+  const lactWrap = document.getElementById('lact-wrap');
+  rep.addEventListener('change', ()=>{
+    lmpWrap.classList.toggle('hide', rep.value!=='pregnant');
+    lactWrap.classList.toggle('hide', rep.value!=='postpartum');
+  });
+
+  document.querySelectorAll('#chooser .opt').forEach(el=>{
+    el.addEventListener('click', ()=>{
+      document.querySelectorAll('.card').forEach(c=>c.classList.add('hide'));
+      const sec = document.getElementById('sec-'+el.getAttribute('data-target'));
+      if (sec){ sec.classList.remove('hide'); sec.scrollIntoView({behavior:'smooth', block:'start'}); }
+    });
+  });
+
+  // ====== بيانات المستخدم ======
+  function nameVal(){ return document.getElementById('pat-name').value?.trim() || 'بدون اسم'; }
+  function ageVal(){ const n=parseInt(document.getElementById('pat-age').value,10); return isNaN(n)? null : Math.min(70, Math.max(10,n)); }
+  function repStatus(){ return document.getElementById('rep-status').value; }
+  function lmpVal(){ return document.getElementById('lmp').value || null; }
+  function lactVal(){ return document.getElementById('lactating') && document.getElementById('lactating').value==='1'; }
+
+  function weeksFromLMP(iso){
+    if (!iso) return null;
+    const l = new Date(iso+"T00:00:00");
+    const now = new Date();
+    const ms = now - l;
+    if (ms < 0) return null;
+    return Math.floor(ms / (1000*60*60*24*7));
+  }
+
+  function userContext(){
+    const age = ageVal();
+    const status = repStatus();
+    const gaWeeks = status==='pregnant' ? weeksFromLMP(lmpVal()) : null;
+    const trimester = gaWeeks==null ? null : (gaWeeks<13?1: gaWeeks<28?2:3);
+    const ama = age!=null && age>=35; // Advanced maternal age
+    return {
+      name:nameVal(), age, status, gaWeeks, trimester,
+      pregnant: status==='pregnant',
+      postpartum: status==='postpartum',
+      lactating: status==='postpartum' && lactVal(),
+      nonPreg: status==='not_pregnant',
+      ama
+    };
+  }
+
+  function yes(id){ return document.getElementById(id).value==='1'; }
+  function lines(arr){ return `<ul>${arr.map(x=>`<li>${x}</li>`).join('')}</ul>`; }
+  function setLast(obj){ window._last = obj; }
+
+  // ====== صانع الخطط — نساء وتوليد ======
+  function buildPlanGyn(domain, ctx, u){
+    const plan=[], rec=[], pharm=[], flags=[];
+    // ملاحظات عامة
+    if (u.pregnant && u.gaWeeks==null) rec.push('يرجى إدخال تاريخ آخر دورة لحساب عمر الحمل بدقة.');
+    if (u.ama) rec.push('العمر ≥ 35 سنة: متابعة الحمل قد تحتاج فحوص إضافية.');
+    if (u.postpartum && u.lactating) rec.push('إرضاع: انتبهي لأدوية آمنة للرضاعة فقط — قرار الطبيب.');
+
+    switch(domain){
+      case 'ft1b': {
+        if (!u.pregnant) rec.push('الاختبار إيجابي؟ في حال الشك بالحمل قومي باختبار الحمل أو تحاليل β-HCG.');
+        if (ctx.bleed && ctx.uni && ctx.syn) flags.push('اشتباه حمل خارج الرحم — طارئ.');
+        if (ctx.bleed && ctx.tissue) rec.push('قد يكون إجهاضًا في طور الحدوث — يلزم تقييم إسعافي.');
+        plan.push('الراحة النسبية، تجنب الجماع مؤقتًا، تحديد فصيلة الدم (Rh) ومراجعة عاجلة عند تزايد النزف/الألم.');
+        rec.push('تصوير بالأمواج فوق الصوتية + β-HCG تسلسلي لتفريق الحالات (حمل سليم/مهدد/خارج رحم).');
+        pharm.push('مسكن بسيط مناسب للحمل (قرار الطبيب).');
+        return {plan, rec, pharm, flags, assess:'نزف/ألم ثلث أول — فرز مبدئي'};
+      }
+      case 'preeclampsia': {
+        if (!u.pregnant || (u.gaWeeks!=null && u.gaWeeks<20)) rec.push('التشخيص يُبحث غالبًا بعد 20 أسبوع.');
+        if (ctx.htn && (ctx.neuro || ctx.ruq || ctx.edema)) flags.push('اشتباه ما قبل الإرجاج — تقييم مستشفى عاجل.');
+        plan.push('قياس ضغط متكرر، راحة نسبية، مراقبة صداع/إبصار/ألم علوي أيمن/الوذمات.');
+        pharm.push('أدوية ضغط مناسبة للحمل تُقرَّر بالمشفى؛ مغنيسيوم سلفات عند الشدة — قرار اختصاصي.');
+        rec.push('تحاليل بول/وظائف/صفائح + تقييم نمو الجنين/تروية المشيمة.');
+        return {plan, rec, pharm, flags, assess:'فرز ارتفاع ضغط الحمل'};
+      }
+      case 'prom': {
+        if (!u.pregnant) return {plan:['غير حامل: هذه الأسئلة تخص الحمل.'], rec, pharm, flags, assess:'غير حامل'};
+        if (ctx.leak) flags.push('اشتباه تمزق أغشية — تقييم ولادي عاجل.');
+        if (ctx.movesLow && u.gaWeeks!=null && u.gaWeeks>=24) flags.push('قلة حركة جنين — تقييم تخطيط ومراقبة.');
+        if (ctx.feverOdor) flags.push('اشتباه التهاب أغشية — طارئ.');
+        plan.push('تجنّب الجماع والسدادات، ملاحظة لون/كمية السائل، عدّ الحركات.');
+        rec.push('مراجعة فورية لقسم الولادة للتشخيص (اختبار السائل/إيكو/CTG).');
+        pharm.push('مضادات حيوية/كورتيكوستيرويد نضج الرئة حسب العمر الحملي — قرار اختصاصي.');
+        return {plan, rec, pharm, flags, assess:'نزول سائل/حركة قليلة — يحتاج تقييمًا عاجلًا'};
+      }
+      case 'hyperemesis': {
+        if (ctx.dehyd || ctx.nopo || ctx.syn) flags.push('تجفاف/اختلال شوارد — قد يحتاج سوائل وريدية.');
+        plan.push('جرعات صغيرة متكرّرة من السوائل/الطعام، فيتامين B6 والزنجبيل (بإشراف)، تجنّب المثيرات.');
+        pharm.push('مضاد إقياء آمن للحمل يقرّره الطبيب (دوكسيلامين/بيريدوكسين/أوندانسيترون… حسب الحالة).');
+        rec.push('تحقق من أجسام كيتون بالبول/الشوارد، استبعاد فرط الدرق/LFT عند الشدة.');
+        return {plan, rec, pharm, flags, assess:'فرط قياء حملي — تقدير الشدة'};
+      }
+      case 'uti-preg': {
+        if (ctx.flank) flags.push('بيرلونفرايت مشتبهة — قبول وعلاج وريدي محتمل.');
+        plan.push('شرب سوائل كافٍ، أخذ عينة بول للزرع قبل المضاد إن أمكن.');
+        pharm.push('أموكسيسيلين/سيفالكسين/فوسفوميسين — أمثلة شائعة للحمل (قرار الطبيب).');
+        pharm.push('نيتروفورانتوين خيار لبعض الحالات لكن قد يُجنب قرب نهاية الحمل — قرار الطبيب.');
+        rec.push('تجنّب الفلوروكينولونات/التتراسيكلينات بالحمل.');
+        return {plan, rec, pharm, flags, assess:'UTI أثناء الحمل'};
+      }
+      case 'vaginitis': {
+        plan.push('تجنّب الدوش المهبلي؛ ملابس قطنية؛ تحرّي السكري عند النكس.');
+        if (ctx.odor) rec.push('التهاب مهبل جرثومي محتمل — يحتاج فحص/مسحة.');
+        if (ctx.itch) rec.push('مبيضات محتملة — تحرّي بالمسحة.');
+        pharm.push('ميترونيدازول/كليندامايسين أو آزولات موضعية حسب السبب — قرار الطبيب (خيارات آمنة للحمل متاحة).');
+        rec.push('علاج الشريك في داء المشعرات؛ استبعاد STIs عند الشك.');
+        return {plan, rec, pharm, flags, assess:'التهاب مهبل/إفرازات — تفريق حسب السمات'};
+      }
+      case 'irreg-pcos': {
+        if (!u.nonPreg) rec.push('هذه الخوارزمية لغير الحوامل.');
+        plan.push('نمط حياة/نشاط بدني وإنقاص وزن إن لزم، تقييم غدد صم.');
+        if (ctx.fert) rec.push('تحريض إباضة بإشراف اختصاصي (ليتروزول/كلوميفين).');
+        pharm.push('موانع حمل مركّبة/بروجستين دوري لضبط الدورة — قرار الطبيب.');
+        pharm.push('ميتفورمين لتحسين مقاومة الإنسولين — قرار الطبيب.');
+        return {plan, rec, pharm, flags, assess:'اضطراب إباضة/PCOS محتمل'};
+      }
+      case 'pelvic-pain': {
+        if (ctx.heavy) rec.push('قد يتداخل مع أورام ليفية/أدينومايوز — يحتاج تصوير.');
+        plan.push('تجربة مضادات الالتهاب، علاج هرموني (COC/بروجستين) بإشراف، علاج فيزيائي لقاع الحوض.');
+        pharm.push('COC/بروجستين/نظائر GnRH حالات مختارة — قرار الطبيب.');
+        rec.push('تنظير بطني تشخيصي/علاجي عند عدم الاستجابة.');
+        return {plan, rec, pharm, flags, assess:'ألم حوض مزمن/انتباذ محتمل'};
+      }
+      case 'ovarian-cyst': {
+        if (!u.nonPreg) rec.push('يفضّل تقييم الكيس الحملي ضمن عيادة الولادة.');
+        if (ctx.unilat && ctx.nv) flags.push('التواء مبيض مشتبه — طارئ.');
+        plan.push('إيكو عبر المهبل؛ مراقبة حجم/مظهر الكيس البسيط الصغير.');
+        pharm.push('مسكنات مناسبة؛ علاج هرموني لمنع أكياس وظيفية — قرار الطبيب.');
+        rec.push('جراحة تنظيرية عند التواء/شك خبيث/أعراض شديدة.');
+        return {plan, rec, pharm, flags, assess:'كيس مبيضي — فرز'};
+      }
+      case 'dyspareunia': {
+        plan.push('مزلّقات أساس مائي، تمارين استرخاء/تنفّس، معالجة سبب سطحي/عميق.');
+        if (ctx.dry) pharm.push('إستروجين موضعي لضمور الإياس — قرار الطبيب.');
+        if (ctx.pf) rec.push('علاج طبيعي لقاع الحوض/ارتخاء تدريجي.');
+        rec.push('استبعاد إنتانات/اندومتريوز/كيسات عند الألم العميق.');
+        return {plan, rec, pharm, flags, assess:'عُسرة الجماع — تحديد النمط (سطحي/عميق)'};
+      }
+      case 'abn-bleeding': {
+        if (!u.nonPreg) rec.push('استبعدي الحمل أولًا.');
+        if (ctx.postCoit) rec.push('تقييم عنق الرحم/مسحة/STI.');
+        if (ctx.risk) flags.push('عوامل خطورة فرط تنسُّج — يلزم تقييم أندومتريوم.');
+        plan.push('سجل نزف، إيكو رحمي، تحاليل خضاب/غدد صم حسب الحاجة.');
+        pharm.push('COC/بروجستين/حمض ترانكساميك — قرار الطبيب.');
+        return {plan, rec, pharm, flags, assess:'نزف رحمي لا نمطي — تفريق PALM-COEIN'};
+      }
+      case 'menopause': {
+        plan.push('نمط حياة: نشاط، نوم منتظم، تبريد، تقليل منبّهات.');
+        if (!ctx.contra) pharm.push('معالجة هرمونية مختارة لنوبات الهبات/GSM — قرار الطبيب بعد تحرّي الموانع.');
+        pharm.push('بدائل لا هرمونية (SSRI/SNRI/غابابنتين/كلونيدين) — قرار الطبيب.');
+        rec.push('إستروجين موضعي لـ GSM عند غياب الموانع.');
+        return {plan, rec, pharm, flags, assess:'ما حول/بعد الإياس — تدبير الأعراض'};
+      }
+      case 'contraception': {
+        const opts=[];
+        if (ctx.smoke35 || ctx.aura || ctx.vte){
+          opts.push('تجنّب مركبات الإستروجين/البروجستين المزدوجة عند وجود موانع.');
+          opts.push('خيارات: لولب نحاسي/هرموني، حبوب بروجستين فقط، غرسة، حقنة — قرار الطبيب.');
+        } else {
+          opts.push('جميع الخيارات متاحة نظريًا بعد تقييم: COC/POP/لولب/غرسة/حقنة/لاصقة/حلقة — قرار الطبيب.');
+        }
+        if (ctx.lact) opts.push('للإرضاع المبكر يُفضّل البروجستين فقط أو اللولب.');
+        plan.push(...opts);
+        rec.push('وقاية ثنائية (واقي) للـ STIs. المتابعة بعد البدء لمراقبة التأثيرات.');
+        pharm.push('COC/POP/ليفونورجيستريل لولبي/نحاسي/إمبلانون/ميدروكسي — أمثلة فئات، القرار للطبيب.');
+        return {plan, rec, pharm, flags, assess:'اختيار مانع حمل مبدئي'};
+      }
+      case 'postpartum': {
+        if (ctx.hem || ctx.feverOdor || ctx.dvt || ctx.mood) flags.push('إنذار نفاسي — مراجعة عاجلة (نزف/التهاب/جلطة/اكتئاب).');
+        plan.push('راحة تدريجية، سوائل، تغذية داعمة، تمارين خفيفة للحوض عند الملاءمة.');
+        if (u.lactating) rec.push('إرضاع حصري إن أمكن؛ معالجة التهاب الثدي باكرًا (تفريغ/كمادات/مضاد آمن للرضاعة — قرار الطبيب).');
+        pharm.push('مسكنات آمنة للرضاعة حسب قرار الطبيب.');
+        rec.push('زيارة فحص 2 أسبوعًا للأم بعد القيصرية أو حسب البروتوكول و 6 أسابيع متابعة.');
+        return {plan, rec, pharm, flags, assess:'رعاية ما بعد الولادة + إنذارات'};
+      }
+    }
+    return {plan, rec, pharm, flags};
+  }
+
+  // ====== عرض موحّد ======
+  function showResult(elId, obj){
+    const u = userContext();
+    const statusLabel = u.pregnant ? 'حامل' : (u.postpartum ? 'نِفاس' : 'غير حامل');
+    const gaTxt = u.pregnant ? ` — عمر حملي: <b>${u.gaWeeks!=null? u.gaWeeks+' أسبوع' : 'غير محدد'}</b>${u.trimester? ` (ثلث ${u.trimester})` : ''}` : '';
+    const header = `<p>الاسم: <b>${u.name}</b>${u.age!=null? ` — العمر: <b>${u.age}</b>`:''} — الحالة: <b>${statusLabel}</b>${gaTxt}${u.postpartum && u.lactating? ' — مُرضع':''}</p>`;
+    const assess = obj.assess ? `<p><b>التقييم:</b> ${obj.assess}</p>` : '';
+    const sev = obj.severity ? `<p><b>الشدة:</b> ${obj.severity}</p>` : '';
+    const score = (obj.score!==undefined) ? `<p><b>قيمة/درجة:</b> ${obj.score}</p>` : '';
+    const flagsHtml = obj.flags?.length? `<p><b>تنبيهات:</b></p>${lines(obj.flags)}` : '';
+    const planHtml = obj.plan?.length? `<p><b>خطة عامة:</b></p>${lines(obj.plan)}` : '';
+    const recHtml = obj.rec?.length? `<p><b>توصيات موجّهة:</b></p>${lines(obj.rec)}` : '';
+    const pharmHtml = obj.pharm?.length? `<p><b>أمثلة أدوية (قرار الطبيب):</b></p>${lines(obj.pharm)}<p class="hint">لا تبدأي/توقفي أي دواء دون طبيب. تختلف الخيارات حسب الحمل/النفاس/الإرضاع والتاريخ المرضي.</p>` : '';
+    document.getElementById(elId).innerHTML = header + score + sev + assess + flagsHtml + planHtml + recHtml + pharmHtml;
+    setLast({...obj, user:u});
+  }
+
+  // ====== الحسابات ======
+  function calcFT1B(){
+    const bleed=yes('ftbBleed'), uni=yes('ftbUni'), syn=yes('ftbSyn'), tissue=yes('ftbTissue');
+    const {plan, rec, pharm, flags, assess} = buildPlanGyn('ft1b', {bleed, uni, syn, tissue}, userContext());
+    showResult('ft1b-res', {title:'نزف/ألم الثلث الأول', assess, plan, rec, pharm, flags});
+  }
+  function calcPreeclampsia(){
+    const htn=yes('prHTN'), neuro=yes('prNeuro'), ruq=yes('prRUQ'), edema=yes('prEdema');
+    const {plan, rec, pharm, flags, assess} = buildPlanGyn('preeclampsia', {htn, neuro, ruq, edema}, userContext());
+    showResult('preeclampsia-res', {title:'ما قبل الإرجاج', assess, plan, rec, pharm, flags});
+  }
+  function calcPROM(){
+    const leak=yes('pmLeak'), moves=yes('pmMovesLow'), bleedPain=yes('pmBleedPain'), feverOdor=yes('pmFeverOdor');
+    const {plan, rec, pharm, flags, assess} = buildPlanGyn('prom', {leak, movesLow:moves, bleedPain, feverOdor}, userContext());
+    showResult('prom-res', {title:'نزول سائل/حركة قليلة', assess, plan, rec, pharm, flags});
+  }
+  function calcHyperemesis(){
+    const freq=yes('hyFreq'), dehyd=yes('hyDehyd'), syn=yes('hySyn'), nopo=yes('hyNoPO');
+    const {plan, rec, pharm, flags, assess} = buildPlanGyn('hyperemesis', {dehyd, syn, nopo}, userContext());
+    showResult('hyperemesis-res', {title:'فرط قياء حملي', assess, plan, rec, pharm, flags});
+  }
+  function calcUTIPreg(){
+    const dys=yes('upDys'), flank=yes('upFlankFever'), hem=yes('upHem'), recur=yes('upRecur');
+    const {plan, rec, pharm, flags, assess} = buildPlanGyn('uti-preg', {flank, hem, recur}, userContext());
+    showResult('uti-preg-res', {title:'UTI حامل', assess: (dys||flank||hem)? assess:'غير واضح', plan, rec, pharm, flags});
+  }
+  function calcVaginitis(){
+    const dis=yes('vgDis'), odor=yes('vgOdor'), itch=yes('vgItch'), dysp=yes('vgDysp');
+    const {plan, rec, pharm, flags, assess} = buildPlanGyn('vaginitis', {odor, itch, dysp}, userContext());
+    showResult('vaginitis-res', {title:'التهاب مهبل/إفرازات', assess: dis? assess:'غير واضح', plan, rec, pharm, flags});
+  }
+  function calcPCOS(){
+    const irreg=yes('pcIrreg'), hyper=yes('pcHyper'), met=yes('pcMet'), fert=yes('pcFert');
+    const {plan, rec, pharm, flags, assess} = buildPlanGyn('irreg-pcos', {irreg, hyper, met, fert}, userContext());
+    showResult('irreg-pcos-res', {title:'اضطراب دورة/PCOS', assess: (irreg||hyper)? assess:'غير واضح', plan, rec, pharm, flags});
+  }
+  function calcPelvicPain(){
+    const cyclic=yes('ppCyclic'), deep=yes('ppDeepDysp'), inf=yes('ppInf'), heavy=yes('ppHeavy');
+    const {plan, rec, pharm, flags, assess} = buildPlanGyn('pelvic-pain', {heavy}, userContext());
+    showResult('pelvic-pain-res', {title:'ألم حوض/انتباذ', assess: (cyclic||deep||inf)? assess:'غير واضح', plan, rec, pharm, flags});
+  }
+  function calcOvarianCyst(){
+    const unilat=yes('ocUnilat'), nv=yes('ocNV'), after=yes('ocAfter'), full=yes('ocFull');
+    const {plan, rec, pharm, flags, assess} = buildPlanGyn('ovarian-cyst', {unilat, nv, after, full}, userContext());
+    showResult('ovarian-cyst-res', {title:'كيس مبيضي', assess, plan, rec, pharm, flags});
+  }
+  function calcDyspareunia(){
+    const surf=yes('dySurf'), deep=yes('dyDeep'), dry=yes('dyDry'), pf=yes('dyPF');
+    const {plan, rec, pharm, flags, assess} = buildPlanGyn('dyspareunia', {dry, pf}, userContext());
+    showResult('dyspareunia-res', {title:'عُسرة الجماع', assess: (surf||deep)? assess:'غير واضح', plan, rec, pharm, flags});
+  }
+  function calcAbnBleeding(){
+    const postCoit=yes('abPostCoit'), irHeavy=yes('abIrHeavy'), painDis=yes('abPainDis'), risk=yes('abRisk');
+    const {plan, rec, pharm, flags, assess} = buildPlanGyn('abn-bleeding', {postCoit, risk}, userContext());
+    showResult('abn-bleeding-res', {title:'نزف لا نمطي', assess: (postCoit||irHeavy)? assess:'غير واضح', plan, rec, pharm, flags});
+  }
+  function calcMenopause(){
+    const hot=yes('mnHot'), sm=yes('mnSleepMood'), gsm=yes('mnGSM'), contra=yes('mnContra');
+    const {plan, rec, pharm, flags, assess} = buildPlanGyn('menopause', {contra}, userContext());
+    showResult('menopause-res', {title:'سن الإياس', assess: (hot||gsm)? assess:'غير واضح', plan, rec, pharm, flags});
+  }
+  function calcContraception(){
+    const smoke35=yes('ctSmoke35'), aura=yes('ctAura'), vte=yes('ctVTE'), lact=yes('ctLact');
+    const u = userContext();
+    const {plan, rec, pharm, flags, assess} = buildPlanGyn('contraception', {smoke35, aura, vte, lact, ama:u.ama}, u);
+    showResult('contraception-res', {title:'تنظيم الأسرة', assess, plan, rec, pharm, flags});
+  }
+  function calcPostpartum(){
+    const hem=yes('ppHem'), feverOdor=yes('ppFeverOdor'), dvt=yes('ppDVT'), mood=yes('ppMood');
+    const {plan, rec, pharm, flags, assess} = buildPlanGyn('postpartum', {hem, feverOdor, dvt, mood}, userContext());
+    showResult('postpartum-res', {title:'ما بعد الولادة', assess, plan, rec, pharm, flags});
+  }
+
+  // ====== PDF ======
+  async function exportPDF(section){
+    const { jsPDF } = window.jspdf;
+    const m = window._last || {title:section, user:userContext(), plan:[], rec:[], pharm:[], flags:[]};
+    const u = m.user || userContext();
+
+    const box = document.createElement('div');
+    box.dir = 'rtl';
+    box.style.cssText = 'width:800px;padding:24px;background:#fff;color:#111;font-family:Cairo,Arial,sans-serif;line-height:1.9;border:1px solid #ddd;border-radius:12px';
+    const statusLabel = u.pregnant ? 'حامل' : (u.postpartum ? 'نِفاس' : 'غير حامل');
+    const gaTxt = u.pregnant ? ` — عمر حملي: ${u.gaWeeks!=null? u.gaWeeks+' أسبوع' : 'غير محدد'}${u.trimester? ` (ثلث ${u.trimester})` : ''}` : '';
+    box.innerHTML = `
+      <h2 style="margin:0 0 10px;font-weight:800">حكيم — ${m.title||section}</h2>
+      <p><b>الاسم:</b> ${u.name || 'بدون اسم'}${u.age!=null? ` — <b>العمر:</b> ${u.age}`:''} — <b>الحالة:</b> ${statusLabel}${gaTxt}${u.postpartum && u.lactating? ' — مُرضع':''}</p>
+      ${m.score!==undefined? `<p><b>قيمة/درجة:</b> ${m.score}</p>`:''}
+      ${m.severity? `<p><b>الشدة:</b> ${m.severity}</p>`:''}
+      ${m.assess? `<p><b>التقييم:</b> ${m.assess}</p>`:''}
+      ${m.flags && m.flags.length? `<p><b>تنبيهات:</b></p><ul>${m.flags.map(x=>`<li>${x}</li>`).join('')}</ul>`:''}
+      ${m.plan && m.plan.length? `<p><b>خطة عامة:</b></p><ul>${m.plan.map(x=>`<li>${x}</li>`).join('')}</ul>`:''}
+      ${m.rec && m.rec.length? `<p><b>توصيات موجّهة:</b></p><ul>${m.rec.map(x=>`<li>${x}</li>`).join('')}</ul>`:''}
+      ${m.pharm && m.pharm.length? `<p><b>أمثلة دوائية (قرار الطبيب):</b></p><ul>${m.pharm.map(x=>`<li>${x}</li>`).join('')}</ul><p style="font-size:12px;color:#555">تنبيه: لا تبدأي/توقفي أي دواء دون طبيب. تختلف الخيارات حسب الحمل/النفاس/الإرضاع والتاريخ المرضي.</p>`:''}
+      <hr style="margin:12px 0;border:0;border-top:1px solid #ddd"/>
+      <p style="font-size:13px;color:#444">ملف تثقيفي — لا يُغني عن تقييم الطبيب المختص. في الطوارئ يُرجى التواصل الفوري مع الإسعاف.</p>
+    `;
+    document.body.appendChild(box);
+    const canvas = await html2canvas(box, {scale:2, backgroundColor:'#ffffff', useCORS:true});
+    document.body.removeChild(box);
+
+    const pdf = new jsPDF({orientation:'p', unit:'pt', format:'a4'});
+    const pageW = pdf.internal.pageSize.getWidth(), pageH = pdf.internal.pageSize.getHeight(), margin=40;
+    let imgW = pageW - margin*2, imgH = canvas.height * imgW / canvas.width;
+    if (imgH > pageH - margin*2){ const r = (pageH - margin*2) / imgH; imgH*=r; imgW*=r; }
+    pdf.addImage(canvas.toDataURL('image/png'), 'PNG', (pageW-imgW)/2, (pageH-imgH)/2, imgW, imgH);
+    pdf.save(`Hakim-OBGYN-${(m.title||section).replace(/\s+/g,'_')}-${Date.now()}.pdf`);
+  }
+</script>
+
+<!--
+  الأقسام المغطّاة:
+  - نزف/ألم الثلث الأول، ما قبل الإرجاج (≥20 أسبوع)، نزول سائل/قلة حركة، فرط قياء حملي، UTI حامل،
+    التهاب مهبل/إفرازات، اضطراب دورة/PCOS، ألم حوض/انتباذ، كيس مبيضي، عُسرة الجماع،
+    نزف لا نمطي، سن الإياس، تنظيم الأسرة، ما بعد الولادة.
+  - أمثلة الأدوية بلا جرعات وبصيغة "قرار الطبيب" التزامًا بالسلامة خصوصًا في الحمل/الإرضاع.
+-->
+</body>
+</html>

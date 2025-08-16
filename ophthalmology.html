@@ -1,0 +1,573 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>حكيم — أمراض العيون | تقييمات ذكية + PDF</title>
+  <meta name="description" content="حكيم — أمراض العيون: ملتحمة (فيروسي/جرثومي/تحسسي)، قرحة/التهاب قرنية (عدسات لاصقة)، خدش قرنية، زرق انسداد زاوية حاد، التهاب عنبة أمامي، انفصال شبكية، فقدان رؤية مفاجئ، جفاف عين، شعيرة/بردة، التهاب جفن، نزف تحت الملتحمة، التهاب كيس دمعي.">
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;800&display=swap" rel="stylesheet">
+  <!-- PDF libs -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" referrerpolicy="no-referrer"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js" referrerpolicy="no-referrer"></script>
+
+  <style>
+    :root{
+      --bg:#07090f; --txt:#e8ecff; --muted:#aab2d8;
+      --primary:#7aa2ff; --primary-2:#00e0ff; --accent:#a855f7;
+      --glass:rgba(255,255,255,.06); --border:rgba(255,255,255,.12);
+    }
+    *{box-sizing:border-box}
+    body{margin:0; font-family:'Cairo',system-ui,'Noto Sans Arabic',sans-serif; background:#07090f; color:var(--txt); line-height:1.9}
+    header{position:sticky; top:0; z-index:50; display:flex; align-items:center; justify-content:space-between; padding:14px 20px; backdrop-filter:saturate(140%) blur(8px); background:linear-gradient(180deg, rgba(15,16,40,.85), rgba(15,16,40,.45)); border-bottom:1px solid var(--border)}
+    .brand{display:flex; gap:12px; align-items:center}
+    .logo{width:42px; height:42px; border-radius:12px; display:grid; place-items:center; font-weight:800; background: radial-gradient(120% 120% at 0% 0%, var(--primary), var(--accent)); box-shadow: 0 0 24px rgba(122,162,255,.35), inset 0 0 18px rgba(255,255,255,.15)}
+    .brand-text strong{display:block; font-size:18px}
+    .brand-text span{display:block; font-size:12px; color:var(--muted)}
+    .container{width:min(1180px,94vw); margin-inline:auto}
+    h1{font-size:clamp(22px,4vw,34px); margin:22px 0 6px}
+    .sub{color:#cfd6ff; margin:0 0 12px}
+    .glass{background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03)); border:1px solid var(--border); border-radius:22px; padding:22px; box-shadow:0 30px 60px rgba(0,10,40,.35)}
+    .grid{display:grid; gap:16px}
+    .grid-2{grid-template-columns:1fr}
+    @media(min-width:1000px){.grid-2{grid-template-columns:1fr 1fr}}
+    .choose{display:grid; gap:12px; grid-template-columns:repeat(2,1fr)}
+    @media(min-width:1000px){.choose{grid-template-columns:repeat(4,1fr)}}
+    .opt{background:rgba(255,255,255,.04); border:1px solid var(--border); border-radius:16px; padding:14px; text-align:center; cursor:pointer; transition:transform .18s ease, border-color .18s ease; min-height:110px; display:grid; place-items:center; font-weight:700}
+    .opt:hover{transform:translateY(-3px); border-color:rgba(122,162,255,.6)}
+    .card{border:1px solid var(--border); border-radius:18px; background:rgba(255,255,255,0.04); padding:18px}
+    label{font-weight:600}
+    select, input[type="number"], input[type="text"]{width:100%; padding:10px 12px; border-radius:12px; border:1px solid var(--border); background:rgba(255,255,255,0.03); color:var(--txt)}
+    .row{display:grid; gap:12px; grid-template-columns:1fr}
+    @media(min-width:680px){.row{grid-template-columns:repeat(2,1fr)}}
+    .row-3{display:grid; gap:12px; grid-template-columns:repeat(3,1fr)}
+    .actions{display:flex; gap:10px; flex-wrap:wrap; margin-top:12px}
+    .btn{padding:10px 14px; border-radius:12px; border:1px solid var(--border); background:var(--glass); color:var(--txt); cursor:pointer; font-weight:700; transition:transform .2s ease, background .2s ease}
+    .btn.primary{background:linear-gradient(135deg, var(--primary), var(--primary-2)); border-color:transparent}
+    .btn:hover{transform:translateY(-2px)}
+    .result{padding:14px; border:1px solid var(--border); border-radius:14px; background:rgba(255,255,255,.03)}
+    .hint{font-size:13px; color:#b8c0ef}
+    footer{text-align:center; padding:22px; color:#aab2d8; font-size:13px; border-top:1px solid var(--border); margin-top:24px}
+    .mt{margin-top:10px}.hide{display:none}
+  </style>
+</head>
+<body>
+<header>
+  <div class="brand">
+    <div class="logo">حكيم</div>
+    <div class="brand-text">
+      <strong>حكيم — أمراض العيون</strong>
+      <span>تقييمات مؤتمتة دقيقة + PDF</span>
+    </div>
+  </div>
+  <nav class="actions" style="margin:0">
+    <a class="btn" href="index.html">الصفحة الرئيسية</a>
+  </nav>
+</header>
+
+<main class="container">
+  <section class="glass">
+    <h1>العيون — اختر الحالة</h1>
+    <p class="sub">أدخل بياناتك ثم اختر الحالة. ستظهر <b>خطة إرشادية + أمثلة أدوية (بدون جرعات)</b> للمراجعة مع الطبيب.</p>
+
+    <div class="row">
+      <div><label>الاسم:</label><input id="pat-name" type="text" placeholder="مثال: يمان"/></div>
+      <div><label>العمر (سنوات):</label><input id="pat-age" type="number" min="1" max="100" placeholder="32"/></div>
+    </div>
+    <div class="row">
+      <div>
+        <label>الجنس:</label>
+        <select id="pat-sex"><option value="male">ذكر</option><option value="female">أنثى</option></select>
+      </div>
+      <div>
+        <label>عدسات لاصقة؟</label>
+        <select id="pat-cl"><option value="0">لا</option><option value="1">نعم</option></select>
+      </div>
+    </div>
+
+    <div class="choose" id="chooser">
+      <div class="opt" data-target="conj">احمرار العين/التهاب ملتحمة</div>
+      <div class="opt" data-target="keratitis">التهاب/قرحة قرنية (عدسات/ألم)</div>
+      <div class="opt" data-target="abrasion">خدش قرنية (رض/جسم غريب)</div>
+      <div class="opt" data-target="aag">زرق انسداد الزاوية الحاد</div>
+      <div class="opt" data-target="uveitis">التهاب عنبة أمامي (قزحية)</div>
+      <div class="opt" data-target="rd">ذبابة وميض/ستارة — انفصال شبكية؟</div>
+      <div class="opt" data-target="sudden-loss">فقدان رؤية مفاجئ غير مؤلم</div>
+      <div class="opt" data-target="dryeye">جفاف العين</div>
+      <div class="opt" data-target="stye">شعيرة/بردة</div>
+      <div class="opt" data-target="bleph">التهاب جفن</div>
+      <div class="opt" data-target="sch">نزف تحت الملتحمة</div>
+      <div class="opt" data-target="dacryo">التهاب كيس دمعي</div>
+    </div>
+
+    <p class="hint mt">
+      أعلام طارئة: نقص رؤية مفاجئ، ألم شديد لا يتحمّل، حساسية ضوء شديدة، كيميائيات/قَلَويات على العين، رضّ عالي السرعة، قيء/غثيان مع صداع شديد واحمرار، ستارة/ظلّ في الرؤية، جسم غريب نافذ.
+    </p>
+  </section>
+
+  <section class="grid grid-2 mt">
+    <!-- 1) Conjunctivitis -->
+    <div class="card hide" id="sec-conj">
+      <h2>التهاب ملتحمة (تمييز فيروسي/جرثومي/تحسّسي)</h2>
+      <div class="row-3">
+        <div><label>حكّة واضحة</label><select id="cjItch"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>إفرازات كثيفة قيحية</label><select id="cjPur"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>دموع/رشح/عدوى علوية</label><select id="cjURI"><option value="0">لا</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="row">
+        <div><label>ألم شديد/حساسية ضوئية</label><select id="cjPhoto"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>أحادي أم ثنائي</label><select id="cjUni"><option value="0">ثنائي</option><option value="1">أحادي</option></select></div>
+      </div>
+      <div class="actions">
+        <button class="btn primary" onclick="calcConj()">تقييم الملتحمة</button>
+        <button class="btn" onclick="exportPDF('conjunctivitis')">تصدير PDF</button>
+      </div>
+      <div class="result mt" id="conj-res"></div>
+    </div>
+
+    <!-- 2) Keratitis -->
+    <div class="card hide" id="sec-keratitis">
+      <h2>التهاب/قرحة قرنية (خاصة مع العدسات)</h2>
+      <div class="row">
+        <div><label>عدسات لاصقة</label><select id="keCL"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>ألم شديد/رهاب ضوء/هباب رؤية</label><select id="kePainPhoto"><option value="0">لا</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="row">
+        <div><label>إفرازات + احمرار مركزي</label><select id="keDischarge"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>تقرّح/بقعة بيضاء مرئية</label><select id="keUlcer"><option value="0">لا/غير معروف</option><option value="1">نعم/محتمل</option></select></div>
+      </div>
+      <div class="actions">
+        <button class="btn primary" onclick="calcKeratitis()">تقييم التهاب القرنية</button>
+        <button class="btn" onclick="exportPDF('keratitis-corneal-ulcer')">تصدير PDF</button>
+      </div>
+      <div class="result mt" id="keratitis-res"></div>
+    </div>
+
+    <!-- 3) Corneal abrasion -->
+    <div class="card hide" id="sec-abrasion">
+      <h2>خدش قرنية / جسم غريب سطحي</h2>
+      <div class="row">
+        <div><label>رض/احتكاك حديث</label><select id="abTrauma"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>رهاب ضوء/دموع غزيرة</label><select id="abPhotoTear"><option value="0">لا</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="row">
+        <div><label>شعور جسم غريب</label><select id="abFB"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>عدسات لاصقة</label><select id="abCL"><option value="0">لا</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="actions">
+        <button class="btn primary" onclick="calcAbrasion()">تقييم الخدش</button>
+        <button class="btn" onclick="exportPDF('corneal-abrasion')">تصدير PDF</button>
+      </div>
+      <div class="result mt" id="abrasion-res"></div>
+    </div>
+
+    <!-- 4) Acute angle-closure glaucoma -->
+    <div class="card hide" id="sec-aag">
+      <h2>زرق انسداد الزاوية الحاد (طارئ)</h2>
+      <div class="row">
+        <div><label>ألم شديد/صداع</label><select id="agPain"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>غثيان/إقياء</label><select id="agNV"><option value="0">لا</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="row">
+        <div><label>هالات حول الأضواء/ضبابية</label><select id="agHalos"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>العمر &gt;= 50 سنة</label><select id="agAge50"><option value="0">لا</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="actions">
+        <button class="btn primary" onclick="calcAAG()">تقييم الزرق الحاد</button>
+        <button class="btn" onclick="exportPDF('acute-angle-closure-glaucoma')">تصدير PDF</button>
+      </div>
+      <div class="result mt" id="aag-res"></div>
+    </div>
+
+    <!-- 5) Uveitis -->
+    <div class="card hide" id="sec-uveitis">
+      <h2>التهاب عنبة أمامي (قزحية)</h2>
+      <div class="row">
+        <div><label>ألم + رهاب ضوء</label><select id="uvPainPhoto"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>رؤية ضبابية</label><select id="uvBlur"><option value="0">لا</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="row">
+        <div><label>بقع/أمراض مناعية</label><select id="uvAuto"><option value="0">لا/غير معروف</option><option value="1">نعم</option></select></div>
+        <div><label>حساسية ضغط العين للمس</label><select id="uvTender"><option value="0">لا</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="actions">
+        <button class="btn primary" onclick="calcUveitis()">تقييم العنبة</button>
+        <button class="btn" onclick="exportPDF('anterior-uveitis')">تصدير PDF</button>
+      </div>
+      <div class="result mt" id="uveitis-res"></div>
+    </div>
+
+    <!-- 6) Retinal detachment -->
+    <div class="card hide" id="sec-rd">
+      <h2>ومضات/ذباب طائر/ستارة — انفصال شبكية؟</h2>
+      <div class="row">
+        <div><label>ومضات ضوئية</label><select id="rdFlashes"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>ذباب طائر جديد</label><select id="rdFloaters"><option value="0">لا</option><option value="1">نعم/تزايد</option></select></div>
+      </div>
+      <div class="row">
+        <div><label>ظل/ستارة بمجال الرؤية</label><select id="rdCurtain"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>قصر نظر شديد/جراحة سابقة</label><select id="rdRisk"><option value="0">لا</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="actions">
+        <button class="btn primary" onclick="calcRD()">تقييم الشبكية</button>
+        <button class="btn" onclick="exportPDF('retinal-detachment')">تصدير PDF</button>
+      </div>
+      <div class="result mt" id="rd-res"></div>
+    </div>
+
+    <!-- 7) Sudden painless vision loss -->
+    <div class="card hide" id="sec-sudden-loss">
+      <h2>فقدان رؤية مفاجئ غير مؤلم</h2>
+      <div class="row">
+        <div><label>بدأ خلال ساعات</label><select id="slHours"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>أمراض وعائية/رجفان أذيني</label><select id="slVasc"><option value="0">لا</option><option value="1">نعم/محتمل</option></select></div>
+      </div>
+      <div class="row">
+        <div><label>فقدان بمجال واحد/ستارة</label><select id="slField"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>ألم فك/صدغ (التهاب شريان صدغي؟)</label><select id="slGCA"><option value="0">لا</option><option value="1">نعم/سن &gt; 50</option></select></div>
+      </div>
+      <div class="actions">
+        <button class="btn primary" onclick="calcSuddenLoss()">تقييم الفقد المفاجئ</button>
+        <button class="btn" onclick="exportPDF('sudden-vision-loss')">تصدير PDF</button>
+      </div>
+      <div class="result mt" id="sudden-loss-res"></div>
+    </div>
+
+    <!-- 8) Dry Eye -->
+    <div class="card hide" id="sec-dryeye">
+      <h2>جفاف العين (متلازمة العين الجافة)</h2>
+      <div class="row">
+        <div><label>حرق/وخز/رملية</label><select id="deBurn"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>شاشة/قراءة طويلة</label><select id="deScreen"><option value="0">لا</option><option value="1">نعم/لساعات طويلة</option></select></div>
+      </div>
+      <div class="row">
+        <div><label>أمراض مناعية/حساسية</label><select id="deAuto"><option value="0">لا</option><option value="1">نعم/محتمل</option></select></div>
+        <div><label>عدسات لاصقة</label><select id="deCL"><option value="0">لا</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="actions">
+        <button class="btn primary" onclick="calcDryEye()">تقييم الجفاف</button>
+        <button class="btn" onclick="exportPDF('dry-eye-disease')">تصدير PDF</button>
+      </div>
+      <div class="result mt" id="dryeye-res"></div>
+    </div>
+
+    <!-- 9) Stye/Chalazion -->
+    <div class="card hide" id="sec-stye">
+      <h2>شعيرة/بردة (التهاب/انسداد غدد)</h2>
+      <div class="row">
+        <div><label>كتلة مؤلمة حمراء</label><select id="stPainRed"><option value="0">لا</option><option value="1">نعم (شعيرة)</option></select></div>
+        <div><label>كتلة غير مؤلمة مزمنة</label><select id="stChal"><option value="0">لا</option><option value="1">نعم (بردة)</option></select></div>
+      </div>
+      <div class="row">
+        <div><label>إفرازات/التهاب جفن مرافق</label><select id="stBleph"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>تكرر الحالة</label><select id="stRecur"><option value="0">لا</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="actions">
+        <button class="btn primary" onclick="calcStye()">تقييم الشعيرة/البردة</button>
+        <button class="btn" onclick="exportPDF('stye-chalazion')">تصدير PDF</button>
+      </div>
+      <div class="result mt" id="stye-res"></div>
+    </div>
+
+    <!-- 10) Blepharitis -->
+    <div class="card hide" id="sec-bleph">
+      <h2>التهاب الجفن (حواف الجفون)</h2>
+      <div class="row">
+        <div><label>قشور على الأهداب/حكة</label><select id="blScale"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>احمرار حواف/لدغ</label><select id="blRed"><option value="0">لا</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="row">
+        <div><label>روزيشيا/جلد ذهني</label><select id="blSkin"><option value="0">لا</option><option value="1">نعم/محتمل</option></select></div>
+        <div><label>عدسات لاصقة</label><select id="blCL"><option value="0">لا</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="actions">
+        <button class="btn primary" onclick="calcBleph()">تقييم التهاب الجفن</button>
+        <button class="btn" onclick="exportPDF('blepharitis')">تصدير PDF</button>
+      </div>
+      <div class="result mt" id="bleph-res"></div>
+    </div>
+
+    <!-- 11) Subconj hemorrhage -->
+    <div class="card hide" id="sec-sch">
+      <h2>نزف تحت الملتحمة</h2>
+      <div class="row">
+        <div><label>بدأ دون ألم</label><select id="scNoPain"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>ارتفاع ضغط/مميّعات</label><select id="scBPant"><option value="0">لا</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="row">
+        <div><label>رض/فرك شديد</label><select id="scTrauma"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>عودة متكررة</label><select id="scRecur"><option value="0">لا</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="actions">
+        <button class="btn primary" onclick="calcSCH()">تقييم النزف</button>
+        <button class="btn" onclick="exportPDF('subconjunctival-hemorrhage')">تصدير PDF</button>
+      </div>
+      <div class="result mt" id="sch-res"></div>
+    </div>
+
+    <!-- 12) Dacryocystitis -->
+    <div class="card hide" id="sec-dacryo">
+      <h2>التهاب كيس دمعي</h2>
+      <div class="row">
+        <div><label>ألم/تورّم عند زاوية العين الأنفية</label><select id="dcPainSw"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>حرارة/إفراز قيحي من النقطة الدمعية</label><select id="dcFeverPus"><option value="0">لا</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="row">
+        <div><label>رضيع (انسداد خلقي؟)</label><select id="dcInfant"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>احمرار ممتد للوجه/سيلوليت</label><select id="dcCellulitis"><option value="0">لا</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="actions">
+        <button class="btn primary" onclick="calcDacryo()">تقييم الكيس الدمعي</button>
+        <button class="btn" onclick="exportPDF('dacryocystitis')">تصدير PDF</button>
+      </div>
+      <div class="result mt" id="dacryo-res"></div>
+    </div>
+  </section>
+
+  <section class="glass mt">
+    <p class="hint">معلومة سريعة: في حال ملامسة المواد الكاوية/الحمضية للعين — اغسل العين فورًا بماء جارٍ 15–20 دقيقة ثم راجع الطوارئ.</p>
+  </section>
+</main>
+
+<footer>© <span id="year"></span> حكيم — جميع الحقوق محفوظة.</footer>
+
+<script>
+  // ====== عام ======
+  document.getElementById('year').textContent = new Date().getFullYear();
+  document.querySelectorAll('#chooser .opt').forEach(el=>{
+    el.addEventListener('click', ()=>{
+      document.querySelectorAll('.card').forEach(c=>c.classList.add('hide'));
+      const sec = document.getElementById('sec-'+el.getAttribute('data-target'));
+      if (sec){ sec.classList.remove('hide'); sec.scrollIntoView({behavior:'smooth', block:'start'}); }
+    });
+  });
+
+  // ====== بيانات المستخدم ======
+  function nameVal(){ return document.getElementById('pat-name').value?.trim() || 'بدون اسم'; }
+  function ageVal(){ const n=parseInt(document.getElementById('pat-age').value,10); return isNaN(n)? null : Math.min(100, Math.max(1,n)); }
+  function sexVal(){ const v=document.getElementById('pat-sex').value; return {code:v, label:(v==='male'?'ذكر':'أنثى')}; }
+  function contactLens(){ return document.getElementById('pat-cl').value==='1'; }
+  function userContext(){
+    const age=ageVal(), sex=sexVal();
+    return { name:nameVal(), age, sex, cl:contactLens(), older: age!=null && age>=50 };
+  }
+  function yes(id){ return document.getElementById(id).value==='1'; }
+  function lines(arr){ return `<ul>${arr.map(x=>`<li>${x}</li>`).join('')}</ul>`; }
+  function setLast(obj){ window._last = obj; }
+
+  // ====== صانع الخطط — عيون ======
+  function buildPlanEye(domain, ctx, u){
+    const plan=[], rec=[], pharm=[], flags=[];
+
+    switch(domain){
+      case 'conj': {
+        if (ctx.photo) flags.push('ألم شديد/رهاب ضوء: استبعد التهاب قرنية/عنبة.');
+        // ترجيح
+        if (ctx.itch && !ctx.pur) rec.push('غالبًا تحسّسي — حكة/دموع مائية ثنائية.');
+        if (ctx.pur && !ctx.itch) rec.push('غالبًا جرثومي — إفراز قيحي كثيف.');
+        if (ctx.uri && !ctx.pur) rec.push('غالبًا فيروسي — مرافق لزكام.');
+        plan.push('غسل يدين وعدم مشاركة المناشف، كمادات فاتر/بارد بحسب الارتياح.');
+        pharm.push('قطرات دموع صناعية.');
+        pharm.push('مضاد هيستامين/مثبّت خلايا بدينة موضعي للحساسية (أولوباتادين) — قرار الطبيب.');
+        if (ctx.pur) pharm.push('مضاد حيوي قطرة موضعية عند الاشتباه الجرثومي — قرار الطبيب.');
+        rec.push('عدسات لاصقة: أوقفها مؤقتًا وفحص قرنية أولًا.');
+        return {plan, rec, pharm, flags, assess:'التهاب ملتحمة — تفريق بحسب السمات'};
+      }
+      case 'keratitis': {
+        if (ctx.cl || ctx.ulcer || ctx.painPhoto) flags.push('اشتباه التهاب/قرحة قرنية (خطر مع العدسات) — تقييم إسعافي.');
+        plan.push('إيقاف العدسات فورًا، لا تستخدم الستيرويد دون اختصاصي.');
+        pharm.push('فلوروكينولون موضعي واسع الطيف — قرار اختصاصي.');
+        rec.push('صبغة فلورسين وفحص مصباح شق؛ مسحات إذا لزم.');
+        return {plan, rec, pharm, flags, assess:'التهاب/قرحة قرنية محتملة'};
+      }
+      case 'abrasion': {
+        if (ctx.cl) flags.push('خدش مرتبط بعدسات — غطاء بمضاد ذو طيف للزائفة بإشراف.');
+        plan.push('دموع صناعية متكررة، كمادات باردة، تجنّب العدسات حتى الشفاء.');
+        pharm.push('مرهم/قطرات مضاد حيوي وقائي — قرار الطبيب.');
+        rec.push('لا تُرقّع العين عادةً؛ راجع إذا لم يتحسّن خلال 24–48 ساعة.');
+        return {plan, rec, pharm, flags, assess:'خدش قرنية/جسم غريب سطحي'};
+      }
+      case 'aag': {
+        if (ctx.pain && (ctx.halos || ctx.nv || u.older)) flags.push('زرق انسداد زاوية حاد — طارئ فوري.');
+        plan.push('توجّه للطوارئ/اختصاصي عيون فورًا.');
+        pharm.push('أسيتازولاميد فموي/وريدي + قطرات خافضة للضغط العيني (مثال: تيمولول) — قرار المشفى.');
+        pharm.push('بيلوكاربين بعد خفض الضغط — قرار اختصاصي.');
+        rec.push('قد يلزم ليزر محفظة محيطية بالعينين.');
+        return {plan, rec, pharm, flags, assess:'زرق انسداد زاوية — طارئ'};
+      }
+      case 'uveitis': {
+        flags.push('يحتاج فحص مصباح شق وتوسيع الحدقة.');
+        plan.push('نظارات شمسية، راحة بصرية.');
+        pharm.push('ستيرويد موضعي + موسّع حدقة (سيكلوبليجيك) — فقط بوصفة اختصاصي.');
+        rec.push('تحرّي أمراض مناعية جهازية عند النكس.');
+        return {plan, rec, pharm, flags, assess:'التهاب عنبة أمامي محتمل'};
+      }
+      case 'rd': {
+        if (ctx.curtain || (ctx.flashes && ctx.floaters)) flags.push('اشتباه انفصال شبكية — إحالة عاجلة نفس اليوم.');
+        plan.push('تجنّب الجهد حتى التقييم.');
+        rec.push('فحص شبكية موسّع/إيكو عيني عند غياب رؤية القاع؛ علاج ليزري/جراحي حسب الإصابة.');
+        return {plan, rec, pharm, flags, assess:'إنذار شبكي (تمزّق/انفصال) محتمل'};
+      }
+      case 'sudden-loss': {
+        flags.push('فقدان رؤية مفاجئ غير مؤلم — طارئ (شريان/وريد شبكي/اعتلال عصب بصري).');
+        if (ctx.gca) flags.push('اشتباه التهاب شريان صدغي لدى >50 سنة — ستيرويد جهازي عاجل بإشراف.');
+        plan.push('تقييم عيني/وعائي عاجل + عوامل خطر قلبية وعائية.');
+        pharm.push('تدابير اختصاصية (خفض ضغط العين، مضادات صفيحات/علاج إذابة بمراكز مختارة) — قرار اختصاصي.');
+        return {plan, rec, pharm, flags, assess:'فقدان رؤية وعائي/عصبي محتمل'};
+      }
+      case 'dryeye': {
+        plan.push('قاعدة 20-20-20 للشاشات، رفع رمش/رمش واعٍ، ترطيب الجو، حماية من الهواء.');
+        pharm.push('دموع صناعية خالية من المواد الحافظة، جل/مرهم ليلي.');
+        if (ctx.auto) pharm.push('سيكلوسبورين/ليفيتيغراست موضعي — قرار الطبيب.');
+        if (ctx.cl) rec.push('ملاءمة العدسات/نوعها أو تقليل مدة الارتداء.');
+        return {plan, rec, pharm, flags, assess:'متلازمة العين الجافة'};
+      }
+      case 'stye': {
+        plan.push('كمادات دافئة 10 دقائق × 3–4 مرات/يوم، تدليك لطيف للحافة.');
+        if (ctx.bleph) rec.push('نظافة جفن يومية (شامبو أطفال مخفف/مسحات).');
+        pharm.push('مرهم مضاد موضعي عند خروج قيح/التهاب حافة — قرار الطبيب.');
+        if (ctx.recur || ctx.chal) rec.push('حقن/شق للبردة عند المزمن — اختصاصي.');
+        return {plan, rec, pharm, flags, assess: ctx.chal ? 'بردة' : 'شعيرة/التهاب حافة'};
+      }
+      case 'bleph': {
+        plan.push('نظافة حواف الجفن يوميًا، كمادات دافئة، تدليك غدد ميبوميوس.');
+        pharm.push('أزيثروميسين/إريثرومايسين موضعي؛ تيتراسيكلين فموي لروزيشيا مختارة — قرار الطبيب.');
+        rec.push('معالجة الجلد/الروزيشيا المرافقة، دموع صناعية للجفاف التبخّري.');
+        return {plan, rec, pharm, flags, assess:'التهاب جفن أمامي/خلفي'};
+      }
+      case 'sch': {
+        if (!ctx.noPain) rec.push('تأكّد من عدم وجود ألم/نقص رؤية.');
+        plan.push('غالبًا يزول تلقائيًا خلال 1–2 أسبوع؛ تجنّب الفرك.');
+        if (ctx.recur || ctx.bpAnt) rec.push('تحرّي ضغط الدم/اضطرابات التخثّر/مميّعات.');
+        pharm.push('دموع صناعية للراحة.');
+        return {plan, rec, pharm, flags, assess:'نزف تحت الملتحمة — مطمئن غالبًا'};
+      }
+      case 'dacryo': {
+        if (ctx.cellulitis) flags.push('سيلوليت حول الحجاج — طارئ.');
+        plan.push('كمادات دافئة متكررة، تدليك مسار الدمع (رضيع).');
+        pharm.push('مضاد حيوي جهازي/موضعي حسب الشدة — قرار الطبيب.');
+        rec.push('قَطْع كيس دمعي/مسار عند النكس المزمن — اختصاصي أنف/عين.');
+        return {plan, rec, pharm, flags, assess:'التهاب كيس دمعي'};
+      }
+    }
+    return {plan, rec, pharm, flags, assess:'غير محدد'};
+  }
+
+  // ====== عرض موحّد ======
+  function showResult(elId, obj){
+    const u = userContext();
+    const header = `<p>الاسم: <b>${u.name}</b>${u.age!=null? ` — العمر: <b>${u.age}</b>`:''} — الجنس: <b>${u.sex.label}</b>${u.cl?' — يرتدي عدسات':''}${u.older?' — ≥50 سنة':''}</p>`;
+    const assess = obj.assess ? `<p><b>التقييم:</b> ${obj.assess}</p>` : '';
+    const flagsHtml = obj.flags?.length? `<p><b>تنبيهات:</b></p>${lines(obj.flags)}` : '';
+    const planHtml = obj.plan?.length? `<p><b>خطة عامة:</b></p>${lines(obj.plan)}` : '';
+    const recHtml = obj.rec?.length? `<p><b>توصيات موجّهة:</b></p>${lines(obj.rec)}` : '';
+    const pharmHtml = obj.pharm?.length? `<p><b>أمثلة أدوية (قرار الطبيب):</b></p>${lines(obj.pharm)}<p class="hint">لا تبدأ/توقف أي دواء دون طبيب. الجرعات تختلف حسب الحالة والعمر.</p>` : '';
+    document.getElementById(elId).innerHTML = header + assess + flagsHtml + planHtml + recHtml + pharmHtml;
+    setLast({...obj, user:u});
+  }
+
+  // ====== الحسابات ======
+  function calcConj(){
+    const itch=yes('cjItch'), pur=yes('cjPur'), uri=yes('cjURI'), photo=yes('cjPhoto'), uni=yes('cjUni');
+    const {plan, rec, pharm, flags, assess} = buildPlanEye('conj', {itch, pur, uri, photo, uni}, userContext());
+    showResult('conj-res', {title:'التهاب ملتحمة', assess, plan, rec, pharm, flags});
+  }
+  function calcKeratitis(){
+    const cl=yes('keCL'), painPhoto=yes('kePainPhoto'), discharge=yes('keDischarge'), ulcer=yes('keUlcer');
+    const {plan, rec, pharm, flags, assess} = buildPlanEye('keratitis', {cl, painPhoto, discharge, ulcer}, userContext());
+    showResult('keratitis-res', {title:'التهاب/قرحة قرنية', assess, plan, rec, pharm, flags});
+  }
+  function calcAbrasion(){
+    const trauma=yes('abTrauma'), photoTear=yes('abPhotoTear'), fb=yes('abFB'), cl=yes('abCL');
+    const {plan, rec, pharm, flags, assess} = buildPlanEye('abrasion', {trauma, photoTear, fb, cl}, userContext());
+    showResult('abrasion-res', {title:'خدش قرنية', assess, plan, rec, pharm, flags});
+  }
+  function calcAAG(){
+    const pain=yes('agPain'), nv=yes('agNV'), halos=yes('agHalos'), age50=yes('agAge50');
+    const {plan, rec, pharm, flags, assess} = buildPlanEye('aag', {pain, nv, halos, age50}, userContext());
+    showResult('aag-res', {title:'زرق انسداد الزاوية', assess, plan, rec, pharm, flags});
+  }
+  function calcUveitis(){
+    const painPhoto=yes('uvPainPhoto'), blur=yes('uvBlur'), auto=yes('uvAuto'), tender=yes('uvTender');
+    const {plan, rec, pharm, flags, assess} = buildPlanEye('uveitis', {painPhoto, blur, auto, tender}, userContext());
+    showResult('uveitis-res', {title:'التهاب عنبة أمامي', assess, plan, rec, pharm, flags});
+  }
+  function calcRD(){
+    const flashes=yes('rdFlashes'), floaters=yes('rdFloaters'), curtain=yes('rdCurtain'), risk=yes('rdRisk');
+    const {plan, rec, pharm, flags, assess} = buildPlanEye('rd', {flashes, floaters, curtain, risk}, userContext());
+    showResult('rd-res', {title:'إنذار انفصال شبكية', assess, plan, rec, pharm, flags});
+  }
+  function calcSuddenLoss(){
+    const hours=yes('slHours'), vasc=yes('slVasc'), field=yes('slField'), gca=yes('slGCA');
+    const {plan, rec, pharm, flags, assess} = buildPlanEye('sudden-loss', {hours, vasc, field, gca}, userContext());
+    showResult('sudden-loss-res', {title:'فقدان رؤية مفاجئ', assess, plan, rec, pharm, flags});
+  }
+  function calcDryEye(){
+    const burn=yes('deBurn'), screen=yes('deScreen'), auto=yes('deAuto'), cl=yes('deCL');
+    const {plan, rec, pharm, flags, assess} = buildPlanEye('dryeye', {burn, screen, auto, cl}, userContext());
+    showResult('dryeye-res', {title:'جفاف العين', assess, plan, rec, pharm, flags});
+  }
+  function calcStye(){
+    const painred=yes('stPainRed'), chal=yes('stChal'), bleph=yes('stBleph'), recur=yes('stRecur');
+    const {plan, rec, pharm, flags, assess} = buildPlanEye('stye', {painred, chal, bleph, recur}, userContext());
+    showResult('stye-res', {title:'شعيرة/بردة', assess, plan, rec, pharm, flags});
+  }
+  function calcBleph(){
+    const scale=yes('blScale'), red=yes('blRed'), skin=yes('blSkin'), cl=yes('blCL');
+    const {plan, rec, pharm, flags, assess} = buildPlanEye('bleph', {scale, red, skin, cl}, userContext());
+    showResult('bleph-res', {title:'التهاب جفن', assess, plan, rec, pharm, flags});
+  }
+  function calcSCH(){
+    const noPain=yes('scNoPain'), bpAnt=yes('scBPant'), trauma=yes('scTrauma'), recur=yes('scRecur');
+    const {plan, rec, pharm, flags, assess} = buildPlanEye('sch', {noPain, bpAnt, trauma, recur}, userContext());
+    showResult('sch-res', {title:'نزف تحت الملتحمة', assess, plan, rec, pharm, flags});
+  }
+  function calcDacryo(){
+    const painSw=yes('dcPainSw'), feverPus=yes('dcFeverPus'), infant=yes('dcInfant'), cellulitis=yes('dcCellulitis');
+    const {plan, rec, pharm, flags, assess} = buildPlanEye('dacryo', {painSw, feverPus, infant, cellulitis}, userContext());
+    showResult('dacryo-res', {title:'التهاب كيس دمعي', assess, plan, rec, pharm, flags});
+  }
+
+  // ====== PDF ======
+  async function exportPDF(section){
+    const { jsPDF } = window.jspdf;
+    const m = window._last || {title:section, user:userContext(), plan:[], rec:[], pharm:[], flags:[]};
+    const u = m.user || userContext();
+
+    const box = document.createElement('div');
+    box.dir = 'rtl';
+    box.style.cssText = 'width:800px;padding:24px;background:#fff;color:#111;font-family:Cairo,Arial,sans-serif;line-height:1.9;border:1px solid #ddd;border-radius:12px';
+    box.innerHTML = `
+      <h2 style="margin:0 0 10px;font-weight:800">حكيم — ${m.title||section}</h2>
+      <p><b>الاسم:</b> ${u.name || 'بدون اسم'}${u.age!=null? ` — <b>العمر:</b> ${u.age}`:''} — <b>الجنس:</b> ${u.sex? u.sex.label : 'غير محدد'}${u.cl?' — عدسات لاصقة':''}${u.older?' — ≥50 سنة':''}</p>
+      ${m.assess? `<p><b>التقييم:</b> ${m.assess}</p>`:''}
+      ${m.flags && m.flags.length? `<p><b>تنبيهات:</b></p><ul>${m.flags.map(x=>`<li>${x}</li>`).join('')}</ul>`:''}
+      ${m.plan && m.plan.length? `<p><b>خطة عامة:</b></p><ul>${m.plan.map(x=>`<li>${x}</li>`).join('')}</ul>`:''}
+      ${m.rec && m.rec.length? `<p><b>توصيات موجّهة:</b></p><ul>${m.rec.map(x=>`<li>${x}</li>`).join('')}</ul>`:''}
+      ${m.pharm && m.pharm.length? `<p><b>أمثلة دوائية (قرار الطبيب):</b></p><ul>${m.pharm.map(x=>`<li>${x}</li>`).join('')}</ul><p style="font-size:12px;color:#555">تنبيه: لا تبدأ/توقف أي دواء دون طبيب.</p>`:''}
+      <hr style="margin:12px 0;border:0;border-top:1px solid #ddd"/>
+      <p style="font-size:13px;color:#444">ملف تثقيفي — لا يُغني عن تقييم الطبيب المختص. في الطوارئ يُرجى التواصل الفوري مع الإسعاف.</p>
+    `;
+    document.body.appendChild(box);
+    const canvas = await html2canvas(box, {scale:2, backgroundColor:'#ffffff', useCORS:true});
+    document.body.removeChild(box);
+
+    const pdf = new jsPDF({orientation:'p', unit:'pt', format:'a4'});
+    const pageW = pdf.internal.pageSize.getWidth(), pageH = pdf.internal.pageSize.getHeight(), margin=40;
+    let imgW = pageW - margin*2, imgH = canvas.height * imgW / canvas.width;
+    if (imgH > pageH - margin*2){ const r = (pageH - margin*2) / imgH; imgH*=r; imgW*=r; }
+    pdf.addImage(canvas.toDataURL('image/png'), 'PNG', (pageW-imgW)/2, (pageH-imgH)/2, imgW, imgH);
+    pdf.save(`Hakim-Ophthalmology-${(m.title||section).replace(/\s+/g,'_')}-${Date.now()}.pdf`);
+  }
+</script>
+
+<!--
+  الحالات المغطّاة (12):
+  - ملتحمة (تحسّسي/فيروسي/جرثومي)، التهاب/قرحة قرنية (عدسات)، خدش قرنية،
+    زرق انسداد زاوية حاد، التهاب عنبة أمامي، إنذار انفصال شبكية،
+    فقدان رؤية مفاجئ، جفاف العين، شعيرة/بردة، التهاب جفن،
+    نزف تحت الملتحمة، التهاب كيس دمعي.
+  - أمثلة الأدوية بلا جرعات وبصيغة "قرار الطبيب" التزامًا بالسلامة.
+-->
+</body>
+</html>

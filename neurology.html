@@ -1,0 +1,810 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>حكيم — الأعصاب (نسخة احترافية) | تقييمات ذكية + PDF</title>
+  <meta name="description" content="حكيم — الأعصاب الاحترافية: سكتة/TIA (FAST + ABCD2 + NIHSS-lite)، صداع (SNOOP10 + ICHD-3 + Cluster)، نوبة أولى، دوار/HINTS (إرشادي)، ألم ظهر، اعتلال أعصاب محيطية، إدراكات، رعاش/باركنسونية، و新增: وهن عضلي MG، متلازمة غيلان باريه GBS، شلل وجهي، ألم العصب مثلثي التوائم، اشتباه تصلب لويحي MS.">
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;800&display=swap" rel="stylesheet">
+  <!-- PDF -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" referrerpolicy="no-referrer"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js" referrerpolicy="no-referrer"></script>
+
+  <style>
+    :root{
+      --bg:#07090f; --txt:#e8ecff; --muted:#aab2d8;
+      --primary:#7aa2ff; --primary-2:#00e0ff; --accent:#a855f7;
+      --glass:rgba(255,255,255,.06); --border:rgba(255,255,255,.12);
+    }
+    *{box-sizing:border-box}
+    body{margin:0; font-family:'Cairo',system-ui,'Noto Sans Arabic',sans-serif; background:#07090f; color:var(--txt); line-height:1.9}
+    header{position:sticky; top:0; z-index:50; display:flex; align-items:center; justify-content:space-between; padding:14px 20px; backdrop-filter:saturate(140%) blur(8px); background:linear-gradient(180deg, rgba(15,16,40,.85), rgba(15,16,40,.45)); border-bottom:1px solid var(--border)}
+    .brand{display:flex; gap:12px; align-items:center}
+    .logo{width:42px; height:42px; border-radius:12px; display:grid; place-items:center; font-weight:800; background: radial-gradient(120% 120% at 0% 0%, var(--primary), var(--accent)); box-shadow: 0 0 24px rgba(122,162,255,.35), inset 0 0 18px rgba(255,255,255,.15)}
+    .brand-text strong{display:block; font-size:18px}
+    .brand-text span{display:block; font-size:12px; color:var(--muted)}
+    .container{width:min(1180px,94vw); margin-inline:auto}
+    h1{font-size:clamp(22px,4vw,34px); margin:22px 0 6px}
+    .sub{color:#cfd6ff; margin:0 0 12px}
+    .glass{background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03)); border:1px solid var(--border); border-radius:22px; padding:22px; box-shadow:0 30px 60px rgba(0,10,40,.35)}
+    .grid{display:grid; gap:16px}
+    .grid-2{grid-template-columns:1fr}
+    @media(min-width:980px){.grid-2{grid-template-columns:1fr 1fr}}
+    .choose{display:grid; gap:12px; grid-template-columns:repeat(2,1fr)}
+    @media(min-width:920px){.choose{grid-template-columns:repeat(4,1fr)}}
+    .opt{background:rgba(255,255,255,.04); border:1px solid var(--border); border-radius:16px; padding:14px; text-align:center; cursor:pointer; transition:transform .18s ease, border-color .18s ease; min-height:100px; display:grid; place-items:center; font-weight:700}
+    .opt:hover{transform:translateY(-3px); border-color:rgba(122,162,255,.6)}
+    .card{border:1px solid var(--border); border-radius:18px; background:rgba(255,255,255,0.04); padding:18px}
+    label{font-weight:600}
+    select, input[type="number"], input[type="text"], input[type="checkbox"]{width:100%; padding:10px 12px; border-radius:12px; border:1px solid var(--border); background:rgba(255,255,255,0.03); color:var(--txt)}
+    .row{display:grid; gap:12px; grid-template-columns:1fr}
+    @media(min-width:680px){.row{grid-template-columns:repeat(2,1fr)}}
+    .row-3{display:grid; gap:12px; grid-template-columns:repeat(3,1fr)}
+    .actions{display:flex; gap:10px; flex-wrap:wrap; margin-top:12px}
+    .btn{padding:10px 14px; border-radius:12px; border:1px solid var(--border); background:var(--glass); color:var(--txt); cursor:pointer; font-weight:700; transition:transform .2s ease, background .2s ease}
+    .btn.primary{background:linear-gradient(135deg, var(--primary), var(--primary-2)); border-color:transparent}
+    .btn:hover{transform:translateY(-2px)}
+    .result{padding:14px; border:1px solid var(--border); border-radius:14px; background:rgba(255,255,255,.03)}
+    .hint{font-size:13px; color:#b8c0ef}
+    footer{text-align:center; padding:22px; color:#aab2d8; font-size:13px; border-top:1px solid var(--border); margin-top:24px}
+    .mt{margin-top:10px}.hide{display:none}
+  </style>
+</head>
+<body>
+  <header>
+    <div class="brand">
+      <div class="logo">حكيم</div>
+      <div class="brand-text">
+        <strong>حكيم — الأعصاب (احترافي)</strong>
+        <span>تقييمات مؤتمتة دقيقة + PDF</span>
+      </div>
+    </div>
+    <nav class="actions" style="margin:0">
+      <a class="btn" href="index.html">الصفحة الرئيسية</a>
+    </nav>
+  </header>
+
+  <main class="container">
+    <section class="glass">
+      <h1>الأعصاب — اختر القسم</h1>
+      <p class="sub">أدخل البيانات ثم اختر قسمًا. الخطة تعرض <b>إرشادات عملية + أمثلة دوائية (بدون جرعات)</b> لمراجعتها مع الطبيب.</p>
+
+      <div class="row">
+        <div><label>الاسم:</label><input id="pat-name" type="text" placeholder="مثال: ليلى خالد"></div>
+        <div><label>العمر (سنوات):</label><input id="pat-age" type="number" min="10" max="120" placeholder="45"></div>
+      </div>
+      <div class="row">
+        <div>
+          <label>الجنس:</label>
+          <select id="pat-sex">
+            <option value="male">ذكر</option>
+            <option value="female">أنثى</option>
+            <option value="pregnant">حامل/يُحتمل الحمل</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="choose" id="chooser">
+        <div class="opt" data-target="stroke">سكتة/‏TIA (FAST + ABCD2)</div>
+        <div class="opt" data-target="headache">الصداع (SNOOP10 + ICHD-3)</div>
+        <div class="opt" data-target="cluster">صداع عنقودي Cluster</div>
+        <div class="opt" data-target="seizure">نوبة صرعية أولى</div>
+        <div class="opt" data-target="vertigo">دوار/دهليزي (HINTS إرشادي)</div>
+        <div class="opt" data-target="back">ألم الظهر/عرق النسا</div>
+        <div class="opt" data-target="neuropathy">اعتلال الأعصاب المحيطية</div>
+        <div class="opt" data-target="cognitive">الذاكرة/الخرف</div>
+        <div class="opt" data-target="tremor">رعاش/باركنسونية</div>
+        <div class="opt" data-target="mg">وهن عضلي وبيل (MG)</div>
+        <div class="opt" data-target="gbs">غيلان-باريه (GBS)</div>
+        <div class="opt" data-target="facial">شلل وجهي محيطي</div>
+        <div class="opt" data-target="tn">ألم العصب ثلاثي التوائم</div>
+        <div class="opt" data-target="ms">اشتباه تصلب لويحي (MS)</div>
+      </div>
+      <p class="hint mt">أعلام الطوارئ: FAST إيجابي، صداع صاعق، نوبة >5 دقائق، ضعف صاعد سريع/ضيق نفس، شلل وجهي مع أعراض دماغية، احتباس بول/سِّرج، حمى مع صلابة رقبة.</p>
+    </section>
+
+    <section class="grid grid-2 mt">
+      <!-- 1) Stroke/TIA -->
+      <div class="card hide" id="sec-stroke">
+        <h2>سكتة دماغية/‏TIA — FAST + ABCD2 + NIHSS-lite</h2>
+        <div class="row">
+          <div><label>هبوط فم/وجه (Face)</label><select id="stFace"><option value="0">لا</option><option value="1">نعم</option></select></div>
+          <div><label>ضعف ذراع/ساق (Arm/Leg)</label><select id="stArm"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        </div>
+        <div class="row">
+          <div><label>اضطراب كلام/حبسة (Speech)</label><select id="stSpeech"><option value="0">لا</option><option value="1">نعم</option></select></div>
+          <div><label>انحراف نظر/نظرة شاردة</label><select id="stGaze"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        </div>
+        <div class="row">
+          <div><label>آخر وقت طبيعي (دقائق)</label><input id="stLNW" type="number" min="0" max="1440" placeholder="60"></div>
+          <div><label>أعراض إضافية (خدر أحادي/ازدواجية/ترنّح)</label><select id="stExtra"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        </div>
+
+        <h3>حساب ABCD2 (للـTIA)</h3>
+        <div class="row">
+          <div><label>العمر ≥60</label><select id="abAge"><option value="0">لا</option><option value="1">نعم</option></select></div>
+          <div><label>ضغط أولي ≥140/90</label><select id="abBP"><option value="0">لا/غير معروف</option><option value="1">نعم</option></select></div>
+        </div>
+        <div class="row">
+          <div><label>أعراض: ضعف أحادي الجانب</label><select id="abWeak"><option value="0">لا</option><option value="2">نعم</option></select></div>
+          <div><label>أعراض: اضطراب كلام دون ضعف</label><select id="abSpeech"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        </div>
+        <div class="row">
+          <div><label>المدة ≥60 دقيقة</label><select id="abD60"><option value="0">لا</option><option value="2">نعم</option></select></div>
+          <div><label>المدة 10–59 دقيقة</label><select id="abD10"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        </div>
+        <div class="row">
+          <div><label>سكري</label><select id="abDM"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        </div>
+
+        <div class="actions">
+          <button class="btn primary" onclick="calcStroke()">حساب التقييم</button>
+          <button class="btn" onclick="exportPDF('stroke')">تصدير PDF</button>
+        </div>
+        <div class="result mt" id="stroke-res"></div>
+      </div>
+
+      <!-- 2) Headache -->
+      <div class="card hide" id="sec-headache">
+        <h2>الصداع — SNOOP10 + معايير الشقيقة (ICHD-3)</h2>
+        <div class="row">
+          <div><label>صاعق مفاجئ (ثوانٍ–دقائق)</label><select id="hdThunder"><option value="0">لا</option><option value="1">نعم</option></select></div>
+          <div><label>حمّى/تيبّس رقبة/طفح</label><select id="hdMeninge"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        </div>
+        <div class="row">
+          <div><label>عجز عصبي بؤري جديد</label><select id="hdNeuro"><option value="0">لا</option><option value="1">نعم</option></select></div>
+          <div><label>بداية ≥50 سنة</label><select id="hdAge50"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        </div>
+        <div class="row">
+          <div><label>تفاقم تدريجي/نمط جديد</label><select id="hdProg"><option value="0">لا</option><option value="1">نعم</option></select></div>
+          <div><label>سرطان/نقص مناعة/حمل</label><select id="hdRisk"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        </div>
+        <h3>صفات الشقيقة</h3>
+        <div class="row">
+          <div><label>مدة 4–72 ساعة</label><select id="migDur"><option value="0">لا</option><option value="1">نعم</option></select></div>
+          <div><label>نصفي/نبضي/يزداد بالحركة</label><select id="migQual"><option value="0">لا</option><option value="1">≥2 صفات</option></select></div>
+        </div>
+        <div class="row">
+          <div><label>غثيان/إقياء</label><select id="migNausea"><option value="0">لا</option><option value="1">نعم</option></select></div>
+          <div><label>رُهاب ضوء/صوت</label><select id="migPhotoPhono"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        </div>
+
+        <div class="actions">
+          <button class="btn primary" onclick="calcHeadache()">تشخيص مبدئي</button>
+          <button class="btn" onclick="exportPDF('headache')">تصدير PDF</button>
+        </div>
+        <div class="result mt" id="headache-res"></div>
+      </div>
+
+      <!-- 3) Cluster Headache -->
+      <div class="card hide" id="sec-cluster">
+        <h2>صداع عنقودي (Cluster) — تحرّي</h2>
+        <div class="row">
+          <div><label>ألم شديد أحادي حول العين/الصدغ (15–180 د)</label><select id="clPain"><option value="0">لا</option><option value="1">نعم</option></select></div>
+          <div><label>أعراض ذاتية (دمع/احتقان أنف/تعرق/تضيّق حدقة)</label><select id="clAut"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        </div>
+        <div class="row">
+          <div><label>هياج حركي أثناء النوبة</label><select id="clAgit"><option value="0">لا</option><option value="1">نعم</option></select></div>
+          <div><label>نمط يومي/فصلي متجمّع</label><select id="clPattern"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        </div>
+        <div class="actions">
+          <button class="btn primary" onclick="calcCluster()">تقييم عنقودي</button>
+          <button class="btn" onclick="exportPDF('cluster')">تصدير PDF</button>
+        </div>
+        <div class="result mt" id="cluster-res"></div>
+      </div>
+
+      <!-- 4) First Seizure -->
+      <div class="card hide" id="sec-seizure">
+        <h2>نوبة صرعية أولى — فرز دقيق</h2>
+        <div class="row">
+          <div><label>اختلاجات مشاهَدة/عضّ لسان/سلس</label><select id="szSigns"><option value="0">لا</option><option value="1">نعم</option></select></div>
+          <div><label>بوستيكتال (تشوّش بعد النوبة)</label><select id="szPost"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        </div>
+        <div class="row">
+          <div><label>مدة >5 دقائق/نوبات متتابعة</label><select id="szLong"><option value="0">لا</option><option value="1">نعم</option></select></div>
+          <div><label>محرّضات (سهر/انسحاب كحول/حمّى)</label><select id="szTrig"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        </div>
+        <div class="actions">
+          <button class="btn primary" onclick="calcSeizure()">تقييم النوبة</button>
+          <button class="btn" onclick="exportPDF('seizure')">تصدير PDF</button>
+        </div>
+        <div class="result mt" id="seizure-res"></div>
+      </div>
+
+      <!-- 5) Vertigo -->
+      <div class="card hide" id="sec-vertigo">
+        <h2>دوار/دهليزي — تفريق محيطي/مركزي</h2>
+        <div class="row">
+          <div><label>دوار وضعي (Dix–Hallpike موجب/دوران مع وضعية)</label><select id="vtPos"><option value="0">لا</option><option value="1">نعم</option></select></div>
+          <div><label>نقص سمع/طنين/امتلاء بالأذن</label><select id="vtEar"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        </div>
+        <div class="row">
+          <div><label>أعراض عصبية (ازدواجية/ترنّح/خدر)</label><select id="vtNeuro"><option value="0">لا</option><option value="1">نعم</option></select></div>
+          <div><label>دوار مستمر أيام + غثيان شديد</label><select id="vtNeuritis"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        </div>
+        <div class="actions">
+          <button class="btn primary" onclick="calcVertigo()">تقييم الدوار</button>
+          <button class="btn" onclick="exportPDF('vertigo')">تصدير PDF</button>
+        </div>
+        <div class="result mt" id="vertigo-res"></div>
+      </div>
+
+      <!-- 6) Back pain -->
+      <div class="card hide" id="sec-back">
+        <h2>ألم الظهر/عرق النسا — أعلام حمراء دقيقة</h2>
+        <div class="row">
+          <div><label>ألم جذري ينتشر تحت الركبة</label><select id="bkRad"><option value="0">لا</option><option value="1">نعم</option></select></div>
+          <div><label>ضعف/خدر/سقوط</label><select id="bkNeuro"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        </div>
+        <div class="row">
+          <div><label>سلس/احتباس بول/براز</label><select id="bkBlad"><option value="0">لا</option><option value="1">نعم</option></select></div>
+          <div><label>تنميل منطقة السرج</label><select id="bkSaddle"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        </div>
+        <div class="row">
+          <div><label>حمّى/سرطان/صدمة/نقص وزن</label><select id="bkRed"><option value="0">لا</option><option value="1">نعم</option></select></div>
+          <div><label>يزداد بالسعال/العطاس</label><select id="bkCough"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        </div>
+        <div class="actions">
+          <button class="btn primary" onclick="calcBack()">تقييم الظهر</button>
+          <button class="btn" onclick="exportPDF('back')">تصدير PDF</button>
+        </div>
+        <div class="result mt" id="back-res"></div>
+      </div>
+
+      <!-- 7) Peripheral Neuropathy -->
+      <div class="card hide" id="sec-neuropathy">
+        <h2>اعتلال الأعصاب المحيطية — فرز معمّق</h2>
+        <div class="row">
+          <div><label>خدر/حرقة نمط قفاز/جورب (ثنائي)</label><select id="npStock"><option value="0">لا</option><option value="1">نعم</option></select></div>
+          <div><label>سكري/قصور كلوي/درقي/كحول</label><select id="npRF"><option value="0">لا</option><option value="1">≥واحد</option></select></div>
+        </div>
+        <div class="row">
+          <div><label>أحادي الجانب/فجائي</label><select id="npAsym"><option value="0">لا</option><option value="1">نعم</option></select></div>
+          <div><label>عدم ثبات مشي/سقوط</label><select id="npGait"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        </div>
+        <div class="actions">
+          <button class="btn primary" onclick="calcNeuropathy()">تقييم الاعتلال</button>
+          <button class="btn" onclick="exportPDF('neuropathy')">تصدير PDF</button>
+        </div>
+        <div class="result mt" id="neuropathy-res"></div>
+      </div>
+
+      <!-- 8) Cognitive -->
+      <div class="card hide" id="sec-cognitive">
+        <h2>الذاكرة/الخرف — تفريق خرف/Delirium/اكتئاب</h2>
+        <div class="row">
+          <div><label>تدهور تدريجي ≥6 أشهر</label><select id="cgChronic"><option value="0">لا</option><option value="1">نعم</option></select></div>
+          <div><label>هبوط أنشطة الحياة المعقدة (مال/دواء)</label><select id="cgIADL"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        </div>
+        <div class="row">
+          <div><label>اضطراب حاد متقلب (Delirium)</label><select id="cgDelir"><option value="0">لا</option><option value="1">نعم</option></select></div>
+          <div><label>اكتئاب/قلق واضح</label><select id="cgMood"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        </div>
+        <div class="actions">
+          <button class="btn primary" onclick="calcCognitive()">تقييم معرفي</button>
+          <button class="btn" onclick="exportPDF('cognitive')">تصدير PDF</button>
+        </div>
+        <div class="result mt" id="cognitive-res"></div>
+      </div>
+
+      <!-- 9) Tremor -->
+      <div class="card hide" id="sec-tremor">
+        <h2>رعاش/باركنسونية — تفريق</h2>
+        <div class="row">
+          <div><label>رعاش راحة يخف بالحركة</label><select id="trRest"><option value="0">لا</option><option value="1">نعم</option></select></div>
+          <div><label>بطء/صلابة/مشية منحنية</label><select id="trPD"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        </div>
+        <div class="row">
+          <div><label>رعاش وضعي/حركي يتحسن بالكحول</label><select id="trET"><option value="0">لا</option><option value="1">نعم</option></select></div>
+          <div><label>رعاش رأس/صوت</label><select id="trHead"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        </div>
+        <div class="actions">
+          <button class="btn primary" onclick="calcTremor()">تقييم الرعاش</button>
+          <button class="btn" onclick="exportPDF('tremor')">تصدير PDF</button>
+        </div>
+        <div class="result mt" id="tremor-res"></div>
+      </div>
+
+      <!-- 10) Myasthenia Gravis -->
+      <div class="card hide" id="sec-mg">
+        <h2>وهن عضلي وبيل (MG) — فرز</h2>
+        <div class="row">
+          <div><label>تعب مع الجهد يتحسن بالراحة</label><select id="mgFatig"><option value="0">لا</option><option value="1">نعم</option></select></div>
+          <div><label>هبوط جفن/ازدواجية</label><select id="mgOcular"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        </div>
+        <div class="row">
+          <div><label>عسر بلع/أنفية الصوت</label><select id="mgBulbar"><option value="0">لا</option><option value="1">نعم</option></select></div>
+          <div><label>ضيق نفس/ضعف رقبة</label><select id="mgResp"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        </div>
+        <div class="actions">
+          <button class="btn primary" onclick="calcMG()">تقييم MG</button>
+          <button class="btn" onclick="exportPDF('mg')">تصدير PDF</button>
+        </div>
+        <div class="result mt" id="mg-res"></div>
+      </div>
+
+      <!-- 11) GBS -->
+      <div class="card hide" id="sec-gbs">
+        <h2>غيلان-باريه (GBS) — فرز</h2>
+        <div class="row">
+          <div><label>ضعف صاعد متناظر/نمل</label><select id="gbsWeak"><option value="0">لا</option><option value="1">نعم</option></select></div>
+          <div><label>نقص منعكسات</label><select id="gbsAref"><option value="0">لا/غير معروف</option><option value="1">نعم</option></select></div>
+        </div>
+        <div class="row">
+          <div><label>عدوى سابقة 1–3 أسابيع</label><select id="gbsInf"><option value="0">لا</option><option value="1">نعم</option></select></div>
+          <div><label>أعراض ذاتية (خفقان/تقلب ضغط/احتباس بول)</label><select id="gbsAuto"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        </div>
+        <div class="actions">
+          <button class="btn primary" onclick="calcGBS()">تقييم GBS</button>
+          <button class="btn" onclick="exportPDF('gbs')">تصدير PDF</button>
+        </div>
+        <div class="result mt" id="gbs-res"></div>
+      </div>
+
+      <!-- 12) Facial Palsy -->
+      <div class="card hide" id="sec-facial">
+        <h2>شلل وجهي محيطي (Bell's palsy) — فرز</h2>
+        <div class="row">
+          <div><label>إصابة الجبهة (لا يستطيع تقطيبها)</label><select id="fcLMN"><option value="0">لا/الجبهة سليمة</option><option value="1">نعم/إصابة كاملة</option></select></div>
+          <div><label>ألم حول الأذن/طفح حويصلي</label><select id="fcRamsay"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        </div>
+        <div class="row">
+          <div><label>أعراض دماغية مرافقة (ضعف طرف/كلام)</label><select id="fcCentral"><option value="0">لا</option><option value="1">نعم</option></select></div>
+          <div><label>جفاف/احمرار عين</label><select id="fcEye"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        </div>
+        <div class="actions">
+          <button class="btn primary" onclick="calcFacial()">تقييم الشلل الوجهي</button>
+          <button class="btn" onclick="exportPDF('facial')">تصدير PDF</button>
+        </div>
+        <div class="result mt" id="facial-res"></div>
+      </div>
+
+      <!-- 13) Trigeminal Neuralgia -->
+      <div class="card hide" id="sec-tn">
+        <h2>ألم العصب ثلاثي التوائم — فرز</h2>
+        <div class="row">
+          <div><label>ألم خاطف أحادي الوجه (ثوانٍ) كالصعقة</label><select id="tnShock"><option value="0">لا</option><option value="1">نعم</option></select></div>
+          <div><label>محرّضات لمس/مضغ/برد</label><select id="tnTrig"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        </div>
+        <div class="row">
+          <div><label>فقد حس/ضعف وجهي</label><select id="tnDef"><option value="0">لا</option><option value="1">نعم</option></select></div>
+          <div><label>العمر < 40 أو ثنائي الجانب</label><select id="tnYoung"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        </div>
+        <div class="actions">
+          <button class="btn primary" onclick="calcTN()">تقييم TN</button>
+          <button class="btn" onclick="exportPDF('tn')">تصدير PDF</button>
+        </div>
+        <div class="result mt" id="tn-res"></div>
+      </div>
+
+      <!-- 14) Multiple Sclerosis -->
+      <div class="card hide" id="sec-ms">
+        <h2>اشتباه تصلب لويحي (MS) — فرز</h2>
+        <div class="row">
+          <div><label>هجمات عصبية منفصلة (أيام-أسابيع) تحسّنت جزئيًا</label><select id="msAttacks"><option value="0">لا</option><option value="1">نعم</option></select></div>
+          <div><label>أعراض نموذجية (تهاب عصب بصري/حسي/رنحي/Lhermitte)</label><select id="msTypical"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        </div>
+        <div class="row">
+          <div><label>تفاقم بالحرارة (Uhthoff)</label><select id="msUhthoff"><option value="0">لا</option><option value="1">نعم</option></select></div>
+          <div><label>جنس أنثى وعمر 20–40</label><select id="msDemo"><option value="0">لا</option><option value="1">ينطبق</option></select></div>
+        </div>
+        <div class="actions">
+          <button class="btn primary" onclick="calcMS()">تقييم MS</button>
+          <button class="btn" onclick="exportPDF('ms')">تصدير PDF</button>
+        </div>
+        <div class="result mt" id="ms-res"></div>
+      </div>
+    </section>
+
+    <section class="glass mt">
+      <p class="hint">هذه الصفحة للتثقيف والفرز الأولي. عند الشك بطارئ (FAST إيجابي، صداع صاعق، نوبة مطوّلة، ضعف صاعد مع ضيق نفس، أعلام ذيل الفرس) اتصل بالإسعاف فورًا.</p>
+    </section>
+  </main>
+
+  <footer>© <span id="year"></span> حكيم — جميع الحقوق محفوظة.</footer>
+
+  <script>
+    // ====== عام ======
+    document.getElementById('year').textContent = new Date().getFullYear();
+    document.querySelectorAll('#chooser .opt').forEach(el=>{
+      el.addEventListener('click', ()=>{
+        document.querySelectorAll('.card').forEach(c=>c.classList.add('hide'));
+        const sec = document.getElementById('sec-'+el.getAttribute('data-target'));
+        if (sec){ sec.classList.remove('hide'); sec.scrollIntoView({behavior:'smooth', block:'start'}); }
+      });
+    });
+
+    function nameVal(){ return document.getElementById('pat-name').value?.trim() || 'بدون اسم'; }
+    function ageVal(){ const n=parseInt(document.getElementById('pat-age').value,10); return isNaN(n)? null : Math.min(120, Math.max(10,n)); }
+    function sexVal(){ const v=document.getElementById('pat-sex').value; return {code:v, label:(v==='male'?'ذكر':(v==='female'?'أنثى':'حامل/محتمل الحمل'))}; }
+    function userContext(){ const age=ageVal(), sex=sexVal(); return {name:nameVal(), age, sex, minor: age!=null && age<18, older: age!=null && age>=65, pregnant: sex.code==='pregnant'}; }
+    function lines(arr){ return `<ul>${arr.map(x=>`<li>${x}</li>`).join('')}</ul>`; }
+    function setLast(obj){ window._last = obj; }
+    function parseNum(id){ const el=document.getElementById(id); if(!el || el.value==='') return null; const v=parseFloat(String(el.value).replace(',','.')); return isNaN(v)? null : v; }
+    function yes(id){ return document.getElementById(id).value==='1'; }
+
+    // ====== مولّد الخطة العصبية الاحترافية ======
+    function buildPlanN(domain, ctx, u){
+      const plan=[], rec=[], pharm=[], flags = ctx.flags? [...ctx.flags] : [];
+      if (u.minor) rec.push('العمر أقل من 18: هذه الصفحة موجّهة للبالغين — يُفضّل تقييم اختصاص أطفال.');
+      if (u.older) rec.push('العمر ≥65: الحذر من السقوط/التداخلات؛ جرعات محافظة ومراقبة وظائف.');
+      if (u.pregnant) rec.push('حمل/احتمال حمل: بعض الأدوية محظورة؛ يلزم تقييم نسائية/أعصاب.');
+
+      switch(domain){
+        case 'stroke': {
+          if (ctx.fastPos) flags.push('FAST إيجابي — يُشتبه سكتة دماغية.');
+          if (ctx.lnw!=null && ctx.lnw<=270) flags.push('ضمن نافذة تقريبية 4.5 ساعة — تأهيل لعلاج حاد حسب البروتوكول.');
+          if (ctx.nih>=6) flags.push('شدة عصبية مرتفعة (NIHSS-lite ≥6).');
+          const ab = ctx.abcd2;
+          if (ab!=null) rec.push(`ABCD2 للـTIA: ${ab.score} — خطر ${ab.risk}.`);
+          plan.push('اتصال فوري بالإسعاف؛ عدم قيادة المركبة؛ تحديد آخر وقت طبيعي بدقة.');
+          rec.push('تصوير دماغ وعائي + مخبريات وفق بروتوكول الطوارئ.');
+          if (!u.pregnant){
+            pharm.push('مضاد صفيحات/مضاد خثرة/ستاتين بعد تثبيت التشخيص — قرار الفريق الطبي.');
+            pharm.push('ضبط ضغط/سكر حسب الإرشادات الإسعافية — قرار طبي.');
+          }
+          break;
+        }
+        case 'headache': {
+          if (ctx.red) flags.push('تنبيهات SNOOP10: يلزم تقييم إسعافي/عاجل.');
+          if (ctx.migraine) rec.push('صفات ترجّح الشقيقة وفق ICHD-3 (بعد استبعاد التنبيهات).');
+          plan.push('مذكّرة نوبات: وقت/مدة/محفزات (نوم/كافيين/أطعمة/توتر).');
+          if (!u.pregnant){
+            pharm.push('مُجهِض نوبة: تريبتان/NSAID/مضاد إقياء — قرار طبي.');
+            pharm.push('وقائي: حاصر بيتا/توبيراميت/أميتريبتيلين/أجسام مضادة لـCGRP — قرار طبي.');
+          } else {
+            pharm.push('الحمل: خيارات محدودة وقرار اختصاصي؛ تُتجنب أدوية معيّنة.');
+          }
+          break;
+        }
+        case 'cluster': {
+          if (ctx.suggest) rec.push('نمط عنقودي مرجّح (ألم حول العين + أعراض ذاتية + نمط مجمّع).');
+          plan.push('تقييم لاستبعاد أسباب ثانوية؛ متابعة جدول النوبات والتواتر.');
+          if (!u.pregnant){
+            pharm.push('علاج حاد: أوكسجين 100% عالي الجريان؛ سوماتريبتان تحت الجلد — قرار طبي.');
+            pharm.push('وقاية: فيراباميل (بحاجة مراقبة ECG)؛ خيارات أخرى تُناقش مع اختصاصي.');
+          } else {
+            pharm.push('الحمل: يُناقش العلاج مع اختصاصي نظرًا لقيود السلامة.');
+          }
+          break;
+        }
+        case 'seizure': {
+          if (ctx.status) flags.push('نوبة >5 دقائق أو متتابعة — طارئ (Status).');
+          if (ctx.trueLike) rec.push('ملامح ترجّح نوبة صرعية (اختلاجات/عضّ لسان/بوستيكتال).');
+          plan.push('تجنّب السواقة/السباحة وحدك حتى تقييم اختصاصي؛ ضبط النوم وتجنّب الكحول.');
+          plan.push('فحوصات: سكر/شوارد، حمل إن لزم، سموم، EEG، تصوير دماغ.');
+          if (!u.pregnant){
+            pharm.push('خيارات مضادّة للاختلاج: levetiracetam / lamotrigine / carbamazepine / valproate (قرار اختصاصي).');
+          } else {
+            pharm.push('الحمل: يُفضَّل lamotrigine/levetiracetam؛ يُتجنب valproate.');
+          }
+          break;
+        }
+        case 'vertigo': {
+          if (ctx.neuro) flags.push('دوار مع علامات مركزية — تقييم عاجل.');
+          if (ctx.positional) rec.push('BPPV محتمل — مناورة Epley بإشراف مختص.');
+          if (ctx.ear) rec.push('أعراض أذنية: راجع منيير/أذية دهليزية.');
+          if (ctx.neuritis) rec.push('التهاب عصب دهليزي محتمل.');
+          plan.push('ترطيب وتجنّب الحركات المفاجئة؛ تمارين دهليزية تدريجية.');
+          if (!u.pregnant){
+            pharm.push('مثبّت دهليزي قصير الأمد (betahistine/dimenhydrinate) ومضاد إقياء — قرار طبي.');
+          }
+          break;
+        }
+        case 'back': {
+          if (ctx.cauda) flags.push('أعلام ذيل الفرس (سلس/سِّرج) — إسعاف عاجل.');
+          if (ctx.red) rec.push('أعلام حمراء (حمّى/سرطان/صدمة/نزول وزن) — تصوير مبكّر.');
+          if (ctx.rad) rec.push('عرق النسا محتمل.');
+          plan.push('نشاط معتدل مبكر، حرارة موضعية، تمارين تدريجية، تجنّب الراحة الطويلة.');
+          if (!u.pregnant){
+            pharm.push('مسكّنات بسيطة/NSAIDs لفترة قصيرة — قرار طبي.');
+            pharm.push('لألم اعتلال عصبي: gabapentin/pregabalin/duloxetine — قرار طبي.');
+          }
+          break;
+        }
+        case 'neuropathy': {
+          if (ctx.asym) rec.push('أحادي فجائي: نَفِ الأسباب الانضغاطية/البؤرية.');
+          if (ctx.stock) rec.push('نمط قفاز/جورب يوحي باعتلال أعصاب محيطي (سكري شائع).');
+          plan.push('فحوص: HbA1c، B12، TSH، وظائف كلوية وكبديّة؛ مراجعة أدوية سامة للأعصاب.');
+          if (!u.pregnant){
+            pharm.push('ألم عصبي: duloxetine / amitriptyline / gabapentin / pregabalin — قرار طبي.');
+            pharm.push('موضعي: ليدوكائين لاصق/كابسيسين — قرار طبي.');
+          }
+          break;
+        }
+        case 'cognitive': {
+          if (ctx.delir) flags.push('Delirium (حاد متقلب) — سبب عضوي/دوائي محتمل؛ تقييم عاجل.');
+          if (ctx.chronic && ctx.iadl) rec.push('خرف محتمل — يلزم تحرّي أسباب قابلة للعكس وتقييم اختصاصي.');
+          if (ctx.mood) rec.push('اكتئاب/قلق قد يفاقم الشكاية — يستحسن التحري والعلاج.');
+          plan.push('B12، TSH، CBC، شوارد؛ تقييم السمع/البصر؛ نشاط ذهني وبدني ونوم منتظم.');
+          if (!u.pregnant){
+            pharm.push('خيارات لبعض الحالات: donepezil/rivastigmine/memantine — قرار طبي.');
+          }
+          break;
+        }
+        case 'tremor': {
+          if (ctx.pd) rec.push('باركنسونية محتملة (راحة + بطء/صلابة/مشية).');
+          if (ctx.et) rec.push('رعاش أساسي محتمل (وضعي/حركي وقد يشمل الرأس/الصوت).');
+          plan.push('مراجعة أدوية محفزة للرعاش (منبّهات/SSRIs/ليفوثيروكسين…).');
+          if (!u.pregnant){
+            pharm.push('باركنسونية: levodopa/carbidopa؛ نواهض الدوبامين؛ MAO-B inhibitors — قرار اختصاصي.');
+            pharm.push('رعاش أساسي: propranolol / primidone / topiramate — قرار طبي.');
+          }
+          break;
+        }
+        case 'mg': {
+          if (ctx.resp) flags.push('اشتباه أزمة وهن عضلي (تنفّس/بلع) — إسعاف.');
+          if (ctx.suggest) rec.push('وهن عضلي مرجّح (إرهاق يتبدّل + عيني/بلع).');
+          plan.push('اختبارات: أضداد AChR/MuSK، تخطيط عضلات/تنبيه متكرر، تصوير منصف لنفي ورم تيموسي.');
+          if (!u.pregnant){
+            pharm.push('pyridostigmine للأعراض؛ كورتيكوستيرويد/مثبطات مناعة عند الحاجة — قرار اختصاصي.');
+            pharm.push('IVIG/Plasmapheresis للأزمات — قرار اختصاصي.');
+          } else {
+            pharm.push('الحمل: قرارات علاجية حذرة مع اختصاصي؛ تجنّب بعض الأدوية.');
+          }
+          break;
+        }
+        case 'gbs': {
+          if (ctx.resp || ctx.auto) flags.push('خطر فشل تنفسي/اختلال ذاتي — إدخال للمراقبة.');
+          if (ctx.suggest) rec.push('GBS مرجّح (ضعف صاعد + نقص منعكسات بعد عدوى).');
+          plan.push('مراقبة السعة الحيوية القسرية، دعم تنفسي عند اللزوم؛ تقييم عصبي عاجل.');
+          if (!u.pregnant){
+            pharm.push('IVIG أو plasmapheresis — قرار اختصاصي.');
+          }
+          break;
+        }
+        case 'facial': {
+          if (ctx.central) flags.push('ملامح مركزية (الجبهة سليمة/أعراض دماغية) — تقييم جلطة/آفة مركزية.');
+          if (ctx.lmn) rec.push('شلل وجهي محيطي محتمل (LMN).');
+          if (ctx.ramsay) rec.push('Ramsay Hunt محتمل (ألم أذن/طفح حويصلي).');
+          plan.push('عناية عين: دموع صناعية/لصاقة ليلية لحماية القرنية؛ إحالة عاجلة إن لم تُغلق العين.');
+          if (!u.pregnant){
+            pharm.push('ستيرويد فموي مبكّر (خلال 72 ساعة) في Bell’s palsy — قرار طبي.');
+            pharm.push('إضافة مضاد فيروسات إذا اشتُبه Ramsay Hunt — قرار طبي.');
+          }
+          break;
+        }
+        case 'tn': {
+          if (ctx.suggest) rec.push('TN نموذجي محتمل (ألم صاعق مع محرضات لمس/مضغ).');
+          if (ctx.red) flags.push('عمر <40/ثنائي الجانب/عجز حسي — يلزم MRI لنفي أسباب ثانوية.');
+          plan.push('تقييم اختصاصي وأشعة عند وجود تنبيهات.');
+          if (!u.pregnant){
+            pharm.push('carbamazepine أو oxcarbazepine — قرار طبي.');
+          }
+          break;
+        }
+        case 'ms': {
+          if (ctx.suggest) rec.push('MS محتمل (هجمات منفصلة + أعراض نموذجية).');
+          plan.push('MRI دماغ/نخاع مع غادولينيوم، تحاليل سائل نخاعي (أشرطة قليلة النسائل).');
+          if (!u.pregnant){
+            pharm.push('ستيرويد وريدي لهجمة حادة؛ علاج مُعدِّل للمرض طويل الأمد — قرار اختصاصي.');
+          } else {
+            pharm.push('الحمل: تخطيط فردي مع اختصاصي؛ بعض العلاجات تُؤجّل/تُبدَّل.');
+          }
+          break;
+        }
+      }
+      return {plan, rec, pharm, flags};
+    }
+
+    // ====== عرض موحّد ======
+    function showResult(elId, obj){
+      const u = userContext();
+      const flags = obj.flags || [];
+      const header = `<p>الاسم: <b>${u.name}</b>${u.age? ` — العمر: <b>${u.age}</b>`:''} — الجنس: <b>${u.sex.label}</b></p>`;
+      const assess = obj.assess ? `<p><b>التقييم:</b> ${obj.assess}</p>` : '';
+      const sev = obj.severity ? `<p><b>الشدة:</b> ${obj.severity}</p>` : '';
+      const score = (obj.score!==undefined) ? `<p><b>قيمة/درجة:</b> ${obj.score}</p>` : '';
+      const flagsHtml = flags.length? `<p><b>تنبيهات:</b></p>${lines(flags)}` : '';
+      const planHtml = obj.plan?.length? `<p><b>خطة عامة:</b></p>${lines(obj.plan)}` : '';
+      const recHtml = obj.rec?.length? `<p><b>توصيات موجّهة:</b></p>${lines(obj.rec)}` : '';
+      const pharmHtml = obj.pharm?.length? `<p><b>أمثلة دوائية (قرار الطبيب):</b></p>${lines(obj.pharm)}<p class="hint">لا تبدأ/توقف أي دواء دون طبيب. توجد موانع وتداخلات خاصة بالحمل وكبار السن والأمراض المرافقة.</p>` : '';
+
+      document.getElementById(elId).innerHTML = header + score + sev + assess + flagsHtml + planHtml + recHtml + pharmHtml;
+      setLast({...obj, user:u});
+    }
+
+    // ====== حسابات الأقسام ======
+    function calcStroke(){
+      const u = userContext();
+      const face = yes('stFace'), arm = yes('stArm'), speech = yes('stSpeech'), gaze = yes('stGaze');
+      const lnw = parseNum('stLNW');
+      const fastPos = face || arm || speech;
+
+      // NIHSS-lite: وجه/ذراع/كلام (0/2) + نظرة (0/1)
+      const nih = (face?2:0) + (arm?2:0) + (speech?2:0) + (gaze?1:0);
+      const sev = (nih>=6)?'مرتفع' : (nih>=3?'متوسط':'خفيف');
+
+      // ABCD2
+      const ab = {
+        score:
+          (parseInt(document.getElementById('abAge').value)||0) +
+          (parseInt(document.getElementById('abBP').value)||0) +
+          (parseInt(document.getElementById('abWeak').value)||0) +
+          (parseInt(document.getElementById('abSpeech').value)||0) +
+          (parseInt(document.getElementById('abD60').value)||0) +
+          (parseInt(document.getElementById('abD10').value)||0) +
+          (parseInt(document.getElementById('abDM').value)||0)
+      };
+      ab.risk = (ab.score<=3)?'منخفض' : (ab.score<=5?'متوسط':'عالٍ');
+
+      const {plan, rec, pharm, flags} = buildPlanN('stroke', {fastPos, lnw, nih, abcd2:ab}, u);
+      const assess = (fastPos? 'FAST إيجابي' : 'FAST سلبي (لا ينفي السكتة)') + ` — NIHSS-lite: ${nih} (${sev})`;
+      showResult('stroke-res', {title:'سكتة/TIA', assess, severity: sev, score:`ABCD2: ${ab.score} (${ab.risk})`, plan, rec, pharm, flags});
+    }
+
+    function calcHeadache(){
+      const u = userContext();
+      const red = ['hdThunder','hdMeninge','hdNeuro','hdAge50','hdProg','hdRisk'].some(id=>yes(id));
+      const migraine = yes('migDur') && yes('migQual') && (yes('migNausea') || yes('migPhotoPhono'));
+      let assess = red ? 'تنبيهات SNOOP10 موجودة' : (migraine ? 'صفات شقيقة محتملة' : 'صداع أولي غير نوعي');
+      const {plan, rec, pharm, flags} = buildPlanN('headache', {red, migraine}, u);
+      showResult('headache-res', {title:'الصداع', assess, plan, rec, pharm, flags});
+    }
+
+    function calcCluster(){
+      const u = userContext();
+      const suggest = yes('clPain') && yes('clAut') && (yes('clAgit') || yes('clPattern'));
+      const {plan, rec, pharm, flags} = buildPlanN('cluster', {suggest}, u);
+      showResult('cluster-res', {title:'صداع عنقودي', assess: suggest?'عنقودي مرجّح':'غير نموذجي للعنقودي', plan, rec, pharm, flags});
+    }
+
+    function calcSeizure(){
+      const u = userContext();
+      const signs = yes('szSigns'), post = yes('szPost'), long = yes('szLong'), trig = yes('szTrig');
+      const trueLike = signs || post;
+      const status = long;
+      let assess = trueLike ? 'ملامح ترجّح نوبة صرعية' : 'غير نموذجية — فكّر بإغماء/أسباب أخرى';
+      if (trig) assess += ' — مع عامل محرّض محتمل';
+      const {plan, rec, pharm, flags} = buildPlanN('seizure', {trueLike, status}, u);
+      showResult('seizure-res', {title:'نوبة أولى', assess, plan, rec, pharm, flags});
+    }
+
+    function calcVertigo(){
+      const u = userContext();
+      const positional = yes('vtPos'), ear = yes('vtEar'), neuro = yes('vtNeuro'), neuritis = yes('vtNeuritis');
+      let assess = 'دوار غير محدد';
+      if (positional) assess = 'BPPV محتمل (وضعي)';
+      if (neuritis) assess = 'التهاب عصب دهليزي محتمل';
+      if (ear) assess += ' — أعراض أذنية';
+      if (neuro) assess += ' — علامات مركزية';
+      const {plan, rec, pharm, flags} = buildPlanN('vertigo', {positional, ear, neuro, neuritis}, u);
+      showResult('vertigo-res', {title:'الدوار/الدهليزي', assess, plan, rec, pharm, flags});
+    }
+
+    function calcBack(){
+      const u = userContext();
+      const rad = yes('bkRad'), neuro = yes('bkNeuro'), blad = yes('bkBlad'), saddle = yes('bkSaddle'), red = yes('bkRed'), cough = yes('bkCough');
+      const cauda = blad || saddle;
+      let assess = 'ألم ظهر ميكانيكي محتمل';
+      if (rad) assess = 'عرق النسا/ألم جذري';
+      if (neuro) assess += ' — مع مظاهر عصبية';
+      if (red) assess += ' — أعلام حمراء';
+      const {plan, rec, pharm, flags} = buildPlanN('back', {rad, red, cauda, cough}, u);
+      showResult('back-res', {title:'ألم الظهر/عرق النسا', assess, plan, rec, pharm, flags});
+    }
+
+    function calcNeuropathy(){
+      const u = userContext();
+      const stock = yes('npStock'), rf = yes('npRF'), asym = yes('npAsym'), gait = yes('npGait');
+      let assess = stock ? 'اعتلال أعصاب محيطي نمطي' : 'أعراض حسّية غير نوعية';
+      if (asym) assess += ' — أحادي الجانب';
+      if (gait) assess += ' — عدم ثبات';
+      const {plan, rec, pharm, flags} = buildPlanN('neuropathy', {stock, rf, asym, gait}, u);
+      showResult('neuropathy-res', {title:'اعتلال الأعصاب المحيطية', assess, plan, rec, pharm, flags});
+    }
+
+    function calcCognitive(){
+      const u = userContext();
+      const chronic = yes('cgChronic'), iadl = yes('cgIADL'), delir = yes('cgDelir'), mood = yes('cgMood');
+      let assess = 'شكاية معرفية غير نوعية';
+      if (chronic && iadl) assess = 'خرف محتمل';
+      if (delir) assess = 'Delirium محتمل (حاد متقلّب)';
+      if (mood) assess += ' — تأثير مزاجي مرافق';
+      const {plan, rec, pharm, flags} = buildPlanN('cognitive', {chronic, iadl, delir, mood}, u);
+      showResult('cognitive-res', {title:'الذاكرة/الخرف', assess, plan, rec, pharm, flags});
+    }
+
+    function calcTremor(){
+      const u = userContext();
+      const rest = yes('trRest'), pd = yes('trPD'), et = yes('trET'), head = yes('trHead');
+      let assess = 'رعاش غير محدد';
+      if (pd || rest) assess = 'باركنسونية محتملة/رعاش راحة';
+      else if (et || head) assess = 'رعاش أساسي محتمل';
+      const {plan, rec, pharm, flags} = buildPlanN('tremor', {pd, et}, u);
+      showResult('tremor-res', {title:'رعاش/باركنسونية', assess, plan, rec, pharm, flags});
+    }
+
+    function calcMG(){
+      const u = userContext();
+      const fatig = yes('mgFatig'), ocular = yes('mgOcular'), bulbar = yes('mgBulbar'), resp = yes('mgResp');
+      const suggest = fatig && (ocular || bulbar);
+      const {plan, rec, pharm, flags} = buildPlanN('mg', {suggest, resp}, u);
+      showResult('mg-res', {title:'وهن عضلي وبيل (MG)', assess: suggest?'مرجّح':'غير نموذجـي للـMG', plan, rec, pharm, flags});
+    }
+
+    function calcGBS(){
+      const u = userContext();
+      const weak = yes('gbsWeak'), aref = yes('gbsAref'), inf = yes('gbsInf'), auto = yes('gbsAuto');
+      const suggest = weak && (aref || inf);
+      const {plan, rec, pharm, flags} = buildPlanN('gbs', {suggest, auto, resp:false}, u);
+      showResult('gbs-res', {title:'غيلان-باريه (GBS)', assess: suggest?'مرجّح':'غير نموذجـي للـGBS', plan, rec, pharm, flags});
+    }
+
+    function calcFacial(){
+      const u = userContext();
+      const lmn = yes('fcLMN'), ramsay = yes('fcRamsay'), central = yes('fcCentral'), eye = yes('fcEye');
+      const {plan, rec, pharm, flags} = buildPlanN('facial', {lmn, ramsay, central, eye}, u);
+      let assess = lmn?'شلل وجهي محيطي محتمل':'قد يكون مركزي/غير نموذجي';
+      if (central) assess = 'ملامح مركزية — استبعاد سكتة/آفة دماغية';
+      showResult('facial-res', {title:'شلل وجهي محيطي', assess, plan, rec, pharm, flags});
+    }
+
+    function calcTN(){
+      const u = userContext();
+      const shock = yes('tnShock'), trig = yes('tnTrig'), def = yes('tnDef'), young = yes('tnYoung');
+      const suggest = shock && trig;
+      const red = def || young;
+      const {plan, rec, pharm, flags} = buildPlanN('tn', {suggest, red}, u);
+      showResult('tn-res', {title:'ألم العصب ثلاثي التوائم', assess: suggest?'TN نموذجي محتمل':'غير نموذجي', plan, rec, pharm, flags});
+    }
+
+    function calcMS(){
+      const u = userContext();
+      const att = yes('msAttacks'), typ = yes('msTypical'), uh = yes('msUhthoff'), demo = yes('msDemo');
+      const suggest = (att && typ) || (typ && demo);
+      const {plan, rec, pharm, flags} = buildPlanN('ms', {suggest, uh}, u);
+      showResult('ms-res', {title:'اشتباه MS', assess: suggest?'مرجّح (يستلزم تصوير وفحوص)': 'غير كافٍ للاشتباه', plan, rec, pharm, flags});
+    }
+
+    // ====== PDF ======
+    async function exportPDF(section){
+      const { jsPDF } = window.jspdf;
+      const m = window._last || {title:section, user:userContext(), plan:[], rec:[], pharm:[], flags:[]};
+      const u = m.user || userContext();
+
+      const box = document.createElement('div');
+      box.dir = 'rtl';
+      box.style.cssText = 'width:800px;padding:24px;background:#fff;color:#111;font-family:Cairo,Arial,sans-serif;line-height:1.9;border:1px solid #ddd;border-radius:12px';
+      box.innerHTML = `
+        <h2 style="margin:0 0 10px;font-weight:800">حكيم — ${m.title||section}</h2>
+        <p><b>الاسم:</b> ${u.name || 'بدون اسم'}${u.age? ` — <b>العمر:</b> ${u.age}`:''} — <b>الجنس:</b> ${u.sex? u.sex.label : 'غير محدد'}</p>
+        ${m.score!==undefined? `<p><b>قيمة/درجة:</b> ${m.score}</p>`:''}
+        ${m.severity? `<p><b>الشدة:</b> ${m.severity}</p>`:''}
+        ${m.assess? `<p><b>التقييم:</b> ${m.assess}</p>`:''}
+        ${m.flags && m.flags.length? `<p><b>تنبيهات:</b></p><ul>${m.flags.map(x=>`<li>${x}</li>`).join('')}</ul>`:''}
+        ${m.plan && m.plan.length? `<p><b>خطة عامة:</b></p><ul>${m.plan.map(x=>`<li>${x}</li>`).join('')}</ul>`:''}
+        ${m.rec && m.rec.length? `<p><b>توصيات موجّهة:</b></p><ul>${m.rec.map(x=>`<li>${x}</li>`).join('')}</ul>`:''}
+        ${m.pharm && m.pharm.length? `<p><b>أمثلة دوائية (قرار الطبيب):</b></p><ul>${m.pharm.map(x=>`<li>${x}</li>`).join('')}</ul><p style="font-size:12px;color:#555">تنبيه: لا تبدأ/توقف أي دواء دون طبيب. قد توجد موانع/تداخلات خاصة بالحمل وكبار السن.</p>`:''}
+        <hr style="margin:12px 0;border:0;border-top:1px solid #ddd"/>
+        <p style="font-size:13px;color:#444">ملف تثقيفي — لا يُغني عن تقييم الطبيب المختص. في الطوارئ يُرجى التواصل الفوري مع الإسعاف.</p>
+      `;
+      document.body.appendChild(box);
+      const canvas = await html2canvas(box, {scale:2, backgroundColor:'#ffffff', useCORS:true});
+      document.body.removeChild(box);
+
+      const pdf = new jsPDF({orientation:'p', unit:'pt', format:'a4'});
+      const pageW = pdf.internal.pageSize.getWidth(), pageH = pdf.internal.pageSize.getHeight(), margin=40;
+      let imgW = pageW - margin*2, imgH = canvas.height * imgW / canvas.width;
+      if (imgH > pageH - margin*2){ const r = (pageH - margin*2) / imgH; imgH*=r; imgW*=r; }
+      pdf.addImage(canvas.toDataURL('image/png'), 'PNG', (pageW-imgW)/2, (pageH-imgH)/2, imgW, imgH);
+      pdf.save(`Hakim-NeuroPro-${(m.title||section).replace(/\s+/g,'_')}-${Date.now()}.pdf`);
+    }
+  </script>
+
+  <!--
+    تحسينات هذه النسخة:
+    - سكتة/TIA: FAST + NIHSS-lite + ABCD2 مع إخراج الشدة وخطر TIA.
+    - صداع: SNOOP10 موسّع + ICHD-3؛ وأضفنا صداع عنقودي مع علاج حاد/وقائي (دون جرعات).
+    - نوبة أولى: إبراز Status، محرضات، توصيات تصوير/EEG.
+    - دوار: تفريق BPPV/Neuritis/Ménière وعلامات مركزية.
+    - ظهر: أعلام ذيل الفرس.
+    - اعتلال أعصاب: فحوص أساسية وبدائل علاجية للألم العصبي.
+    - إدراك: تفريق خرف/Delirium/اكتئاب.
+    - رعاش: أساسي مقابل باركنسوني.
+    - جديد: MG، GBS، شلل وجهي، TN، MS مع خطط وأدوية أمثلة.
+  -->
+</body>
+</html>

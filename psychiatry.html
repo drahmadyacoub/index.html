@@ -1,0 +1,584 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>حكيم — الطب النفسي | فحوصات سريعة + PDF</title>
+  <meta name="description" content="الطب النفسي — ثمانية أقسام مع أخد العمر والجنس بالحسبان: PHQ-9, GAD-7, Panic, OCD, PTSD, Bipolar (MDQ مبسّط), Adult ADHD (ASRS-A), Insomnia (ISI). تقييم ذكي وخطة إرشادية + PDF عربي.">
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;800&display=swap" rel="stylesheet">
+
+  <!-- للتصدير PDF (العربية عبر التقاط DOM) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" referrerpolicy="no-referrer"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js" referrerpolicy="no-referrer"></script>
+
+  <style>
+    :root{
+      --bg:#07090f; --txt:#e8ecff; --muted:#aab2d8;
+      --primary:#7aa2ff; --primary-2:#00e0ff; --accent:#a855f7;
+      --glass:rgba(255,255,255,.06); --border:rgba(255,255,255,.12);
+    }
+    *{box-sizing:border-box}
+    body{margin:0; font-family:'Cairo',system-ui,'Noto Sans Arabic',sans-serif; background:#07090f; color:var(--txt); line-height:1.9}
+    header{position:sticky; top:0; z-index:50; display:flex; align-items:center; justify-content:space-between; padding:14px 20px; backdrop-filter:saturate(140%) blur(8px); background:linear-gradient(180deg, rgba(15,16,40,.85), rgba(15,16,40,.45)); border-bottom:1px solid var(--border)}
+    .brand{display:flex; gap:12px; align-items:center}
+    .logo{width:42px; height:42px; border-radius:12px; display:grid; place-items:center; font-weight:800; background: radial-gradient(120% 120% at 0% 0%, var(--primary), var(--accent)); box-shadow: 0 0 24px rgba(122,162,255,.35), inset 0 0 18px rgba(255,255,255,.15)}
+    .brand-text strong{display:block; font-size:18px}
+    .brand-text span{display:block; font-size:12px; color:var(--muted)}
+    .container{width:min(1180px,94vw); margin-inline:auto}
+    h1{font-size:clamp(22px,4vw,34px); margin:22px 0 6px}
+    .sub{color:#cfd6ff; margin:0 0 12px}
+    .glass{background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03)); border:1px solid var(--border); border-radius:22px; padding:22px; box-shadow:0 30px 60px rgba(0,10,40,.35)}
+    .grid{display:grid; gap:16px}
+    .grid-2{grid-template-columns:1fr}
+    @media(min-width:980px){.grid-2{grid-template-columns:1fr 1fr}}
+    .choose{display:grid; gap:12px; grid-template-columns:repeat(2,1fr)}
+    @media(min-width:860px){.choose{grid-template-columns:repeat(4,1fr)}}
+    .opt{background:rgba(255,255,255,.04); border:1px solid var(--border); border-radius:16px; padding:14px; text-align:center; cursor:pointer; transition:transform .18s ease, border-color .18s ease; min-height:100px; display:grid; place-items:center; font-weight:700}
+    .opt:hover{transform:translateY(-3px); border-color:rgba(122,162,255,.6)}
+    .card{border:1px solid var(--border); border-radius:18px; background:rgba(255,255,255,0.04); padding:18px}
+    label{font-weight:600}
+    select, input[type="number"], input[type="text"]{width:100%; padding:10px 12px; border-radius:12px; border:1px solid var(--border); background:rgba(255,255,255,0.03); color:var(--txt)}
+    .row{display:grid; gap:12px; grid-template-columns:1fr}
+    @media(min-width:680px){.row{grid-template-columns:repeat(2,1fr)}}
+    .q{margin:10px 0; padding:12px; border-radius:14px; border:1px dashed rgba(255,255,255,.15)}
+    .actions{display:flex; gap:10px; flex-wrap:wrap; margin-top:12px}
+    .btn{padding:10px 14px; border-radius:12px; border:1px solid var(--border); background:var(--glass); color:var(--txt); cursor:pointer; font-weight:700; transition:transform .2s ease, background .2s ease}
+    .btn.primary{background:linear-gradient(135deg, var(--primary), var(--primary-2)); border-color:transparent}
+    .btn:hover{transform:translateY(-2px)}
+    .pill{display:inline-block; padding:6px 10px; border:1px solid var(--border); border-radius:999px; background:rgba(255,255,255,.05); font-size:13px}
+    .result{padding:14px; border:1px solid var(--border); border-radius:14px; background:rgba(255,255,255,.03)}
+    .hint{font-size:13px; color:#b8c0ef}
+    footer{text-align:center; padding:22px; color:#aab2d8; font-size:13px; border-top:1px solid var(--border); margin-top:24px}
+    .mt{margin-top:10px}.hide{display:none}
+  </style>
+</head>
+<body>
+  <header>
+    <div class="brand">
+      <div class="logo">حكيم</div>
+      <div class="brand-text">
+        <strong>حكيم — الطب النفسي</strong>
+        <span>فحوصات سريعة مؤتمتة + PDF</span>
+      </div>
+    </div>
+    <nav class="actions" style="margin:0">
+      <a class="btn" href="index.html">الصفحة الرئيسية</a>
+    </nav>
+  </header>
+
+  <main class="container">
+    <section class="glass">
+      <h1>الطب النفسي — اختر القسم</h1>
+      <p class="sub">أدخل البيانات ثم اختر أحد الأقسام الثمانية. كل قسم يعتمد أسئلة قياسية للفحص الأوّلي والتوجيه العام. لا تُخزَّن أي بيانات.</p>
+      <div class="row">
+        <div><label>الاسم:</label><input id="pat-name" type="text" placeholder="مثال: محمد أحمد"></div>
+        <div><label>العمر (سنوات):</label><input id="pat-age" type="number" min="10" max="120" placeholder="مثال: 34"></div>
+      </div>
+      <div class="row">
+        <div>
+          <label>الجنس:</label>
+          <select id="pat-sex">
+            <option value="male">ذكر</option>
+            <option value="female">أنثى</option>
+            <option value="pregnant">حامل/يُحتمل الحمل</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="choose" id="chooser">
+        <div class="opt" data-target="dep">اكتئاب (PHQ-9)</div>
+        <div class="opt" data-target="gad">قلق معمّم (GAD-7)</div>
+        <div class="opt" data-target="panic">اضطراب الهلع</div>
+        <div class="opt" data-target="ocd">الوسواس القهري (OCD)</div>
+        <div class="opt" data-target="ptsd">الكرب التالي للصدمة (PC-PTSD-5)</div>
+        <div class="opt" data-target="bip">ثنائي القطب (MDQ مبسّط)</div>
+        <div class="opt" data-target="adhd">نقص الانتباه/فرط الحركة — بالغ (ASRS-A)</div>
+        <div class="opt" data-target="insomnia">الأرق (ISI)</div>
+      </div>
+      <p class="hint mt">الأداة موجّهة للبالغين. عند أعلام الخطر (أفكار بإيذاء النفس، ذهان/هياج شديد)، توجّه للطوارئ فورًا.</p>
+    </section>
+
+    <section class="grid grid-2 mt">
+      <!-- 1) Depression PHQ-9 -->
+      <div class="card hide" id="sec-dep">
+        <h2>اكتئاب — PHQ-9</h2>
+        <p class="hint">اختر شدة تكرار الأعراض خلال آخر أسبوعين.</p>
+        <div class="row">
+          <div><label>فقدان الاهتمام/المتعة</label><select id="dep1"><option value="0">أبدًا</option><option value="1">عدة أيام</option><option value="2">أكثر من نصف الأيام</option><option value="3">تقريبًا كل يوم</option></select></div>
+          <div><label>مزاج منخفض/حزن/يأس</label><select id="dep2"><option value="0">أبدًا</option><option value="1">عدة أيام</option><option value="2">أكثر من نصف الأيام</option><option value="3">تقريبًا كل يوم</option></select></div>
+          <div><label>مشاكل النوم</label><select id="dep3"><option value="0">أبدًا</option><option value="1">عدة أيام</option><option value="2">أكثر من نصف الأيام</option><option value="3">تقريبًا كل يوم</option></select></div>
+          <div><label>تعب/نقص طاقة</label><select id="dep4"><option value="0">أبدًا</option><option value="1">عدة أيام</option><option value="2">أكثر من نصف الأيام</option><option value="3">تقريبًا كل يوم</option></select></div>
+          <div><label>ضعف الشهية/الأكل المفرط</label><select id="dep5"><option value="0">أبدًا</option><option value="1">عدة أيام</option><option value="2">أكثر من نصف الأيام</option><option value="3">تقريبًا كل يوم</option></select></div>
+          <div><label>شعور بالذنب/قلة تقدير الذات</label><select id="dep6"><option value="0">أبدًا</option><option value="1">عدة أيام</option><option value="2">أكثر من نصف الأيام</option><option value="3">تقريبًا كل يوم</option></select></div>
+          <div><label>صعوبة التركيز</label><select id="dep7"><option value="0">أبدًا</option><option value="1">عدة أيام</option><option value="2">أكثر من نصف الأيام</option><option value="3">تقريبًا كل يوم</option></select></div>
+          <div><label>بطء أو تهيّج ملحوظ</label><select id="dep8"><option value="0">أبدًا</option><option value="1">عدة أيام</option><option value="2">أكثر من نصف الأيام</option><option value="3">تقريبًا كل يوم</option></select></div>
+          <div><label>أفكار بإيذاء النفس/الموت</label><select id="dep9"><option value="0">أبدًا</option><option value="1">عدة أيام</option><option value="2">أكثر من نصف الأيام</option><option value="3">تقريبًا كل يوم</option></select></div>
+        </div>
+        <div class="actions">
+          <button class="btn primary" onclick="calcPHQ()">احسب PHQ-9</button>
+          <button class="btn" onclick="exportPDF('dep')">تصدير PDF</button>
+        </div>
+        <div class="result mt" id="dep-res"></div>
+      </div>
+
+      <!-- 2) GAD-7 -->
+      <div class="card hide" id="sec-gad">
+        <h2>قلق معمّم — GAD-7</h2>
+        <p class="hint">آخر أسبوعين.</p>
+        <div class="row">
+          <div><label>توتر/عصبية</label><select id="gad1"><option value="0">أبدًا</option><option value="1">أيام قليلة</option><option value="2">أكثر من النصف</option><option value="3">تقريبًا يوميًا</option></select></div>
+          <div><label>عدم القدرة على التوقف عن القلق</label><select id="gad2"><option value="0">أبدًا</option><option value="1">أيام قليلة</option><option value="2">أكثر من النصف</option><option value="3">تقريبًا يوميًا</option></select></div>
+          <div><label>قلق مفرط حول أشياء مختلفة</label><select id="gad3"><option value="0">أبدًا</option><option value="1">أيام قليلة</option><option value="2">أكثر من النصف</option><option value="3">تقريبًا يوميًا</option></select></div>
+          <div><label>صعوبة الاسترخاء</label><select id="gad4"><option value="0">أبدًا</option><option value="1">أيام قليلة</option><option value="2">أكثر من النصف</option><option value="3">تقريبًا يوميًا</option></select></div>
+          <div><label>قلق لدرجة صعوبة الثبات</label><select id="gad5"><option value="0">أبدًا</option><option value="1">أيام قليلة</option><option value="2">أكثر من النصف</option><option value="3">تقريبًا يوميًا</option></select></div>
+          <div><label>سهولة الانزعاج/العصبية</label><select id="gad6"><option value="0">أبدًا</option><option value="1">أيام قليلة</option><option value="2">أكثر من النصف</option><option value="3">تقريبًا يوميًا</option></select></div>
+          <div><label>خوف من حدوث شيء سيئ</label><select id="gad7"><option value="0">أبدًا</option><option value="1">أيام قليلة</option><option value="2">أكثر من النصف</option><option value="3">تقريبًا يوميًا</option></select></div>
+        </div>
+        <div class="actions">
+          <button class="btn primary" onclick="calcGAD()">احسب GAD-7</button>
+          <button class="btn" onclick="exportPDF('gad')">تصدير PDF</button>
+        </div>
+        <div class="result mt" id="gad-res"></div>
+      </div>
+
+      <!-- 3) Panic -->
+      <div class="card hide" id="sec-panic">
+        <h2>اضطراب الهلع — فحص أولي</h2>
+        <div class="row">
+          <div><label>نوبات هلع متكرّرة ومفاجئة؟</label><select id="pan1"><option value="no">لا</option><option value="yes">نعم</option></select></div>
+          <div><label>قلق مستمر من نوبات مستقبلية؟</label><select id="pan2"><option value="no">لا</option><option value="yes">نعم</option></select></div>
+        </div>
+        <div class="row">
+          <div><label>تغيّر سلوك ملحوظ لتجنّب النوبات؟</label><select id="pan3"><option value="no">لا</option><option value="yes">نعم</option></select></div>
+          <div><label>أعراض جسدية أثناء النوبة</label>
+            <select id="pan-som" multiple>
+              <option value="palp">خفقان</option><option value="sweat">تعرّق/رجف</option><option value="sob">ضيق نفس/اختناق</option><option value="chest">ألم صدري</option><option value="dizzy">دوار</option><option value="doom">شعور بكارثة</option>
+            </select>
+          </div>
+        </div>
+        <div class="actions">
+          <button class="btn primary" onclick="calcPanic()">احسب التقييم</button>
+          <button class="btn" onclick="exportPDF('panic')">تصدير PDF</button>
+        </div>
+        <div class="result mt" id="panic-res"></div>
+      </div>
+
+      <!-- 4) OCD -->
+      <div class="card hide" id="sec-ocd">
+        <h2>الوسواس القهري — فحص أولي</h2>
+        <div class="row">
+          <div><label>أفكار/صور دخيلة ومتكررة مزعجة؟</label><select id="ocd1"><option value="no">لا</option><option value="yes">نعم</option></select></div>
+          <div><label>سلوكيات قهرية (غسل، فحص، عدّ…)</label><select id="ocd2"><option value="no">لا</option><option value="yes">نعم</option></select></div>
+        </div>
+        <div class="row">
+          <div><label>تستهلك > ساعة يوميًا؟</label><select id="ocd3"><option value="no">لا</option><option value="yes">نعم</option></select></div>
+          <div><label>تسبّب ضيقًا أو تُضعف الأداء؟</label><select id="ocd4"><option value="no">لا</option><option value="yes">نعم</option></select></div>
+        </div>
+        <div class="row">
+          <div><label>محاولة مقاومة/الاعتراف بسخافة الوساوس؟</label><select id="ocd5"><option value="no">لا</option><option value="yes">نعم</option></select></div>
+          <div><label>أعراض رئيسية (تلوّث/تماثل/مخاوف أذى…)</label><select id="ocd6"><option value="no">لا</option><option value="yes">نعم</option></select></div>
+        </div>
+        <div class="actions">
+          <button class="btn primary" onclick="calcOCD()">احسب التقييم</button>
+          <button class="btn" onclick="exportPDF('ocd')">تصدير PDF</button>
+        </div>
+        <div class="result mt" id="ocd-res"></div>
+      </div>
+
+      <!-- 5) PTSD -->
+      <div class="card hide" id="sec-ptsd">
+        <h2>الكرب التالي للصدمة — PC-PTSD-5</h2>
+        <p class="hint">هل تعرضت لحدث صادم؟ إن كان نعم، أجب:</p>
+        <div class="row">
+          <div><label>كوابيس/ذكريات مزعجة عن الحدث</label><select id="pt1"><option value="no">لا</option><option value="yes">نعم</option></select></div>
+          <div><label>محاولة تجنّب التذكّر/المثيرات</label><select id="pt2"><option value="no">لا</option><option value="yes">نعم</option></select></div>
+        </div>
+        <div class="row">
+          <div><label>تيقّظ زائد/حذر شديد</label><select id="pt3"><option value="no">لا</option><option value="yes">نعم</option></select></div>
+          <div><label>خدر عاطفي/انفصال عن الآخرين</label><select id="pt4"><option value="no">لا</option><option value="yes">نعم</option></select></div>
+        </div>
+        <div class="row">
+          <div><label>شعور بالذنب/لوم الذات بسبب الحدث</label><select id="pt5"><option value="no">لا</option><option value="yes">نعم</option></select></div>
+        </div>
+        <div class="actions">
+          <button class="btn primary" onclick="calcPTSD()">احسب PC-PTSD-5</button>
+          <button class="btn" onclick="exportPDF('ptsd')">تصدير PDF</button>
+        </div>
+        <div class="result mt" id="ptsd-res"></div>
+      </div>
+
+      <!-- 6) Bipolar (MDQ simplified) -->
+      <div class="card hide" id="sec-bip">
+        <h2>ثنائي القطب — MDQ مبسّط (فحص)</h2>
+        <p class="hint">اختر إن كانت قد حدثت في أي وقت (نعم/لا).</p>
+        <div class="row">
+          <div><label>فترات مزاج مرتفع/طاقة عالية بشكل غير معتاد</label><select id="bip1"><option value="no">لا</option><option value="yes">نعم</option></select></div>
+          <div><label>نقص الحاجة للنوم دون تعب</label><select id="bip2"><option value="no">لا</option><option value="yes">نعم</option></select></div>
+        </div>
+        <div class="row">
+          <div><label>تسارع الأفكار/الكلام</label><select id="bip3"><option value="no">لا</option><option value="yes">نعم</option></select></div>
+          <div><label>زيادة نشاط/اندفاعات (تسوق/مخاطر…)</label><select id="bip4"><option value="no">لا</option><option value="yes">نعم</option></select></div>
+        </div>
+        <div class="row">
+          <div><label>ثقة بالنفس مفرطة/عظمة</label><select id="bip5"><option value="no">لا</option><option value="yes">نعم</option></select></div>
+          <div><label>سهولة التشتت</label><select id="bip6"><option value="no">لا</option><option value="yes">نعم</option></select></div>
+        </div>
+        <div class="row">
+          <div><label>هل حدثت هذه الأعراض معًا في نفس الفترة؟</label><select id="bipCo"><option value="no">لا</option><option value="yes">نعم</option></select></div>
+          <div><label>هل سبّبت هذه الفترات مشاكل بالعمل/العلاقات؟</label><select id="bipImp"><option value="no">لا</option><option value="moderate">متوسطة</option><option value="serious">شديدة</option></select></div>
+        </div>
+        <div class="actions">
+          <button class="btn primary" onclick="calcBip()">احسب الفحص</button>
+          <button class="btn" onclick="exportPDF('bip')">تصدير PDF</button>
+        </div>
+        <div class="result mt" id="bip-res"></div>
+      </div>
+
+      <!-- 7) Adult ADHD (ASRS Part A) -->
+      <div class="card hide" id="sec-adhd">
+        <h2>ADHD للبالغين — ASRS (القسم A)</h2>
+        <p class="hint">آخر 6 أشهر.</p>
+        <div class="row">
+          <div><label>صعوبة إنهاء التفاصيل/أخطاء إهمال</label><select id="ad1"><option value="0">أبدًا</option><option value="1">نادرًا</option><option value="2">أحيانًا</option><option value="3">غالبًا</option><option value="4">دائمًا</option></select></div>
+          <div><label>صعوبة تنظيم المهام</label><select id="ad2"><option value="0">أبدًا</option><option value="1">نادرًا</option><option value="2">أحيانًا</option><option value="3">غالبًا</option><option value="4">دائمًا</option></select></div>
+        </div>
+        <div class="row">
+          <div><label>تأجيل/تجنب المهام التي تتطلب جهدًا ذهنيًا</label><select id="ad3"><option value="0">أبدًا</option><option value="1">نادرًا</option><option value="2">أحيانًا</option><option value="3">غالبًا</option><option value="4">دائمًا</option></select></div>
+          <div><label>فقدان أشياء ضرورية</label><select id="ad4"><option value="0">أبدًا</option><option value="1">نادرًا</option><option value="2">أحيانًا</option><option value="3">غالبًا</option><option value="4">دائمًا</option></select></div>
+        </div>
+        <div class="row">
+          <div><label>تشتت بسهولة بالمثيرات الخارجية</label><select id="ad5"><option value="0">أبدًا</option><option value="1">نادرًا</option><option value="2">أحيانًا</option><option value="3">غالبًا</option><option value="4">دائمًا</option></select></div>
+          <div><label>نسيان المواعيد/الالتزامات</label><select id="ad6"><option value="0">أبدًا</option><option value="1">نادرًا</option><option value="2">أحيانًا</option><option value="3">غالبًا</option><option value="4">دائمًا</option></select></div>
+        </div>
+        <div class="actions">
+          <button class="btn primary" onclick="calcADHD()">احسب الفحص</button>
+          <button class="btn" onclick="exportPDF('adhd')">تصدير PDF</button>
+        </div>
+        <div class="result mt" id="adhd-res"></div>
+      </div>
+
+      <!-- 8) Insomnia ISI -->
+      <div class="card hide" id="sec-insomnia">
+        <h2>الأرق — ISI</h2>
+        <p class="hint">قيّم شدة كل بند (0–4).</p>
+        <div class="row">
+          <div><label>صعوبة بدء النوم</label><select id="in1"><option value="0">لا</option><option value="1">خفيف</option><option value="2">متوسط</option><option value="3">شديد</option><option value="4">شديد جدًا</option></select></div>
+          <div><label>صعوبة استمرار النوم</label><select id="in2"><option value="0">لا</option><option value="1">خفيف</option><option value="2">متوسط</option><option value="3">شديد</option><option value="4">شديد جدًا</option></select></div>
+        </div>
+        <div class="row">
+          <div><label>استيقاظ مبكر غير مرغوب</label><select id="in3"><option value="0">لا</option><option value="1">خفيف</option><option value="2">متوسط</option><option value="3">شديد</option><option value="4">شديد جدًا</option></select></div>
+          <div><label>الرضا عن نمط النوم الحالي</label><select id="in4"><option value="0">راضٍ جدًا</option><option value="1">راضٍ</option><option value="2">محايد</option><option value="3">غير راضٍ</option><option value="4">غير راضٍ إطلاقًا</option></select></div>
+        </div>
+        <div class="row">
+          <div><label>تأثير الأرق على الأداء النهاري</label><select id="in5"><option value="0">لا يوجد</option><option value="1">خفيف</option><option value="2">متوسط</option><option value="3">شديد</option><option value="4">شديد جدًا</option></select></div>
+          <div><label>مدى ملاحظة الآخرين للمشكلة</label><select id="in6"><option value="0">لا</option><option value="1">قليل</option><option value="2">متوسط</option><option value="3">كبير</option><option value="4">كبير جدًا</option></select></div>
+        </div>
+        <div class="row">
+          <div><label>القلق بشأن النوم</label><select id="in7"><option value="0">لا</option><option value="1">قليل</option><option value="2">متوسط</option><option value="3">شديد</option><option value="4">شديد جدًا</option></select></div>
+        </div>
+        <div class="actions">
+          <button class="btn primary" onclick="calcISI()">احسب ISI</button>
+          <button class="btn" onclick="exportPDF('insomnia')">تصدير PDF</button>
+        </div>
+        <div class="result mt" id="ins-res"></div>
+      </div>
+    </section>
+
+    <section class="glass mt">
+      <p class="hint">المحتوى تثقيفي/فرز أولي ولا يغني عن تقييم الطبيب المختص. في حال الحمل أو العمر &lt; 18 سنة أو ≥ 65 سنة، يلزم الحذر وتقييم شخصي متخصص.</p>
+    </section>
+  </main>
+
+  <footer>© <span id="year"></span> حكيم — جميع الحقوق محفوظة.</footer>
+
+  <script>
+    // ========== بيانات أساسية ==========
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // التنقل بين الأقسام
+    document.querySelectorAll('#chooser .opt').forEach(el=>{
+      el.addEventListener('click', ()=>{
+        document.querySelectorAll('.card').forEach(c=>c.classList.add('hide'));
+        const sec = document.getElementById('sec-'+el.getAttribute('data-target'));
+        if (sec){ sec.classList.remove('hide'); sec.scrollIntoView({behavior:'smooth', block:'start'}); }
+      });
+    });
+
+    // أدوات إدخال
+    function nameVal(){ return document.getElementById('pat-name').value?.trim() || 'بدون اسم'; }
+    function ageVal(){ const n=parseInt(document.getElementById('pat-age').value,10); return isNaN(n)? null : Math.min(120, Math.max(10,n)); }
+    function sexVal(){
+      const v = document.getElementById('pat-sex').value;
+      return {code:v, label: v==='male'?'ذكر':(v==='female'?'أنثى':'حامل/محتمل الحمل')};
+    }
+    function userContext(){
+      const age = ageVal();
+      const sex = sexVal();
+      const minor = age!==null ? age<18 : false;
+      const older = age!==null ? age>=65 : false;
+      const pregnant = sex.code==='pregnant';
+      return {name:nameVal(), age, sex, minor, older, pregnant};
+    }
+
+    // أدوات عرض
+    function pill(t,cls=''){ return `<span class="pill ${cls}">${t}</span>`; }
+    function lines(arr){ return `<ul>${arr.map(x=>`<li>${x}</li>`).join('')}</ul>`; }
+    function setLast(obj){ window._last = obj; }
+
+    // ========== مولّد خطة علاجية متكاملة (إرشادية) ==========
+    function buildPlan(domain, ctx, u){
+      // ctx يمكن أن يحتوي: severity, score, assess, positives, flags
+      const plan = [];
+      const rec = [];
+
+      // قواعد عامة
+      if (u.minor) rec.push('الأداة موجّهة للبالغين: يُفضّل تقييم اختصاص طب نفس الأطفال/الناشئة.');
+      if (u.older) rec.push('العمر ≥ 65: يُفضّل خطط محافظة وتقييم آثار جانبية محتملة و خطر السقوط.');
+      if (u.pregnant) rec.push('حمل/احتمال حمل: يفضّل العلاجات النفسية أولًا واستشارة نسائية/نفسية قبل أي علاج دوائي.');
+      
+      // توصيات نمط حياة أساسية للجميع
+      plan.push('تنظيم النوم (مواعيد ثابتة، تخفيف الكافيين/النيكوتين، تقليل الشاشات قبل النوم).');
+      plan.push('نشاط بدني معتدل 150 دقيقة/أسبوع إن أمكن، وتغذية متوازنة.');
+      plan.push('تقنيات إدارة التوتر: تنفّس عميق، استرخاء عضلي تدريجي، وذهن حاضر (Mindfulness).');
+
+      // تخصيص حسب المجال
+      switch(domain){
+        case 'dep': {
+          if (ctx.severity==='طفيف' || ctx.severity==='خفيف'){
+            rec.push('مراقبة نشطة مع أدوات المساعدة الذاتية وتمارين تفعيل السلوك.');
+          } else if (ctx.severity==='متوسط'){
+            rec.push('يُوصى بالعلاج النفسي المنظم (علاج معرفي سلوكي/بين-شخصي).');
+          } else {
+            rec.push('تقييم اختصاصي للصحة النفسية لوضع خطة علاجية متكاملة وربما متابعة لصيقة للسلامة.');
+          }
+          if (ctx.flags?.some(f=>/إيذاء النفس|انتحار/i.test(f))) {
+            rec.push('خطة أمان: إزالة الوسائل الخطرة، دعم أسري، وخيارات تواصل طارئة.');
+          }
+          break;
+        }
+        case 'gad': {
+          if ((ctx.severity||'').includes('خفيف')) rec.push('تقنيات الاسترخاء وCBT تركّز على القلق مفيدة.');
+          else if ((ctx.severity||'').includes('متوسط')) rec.push('العلاج المعرفي السلوكي مع تدريب تعرّض/منع سلوكيات طمأنة.');
+          else rec.push('تقييم اختصاصي لوضع خطة علاجية وربما إحالة لبرنامج علاجي منظّم.');
+          break;
+        }
+        case 'panic': {
+          rec.push('تثقيف حول فسيولوجيا القلق ونوبات الهلع، وتعلّم تنفّس بطيء من الحجاب الحاجز.');
+          rec.push('استبعاد أسباب جسدية محتملة (قلبية/غدية/دوائية) عبر طبيب سريري.');
+          rec.push('العلاج المعرفي السلوكي مع تعرّض تدريجي للمثيرات/الأحاسيس الجسدية.');
+          break;
+        }
+        case 'ocd': {
+          rec.push('العلاج المعرفي السلوكي بنوع «التعرّض ومنع الاستجابة (ERP)» هو الأساس.');
+          rec.push('تقليل طقوس الطمأنة وطلب التطمين، ووضع سلّم تدرّج للمثيرات.');
+          break;
+        }
+        case 'ptsd': {
+          rec.push('علاجات مركّزة على الصدمة (CBT-TF، EMDR) عبر أخصائي مؤهّل.');
+          rec.push('إن كانت الأعراض شديدة أو يتداخل معها مخاطر سلامة، يلزم خطة أمان وإحالة متخصصة.');
+          break;
+        }
+        case 'bip': {
+          rec.push('تثقيف نفسي حول نوبات المزاج، ومراقبة نمط النوم والنشاط عبر مفكرة مزاج.');
+          rec.push('تنظيم روتين يومي ثابت وتجنّب السهر والمحرّضات.');
+          if (ctx.assess && /إيجابي/.test(ctx.assess)) rec.push('إحالة سريعة لتقييم اختصاصي لتأكيد/نفي التشخيص ووضع خطة متابعة.');
+          break;
+        }
+        case 'adhd': {
+          rec.push('استراتيجيات تنظيمية: تقسيم المهام، مؤقّتات، بيئة خالية من المشتتات.');
+          rec.push('تقييم اختصاصي يشمل القصة منذ الطفولة وتأثير الأعراض في العمل/الدراسة.');
+          break;
+        }
+        case 'insomnia': {
+          rec.push('العلاج السلوكي المعرفي للأرق (CBT-I): ضبط المنبّهات، تقييد النوم، إعادة الهيكلة المعرفية.');
+          if (ctx.severity && /شديد/.test(ctx.severity)) rec.push('استبعاد أسباب طبية (ألم، توقف تنفّس أثناء النوم...) عبر تقييم سريري.');
+          break;
+        }
+      }
+
+      // دمج التوصيات
+      return {plan, rec};
+    }
+
+    // عرض نتيجة موحّدة
+    function showResult(elId, obj){
+      const u = userContext();
+      const flags = obj.flags || [];
+      const header = `<p>الاسم: <b>${u.name}</b>${u.age? ` — العمر: <b>${u.age}</b>`:''} — الجنس: <b>${u.sex.label}</b></p>`;
+      const assess = obj.assess ? `<p><b>التقييم:</b> ${obj.assess}</p>` : '';
+      const sev = obj.severity ? `<p><b>الشدة:</b> ${obj.severity}</p>` : '';
+      const score = (obj.score!==undefined) ? `<p><b>الدرجة/العدد:</b> ${obj.score}</p>` : '';
+      const flagsHtml = flags.length? `<p><b>تنبيهات:</b></p>${lines(flags)}` : '';
+      const planHtml = obj.plan?.length? `<p><b>خطة عامة:</b></p>${lines(obj.plan)}` : '';
+      const recHtml = obj.rec?.length? `<p><b>توصيات موجّهة:</b></p>${lines(obj.rec)}` : '';
+
+      document.getElementById(elId).innerHTML = header + score + sev + assess + flagsHtml + planHtml + recHtml +
+        `<p class="hint">ملاحظة: هذه إرشادات تثقيفية عامة؛ خطّة العلاج النهائية يضعها الطبيب المختص بعد تقييم سريري شامل.</p>`;
+      // حفظ آخر نتيجة للتصدير
+      setLast({...obj, user:u});
+    }
+
+    // ========== الحسابات ==========
+    function val(id){ return parseInt(document.getElementById(id).value,10) || 0; }
+    function yes(id){ return document.getElementById(id).value==='yes'; }
+
+    // 1) PHQ-9
+    function calcPHQ(){
+      const s=[1,2,3,4,5,6,7,8,9].map(i=>val('dep'+i)).reduce((a,b)=>a+b,0);
+      let severity='طفيف';
+      if (s>=5 && s<=9) severity='خفيف';
+      else if (s<=14) severity='متوسط';
+      else if (s<=19) severity='متوسط إلى شديد';
+      else severity='شديد';
+
+      const flags=[];
+      if (val('dep9')>=2) flags.push('أفكار متكررة بإيذاء النفس — توجّه للإسعاف/الطوارئ فورًا.');
+      const u = userContext();
+      if (u.minor) flags.push('العمر أقل من 18: هذه الأداة غير مخصّصة للأطفال — راجع اختصاص طب نفس الأطفال.');
+      if (u.pregnant) flags.push('الحمل/احتمال الحمل: يفضّل العلاجات النفسية أولًا واستشارة نسائية قبل أي دواء.');
+      if (u.older) flags.push('العمر ≥ 65: احذر من آثار جانبية لبعض العلاجات — يلزم تقييم شخصي.');
+
+      const {plan, rec} = buildPlan('dep', {severity, score:s, flags}, u);
+      showResult('dep-res', {title:'اكتئاب (PHQ-9)', score:s, severity, flags, plan, rec});
+    }
+
+    // 2) GAD-7
+    function calcGAD(){
+      const s=[1,2,3,4,5,6,7].map(i=>val('gad'+i)).reduce((a,b)=>a+b,0);
+      let severity='طفيف';
+      if (s>=5 && s<=9) severity='خفيف';
+      else if (s<=14) severity='متوسط';
+      else severity='شديد';
+
+      const u = userContext();
+      const flags=[];
+      if (u.minor) flags.push('العمر أقل من 18: هذه الأداة غير مخصّصة للأطفال — راجع اختصاص طب نفس الأطفال.');
+      if (u.pregnant) flags.push('الحمل/احتمال الحمل: يفضّل العلاجات النفسية أولًا واستشارة نسائية قبل أي دواء.');
+      const {plan, rec} = buildPlan('gad', {severity, score:s, flags}, u);
+      showResult('gad-res', {title:'قلق معمّم (GAD-7)', score:s, severity, flags, plan, rec});
+    }
+
+    // 3) Panic
+    function calcPanic(){
+      const yesCount = [yes('pan1'),yes('pan2'),yes('pan3')].filter(Boolean).length;
+      const som = new Set(Array.from(document.getElementById('pan-som').selectedOptions).map(o=>o.value));
+      let assess='مؤشرات قليلة';
+      if (yes('pan1') && (yes('pan2')||yes('pan3')) && som.size>=3){
+        assess='احتمال مرتفع لاضطراب هلع — يُنصح بتقييم اختصاصي.';
+      } else if (yes('pan1')) {
+        assess='اشتباه متوسط — راجع طبيبًا للتقييم.';
+      }
+      const u = userContext();
+      const flags=[];
+      if (som.has('chest')) flags.push('ألم صدري/ضيق نفس شديد: استبعد سببًا قلبيًا في الطوارئ خاصة إذا كان أول حدوث.');
+      if (u.older) flags.push('العمر ≥ 65: يلزم استبعاد أسباب جسدية بدقة.');
+      const {plan, rec} = buildPlan('panic', {assess, flags}, u);
+      showResult('panic-res', {title:'اضطراب الهلع', assess, flags, plan, rec});
+    }
+
+    // 4) OCD
+    function calcOCD(){
+      const ys = ['ocd1','ocd2','ocd3','ocd4','ocd5','ocd6'].map(id=>yes(id));
+      const score = ys.filter(Boolean).length;
+      let assess='مؤشرات قليلة';
+      if (ys[0] && ys[1] && (ys[2]||ys[3])) assess='احتمال مرتفع لاضطراب وسواسي قهري — يُنصح بتقييم اختصاصي.';
+      else if (score>=3) assess='اشتباه متوسط — يلزم تقييم سريري.';
+      const u = userContext();
+      const {plan, rec} = buildPlan('ocd', {assess, score}, u);
+      showResult('ocd-res', {title:'الوسواس القهري (فحص)', assess, score, plan, rec});
+    }
+
+    // 5) PTSD
+    function calcPTSD(){
+      const yesCount=['pt1','pt2','pt3','pt4','pt5'].map(id=>yes(id)).filter(Boolean).length;
+      const positive = yesCount>=3;
+      const assess = positive ? 'نتيجة فحص إيجابية (≥3) — يُنصح بتقييم اختصاصي.' : 'نتيجة فحص سلبية.';
+      const u = userContext();
+      const {plan, rec} = buildPlan('ptsd', {score:yesCount, assess}, u);
+      showResult('ptsd-res', {title:'الكرب التالي للصدمة (PC-PTSD-5)', score:yesCount, assess, plan, rec});
+    }
+
+    // 6) Bipolar (MDQ simplified)
+    function calcBip(){
+      const yesItems = ['bip1','bip2','bip3','bip4','bip5','bip6'].map(id=>yes(id)).filter(Boolean).length;
+      const co = yes('bipCo'); const imp = document.getElementById('bipImp').value;
+      const positive = (yesItems>=4 && co && (imp==='moderate' || imp==='serious'));
+      const assess = positive ? 'فحص MDQ مبسّط إيجابي — يُنصح بتقييم اختصاصي لتأكيد/نفي التشخيص.' : 'فحص غير كافٍ لتشخيص ثنائي القطب.';
+      const u = userContext();
+      const flags=[];
+      if (u.pregnant) flags.push('الحمل/احتمال الحمل: يلزم موازنة الفوائد/المخاطر واستشارة نسائية/نفسية.');
+      const {plan, rec} = buildPlan('bip', {assess, flags}, u);
+      showResult('bip-res', {title:'ثنائي القطب (MDQ مبسّط)', assess, flags, plan, rec, score:yesItems});
+    }
+
+    // 7) ADHD (ASRS A)
+    function calcADHD(){
+      const vals=[val('ad1'),val('ad2'),val('ad3'),val('ad4'),val('ad5'),val('ad6')];
+      const positives = vals.filter(v=>v>=3).length; // 3=غالبًا, 4=دائمًا
+      const assess = positives>=4 ? 'فحص ASRS (A) إيجابي — يُفضّل تقييم اختصاصي.' : 'فحص غير إيجابي.';
+      const u = userContext();
+      const flags=[];
+      if (u.minor) flags.push('العمر أقل من 18: هذه الأداة لِلْبالغين — استخدم أدوات مخصّصة للأطفال.');
+      const {plan, rec} = buildPlan('adhd', {assess, score:positives}, u);
+      showResult('adhd-res', {title:'ADHD للبالغين (ASRS-A)', assess, score:positives, flags, plan, rec});
+    }
+
+    // 8) ISI
+    function calcISI(){
+      const s=[1,2,3,4,5,6,7].map(i=>val('in'+i)).reduce((a,b)=>a+b,0);
+      let severity='لا/طفيف (0–7)';
+      if (s>=8 && s<=14) severity='تحت العتبة (8–14)';
+      else if (s<=21) severity='متوسط (15–21)';
+      else severity='شديد (22–28)';
+      const u = userContext();
+      const {plan, rec} = buildPlan('insomnia', {severity, score:s}, u);
+      showResult('ins-res', {title:'الأرق (ISI)', score:s, severity, plan, rec});
+    }
+
+    // =============== PDF (عربي) ===============
+    async function exportPDF(section){
+      const { jsPDF } = window.jspdf;
+      const m = window._last || {title:section, plan:[], rec:[], flags:[], user:userContext()};
+      const u = m.user || userContext();
+      // نبني محتوى عربي للطباعة
+      const box = document.createElement('div');
+      box.dir = 'rtl';
+      box.style.cssText = 'width:800px;padding:24px;background:#fff;color:#111;font-family:Cairo,Arial,sans-serif;line-height:1.9;border:1px solid #ddd;border-radius:12px';
+      box.innerHTML = `
+        <h2 style="margin:0 0 10px;font-weight:800">حكيم — ${m.title||section}</h2>
+        <p><b>الاسم:</b> ${u.name || 'بدون اسم'}${u.age? ` — <b>العمر:</b> ${u.age}`:''} — <b>الجنس:</b> ${u.sex? u.sex.label : 'غير محدد'}</p>
+        ${m.score!==undefined? `<p><b>الدرجة/العدد:</b> ${m.score}</p>`:''}
+        ${m.severity? `<p><b>الشدة:</b> ${m.severity}</p>`:''}
+        ${m.assess? `<p><b>التقييم:</b> ${m.assess}</p>`:''}
+        ${m.flags && m.flags.length? `<p><b>تنبيهات:</b></p><ul>${m.flags.map(x=>`<li>${x}</li>`).join('')}</ul>`:''}
+        ${m.plan && m.plan.length? `<p><b>خطة عامة:</b></p><ul>${m.plan.map(x=>`<li>${x}</li>`).join('')}</ul>`:''}
+        ${m.rec && m.rec.length? `<p><b>توصيات موجّهة:</b></p><ul>${m.rec.map(x=>`<li>${x}</li>`).join('')}</ul>`:''}
+        <hr style="margin:12px 0;border:0;border-top:1px solid #ddd"/>
+        <p style="font-size:13px;color:#444">ملف تثقيفي — لا يُغني عن تقييم الطبيب المختص. في الطوارئ/أفكار إيذاء النفس يرجى التواصل الفوري مع الإسعاف.</p>
+      `;
+      document.body.appendChild(box);
+      const canvas = await html2canvas(box, {scale:2, backgroundColor:'#ffffff', useCORS:true});
+      document.body.removeChild(box);
+
+      const pdf = new jsPDF({orientation:'p', unit:'pt', format:'a4'});
+      const pageW = pdf.internal.pageSize.getWidth(), pageH = pdf.internal.pageSize.getHeight(), margin=40;
+      let imgW = pageW - margin*2, imgH = canvas.height * imgW / canvas.width;
+      if (imgH > pageH - margin*2){ const r = (pageH - margin*2) / imgH; imgH*=r; imgW*=r; }
+      pdf.addImage(canvas.toDataURL('image/png'), 'PNG', (pageW-imgW)/2, (pageH-imgH)/2, imgW, imgH);
+      pdf.save(`Hakim-Psych-${(m.title||section).replace(/\s+/g,'_')}-${Date.now()}.pdf`);
+    }
+  </script>
+
+  <!--
+    ملاحظات مرجعية (للمطور):
+    - PHQ-9: عتبات 5/10/15/20.
+    - GAD-7: عتبات 5/10/15.
+    - PC-PTSD-5: إيجابي عادة ≥3.
+    - MDQ (مبسّط): إيجابي = عدد كافٍ + تزامن + تأثير وظيفي.
+    - ASRS v1.1 (A): ≥4 بنود عالية التكرار.
+    - ISI: 0–7 لا/طفيف، 8–14 تحت العتبة، 15–21 متوسط، 22–28 شديد.
+    - خطط العلاج مذكورة كإرشادات عامة غير دوائية أو إحالات علاج نفسي/تقييم اختصاصي لتجنّب وصفات مباشرة.
+  -->
+</body>
+</html>

@@ -1,0 +1,656 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>حكيم — المسالك البولية | تقييمات ذكية + PDF</title>
+  <meta name="description" content="حكيم — المسالك البولية: التهاب مثانة، التهاب حويضة وكلية، مغص كلوي/حصيات، التهاب بروستات حاد، تضخم بروستات (LUTS)، بيلة دموية، احتباس بولي، سلس بول (جهدي/إلحاحي/مختلط)، أمراض منقولة جنسيًا (إحليل/عنق رحم)، دوالي/التهاب بربخ مقابل التواء خصية، تبول لا إرادي، UTI عند الأطفال.">
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;800&display=swap" rel="stylesheet">
+  <!-- PDF -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" referrerpolicy="no-referrer"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js" referrerpolicy="no-referrer"></script>
+
+  <style>
+    :root{
+      --bg:#07090f; --txt:#e8ecff; --muted:#aab2d8;
+      --primary:#7aa2ff; --primary-2:#00e0ff; --accent:#a855f7;
+      --glass:rgba(255,255,255,.06); --border:rgba(255,255,255,.12);
+    }
+    *{box-sizing:border-box}
+    body{margin:0; font-family:'Cairo',system-ui,'Noto Sans Arabic',sans-serif; background:#07090f; color:var(--txt); line-height:1.9}
+    header{position:sticky; top:0; z-index:50; display:flex; align-items:center; justify-content:space-between; padding:14px 20px; backdrop-filter:saturate(140%) blur(8px); background:linear-gradient(180deg, rgba(15,16,40,.85), rgba(15,16,40,.45)); border-bottom:1px solid var(--border)}
+    .brand{display:flex; gap:12px; align-items:center}
+    .logo{width:42px; height:42px; border-radius:12px; display:grid; place-items:center; font-weight:800; background: radial-gradient(120% 120% at 0% 0%, var(--primary), var(--accent)); box-shadow: 0 0 24px rgba(122,162,255,.35), inset 0 0 18px rgba(255,255,255,.15)}
+    .brand-text strong{display:block; font-size:18px}
+    .brand-text span{display:block; font-size:12px; color:var(--muted)}
+    .container{width:min(1180px,94vw); margin-inline:auto}
+    h1{font-size:clamp(22px,4vw,34px); margin:22px 0 6px}
+    .sub{color:#cfd6ff; margin:0 0 12px}
+    .glass{background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03)); border:1px solid var(--border); border-radius:22px; padding:22px; box-shadow:0 30px 60px rgba(0,10,40,.35)}
+    .grid{display:grid; gap:16px}
+    .grid-2{grid-template-columns:1fr}
+    @media(min-width:1000px){.grid-2{grid-template-columns:1fr 1fr}}
+    .choose{display:grid; gap:12px; grid-template-columns:repeat(2,1fr)}
+    @media(min-width:920px){.choose{grid-template-columns:repeat(4,1fr)}}
+    .opt{background:rgba(255,255,255,.04); border:1px solid var(--border); border-radius:16px; padding:14px; text-align:center; cursor:pointer; transition:transform .18s ease, border-color .18s ease; min-height:100px; display:grid; place-items:center; font-weight:700}
+    .opt:hover{transform:translateY(-3px); border-color:rgba(122,162,255,.6)}
+    .card{border:1px solid var(--border); border-radius:18px; background:rgba(255,255,255,0.04); padding:18px}
+    label{font-weight:600}
+    select, input[type="number"], input[type="text"]{width:100%; padding:10px 12px; border-radius:12px; border:1px solid var(--border); background:rgba(255,255,255,0.03); color:var(--txt)}
+    .row{display:grid; gap:12px; grid-template-columns:1fr}
+    @media(min-width:680px){.row{grid-template-columns:repeat(2,1fr)}}
+    .row-3{display:grid; gap:12px; grid-template-columns:repeat(3,1fr)}
+    .actions{display:flex; gap:10px; flex-wrap:wrap; margin-top:12px}
+    .btn{padding:10px 14px; border-radius:12px; border:1px solid var(--border); background:var(--glass); color:var(--txt); cursor:pointer; font-weight:700; transition:transform .2s ease, background .2s ease}
+    .btn.primary{background:linear-gradient(135deg, var(--primary), var(--primary-2)); border-color:transparent}
+    .btn:hover{transform:translateY(-2px)}
+    .result{padding:14px; border:1px solid var(--border); border-radius:14px; background:rgba(255,255,255,.03)}
+    .hint{font-size:13px; color:#b8c0ef}
+    footer{text-align:center; padding:22px; color:#aab2d8; font-size:13px; border-top:1px solid var(--border); margin-top:24px}
+    .mt{margin-top:10px}.hide{display:none}
+  </style>
+</head>
+<body>
+<header>
+  <div class="brand">
+    <div class="logo">حكيم</div>
+    <div class="brand-text">
+      <strong>حكيم — المسالك البولية</strong>
+      <span>تقييمات مؤتمتة دقيقة + PDF</span>
+    </div>
+  </div>
+  <nav class="actions" style="margin:0">
+    <a class="btn" href="index.html">الصفحة الرئيسية</a>
+  </nav>
+</header>
+
+<main class="container">
+  <section class="glass">
+    <h1>المسالك البولية — اختر القسم</h1>
+    <p class="sub">أدخل بياناتك ثم اختر الحالة. ستظهر <b>خطة إرشادية + أمثلة أدوية (بدون جرعات)</b> للمراجعة مع الطبيب.</p>
+
+    <div class="row">
+      <div><label>الاسم:</label><input id="pat-name" type="text" placeholder="مثال: يمان فتال"></div>
+      <div><label>العمر (سنوات):</label><input id="pat-age" type="number" min="0" max="120" placeholder="34"></div>
+    </div>
+    <div class="row">
+      <div>
+        <label>الفئة:</label>
+        <select id="pat-group" title="اختر الفئة الأدق">
+          <option value="male">رجل بالغ</option>
+          <option value="female">امرأة بالغة</option>
+          <option value="pregnant">حامل/محتمل الحمل</option>
+          <option value="child">طفل</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="choose" id="chooser">
+      <div class="opt" data-target="cystitis">التهاب مثانة (سفلي)</div>
+      <div class="opt" data-target="pyelo">التهاب حويضة وكلية (علوي)</div>
+      <div class="opt" data-target="stone">مغص كلوي/حصيات</div>
+      <div class="opt" data-target="prostatitis">التهاب بروستات حاد</div>
+      <div class="opt" data-target="bph">أعراض بولية سفلية/BPH</div>
+      <div class="opt" data-target="hematuria">بيلة دموية</div>
+      <div class="opt" data-target="retention">احتباس بولي حاد</div>
+      <div class="opt" data-target="incontinence">سلس بول (جهدي/إلحاحي)</div>
+      <div class="opt" data-target="sti">أمراض منقولة جنسيًا (إحليل/عنق رحم)</div>
+      <div class="opt" data-target="torsion">ألم خصية مفاجئ (التواء/بربخ)</div>
+      <div class="opt" data-target="enuresis">تبول لا إرادي ليلي (أطفال)</div>
+      <div class="opt" data-target="child-uti">UTI عند الأطفال</div>
+    </div>
+    <p class="hint mt">أعلام طارئة: ألم خصية مفاجئ شديد، حمى مع ألم الخاصرة وقيء، احتباس بول مؤلم، نزف بولي غزير مع خثرات، ألم شديد مع حرارة (حصاة مُصابة)، ارتباك/هبوط ضغط — اتصل بالإسعاف فورًا.</p>
+  </section>
+
+  <section class="grid grid-2 mt">
+    <!-- 1) Cystitis -->
+    <div class="card hide" id="sec-cystitis">
+      <h2>التهاب مثانة (سفلي) — فرز</h2>
+      <div class="row">
+        <div><label>عسرة تبول/حُرقة</label><select id="cyDys"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>تكرار/إلحاح بولي</label><select id="cyFreqUrg"><option value="0">لا</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="row">
+        <div><label>إفرازات مهبلية/ألم مهبلي</label><select id="cyVag"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>حمّى/ألم خاصرة</label><select id="cyFeverFlank"><option value="0">لا</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="actions">
+        <button class="btn primary" onclick="calcCystitis()">تقييم المثانة</button>
+        <button class="btn" onclick="exportPDF('cystitis')">تصدير PDF</button>
+      </div>
+      <div class="result mt" id="cystitis-res"></div>
+    </div>
+
+    <!-- 2) Pyelonephritis -->
+    <div class="card hide" id="sec-pyelo">
+      <h2>التهاب حويضة وكلية — فرز</h2>
+      <div class="row">
+        <div><label>حمّى &ge; 38°</label><select id="pyFever"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>ألم خاصرة/حساسية زاوية ضلعية فقرية</label><select id="pyFlank"><option value="0">لا</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="row">
+        <div><label>غثيان/قيء</label><select id="pyNV"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>حمل/مثبط مناعة/مسن</label><select id="pyHighRisk"><option value="0">لا</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="actions">
+        <button class="btn primary" onclick="calcPyelo()">تقييم الحويضة والكلية</button>
+        <button class="btn" onclick="exportPDF('pyelonephritis')">تصدير PDF</button>
+      </div>
+      <div class="result mt" id="pyelo-res"></div>
+    </div>
+
+    <!-- 3) Stone -->
+    <div class="card hide" id="sec-stone">
+      <h2>مغص كلوي/حصيات — فرز</h2>
+      <div class="row">
+        <div><label>ألم ماغص خاصري مفاجئ ينتشر للأُرْبِيَّة</label><select id="stColic"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>دم بالبول (مجهري/عياني)</label><select id="stBlood"><option value="0">لا/غير معروف</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="row">
+        <div><label>غثيان/قيء</label><select id="stNV"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>حمّى مصاحبة</label><select id="stFever"><option value="0">لا</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="actions">
+        <button class="btn primary" onclick="calcStone()">تقييم الحصيات</button>
+        <button class="btn" onclick="exportPDF('stone')">تصدير PDF</button>
+      </div>
+      <div class="result mt" id="stone-res"></div>
+    </div>
+
+    <!-- 4) Prostatitis -->
+    <div class="card hide" id="sec-prostatitis">
+      <h2>التهاب بروستات حاد — فرز (للرجال)</h2>
+      <div class="row">
+        <div><label>حمّى/قشعريرة</label><select id="prFever"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>ألم عجان/عانه/أسفل ظهر</label><select id="prPain"><option value="0">لا</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="row">
+        <div><label>عسرة/ضعف جريان/إلحاح</label><select id="prLUTS"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>احتباس/صعوبة شديدة</label><select id="prRetention"><option value="0">لا</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="actions">
+        <button class="btn primary" onclick="calcProstatitis()">تقييم البروستات</button>
+        <button class="btn" onclick="exportPDF('prostatitis')">تصدير PDF</button>
+      </div>
+      <div class="result mt" id="prostatitis-res"></div>
+    </div>
+
+    <!-- 5) BPH / LUTS -->
+    <div class="card hide" id="sec-bph">
+      <h2>أعراض بولية سفلية/BPH — تقدير بسيط</h2>
+      <div class="row-3">
+        <div><label>كثرة تبوّل نهارًا</label><select id="bpFreq"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>تبول ليلي &ge; 2</label><select id="bpNoct"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>جريان ضعيف/تقطّع</label><select id="bpStream"><option value="0">لا</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="row-3">
+        <div><label>إلحاح/سلس إلحاحي</label><select id="bpUrge"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>إحساس عدم إفراغ</label><select id="bpEmpty"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>احتباس سابق</label><select id="bpRet"><option value="0">لا</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="actions">
+        <button class="btn primary" onclick="calcBPH()">تقدير الأعراض</button>
+        <button class="btn" onclick="exportPDF('bph')">تصدير PDF</button>
+      </div>
+      <div class="result mt" id="bph-res"></div>
+    </div>
+
+    <!-- 6) Hematuria -->
+    <div class="card hide" id="sec-hematuria">
+      <h2>بيلة دموية — فرز خطورة</h2>
+      <div class="row">
+        <div><label>دم عياني/خثرات</label><select id="heGross"><option value="0">لا/مجهري</option><option value="1">عياني/خثرات</option></select></div>
+        <div><label>ألم خاصرة/مغص/ألم تبول</label><select id="hePain"><option value="0">لا</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="row">
+        <div><label>العمر ≥ 40 أو مدخّن</label><select id="heRisk"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>عدوى بولية مؤكدة حديثًا</label><select id="heUTI"><option value="0">لا/غير معروف</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="actions">
+        <button class="btn primary" onclick="calcHematuria()">تقييم البيلة الدموية</button>
+        <button class="btn" onclick="exportPDF('hematuria')">تصدير PDF</button>
+      </div>
+      <div class="result mt" id="hematuria-res"></div>
+    </div>
+
+    <!-- 7) Acute retention -->
+    <div class="card hide" id="sec-retention">
+      <h2>احتباس بولي حاد — فرز</h2>
+      <div class="row">
+        <div><label>عدم القدرة على التبول + ألم فوق العانة</label><select id="reAcute"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>أدوية محتملة السبب (مضاد كولين/أفيونات/مزيلة احتقان...)</label><select id="reDrugs"><option value="0">لا/غير معروف</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="row">
+        <div><label>سوابق تضخم بروستات/عمليات مسالك</label><select id="reHx"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>أعراض عصبية/إصابة ظهر حديثة</label><select id="reNeuro"><option value="0">لا</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="actions">
+        <button class="btn primary" onclick="calcRetention()">تقييم الاحتباس</button>
+        <button class="btn" onclick="exportPDF('retention')">تصدير PDF</button>
+      </div>
+      <div class="result mt" id="retention-res"></div>
+    </div>
+
+    <!-- 8) Incontinence -->
+    <div class="card hide" id="sec-incontinence">
+      <h2>سلس بول — تحديد النوع</h2>
+      <div class="row">
+        <div><label>تسرّب مع السعال/الضحك/الرياضة (جهدي)</label><select id="inStress"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>إلحاح شديد مع تسرّب قبل الوصول للمرحاض (إلحاحي)</label><select id="inUrge"><option value="0">لا</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="row">
+        <div><label>تسرّب مستمر/قطرات مع امتلاء (فيض/انسدادي)</label><select id="inOverflow"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>ولادة/جراحة حوضية حديثة</label><select id="inObst"><option value="0">لا</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="actions">
+        <button class="btn primary" onclick="calcIncontinence()">تحديد النوع</button>
+        <button class="btn" onclick="exportPDF('incontinence')">تصدير PDF</button>
+      </div>
+      <div class="result mt" id="incontinence-res"></div>
+    </div>
+
+    <!-- 9) STI -->
+    <div class="card hide" id="sec-sti">
+      <h2>أمراض منقولة جنسيًا — إحليل/عنق رحم</h2>
+      <div class="row">
+        <div><label>حرقة بول مع مفرزات إحليل/مهبل</label><select id="stDischarge"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>ألم حوض/خصر/نزف بعد الجماع</label><select id="stPelvic"><option value="0">لا</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="row">
+        <div><label>شريك/ة جديد/ة أو غير محمي</label><select id="stPartner"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>حمّى/ألم خصية</label><select id="stFeverTestis"><option value="0">لا</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="actions">
+        <button class="btn primary" onclick="calcSTI()">تقييم عدوى منقولة جنسيًا</button>
+        <button class="btn" onclick="exportPDF('sti')">تصدير PDF</button>
+      </div>
+      <div class="result mt" id="sti-res"></div>
+    </div>
+
+    <!-- 10) Torsion vs Epididymitis -->
+    <div class="card hide" id="sec-torsion">
+      <h2>ألم خصية مفاجئ — التواء مقابل بربخ</h2>
+      <div class="row">
+        <div><label>بداية مفاجئة جدًا مع غثيان/إقياء</label><select id="toSudden"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>خصية مرتفعة/أفقية (إن لوحظ)</label><select id="toHigh"><option value="0">لا/غير معروف</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="row">
+        <div><label>إيلام/تورّم تدريجي مع أعراض بولية</label><select id="toEpi"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>تحسّن مع رفع الخصية (غير موثوق لكنه داعم للبربخ)</label><select id="toPrehn"><option value="0">لا/غير معروف</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="actions">
+        <button class="btn primary" onclick="calcTorsion()">تقييم الألم الخصوي</button>
+        <button class="btn" onclick="exportPDF('torsion')">تصدير PDF</button>
+      </div>
+      <div class="result mt" id="torsion-res"></div>
+    </div>
+
+    <!-- 11) Enuresis -->
+    <div class="card hide" id="sec-enuresis">
+      <h2>تبول لا إرادي ليلي (أطفال) — فرز</h2>
+      <div class="row">
+        <div><label>العمر ≥ 5 سنوات</label><select id="enAge5"><option value="0">لا/أصغر</option><option value="1">نعم</option></select></div>
+        <div><label>نوبات ≥ 2/أسبوع</label><select id="enFreq"><option value="0">لا</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="row">
+        <div><label>أعراض نهارية/سلس نهاري</label><select id="enDay"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>إمساك/احتباس براز</label><select id="enConst"><option value="0">لا</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="actions">
+        <button class="btn primary" onclick="calcEnuresis()">تقييم التبول الليلي</button>
+        <button class="btn" onclick="exportPDF('enuresis')">تصدير PDF</button>
+      </div>
+      <div class="result mt" id="enuresis-res"></div>
+    </div>
+
+    <!-- 12) Child UTI -->
+    <div class="card hide" id="sec-child-uti">
+      <h2>UTI عند الأطفال — فرز</h2>
+      <div class="row">
+        <div><label>حمّى ≥ 38.5 بدون مصدر واضح</label><select id="cuFever"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>ألم/حرق تبول/رائحة قوية للبول</label><select id="cuDys"><option value="0">لا</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="row">
+        <div><label>إقياء/خمول/رفض رضاعة (للرضّع)</label><select id="cuInfant"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>سابقات UTI/مشاكل كلوية خلقية</label><select id="cuHx"><option value="0">لا</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="actions">
+        <button class="btn primary" onclick="calcChildUTI()">تقييم UTI الأطفال</button>
+        <button class="btn" onclick="exportPDF('child-uti')">تصدير PDF</button>
+      </div>
+      <div class="result mt" id="child-uti-res"></div>
+    </div>
+  </section>
+
+  <section class="glass mt">
+    <p class="hint">هذه الصفحة للتثقيف والفرز الأولي. عند الشك بحالة إسعافية — تواصل مع الإسعاف فورًا.</p>
+  </section>
+</main>
+
+<footer>© <span id="year"></span> حكيم — جميع الحقوق محفوظة.</footer>
+
+<script>
+  // ====== عام ======
+  document.getElementById('year').textContent = new Date().getFullYear();
+  document.querySelectorAll('#chooser .opt').forEach(el=>{
+    el.addEventListener('click', ()=>{
+      document.querySelectorAll('.card').forEach(c=>c.classList.add('hide'));
+      const sec = document.getElementById('sec-'+el.getAttribute('data-target'));
+      if (sec){ sec.classList.remove('hide'); sec.scrollIntoView({behavior:'smooth', block:'start'}); }
+    });
+  });
+
+  // المستخدم/الفئة
+  function nameVal(){ return document.getElementById('pat-name').value?.trim() || 'بدون اسم'; }
+  function ageVal(){ const n=parseInt(document.getElementById('pat-age').value,10); return isNaN(n)? null : Math.min(120, Math.max(0,n)); }
+  function groupVal(){
+    const g=document.getElementById('pat-group').value;
+    const label = (g==='male'?'رجل بالغ': g==='female'?'امرأة بالغة': g==='pregnant'?'حامل/محتمل الحمل':'طفل');
+    const sex = (g==='male'?'male': (g==='female' || g==='pregnant')?'female':'child');
+    return {code:g, label, sex};
+  }
+  function userContext(){
+    const age=ageVal(), group=groupVal();
+    return {
+      name:nameVal(), age, group,
+      child: group.code==='child' || (age!=null && age<14),
+      older: age!=null && age>=65,
+      male: group.code==='male',
+      female: group.code==='female' || group.code==='pregnant',
+      pregnant: group.code==='pregnant'
+    };
+  }
+  function lines(arr){ return `<ul>${arr.map(x=>`<li>${x}</li>`).join('')}</ul>`; }
+  function setLast(obj){ window._last = obj; }
+  function yes(id){ return document.getElementById(id).value==='1'; }
+
+  // ====== صانع الخطط للمسالك ======
+  function buildPlanUro(domain, ctx, u){
+    const plan=[], rec=[], pharm=[], flags = ctx.flags? [...ctx.flags] : [];
+    if (u.child) rec.push('الفئة طفل: القرارات الدوائية والتصويرية تختلف حسب العمر والوزن — يلزم اختصاص أطفال.');
+    if (u.older) rec.push('العمر ≥65: الانتباه للجفاف، قصور كلوي، وتداخلات دوائية؛ خطط محافظة ومراقبة وظائف.');
+    if (u.pregnant) rec.push('حمل/احتمال حمل: أدوية وتصوير معيّنة محظورة؛ يلزم تقييم اختصاصي.');
+
+    switch(domain){
+      case 'cystitis': {
+        if (u.male) flags.push('UTI عند الرجال يُعدّ معقّدًا غالبًا — يحتاج تقييم أوسع.');
+        if (u.pregnant) flags.push('UTI أثناء الحمل يتطلّب معالجة مؤكدة حسب زرع البول.');
+        if (ctx.feverFlank) flags.push('أعراض علويّة/حمّى — استبعد التهاب حويضة وكلية.');
+        plan.push('إكثار سوائل، إفراغ منتظم، تجنّب مهيجات (كافيين/حريف)، مسكنات بسيطة بإشراف.');
+        rec.push('تحليل بول وشريط + زرع عند النكس/الرجل/الحمل/الأطفال.');
+        if (!u.child){
+          pharm.push('مضادّات مناسبة وفق الإرشادات المحلية وزرع البول — قرار الطبيب.');
+          pharm.push('مسكّنات بولية/مضاد تشنج عند اللزوم — قرار الطبيب.');
+        }
+        break;
+      }
+      case 'pyelo': {
+        flags.push('التهاب حويضة وكلية مشتبه — يلزم تقييم سريع.');
+        if (u.pregnant || ctx.highRisk) flags.push('حمل/مناعيات/مسن — احتمال إدخال للمراقبة.');
+        plan.push('سوائل، مسكن مناسب، قد تحتاج مضادّات وريدية أولية ثم فموية وفق الحساسية.');
+        rec.push('تحليل/زرع بول، وظائف كلوية، تصوير (إيكو) عند عدم التحسّن أو الشك بانسداد.');
+        if (!u.child){
+          pharm.push('مضادّات (سيفالوسبورين جيل ثالث/فلوروكينولون/تركيبات أخرى) — قرار اختصاصي.');
+        }
+        break;
+      }
+      case 'stone': {
+        if (ctx.fever) flags.push('حمّى مع حصاة = حصاة مُصابة — طارئ لتصريف/مضاد وريدياً.');
+        plan.push('مسكنات مناسبة؛ تصفية/ترشيح بول لالتقاط الحصاة؛ ترطيب متوازن (ليس مفرطًا).');
+        rec.push('تصوير غير مُحَضَّر (CT منخفض الجرعة) أو إيكو/صورة بسيطة حسب التوفّر.');
+        if (!u.pregnant){
+          pharm.push('حاصرات ألفا (tamsulosin) كمساعدة للطرح لبعض الحصيات — قرار الطبيب.');
+          pharm.push('مضادّ قيء عند اللزوم — قرار الطبيب.');
+        } else {
+          pharm.push('الحمل: مسكنات آمنة محدودة، تصوير بالموجات فوق الصوتية — قرار اختصاصي.');
+        }
+        break;
+      }
+      case 'prostatitis': {
+        if (!u.male) flags.push('التهاب بروستات ينطبق على الرجال فقط.');
+        if (ctx.retention) flags.push('احتباس مرافق — قد يلزم قثطرة بإشراف.');
+        plan.push('تجنّب تدليك البروستات، سوائل، مسكنات؛ متابعة حرارة.');
+        rec.push('تحليل/زرع بول؛ استبعاد خراج إن لم يتحسّن؛ تقييم مناعة/مرافِقات.');
+        pharm.push('مضادّات تغطّي مسببات شائعة (فلوروكينولون/تريميثوبريم-سلفا/سيفالوسبورين) — قرار الطبيب.');
+        break;
+      }
+      case 'bph': {
+        plan.push('تقليل سوائل مساءً، تقليل كافيين/كحول، تفريغ مزدوج، تمرين مثانة.');
+        if (!u.pregnant && !u.child){
+          pharm.push('حاصرات ألفا (مثال: tamsulosin) — قرار الطبيب.');
+          pharm.push('مثبطات 5-ألفا (مثال: finasteride) للبروستات الكبيرة — قرار الطبيب.');
+        }
+        rec.push('قياس PSA حسب العمر/الاستطباب؛ إيكو/قياس بول متبقٍ عند الحاجة.');
+        break;
+      }
+      case 'hematuria': {
+        if (ctx.gross) flags.push('دم عياني/خثرات — قد يحتاج قثطرة غسيل/تقييم عاجل.');
+        if (ctx.ageRisk) rec.push('العمر ≥40/تدخين: يلزم تحرّي أورام (تصوير + تنظير مثانة).');
+        if (ctx.uti) rec.push('أعد التحليل بعد معالجة UTI للتأكد من زوال الدم.');
+        plan.push('تفريق علوي/سفلي حسب الأعراض؛ تحاليل دموية وكيمياء بول؛ تصوير كُلوي.');
+        break;
+      }
+      case 'retention': {
+        flags.push('احتباس مؤلم — طارئ لإفراغ المثانة.');
+        if (ctx.neuro) rec.push('قد تكون عصبية المنشأ — تقييم عصبي/تصوير.');
+        if (ctx.drugs) rec.push('مراجعة الأدوية المسببة (مضاد كولين/أفيونات/مضادات احتقان...).');
+        plan.push('قثطرة بولية بإشراف؛ معالجة السبب (BPH/ضيق إحليل/دواء).');
+        if (u.male) pharm.push('حاصرات ألفا بعد فك الاحتباس — قرار الطبيب.');
+        break;
+      }
+      case 'incontinence': {
+        const type = ctx.type;
+        if (type==='stress'){
+          plan.push('تمارين قاع الحوض (كيجل) 8–12 انقباضة ×3 يوميًا، تعديل نمط حياة، إنقاص وزن.');
+          if (u.female) pharm.push('إستروجين موضعي بعد سن الإياس — قرار الطبيب.');
+        } else if (type==='urge'){
+          plan.push('تدريب المثانة، جدول تبول، علاج إمساك.');
+          pharm.push('مضادّات مسكارينية أو mirabegron — قرار الطبيب.');
+        } else if (type==='overflow'){
+          flags.push('شك باحتباس/انسداد — يلزم تقييم.');
+          plan.push('قياس بول متبقٍ بعد التفريغ وتصحيح السبب.');
+        } else {
+          plan.push('غالبًا مختلط — مزيج من تقنيات السلوك + أدوية وفق الغالب.');
+        }
+        break;
+      }
+      case 'sti': {
+        plan.push('الامتناع المؤقت، فحوص NAAT (غونو/كلاميديا) ± مزروعات حسب الأعراض.');
+        pharm.push('علاج مبدئي مدمج شائع: سيفالوسبورين + دوكسيسيكلين/ماكروليد — قرار الطبيب.');
+        rec.push('علاج الشركاء، إعادة الفحص وفق الإرشادات، تعليم وقاية.');
+        if (ctx.testisPain) flags.push('ألم خصية/حمّى — استبعد بربخ/التواء.');
+        break;
+      }
+      case 'torsion': {
+        if (ctx.torsionLikely) flags.push('اشتباه التواء خصية — طارئ جراحي خلال ساعات.');
+        if (ctx.epiLikely) rec.push('بربخ محتمل (عدوى) — علاج مضاد حسب العمر/السلوك الجنسي.');
+        plan.push('لا تؤخّر التقييم بالإيكو الدوبلر عند الشك بالالتواء.');
+        if (ctx.epiLikely) pharm.push('مضادّات موجهة للمسببات الشائعة — قرار الطبيب.');
+        break;
+      }
+      case 'enuresis': {
+        plan.push('تعزيز سلوكي/دفتر نجوم، تقليل سوائل مساءً، إيقاظ مُجَدول، معالجة الإمساك.');
+        rec.push('جهاز إنذار ليلي فعال لكثير من الحالات.');
+        pharm.push('Desmopressin لبعض الحالات المختارة — قرار اختصاص أطفال.');
+        break;
+      }
+      case 'child-uti': {
+        flags.push('UTI أطفال: يحتاج تحليل/زرع، وقد يلزم تصوير عند الذكور صغار السن/الرضّع.');
+        if (ctx.infant) flags.push('رضيع مع حمى/خمول — تقييم سريع وربما إدخال.');
+        plan.push('جمع بول بطرق مناسبة للعمر؛ بدء علاج حسب إرشاد اختصاص الأطفال.');
+        pharm.push('مضادّات أطفال وفق الوزن والحساسية — قرار اختصاص أطفال.');
+        break;
+      }
+    }
+    return {plan, rec, pharm, flags};
+  }
+
+  // ====== عرض موحّد ======
+  function showResult(elId, obj){
+    const u = userContext();
+    const header = `<p>الاسم: <b>${u.name}</b>${u.age!=null? ` — العمر: <b>${u.age}</b>`:''} — الفئة: <b>${u.group.label}</b></p>`;
+    const assess = obj.assess ? `<p><b>التقييم:</b> ${obj.assess}</p>` : '';
+    const sev = obj.severity ? `<p><b>الشدة:</b> ${obj.severity}</p>` : '';
+    const score = (obj.score!==undefined) ? `<p><b>قيمة/درجة:</b> ${obj.score}</p>` : '';
+    const flagsHtml = obj.flags?.length? `<p><b>تنبيهات:</b></p>${lines(obj.flags)}` : '';
+    const planHtml = obj.plan?.length? `<p><b>خطة عامة:</b></p>${lines(obj.plan)}` : '';
+    const recHtml = obj.rec?.length? `<p><b>توصيات موجّهة:</b></p>${lines(obj.rec)}` : '';
+    const pharmHtml = obj.pharm?.length? `<p><b>أمثلة أدوية (قرار الطبيب):</b></p>${lines(obj.pharm)}<p class="hint">لا تبدأ/توقف أي دواء دون طبيب. قد توجد موانع/تداخلات خاصة بالحمل والأطفال وكبار السن.</p>` : '';
+    document.getElementById(elId).innerHTML = header + score + sev + assess + flagsHtml + planHtml + recHtml + pharmHtml;
+    setLast({...obj, user:u});
+  }
+
+  // ====== الحسابات ======
+  function calcCystitis(){
+    const dys=yes('cyDys'), fq=yes('cyFreqUrg'), vag=yes('cyVag'), ff=yes('cyFeverFlank');
+    const u=userContext();
+    let assess = (dys||fq) ? 'التهاب مثانة محتمل' : 'أعراض غير نوعية';
+    if (vag && u.female && !u.pregnant) assess += ' — فكر بالتهاب مهبلي/عنق رحم';
+    const {plan, rec, pharm, flags} = buildPlanUro('cystitis', {feverFlank:ff}, u);
+    showResult('cystitis-res', {title:'التهاب مثانة', assess, plan, rec, pharm, flags});
+  }
+
+  function calcPyelo(){
+    const fever=yes('pyFever'), flank=yes('pyFlank'), nv=yes('pyNV'), hr=yes('pyHighRisk');
+    const u=userContext();
+    let assess = (fever && flank) ? 'التهاب حويضة وكلية محتمل' : 'عدوى بولية مع أعراض غير مكتملة';
+    const {plan, rec, pharm, flags} = buildPlanUro('pyelo', {highRisk:hr}, u);
+    showResult('pyelo-res', {title:'التهاب حويضة وكلية', assess, plan, rec, pharm, flags, severity: (fever&&nv)||hr?'متوسط/عالٍ':'منخفض/متوسط'});
+  }
+
+  function calcStone(){
+    const colic=yes('stColic'), hem=yes('stBlood'), nv=yes('stNV'), fever=yes('stFever');
+    const u=userContext();
+    let assess = colic ? 'حصاة حالِب/كلية محتملة' : 'أعراض غير نوعية';
+    const {plan, rec, pharm, flags} = buildPlanUro('stone', {fever}, u);
+    showResult('stone-res', {title:'مغص كلوي/حصيات', assess, plan, rec, pharm, flags});
+  }
+
+  function calcProstatitis(){
+    const fever=yes('prFever'), pain=yes('prPain'), luts=yes('prLUTS'), ret=yes('prRetention');
+    const u=userContext();
+    let assess = (u.male && (fever||pain) && luts) ? 'التهاب بروستات حاد محتمل' : (u.male?'غير نوعي للالتهاب':'غير منطبق على هذه الفئة');
+    const {plan, rec, pharm, flags} = buildPlanUro('prostatitis', {retention:ret}, u);
+    showResult('prostatitis-res', {title:'التهاب بروستات', assess, plan, rec, pharm, flags});
+  }
+
+  function calcBPH(){
+    const vals=['bpFreq','bpNoct','bpStream','bpUrge','bpEmpty','bpRet'].map(id=>yes(id)?1:0);
+    const sum=vals.reduce((a,b)=>a+b,0);
+    const u=userContext();
+    const severity = sum>=5?'شديد': (sum>=3?'متوسط':'خفيف');
+    const {plan, rec, pharm, flags} = buildPlanUro('bph', {}, u);
+    let assess = u.male ? `أعراض بولية سفلية — تقدير ${severity}` : 'BPH يخص الرجال عادةً';
+    showResult('bph-res', {title:'BPH/LUTS', assess, score:`${sum}/6`, severity, plan, rec, pharm, flags});
+  }
+
+  function calcHematuria(){
+    const gross=yes('heGross'), pain=yes('hePain'), risk=yes('heRisk'), uti=yes('heUTI');
+    const u=userContext();
+    const {plan, rec, pharm, flags} = buildPlanUro('hematuria', {gross, ageRisk:risk, uti}, u);
+    let assess = gross?'بيلة دموية عيانية':'بيلة دموية مجهرية';
+    if (pain) assess += ' — قد تكون حصاة/عدوى';
+    if (risk) assess += ' — خطورة أعلى (عمر/تدخين)';
+    showResult('hematuria-res', {title:'بيلة دموية', assess, plan, rec, pharm, flags});
+  }
+
+  function calcRetention(){
+    const acute=yes('reAcute'), drugs=yes('reDrugs'), hx=yes('reHx'), neuro=yes('reNeuro');
+    const u=userContext();
+    const {plan, rec, pharm, flags} = buildPlanUro('retention', {drugs, neuro}, u);
+    let assess = acute? 'احتباس بولي حاد' : 'أعراض غير كافية';
+    if (hx) assess += ' — مع تاريخ مسالك';
+    showResult('retention-res', {title:'احتباس بولي', assess, plan, rec, pharm, flags});
+  }
+
+  function calcIncontinence(){
+    const st=yes('inStress'), ur=yes('inUrge'), of=yes('inOverflow');
+    const u=userContext();
+    let type = st && ur ? 'mixed' : (st?'stress' : (ur?'urge': (of?'overflow':'unsure')));
+    const {plan, rec, pharm, flags} = buildPlanUro('incontinence', {type}, u);
+    let assess = (type==='stress'?'سلس جهدي': type==='urge'?'سلس إلحاحي': type==='overflow'?'سلس فيضي/انسدادي': type==='mixed'?'سلس مختلط':'نوع غير محدد');
+    showResult('incontinence-res', {title:'سلس بول', assess, plan, rec, pharm, flags});
+  }
+
+  function calcSTI(){
+    const dis=yes('stDischarge'), pelv=yes('stPelvic'), part=yes('stPartner'), tPain=yes('stFeverTestis');
+    const u=userContext();
+    const {plan, rec, pharm, flags} = buildPlanUro('sti', {testisPain:tPain}, u);
+    let assess = dis? 'عدوى منقولة جنسيًا محتملة' : 'أعراض غير نوعية';
+    if (pelv) assess += ' — قد يمتد للحوض (نساء)';
+    showResult('sti-res', {title:'عدوى منقولة جنسيًا', assess, plan, rec, pharm, flags});
+  }
+
+  function calcTorsion(){
+    const sudden=yes('toSudden'), high=yes('toHigh'), epi=yes('toEpi'), prehn=yes('toPrehn');
+    const torsionLikely = sudden && (high || !prehn);
+    const epiLikely = epi && !torsionLikely;
+    const u=userContext();
+    const {plan, rec, pharm, flags} = buildPlanUro('torsion', {torsionLikely, epiLikely}, u);
+    let assess = torsionLikely? 'اشتباه التواء خصية (طارئ)' : (epiLikely?'التهاب بربخ محتمل':'غير محدد');
+    showResult('torsion-res', {title:'ألم خصية', assess, plan, rec, pharm, flags});
+  }
+
+  function calcEnuresis(){
+    const a5=yes('enAge5'), freq=yes('enFreq'), day=yes('enDay'), cons=yes('enConst');
+    const u=userContext();
+    let assess = (a5 && freq)? 'تبول لا إرادي أولي محتمل' : 'غير مستوفي للمعايير';
+    if (day) assess += ' — أعراض نهارية: يلزم تقييم أوسع';
+    const {plan, rec, pharm, flags} = buildPlanUro('enuresis', {}, u);
+    showResult('enuresis-res', {title:'تبول ليلي', assess, plan, rec, pharm, flags});
+  }
+
+  function calcChildUTI(){
+    const fever=yes('cuFever'), dys=yes('cuDys'), infant=yes('cuInfant'), hx=yes('cuHx');
+    const u=userContext();
+    const {plan, rec, pharm, flags} = buildPlanUro('child-uti', {infant}, u);
+    let assess = (fever && (dys||infant)) ? 'UTI محتمل عند الأطفال' : 'غير كافٍ للاشتباه العالي';
+    if (hx) assess += ' — سوابق/تشوهات تزيد الخطورة';
+    showResult('child-uti-res', {title:'UTI أطفال', assess, plan, rec, pharm, flags});
+  }
+
+  // ====== PDF ======
+  async function exportPDF(section){
+    const { jsPDF } = window.jspdf;
+    const m = window._last || {title:section, user:userContext(), plan:[], rec:[], pharm:[], flags:[]};
+    const u = m.user || userContext();
+
+    const box = document.createElement('div');
+    box.dir = 'rtl';
+    box.style.cssText = 'width:800px;padding:24px;background:#fff;color:#111;font-family:Cairo,Arial,sans-serif;line-height:1.9;border:1px solid #ddd;border-radius:12px';
+    box.innerHTML = `
+      <h2 style="margin:0 0 10px;font-weight:800">حكيم — ${m.title||section}</h2>
+      <p><b>الاسم:</b> ${u.name || 'بدون اسم'}${u.age!=null? ` — <b>العمر:</b> ${u.age}`:''} — <b>الفئة:</b> ${u.group? u.group.label : 'غير محدد'}</p>
+      ${m.score!==undefined? `<p><b>قيمة/درجة:</b> ${m.score}</p>`:''}
+      ${m.severity? `<p><b>الشدة:</b> ${m.severity}</p>`:''}
+      ${m.assess? `<p><b>التقييم:</b> ${m.assess}</p>`:''}
+      ${m.flags && m.flags.length? `<p><b>تنبيهات:</b></p><ul>${m.flags.map(x=>`<li>${x}</li>`).join('')}</ul>`:''}
+      ${m.plan && m.plan.length? `<p><b>خطة عامة:</b></p><ul>${m.plan.map(x=>`<li>${x}</li>`).join('')}</ul>`:''}
+      ${m.rec && m.rec.length? `<p><b>توصيات موجّهة:</b></p><ul>${m.rec.map(x=>`<li>${x}</li>`).join('')}</ul>`:''}
+      ${m.pharm && m.pharm.length? `<p><b>أمثلة دوائية (قرار الطبيب):</b></p><ul>${m.pharm.map(x=>`<li>${x}</li>`).join('')}</ul><p style="font-size:12px;color:#555">تنبيه: لا تبدأ/توقف أي دواء دون طبيب. قد توجد موانع/تداخلات خاصة بالحمل والأطفال وكبار السن.</p>`:''}
+      <hr style="margin:12px 0;border:0;border-top:1px solid #ddd"/>
+      <p style="font-size:13px;color:#444">ملف تثقيفي — لا يُغني عن تقييم الطبيب المختص. في الطوارئ يُرجى التواصل الفوري مع الإسعاف.</p>
+    `;
+    document.body.appendChild(box);
+    const canvas = await html2canvas(box, {scale:2, backgroundColor:'#ffffff', useCORS:true});
+    document.body.removeChild(box);
+
+    const pdf = new jsPDF({orientation:'p', unit:'pt', format:'a4'});
+    const pageW = pdf.internal.pageSize.getWidth(), pageH = pdf.internal.pageSize.getHeight(), margin=40;
+    let imgW = pageW - margin*2, imgH = canvas.height * imgW / canvas.width;
+    if (imgH > pageH - margin*2){ const r = (pageH - margin*2) / imgH; imgH*=r; imgW*=r; }
+    pdf.addImage(canvas.toDataURL('image/png'), 'PNG', (pageW-imgW)/2, (pageH-imgH)/2, imgW, imgH);
+    pdf.save(`Hakim-Uro-${(m.title||section).replace(/\s+/g,'_')}-${Date.now()}.pdf`);
+  }
+</script>
+
+<!--
+  المحتويات:
+  - التهاب مثانة، حويضة وكلية، حصيات/مغص، التهاب بروستات حاد، BPH/LUTS،
+    بيلة دموية، احتباس بولي، سلس (جهدي/إلحاحي/فيض)، عدوى منقولة جنسيًا،
+    ألم خصية (التواء/بربخ)، تبول ليلي، UTI أطفال.
+  - أمثلة أدوية دون جرعات وبصيغة "قرار الطبيب" التزامًا بالسلامة.
+-->
+</body>
+</html>

@@ -1,0 +1,649 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>حكيم — الجهاز التنفسي | تقييمات ذكية + PDF</title>
+  <meta name="description" content="حكيم — الجهاز التنفسي: ربو (حاد/سيطرة)، داء الانسداد الرئوي COPD، ذات الرئة (CRB-65)، خثار رئوي (Wells المبسّط)، استرواح صدري، فيروسات/إنفلونزا/كوفيد، نفث دموي، اشتباه سل، انقطاع نفس نومي (STOP-Bang)، توسّع قصبات، أمراض خلالية.">
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;800&display=swap" rel="stylesheet">
+  <!-- PDF -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" referrerpolicy="no-referrer"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js" referrerpolicy="no-referrer"></script>
+
+  <style>
+    :root{
+      --bg:#07090f; --txt:#e8ecff; --muted:#aab2d8;
+      --primary:#7aa2ff; --primary-2:#00e0ff; --accent:#a855f7;
+      --glass:rgba(255,255,255,.06); --border:rgba(255,255,255,.12);
+    }
+    *{box-sizing:border-box}
+    body{margin:0; font-family:'Cairo',system-ui,'Noto Sans Arabic',sans-serif; background:#07090f; color:var(--txt); line-height:1.9}
+    header{position:sticky; top:0; z-index:50; display:flex; align-items:center; justify-content:space-between; padding:14px 20px; backdrop-filter:saturate(140%) blur(8px); background:linear-gradient(180deg, rgba(15,16,40,.85), rgba(15,16,40,.45)); border-bottom:1px solid var(--border)}
+    .brand{display:flex; gap:12px; align-items:center}
+    .logo{width:42px; height:42px; border-radius:12px; display:grid; place-items:center; font-weight:800; background: radial-gradient(120% 120% at 0% 0%, var(--primary), var(--accent)); box-shadow: 0 0 24px rgba(122,162,255,.35), inset 0 0 18px rgba(255,255,255,.15)}
+    .brand-text strong{display:block; font-size:18px}
+    .brand-text span{display:block; font-size:12px; color:var(--muted)}
+    .container{width:min(1180px,94vw); margin-inline:auto}
+    h1{font-size:clamp(22px,4vw,34px); margin:22px 0 6px}
+    .sub{color:#cfd6ff; margin:0 0 12px}
+    .glass{background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03)); border:1px solid var(--border); border-radius:22px; padding:22px; box-shadow:0 30px 60px rgba(0,10,40,.35)}
+    .grid{display:grid; gap:16px}
+    .grid-2{grid-template-columns:1fr}
+    @media(min-width:980px){.grid-2{grid-template-columns:1fr 1fr}}
+    .choose{display:grid; gap:12px; grid-template-columns:repeat(2,1fr)}
+    @media(min-width:920px){.choose{grid-template-columns:repeat(4,1fr)}}
+    .opt{background:rgba(255,255,255,.04); border:1px solid var(--border); border-radius:16px; padding:14px; text-align:center; cursor:pointer; transition:transform .18s ease, border-color .18s ease; min-height:100px; display:grid; place-items:center; font-weight:700}
+    .opt:hover{transform:translateY(-3px); border-color:rgba(122,162,255,.6)}
+    .card{border:1px solid var(--border); border-radius:18px; background:rgba(255,255,255,0.04); padding:18px}
+    label{font-weight:600}
+    select, input[type="number"], input[type="text"]{width:100%; padding:10px 12px; border-radius:12px; border:1px solid var(--border); background:rgba(255,255,255,0.03); color:var(--txt)}
+    .row{display:grid; gap:12px; grid-template-columns:1fr}
+    @media(min-width:680px){.row{grid-template-columns:repeat(2,1fr)}}
+    .row-3{display:grid; gap:12px; grid-template-columns:repeat(3,1fr)}
+    .actions{display:flex; gap:10px; flex-wrap:wrap; margin-top:12px}
+    .btn{padding:10px 14px; border-radius:12px; border:1px solid var(--border); background:var(--glass); color:var(--txt); cursor:pointer; font-weight:700; transition:transform .2s ease, background .2s ease}
+    .btn.primary{background:linear-gradient(135deg, var(--primary), var(--primary-2)); border-color:transparent}
+    .btn:hover{transform:translateY(-2px)}
+    .result{padding:14px; border:1px solid var(--border); border-radius:14px; background:rgba(255,255,255,.03)}
+    .hint{font-size:13px; color:#b8c0ef}
+    footer{text-align:center; padding:22px; color:#aab2d8; font-size:13px; border-top:1px solid var(--border); margin-top:24px}
+    .mt{margin-top:10px}.hide{display:none}
+  </style>
+</head>
+<body>
+<header>
+  <div class="brand">
+    <div class="logo">حكيم</div>
+    <div class="brand-text">
+      <strong>حكيم — الجهاز التنفسي</strong>
+      <span>تقييمات مؤتمتة دقيقة + PDF</span>
+    </div>
+  </div>
+  <nav class="actions" style="margin:0">
+    <a class="btn" href="index.html">الصفحة الرئيسية</a>
+  </nav>
+</header>
+
+<main class="container">
+  <section class="glass">
+    <h1>الجهاز التنفسي — اختر القسم</h1>
+    <p class="sub">أدخل بياناتك ثم اختر الحالة. ستظهر <b>خطة إرشادية + أمثلة دوائية (بدون جرعات)</b> للمراجعة مع الطبيب.</p>
+
+    <div class="row">
+      <div><label>الاسم:</label><input id="pat-name" type="text" placeholder="مثال: ليلى خالد"></div>
+      <div><label>العمر (سنوات):</label><input id="pat-age" type="number" min="10" max="120" placeholder="45"></div>
+    </div>
+    <div class="row">
+      <div>
+        <label>الجنس:</label>
+        <select id="pat-sex">
+          <option value="male">ذكر</option>
+          <option value="female">أنثى</option>
+          <option value="pregnant">حامل/يُحتمل الحمل</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="choose" id="chooser">
+      <div class="opt" data-target="asthma-acute">ربو حاد (نوبة)</div>
+      <div class="opt" data-target="asthma-control">سيطرة الربو (مزمن)</div>
+      <div class="opt" data-target="copd">COPD — تفاقم</div>
+      <div class="opt" data-target="cap">ذات رئة مجتمعية (CRB-65)</div>
+      <div class="opt" data-target="pe">خثار رئوي PE (Wells مبسّط)</div>
+      <div class="opt" data-target="ptx">استرواح صدري (Pneumothorax)</div>
+      <div class="opt" data-target="viral">فيروسات/إنفلونزا/كوفيد</div>
+      <div class="opt" data-target="hemo">نفث دموي (Hemoptysis)</div>
+      <div class="opt" data-target="tb">اشتباه سل</div>
+      <div class="opt" data-target="osa">انقطاع نفس نَومي (STOP-Bang)</div>
+      <div class="opt" data-target="bronch">توسّع قصبات — تفاقم</div>
+      <div class="opt" data-target="ild">أمراض رئوية خلالية (ILD) — اشتباه</div>
+    </div>
+    <p class="hint mt">أعلام طارئة: زُراق/اختناق، استعمال عضلات إضافية، وعي مضطرب، نفث دم غزير، ألم صدري حاد مفاجئ مع ضيق نفس، تشكك بخثار/صمة رئوية — اتصل بالإسعاف فورًا.</p>
+  </section>
+
+  <section class="grid grid-2 mt">
+    <!-- 1) Asthma Acute -->
+    <div class="card hide" id="sec-asthma-acute">
+      <h2>ربو حاد (نوبة) — فرز شدة</h2>
+      <div class="row">
+        <div><label>صعوبة كلام (كلمات/جمل قصيرة)</label><select id="aaSpeech"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>صفير مسموع/استعمال عضلات إضافية</label><select id="aaAccessory"><option value="0">لا</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="row">
+        <div><label>استيقاظ ليلي هذه الليلة</label><select id="aaNight"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>عدم تحسّن بعد موسّع قصبي</label><select id="aaNoRelief"><option value="0">لا</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="actions">
+        <button class="btn primary" onclick="calcAsthmaAcute()">تقييم الربو الحاد</button>
+        <button class="btn" onclick="exportPDF('asthma-acute')">تصدير PDF</button>
+      </div>
+      <div class="result mt" id="asthma-acute-res"></div>
+    </div>
+
+    <!-- 2) Asthma Control -->
+    <div class="card hide" id="sec-asthma-control">
+      <h2>سيطرة الربو (مزمن) — تصنيف بسيط</h2>
+      <div class="row">
+        <div><label>أعراض نهارية > مرتين/أسبوع</label><select id="acDay"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>استيقاظ ليلي ≥ مرّة/شهر</label><select id="acNight"><option value="0">لا</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="row">
+        <div><label>حاجة لمسكن سريع > مرتين/أسبوع</label><select id="acReliever"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>تحديد للنشاط</label><select id="acActivity"><option value="0">لا</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="row">
+        <div><label>تفاقمات استوجبت طوارئ/كورتيزون خلال سنة</label><select id="acExac"><option value="0">لا</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="actions">
+        <button class="btn primary" onclick="calcAsthmaControl()">تصنيف السيطرة</button>
+        <button class="btn" onclick="exportPDF('asthma-control')">تصدير PDF</button>
+      </div>
+      <div class="result mt" id="asthma-control-res"></div>
+    </div>
+
+    <!-- 3) COPD -->
+    <div class="card hide" id="sec-copd">
+      <h2>COPD — تفاقم (معايير أنثونيسن)</h2>
+      <div class="row">
+        <div><label>زيادة ضيق النفس</label><select id="coDysp"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>زيادة قشع</label><select id="coSputVol"><option value="0">لا</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="row">
+        <div><label>تقيّح القشع (أخضر/أصفر)</label><select id="coPurul"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>أزرقاق/نعاس/تفاقم شديد</label><select id="coSev"><option value="0">لا</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="actions">
+        <button class="btn primary" onclick="calcCOPD()">تقييم التفاقم</button>
+        <button class="btn" onclick="exportPDF('copd')">تصدير PDF</button>
+      </div>
+      <div class="result mt" id="copd-res"></div>
+    </div>
+
+    <!-- 4) CAP CRB-65 -->
+    <div class="card hide" id="sec-cap">
+      <h2>ذات الرئة (مجتمعية) — CRB-65</h2>
+      <div class="row">
+        <div><label>تشوّش ذهني</label><select id="crConf"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>سرعة التنفس ≥ 30/د</label><select id="crRR"><option value="0">لا</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="row">
+        <div><label>ضغط منخفض (انقباضي &lt;90 أو انبساطي ≤60)</label><select id="crBP"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>العمر ≥ 65 سنة</label><select id="crAge65"><option value="0">لا</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="actions">
+        <button class="btn primary" onclick="calcCAP()">حساب CRB-65</button>
+        <button class="btn" onclick="exportPDF('cap')">تصدير PDF</button>
+      </div>
+      <div class="result mt" id="cap-res"></div>
+    </div>
+
+    <!-- 5) PE Wells simplified -->
+    <div class="card hide" id="sec-pe">
+      <h2>خثار/صمّة رئوية — Wells (مبسّط)</h2>
+      <div class="row">
+        <div><label>دلائل DVT سريرية (تورم ساق/ألم مسار وريدي)</label><select id="weDvt"><option value="0">لا</option><option value="3">نعم (+3)</option></select></div>
+        <div><label>PE أرجح من تشاخيص أخرى</label><select id="wePElikely"><option value="0">لا</option><option value="3">نعم (+3)</option></select></div>
+      </div>
+      <div class="row">
+        <div><label>نبض &gt; 100/د</label><select id="weHR"><option value="0">لا</option><option value="1.5">نعم (+1.5)</option></select></div>
+        <div><label>جراحة/تثبيت &lt; 4 أسابيع</label><select id="weSurg"><option value="0">لا</option><option value="1.5">نعم (+1.5)</option></select></div>
+      </div>
+      <div class="row">
+        <div><label>خثار/صمّة سابقة</label><select id="wePrev"><option value="0">لا</option><option value="1.5">نعم (+1.5)</option></select></div>
+        <div><label>نفث دم</label><select id="weHemo"><option value="0">لا</option><option value="1">نعم (+1)</option></select></div>
+      </div>
+      <div class="row">
+        <div><label>سرطان فعّال</label><select id="weCancer"><option value="0">لا</option><option value="1">نعم (+1)</option></select></div>
+      </div>
+      <div class="actions">
+        <button class="btn primary" onclick="calcPE()">حساب Wells</button>
+        <button class="btn" onclick="exportPDF('pe')">تصدير PDF</button>
+      </div>
+      <div class="result mt" id="pe-res"></div>
+    </div>
+
+    <!-- 6) Pneumothorax -->
+    <div class="card hide" id="sec-ptx">
+      <h2>استرواح صدري — فرز</h2>
+      <div class="row">
+        <div><label>ألم صدري حاد مفاجئ أحادي الجانب</label><select id="ptPain"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>ضيق نفس واضح</label><select id="ptDysp"><option value="0">لا</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="row">
+        <div><label>حادث/رضّ صدر مؤخّرًا</label><select id="ptTrauma"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>داء رئوي أرضي (COPD/ربو/ليفية)</label><select id="ptLung"><option value="0">لا</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="actions">
+        <button class="btn primary" onclick="calcPTX()">تقييم الاسترواح</button>
+        <button class="btn" onclick="exportPDF('ptx')">تصدير PDF</button>
+      </div>
+      <div class="result mt" id="ptx-res"></div>
+    </div>
+
+    <!-- 7) Viral -->
+    <div class="card hide" id="sec-viral">
+      <h2>فيروسات/إنفلونزا/كوفيد — فرز شدة</h2>
+      <div class="row">
+        <div><label>حمّى/قشعريرة/ألم عضلي</label><select id="viFlu"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>سعال/احتقان أنف/التهاب حلق</label><select id="viURTI"><option value="0">لا</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="row">
+        <div><label>ضيق نفس/ألم صدري مستمر</label><select id="viSev"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>تعرّض مؤكد/فحص إيجابي حديث</label><select id="viExpo"><option value="0">لا</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="actions">
+        <button class="btn primary" onclick="calcViral()">تقييم الحالة الفيروسية</button>
+        <button class="btn" onclick="exportPDF('viral')">تصدير PDF</button>
+      </div>
+      <div class="result mt" id="viral-res"></div>
+    </div>
+
+    <!-- 8) Hemoptysis -->
+    <div class="card hide" id="sec-hemo">
+      <h2>نفث دموي — فرز خطورة</h2>
+      <div class="row">
+        <div><label>كمية كبيرة (مثلاً ملء كأس صغير أو أكثر)</label><select id="heMass"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>دوخة/هبوط ضغط أو ضيق نفس شديد</label><select id="heShock"><option value="0">لا</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="row">
+        <div><label>سُعال مزمن &gt; 2 أسابيع/حمّى/نقص وزن</label><select id="heTB"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>تاريخ تدخين/داء قصبات/خثار رئوي</label><select id="heRF"><option value="0">لا</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="actions">
+        <button class="btn primary" onclick="calcHemo()">تقييم النفث الدموي</button>
+        <button class="btn" onclick="exportPDF('hemo')">تصدير PDF</button>
+      </div>
+      <div class="result mt" id="hemo-res"></div>
+    </div>
+
+    <!-- 9) TB -->
+    <div class="card hide" id="sec-tb">
+      <h2>اشتباه سل رئوي — فرز</h2>
+      <div class="row">
+        <div><label>سعال ≥ 2 أسابيع</label><select id="tbCough2w"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>تعرق ليلي/حمّى/نقص وزن</label><select id="tbBsymp"><option value="0">لا</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="row">
+        <div><label>احتكاك وثيق بحالة سل</label><select id="tbContact"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>نفث دم</label><select id="tbHemo"><option value="0">لا</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="actions">
+        <button class="btn primary" onclick="calcTB()">تقييم الاشتباه</button>
+        <button class="btn" onclick="exportPDF('tb')">تصدير PDF</button>
+      </div>
+      <div class="result mt" id="tb-res"></div>
+    </div>
+
+    <!-- 10) OSA STOP-Bang -->
+    <div class="card hide" id="sec-osa">
+      <h2>انقطاع النفس النومي — STOP-Bang</h2>
+      <div class="row-3">
+        <div><label>شخير مرتفع؟</label><select id="sbSnore"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>تعب/نعاس نهاري؟</label><select id="sbTired"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>مُشاهدة توقف تنفس؟</label><select id="sbObserved"><option value="0">لا</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="row-3">
+        <div><label>ضغط مرتفع؟</label><select id="sbPressure"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>مؤشّر كتلة ≥35؟</label><select id="sbBMI"><option value="0">لا/غير معروف</option><option value="1">نعم</option></select></div>
+        <div><label>العمر &gt; 50؟</label><select id="sbAge"><option value="0">لا</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="row-3">
+        <div><label>عنق &gt; 40 سم؟</label><select id="sbNeck"><option value="0">لا/غير معروف</option><option value="1">نعم</option></select></div>
+        <div><label>الجنس ذكر؟</label><select id="sbMale"><option value="0">لا</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="actions">
+        <button class="btn primary" onclick="calcOSA()">حساب STOP-Bang</button>
+        <button class="btn" onclick="exportPDF('osa')">تصدير PDF</button>
+      </div>
+      <div class="result mt" id="osa-res"></div>
+    </div>
+
+    <!-- 11) Bronchiectasis -->
+    <div class="card hide" id="sec-bronch">
+      <h2>توسّع قصبات — تفاقم</h2>
+      <div class="row">
+        <div><label>سعال مزمن مع قشع يومي أساسي</label><select id="brChronic"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>زيادة قشع/تقيّح/رائحة</label><select id="brPurul"><option value="0">لا</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="row">
+        <div><label>حمّى/ضيق نفس جديد</label><select id="brSev"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>فشل علاج منزلي/تكرار &ge; 3/سنة</label><select id="brFreq"><option value="0">لا</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="actions">
+        <button class="btn primary" onclick="calcBronch()">تقييم التفاقم</button>
+        <button class="btn" onclick="exportPDF('bronch')">تصدير PDF</button>
+      </div>
+      <div class="result mt" id="bronch-res"></div>
+    </div>
+
+    <!-- 12) ILD -->
+    <div class="card hide" id="sec-ild">
+      <h2>أمراض رئوية خلالية (ILD) — اشتباه</h2>
+      <div class="row">
+        <div><label>ضيق نفس تدريجي وأحيانًا سعال جاف</label><select id="ilDysp"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>أصوات خرخشة قاعدية (إن كانت معروفة)</label><select id="ilCrack"><option value="0">لا/غير معروف</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="row">
+        <div><label>تعرض مهني/دوائي/مناعي ذاتي</label><select id="ilExpo"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>تعجّر أصابع/ناديّات</label><select id="ilClub"><option value="0">لا</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="actions">
+        <button class="btn primary" onclick="calcILD()">تقييم الاشتباه</button>
+        <button class="btn" onclick="exportPDF('ild')">تصدير PDF</button>
+      </div>
+      <div class="result mt" id="ild-res"></div>
+    </div>
+  </section>
+
+  <section class="glass mt">
+    <p class="hint">هذه الصفحة للتثقيف والفرز الأولي. عند الشك بطارئ تنفّسي — اتصل بالإسعاف فورًا.</p>
+  </section>
+</main>
+
+<footer>© <span id="year"></span> حكيم — جميع الحقوق محفوظة.</footer>
+
+<script>
+  // ====== عام ======
+  document.getElementById('year').textContent = new Date().getFullYear();
+  document.querySelectorAll('#chooser .opt').forEach(el=>{
+    el.addEventListener('click', ()=>{
+      document.querySelectorAll('.card').forEach(c=>c.classList.add('hide'));
+      const sec = document.getElementById('sec-'+el.getAttribute('data-target'));
+      if (sec){ sec.classList.remove('hide'); sec.scrollIntoView({behavior:'smooth', block:'start'}); }
+    });
+  });
+
+  function nameVal(){ return document.getElementById('pat-name').value?.trim() || 'بدون اسم'; }
+  function ageVal(){ const n=parseInt(document.getElementById('pat-age').value,10); return isNaN(n)? null : Math.min(120, Math.max(10,n)); }
+  function sexVal(){ const v=document.getElementById('pat-sex').value; return {code:v, label:(v==='male'?'ذكر':(v==='female'?'أنثى':'حامل/محتمل الحمل'))}; }
+  function userContext(){ const age=ageVal(), sex=sexVal(); return {name:nameVal(), age, sex, minor: age!=null && age<18, older: age!=null && age>=65, pregnant: sex.code==='pregnant'}; }
+  function lines(arr){ return `<ul>${arr.map(x=>`<li>${x}</li>`).join('')}</ul>`; }
+  function setLast(obj){ window._last = obj; }
+  function yes(id){ return document.getElementById(id).value==='1' || document.getElementById(id).value==='yes'; }
+  function valNum(id){ const el=document.getElementById(id); if(!el||el.value==='') return null; const v=parseFloat(String(el.value).replace(',','.')); return isNaN(v)? null : v; }
+
+  // ====== مولّد الخطط التنفسية ======
+  function buildPlanP(domain, ctx, u){
+    const plan=[], rec=[], pharm=[], flags = ctx.flags? [...ctx.flags] : [];
+    if (u.minor) rec.push('العمر أقل من 18: هذه الصفحة موجّهة للبالغين — يُفضّل تقييم اختصاص أطفال.');
+    if (u.older) rec.push('العمر ≥65: الحذر من نقص الأكسجة والتداخلات الدوائية؛ خطط محافظة ومراقبة وظائف.');
+    if (u.pregnant) rec.push('حمل/احتمال حمل: أدوية معيّنة محظورة؛ يلزم تقييم اختصاصي.');
+
+    switch(domain){
+      case 'asthma-acute': {
+        if (ctx.severe) flags.push('نوبة ربو شديدة/خطر — يلزم إسعاف.');
+        plan.push('اجلس بوضع مريح، تنفس ببطء؛ تجنّب المحرّضات (دخان/روائح).');
+        if (!u.pregnant){
+          pharm.push('موسّع قصبي سريع المفعول (SABA) بالاستنشاق — قرار طبي.');
+          pharm.push('إضافة كورتيكوستيرويد فموي قصير الأمد عند النوبات المتوسطة-الشديدة — قرار طبي.');
+          pharm.push('أكسجين موجّه إذا وُجد نقص أكسجة — قرار طبي.');
+        } else {
+          pharm.push('الحمل: يقرّر الطبيب الخطة؛ غالبًا يُمكن استخدام SABA؛ تُقيّم السلامة فرديًا.');
+        }
+        rec.push('في حال تكرار النوبات أو عدم التحسّن — مراجعة عاجلة لتعديل العلاج الوقائي.');
+        break;
+      }
+      case 'asthma-control': {
+        const level = ctx.level;
+        rec.push(`تصنيف السيطرة: ${level}.`);
+        plan.push('تجنّب المحفزات، تقنية بخاخ صحيحة، خطة ذاتية مكتوبة بإشراف الطبيب.');
+        if (!u.pregnant){
+          pharm.push('علاج مسيطر: كورتيكوستيرويد استنشاقي (ICS) ± LABA (مثال: budesonide/formoterol) — قرار طبي.');
+          pharm.push('بدائل/مُضافات: مضاد لوكوترايين (montelukast) — قرار طبي.');
+        } else {
+          pharm.push('الحمل: يقرّر الطبيب؛ يعتبر بوديزونيد خيارًا شائعًا للـICS.');
+        }
+        break;
+      }
+      case 'copd': {
+        if (ctx.sev) flags.push('تفاقم شديد/علامات قصور تنفسي — تقييم إسعافي.');
+        const anthonisen = ctx.anth;
+        rec.push(`معايير أنثونيسن: ${anthonisen}/3.`);
+        plan.push('ترطيب، تمارين تنفّس، مراقبة تشبع الأكسجين؛ تعليم خطة تفاقم.');
+        if (!u.pregnant){
+          pharm.push('موسّعات قصبية قصيرة الأمد SABA/SAMA أو مدمجة — قرار طبي.');
+          pharm.push('كورتيكوستيرويد فموي قصير الأمد لبعض التفاقمات — قرار طبي.');
+          pharm.push('مضاد حيوي عند وجود 2/3 مع التقيّح — أمثلة: amoxicillin/clavulanate أو doxycycline أو macrolide — قرار طبي.');
+          pharm.push('أكسجين بهدف 88–92% عند اللزوم — قرار طبي.');
+        }
+        break;
+      }
+      case 'cap': {
+        const score = ctx.crb;
+        if (score>=3) flags.push('خطورة عالية — غالبًا حاجة إدخال/عناية.');
+        plan.push('إماطة اللثام عن عوامل الخطر والتطعيمات؛ سوائل واستراحة؛ متابعة التحسّن خلال 48–72 ساعة.');
+        if (!u.pregnant){
+          pharm.push('خيار مجتمعي شائع (حسب المنطقة والمقاومة): amoxicillin أو doxycycline أو macrolide — قرار طبي.');
+        } else {
+          pharm.push('الحمل: يقرّر الطبيب المضاد المناسب لضمان السلامة الجنينية.');
+        }
+        rec.push(`CRB-65 = ${score} (${score===0?'خطورة منخفضة':'متوسطة/عالية'}).`);
+        break;
+      }
+      case 'pe': {
+        if (ctx.likely) flags.push('PE مرجّح سريريًا — يحتاج طوارئ/تصوير.');
+        plan.push('لا تُهمِل الأعراض الصدرية مع ضيق نفس مفاجئ؛ تجنّب السفر/الجهد حتى التقييم.');
+        if (!u.pregnant){
+          pharm.push('مضاد تخثّر بعد تأكيد التشخيص — أمثلة: DOAC (apixaban/rivaroxaban) أو LMWH — قرار اختصاصي.');
+        } else {
+          pharm.push('الحمل: غالبًا LMWH إن لزم — قرار اختصاصي.');
+        }
+        rec.push(ctx.likely? 'التصوير/المسار الإسعافي أولى من D-dimer.' : 'يمكن تحرّي D-dimer إذا كانت احتمالية منخفضة.');
+        break;
+      }
+      case 'ptx': {
+        if (ctx.severe || ctx.trauma) flags.push('اشتباه استرواح/توتر — إسعاف عاجل.');
+        plan.push('تجنّب الجهد/الطيران حتى زوال الحالة؛ تصوير صدر مطلوب للتأكيد.');
+        rec.push('يحدّد الاختصاصي: مراقبة/شفط/أنبوب صدري حسب الحجم والأعراض.');
+        break;
+      }
+      case 'viral': {
+        if (ctx.sev) flags.push('أعراض إنذارية تنفّسية — تقييم عاجل.');
+        plan.push('راحة، سوائل، عزل منزلي حسب الإرشادات، كمامة عند الأعراض.');
+        if (!u.pregnant){
+          pharm.push('خافض حرارة/مسكّن بسيط (مثال: acetaminophen) — قرار طبي.');
+          pharm.push('مضاد فيروسات للإنفلونزا ضمن 48 ساعة لبعض الفئات — قرار طبي.');
+          pharm.push('علاجات كوفيد/فيروسات أخرى وفق البروتوكولات المحلية — قرار اختصاصي.');
+        } else {
+          pharm.push('الحمل: تُقيّم الأدوية بشكل فردي مع الطبيب.');
+        }
+        rec.push('اختبار (إنفلونزا/كوفيد) عند التعرّض أو الأعراض النمطية.');
+        break;
+      }
+      case 'hemo': {
+        if (ctx.mass || ctx.shock) flags.push('نفث دم غزير/لاستقرار — إسعاف فوري.');
+        plan.push('تمييز مصدر الدم (علوي/سفلي)، تصوير شعاعي/طبقي وبرونكوسكوب عند اللزوم.');
+        if (!u.pregnant){
+          pharm.push('يعالج السبب: إنتان/توسع قصبات/خثار/سل… (مضادات حيوية/تخثر/إجراءات) — قرار اختصاصي.');
+        }
+        break;
+      }
+      case 'tb': {
+        if (ctx.suggest) rec.push('اشتباه سل رئوي — يلزم تحرّي سريع.');
+        plan.push('كمامة، دائرة سل/صدرية: لطاخة وبلمرة للبلغم + صورة صدر، تتبّع المخالطين.');
+        pharm.push('العلاج دوائي متعدد وفق بروتوكولات السل الوطنية — قرار برنامج السل.');
+        break;
+      }
+      case 'osa': {
+        rec.push(`نتيجة STOP-Bang: ${ctx.score}/8 — خطورة ${ctx.risk}.`);
+        plan.push('تحويل لدراسة نوم (Polysomnography)؛ إنقاص وزن؛ تجنّب المهدئات والكحول؛ نوم جانبي.');
+        pharm.push('علاج داعم: CPAP/BiPAP حسب الدراسة — قرار اختصاصي.');
+        break;
+      }
+      case 'bronch': {
+        if (ctx.sev) flags.push('تفاقم مهم/فشل علاج — قد يلزم إدخال.');
+        plan.push('تقنيات تصريف مَخاطي، سوائل، تمارين تنفّس؛ إرسال قشع للزرع إن أمكن.');
+        if (!u.pregnant){
+          pharm.push('مضاد حيوي موجّه حسب الزرع (مثال: amoxicillin/clavulanate أو ciprofloxacin عند الاشتباه بجراثيم معيّنة) — قرار طبي.');
+          pharm.push('موسّعات قصبية ± مقشّعات/مذوبات مخاط — قرار طبي.');
+        }
+        break;
+      }
+      case 'ild': {
+        if (ctx.suggest) rec.push('اشتباه ILD — يلزم تقييم صدرية متقدم.');
+        plan.push('HRCT عالي الدقة، وظائف رئة (DLCO)، تحاليل مناعية؛ مراجعة الأدوية والتعرضات.');
+        if (!u.pregnant){
+          pharm.push('خيارات لبعض الأنماط: مضادات تليّف (nintedanib/pirfenidone) — قرار اختصاصي.');
+        }
+        break;
+      }
+    }
+    return {plan, rec, pharm, flags};
+  }
+
+  // ====== عرض موحّد ======
+  function showResult(elId, obj){
+    const u = userContext();
+    const header = `<p>الاسم: <b>${u.name}</b>${u.age? ` — العمر: <b>${u.age}</b>`:''} — الجنس: <b>${u.sex.label}</b></p>`;
+    const assess = obj.assess ? `<p><b>التقييم:</b> ${obj.assess}</p>` : '';
+    const sev = obj.severity ? `<p><b>الشدة:</b> ${obj.severity}</p>` : '';
+    const score = (obj.score!==undefined) ? `<p><b>قيمة/درجة:</b> ${obj.score}</p>` : '';
+    const flagsHtml = obj.flags?.length? `<p><b>تنبيهات:</b></p>${lines(obj.flags)}` : '';
+    const planHtml = obj.plan?.length? `<p><b>خطة عامة:</b></p>${lines(obj.plan)}` : '';
+    const recHtml = obj.rec?.length? `<p><b>توصيات موجّهة:</b></p>${lines(obj.rec)}` : '';
+    const pharmHtml = obj.pharm?.length? `<p><b>أمثلة دوائية (قرار الطبيب):</b></p>${lines(obj.pharm)}<p class="hint">لا تبدأ/توقف أي دواء دون طبيب. قد توجد موانع/تداخلات خاصة بالحمل وكبار السن والأمراض المرافقة.</p>` : '';
+    document.getElementById(elId).innerHTML = header + score + sev + assess + flagsHtml + planHtml + recHtml + pharmHtml;
+    setLast({...obj, user:u});
+  }
+
+  // ====== الحسابات ======
+  function calcAsthmaAcute(){
+    const speech=yes('aaSpeech'), acc=yes('aaAccessory'), night=yes('aaNight'), noRel=yes('aaNoRelief');
+    let sev='خفيفة', severe=false, score=0;
+    if (speech) score+=2; if (acc) score+=2; if (night) score+=1; if (noRel) score+=2;
+    if (score>=5){ sev='شديدة'; severe=true; } else if (score>=3){ sev='متوسطة'; }
+    const {plan, rec, pharm, flags} = buildPlanP('asthma-acute', {severe}, userContext());
+    showResult('asthma-acute-res', {title:'ربو حاد', assess:'نوبة ربو محتملة', severity:sev, plan, rec, pharm, flags});
+  }
+
+  function calcAsthmaControl(){
+    const c = [yes('acDay'), yes('acNight'), yes('acReliever'), yes('acActivity')].filter(Boolean).length;
+    const ex = yes('acExac');
+    let level = (c===0 && !ex)?'مسيطر' : (c<=2 && !ex ? 'سيطرة جزئية' : 'غير مسيطر');
+    const {plan, rec, pharm, flags} = buildPlanP('asthma-control', {level}, userContext());
+    showResult('asthma-control-res', {title:'سيطرة الربو', assess:'تقييم سيطرة الربو', score:`معايير إيجابية: ${c}/4${ex?' + تفاقمات':''}`, plan, rec, pharm, flags});
+  }
+
+  function calcCOPD(){
+    const d=yes('coDysp'), v=yes('coSputVol'), p=yes('coPurul'), sev=yes('coSev');
+    const anth = (d?1:0) + (v?1:0) + (p?1:0);
+    const {plan, rec, pharm, flags} = buildPlanP('copd', {anth, sev}, userContext());
+    let assess='تفاقم COPD محتمل'; if (anth>=2 && p) assess+=' مع احتمال بكتيري';
+    showResult('copd-res', {title:'COPD — تفاقم', assess, score:`أنثونيسن: ${anth}/3`, plan, rec, pharm, flags});
+  }
+
+  function calcCAP(){
+    const crb = (yes('crConf')?1:0) + (yes('crRR')?1:0) + (yes('crBP')?1:0) + (yes('crAge65')?1:0);
+    const sev = crb>=3 ? 'عالية' : (crb===2 ? 'متوسطة' : 'منخفضة');
+    const {plan, rec, pharm, flags} = buildPlanP('cap', {crb}, userContext());
+    showResult('cap-res', {title:'ذات الرئة', assess:'التقييم السريري يشير لالتهاب رئوي محتمل', severity:sev, score:`CRB-65 = ${crb}`, plan, rec, pharm, flags});
+  }
+
+  function calcPE(){
+    const vals=['weDvt','wePElikely','weHR','weSurg','wePrev','weHemo','weCancer'].map(id=>parseFloat(document.getElementById(id).value)||0);
+    const score = vals.reduce((a,b)=>a+b,0);
+    const likely = score>4; // Wells التقليدي: >4 مرجّح
+    const {plan, rec, pharm, flags} = buildPlanP('pe', {likely}, userContext());
+    showResult('pe-res', {title:'خثار/صمّة رئوية', assess: likely?'احتمال مرتفع':'احتمال منخفض/متوسط', score:`Wells = ${score.toFixed(1)}`, plan, rec, pharm, flags});
+  }
+
+  function calcPTX(){
+    const pain=yes('ptPain'), dysp=yes('ptDysp'), trauma=yes('ptTrauma'), lung=yes('ptLung');
+    const severe = dysp && (pain || trauma);
+    const {plan, rec, pharm, flags} = buildPlanP('ptx', {severe, trauma}, userContext());
+    let assess='استرواح صدري محتمل'; if (trauma) assess+=' بعد رضّ';
+    showResult('ptx-res', {title:'استرواح صدري', assess, plan, rec, pharm, flags});
+  }
+
+  function calcViral(){
+    const flu=yes('viFlu'), urti=yes('viURTI'), sev=yes('viSev'), expo=yes('viExpo');
+    const {plan, rec, pharm, flags} = buildPlanP('viral', {sev, expo}, userContext());
+    let assess = (flu||urti)? 'عدوى تنفّسية علوية/إنفلونزا محتملة' : 'أعراض غير نوعية';
+    if (expo) assess+=' — مع تعرّض مؤكد';
+    showResult('viral-res', {title:'فيروسات/إنفلونزا/كوفيد', assess, plan, rec, pharm, flags});
+  }
+
+  function calcHemo(){
+    const mass=yes('heMass'), shock=yes('heShock'), tb=yes('heTB'), rf=yes('heRF');
+    const {plan, rec, pharm, flags} = buildPlanP('hemo', {mass, shock}, userContext());
+    let assess='نفث دموي بسيط/متوسط'; if (mass||shock) assess='نفث دموي عالي الخطورة';
+    if (tb) assess+=' — مع سمات سل محتملة';
+    if (rf) assess+=' — عوامل خطر مرافقة';
+    showResult('hemo-res', {title:'نفث دموي', assess, plan, rec, pharm, flags});
+  }
+
+  function calcTB(){
+    const cough=yes('tbCough2w'), bs=yes('tbBsymp'), contact=yes('tbContact'), hemo=yes('tbHemo');
+    const suggest = (cough && (bs || contact)) || hemo;
+    const {plan, rec, pharm, flags} = buildPlanP('tb', {suggest}, userContext());
+    showResult('tb-res', {title:'اشتباه سل', assess: suggest?'اشتباه مرتفع':'اشتباه منخفض/متوسط', plan, rec, pharm, flags});
+  }
+
+  function calcOSA(){
+    const items=['sbSnore','sbTired','sbObserved','sbPressure','sbBMI','sbAge','sbNeck','sbMale'];
+    const score = items.reduce((s,id)=>s + (yes(id)?1:0), 0);
+    const risk = score>=5 ? 'عالٍ' : (score>=3 ? 'متوسط' : 'منخفض');
+    const {plan, rec, pharm, flags} = buildPlanP('osa', {score, risk}, userContext());
+    showResult('osa-res', {title:'انقطاع نفس نَومي', assess:'خطر OSA حسب STOP-Bang', score:`${score}/8 (${risk})`, plan, rec, pharm, flags});
+  }
+
+  function calcBronch(){
+    const chronic=yes('brChronic'), pur=yes('brPurul'), sev=yes('brSev'), freq=yes('brFreq');
+    const {plan, rec, pharm, flags} = buildPlanP('bronch', {sev}, userContext());
+    let assess = chronic? 'توسّع قصبات مع تفاقم محتمل' : 'أعراض غير نوعية';
+    if (pur) assess+=' — تقيّح قشع';
+    if (freq) assess+=' — نكس متكرر';
+    showResult('bronch-res', {title:'توسّع قصبات', assess, plan, rec, pharm, flags});
+  }
+
+  function calcILD(){
+    const dysp=yes('ilDysp'), crack=yes('ilCrack'), expo=yes('ilExpo'), club=yes('ilClub');
+    const suggest = dysp && (crack || expo || club);
+    const {plan, rec, pharm, flags} = buildPlanP('ild', {suggest}, userContext());
+    showResult('ild-res', {title:'اشتباه ILD', assess: suggest?'اشتباه قائم — يحتاج تقييم متقدّم':'معطيات غير كافية', plan, rec, pharm, flags});
+  }
+
+  // ====== PDF ======
+  async function exportPDF(section){
+    const { jsPDF } = window.jspdf;
+    const m = window._last || {title:section, user:userContext(), plan:[], rec:[], pharm:[], flags:[]};
+    const u = m.user || userContext();
+
+    const box = document.createElement('div');
+    box.dir = 'rtl';
+    box.style.cssText = 'width:800px;padding:24px;background:#fff;color:#111;font-family:Cairo,Arial,sans-serif;line-height:1.9;border:1px solid #ddd;border-radius:12px';
+    box.innerHTML = `
+      <h2 style="margin:0 0 10px;font-weight:800">حكيم — ${m.title||section}</h2>
+      <p><b>الاسم:</b> ${u.name || 'بدون اسم'}${u.age? ` — <b>العمر:</b> ${u.age}`:''} — <b>الجنس:</b> ${u.sex? u.sex.label : 'غير محدد'}</p>
+      ${m.score!==undefined? `<p><b>قيمة/درجة:</b> ${m.score}</p>`:''}
+      ${m.severity? `<p><b>الشدة:</b> ${m.severity}</p>`:''}
+      ${m.assess? `<p><b>التقييم:</b> ${m.assess}</p>`:''}
+      ${m.flags && m.flags.length? `<p><b>تنبيهات:</b></p><ul>${m.flags.map(x=>`<li>${x}</li>`).join('')}</ul>`:''}
+      ${m.plan && m.plan.length? `<p><b>خطة عامة:</b></p><ul>${m.plan.map(x=>`<li>${x}</li>`).join('')}</ul>`:''}
+      ${m.rec && m.rec.length? `<p><b>توصيات موجّهة:</b></p><ul>${m.rec.map(x=>`<li>${x}</li>`).join('')}</ul>`:''}
+      ${m.pharm && m.pharm.length? `<p><b>أمثلة دوائية (قرار الطبيب):</b></p><ul>${m.pharm.map(x=>`<li>${x}</li>`).join('')}</ul><p style="font-size:12px;color:#555">تنبيه: لا تبدأ/توقف أي دواء دون طبيب. قد توجد موانع/تداخلات خاصة بالحمل وكبار السن.</p>`:''}
+      <hr style="margin:12px 0;border:0;border-top:1px solid #ddd"/>
+      <p style="font-size:13px;color:#444">ملف تثقيفي — لا يُغني عن تقييم الطبيب المختص. في الطوارئ يُرجى التواصل الفوري مع الإسعاف.</p>
+    `;
+    document.body.appendChild(box);
+    const canvas = await html2canvas(box, {scale:2, backgroundColor:'#ffffff', useCORS:true});
+    document.body.removeChild(box);
+
+    const pdf = new jsPDF({orientation:'p', unit:'pt', format:'a4'});
+    const pageW = pdf.internal.pageSize.getWidth(), pageH = pdf.internal.pageSize.getHeight(), margin=40;
+    let imgW = pageW - margin*2, imgH = canvas.height * imgW / canvas.width;
+    if (imgH > pageH - margin*2){ const r = (pageH - margin*2) / imgH; imgH*=r; imgW*=r; }
+    pdf.addImage(canvas.toDataURL('image/png'), 'PNG', (pageW-imgW)/2, (pageH-imgH)/2, imgW, imgH);
+    pdf.save(`Hakim-Pulmo-${(m.title||section).replace(/\s+/g,'_')}-${Date.now()}.pdf`);
+  }
+</script>
+
+<!--
+  محتويات الصفحة:
+  - ربو حاد/سيطرة، COPD، ذات الرئة CRB-65، Wells المبسّط للـPE، استرواح صدري،
+    فيروسات/إنفلونزا/كوفيد، نفث دموي، سل، STOP-Bang، توسّع قصبات، ILD.
+  - أمثلة دوائية دون جرعات وبصيغة "قرار الطبيب" التزامًا بالسلامة.
+-->
+</body>
+</html>

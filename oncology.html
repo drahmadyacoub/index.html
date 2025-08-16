@@ -1,0 +1,615 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>حكيم — الأورام | تقييمات ذكية + PDF</title>
+  <meta name="description" content="حكيم — الأورام: كتل/نقص وزن/تعرق ليلي، سعال مزمن/نفث دم، تبدّل عادات الأمعاء/نزف شرجي، عسرة بلع/نقص وزن، يرقان، نزف مهبلي بعد سن اليأس، تغيّرات الثدي، بيلة دموية، آفات جلدية مشتبهة، ضخامة عقد لمفية، ألم عظم مستمر، طوارئ أورام وقلة عدلات حموية.">
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;800&display=swap" rel="stylesheet">
+  <!-- PDF libs -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" referrerpolicy="no-referrer"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js" referrerpolicy="no-referrer"></script>
+
+  <style>
+    :root{
+      --bg:#07090f; --txt:#e8ecff; --muted:#aab2d8;
+      --primary:#7aa2ff; --primary-2:#00e0ff; --accent:#a855f7;
+      --glass:rgba(255,255,255,.06); --border:rgba(255,255,255,.12);
+    }
+    *{box-sizing:border-box}
+    body{margin:0; font-family:'Cairo',system-ui,'Noto Sans Arabic',sans-serif; background:#07090f; color:var(--txt); line-height:1.9}
+    header{position:sticky; top:0; z-index:50; display:flex; align-items:center; justify-content:space-between; padding:14px 20px; backdrop-filter:saturate(140%) blur(8px); background:linear-gradient(180deg, rgba(15,16,40,.85), rgba(15,16,40,.45)); border-bottom:1px solid var(--border)}
+    .brand{display:flex; gap:12px; align-items:center}
+    .logo{width:42px; height:42px; border-radius:12px; display:grid; place-items:center; font-weight:800; background: radial-gradient(120% 120% at 0% 0%, var(--primary), var(--accent)); box-shadow: 0 0 24px rgba(122,162,255,.35), inset 0 0 18px rgba(255,255,255,.15)}
+    .brand-text strong{display:block; font-size:18px}
+    .brand-text span{display:block; font-size:12px; color:var(--muted)}
+    .container{width:min(1180px,94vw); margin-inline:auto}
+    h1{font-size:clamp(22px,4vw,34px); margin:22px 0 6px}
+    .sub{color:#cfd6ff; margin:0 0 12px}
+    .glass{background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03)); border:1px solid var(--border); border-radius:22px; padding:22px; box-shadow:0 30px 60px rgba(0,10,40,.35)}
+    .grid{display:grid; gap:16px}
+    .grid-2{grid-template-columns:1fr}
+    @media(min-width:1000px){.grid-2{grid-template-columns:1fr 1fr}}
+    .choose{display:grid; gap:12px; grid-template-columns:repeat(2,1fr)}
+    @media(min-width:1000px){.choose{grid-template-columns:repeat(4,1fr)}}
+    .opt{background:rgba(255,255,255,.04); border:1px solid var(--border); border-radius:16px; padding:14px; text-align:center; cursor:pointer; transition:transform .18s ease, border-color .18s ease; min-height:110px; display:grid; place-items:center; font-weight:700}
+    .opt:hover{transform:translateY(-3px); border-color:rgba(122,162,255,.6)}
+    .card{border:1px solid var(--border); border-radius:18px; background:rgba(255,255,255,0.04); padding:18px}
+    label{font-weight:600}
+    select, input[type="number"], input[type="text"]{width:100%; padding:10px 12px; border-radius:12px; border:1px solid var(--border); background:rgba(255,255,255,0.03); color:var(--txt)}
+    .row{display:grid; gap:12px; grid-template-columns:1fr}
+    @media(min-width:680px){.row{grid-template-columns:repeat(2,1fr)}}
+    .row-3{display:grid; gap:12px; grid-template-columns:repeat(3,1fr)}
+    .actions{display:flex; gap:10px; flex-wrap:wrap; margin-top:12px}
+    .btn{padding:10px 14px; border-radius:12px; border:1px solid var(--border); background:var(--glass); color:var(--txt); cursor:pointer; font-weight:700; transition:transform .2s ease, background .2s ease}
+    .btn.primary{background:linear-gradient(135deg, var(--primary), var(--primary-2)); border-color:transparent}
+    .btn:hover{transform:translateY(-2px)}
+    .result{padding:14px; border:1px solid var(--border); border-radius:14px; background:rgba(255,255,255,.03)}
+    .hint{font-size:13px; color:#b8c0ef}
+    footer{text-align:center; padding:22px; color:#aab2d8; font-size:13px; border-top:1px solid var(--border); margin-top:24px}
+    .mt{margin-top:10px}.hide{display:none}
+  </style>
+</head>
+<body>
+<header>
+  <div class="brand">
+    <div class="logo">حكيم</div>
+    <div class="brand-text">
+      <strong>حكيم — الأورام</strong>
+      <span>تقييمات مؤتمتة دقيقة + PDF</span>
+    </div>
+  </div>
+  <nav class="actions" style="margin:0">
+    <a class="btn" href="index.html">الصفحة الرئيسية</a>
+  </nav>
+</header>
+
+<main class="container">
+  <section class="glass">
+    <h1>الأورام — اختر الحالة</h1>
+    <p class="sub">أدخل بياناتك ثم اختر الحالة. ستظهر <b>خطة إرشادية + أمثلة أدوية (بدون جرعات)</b> للمراجعة مع الطبيب.</p>
+
+    <div class="row">
+      <div><label>الاسم:</label><input id="pat-name" type="text" placeholder="مثال: يمان"/></div>
+      <div><label>العمر (سنوات):</label><input id="pat-age" type="number" min="1" max="110" placeholder="40"/></div>
+    </div>
+    <div class="row">
+      <div>
+        <label>الجنس:</label>
+        <select id="pat-sex"><option value="male">ذكر</option><option value="female">أنثى</option></select>
+      </div>
+      <div>
+        <label>تاريخ عائلي لسرطان (اختياري):</label>
+        <select id="fam"><option value="0">لا</option><option value="1">نعم/درجة أولى</option></select>
+      </div>
+    </div>
+
+    <div class="choose" id="chooser">
+      <div class="opt" data-target="mass">كتلة/تورّم غير مُفسَّر</div>
+      <div class="opt" data-target="bsx">نقص وزن/تعرّق ليلي/حمّى</div>
+      <div class="opt" data-target="lung">سعال مزمن/نفث دم</div>
+      <div class="opt" data-target="bowel">تبدّل عادات الأمعاء/نزف شرجي</div>
+      <div class="opt" data-target="uppergi">عُسرة بلع/حرقة مزمنة مع نقص وزن</div>
+      <div class="opt" data-target="jaundice">يرقان غير مُفسَّر</div>
+      <div class="opt" data-target="gynbleed">نزف مهبلي بعد سن اليأس/بين الدورات</div>
+      <div class="opt" data-target="breast">كتلة/تغيّرات في الثدي</div>
+      <div class="opt" data-target="hematuria">دم في البول</div>
+      <div class="opt" data-target="skin">شامة متغيّرة/قرحة لا تلتئم</div>
+      <div class="opt" data-target="nodes">عقد لمفية متضخّمة</div>
+      <div class="opt" data-target="bone">ألم عظم مستمر/كسور هشّة</div>
+      <div class="opt" data-target="emerg">طوارئ أورام/أعراض إسعافية</div>
+      <div class="opt" data-target="neutro">حمّى مع علاج كيميائي (قلة عدلات)</div>
+    </div>
+
+    <p class="hint mt">
+      أعلام طارئة: قِلّة عدلات حموية، ضيق نفس شديد/تورّم وجه/عنق (SVC)، ألم ظهر مع ضعف/سلس (انضغاط نخاع)، نفث دم غزير، نزف لا يتوقف، يرقان مع حرارة وألم (التهاب أقنية صفراوية)، ألم صدر وضيق نفس مفاجئ (خثرة).
+    </p>
+  </section>
+
+  <section class="grid grid-2 mt">
+    <!-- 1) Mass -->
+    <div class="card hide" id="sec-mass">
+      <h2>كتلة/تورّم غير مُفسَّر</h2>
+      <div class="row-3">
+        <div><label>مدة &gt; 4 أسابيع</label><select id="msDur"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>حجم ≥ 2 سم</label><select id="msSize"><option value="0">لا/غير معروف</option><option value="1">نعم</option></select></div>
+        <div><label>صلبة/ثابتة على الأنسجة</label><select id="msHard"><option value="0">لا</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="row">
+        <div><label>نمو سريع</label><select id="msFast"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>أعراض مرافقة (نقص وزن/حمّى/تعرّق ليلي)</label><select id="msB"><option value="0">لا</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="actions">
+        <button class="btn primary" onclick="calcMass()">تقييم الكتلة</button>
+        <button class="btn" onclick="exportPDF('unexplained-mass')">تصدير PDF</button>
+      </div>
+      <div class="result mt" id="mass-res"></div>
+    </div>
+
+    <!-- 2) B symptoms -->
+    <div class="card hide" id="sec-bsx">
+      <h2>نقص وزن/تعرّق ليلي/حمّى (B-symptoms)</h2>
+      <div class="row-3">
+        <div><label>نقص وزن &gt; 5% خلال 6–12 شهر</label><select id="bsWl"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>تعرّق ليلي غزير</label><select id="bsNs"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>حمّى غير مفسّرة</label><select id="bsFev"><option value="0">لا</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="actions">
+        <button class="btn primary" onclick="calcBSX()">تقييم الأعراض العامة</button>
+        <button class="btn" onclick="exportPDF('b-symptoms')">تصدير PDF</button>
+      </div>
+      <div class="result mt" id="bsx-res"></div>
+    </div>
+
+    <!-- 3) Lung -->
+    <div class="card hide" id="sec-lung">
+      <h2>سعال مزمن/نفث دم</h2>
+      <div class="row">
+        <div><label>سعال &gt; 8 أسابيع</label><select id="lgDur"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>نفث دم</label><select id="lgHem"><option value="0">لا</option><option value="1">نعم/غزير</option></select></div>
+      </div>
+      <div class="row">
+        <div><label>مدخّن/تعرض مهني</label><select id="lgSmk"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>ألم صدري/ضيق نفس/نقص وزن</label><select id="lgRed"><option value="0">لا</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="actions">
+        <button class="btn primary" onclick="calcLung()">تقييم الرئة</button>
+        <button class="btn" onclick="exportPDF('chronic-cough-hemoptysis')">تصدير PDF</button>
+      </div>
+      <div class="result mt" id="lung-res"></div>
+    </div>
+
+    <!-- 4) Bowel -->
+    <div class="card hide" id="sec-bowel">
+      <h2>تبدّل عادات الأمعاء/نزف شرجي</h2>
+      <div class="row">
+        <div><label>تغيّر مزمن &gt; 6 أسابيع</label><select id="bwChg"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>دم بالبراز (أحمر/أسود)</label><select id="bwBleed"><option value="0">لا</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="row">
+        <div><label>فقر دم/تعب</label><select id="bwAn"><option value="0">لا</option><option value="1">نعم/محتمل</option></select></div>
+        <div><label>عمر ≥ 50 أو قصة عائلية</label><select id="bwAgeFam"><option value="0">لا</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="actions">
+        <button class="btn primary" onclick="calcBowel()">تقييم القولون والمستقيم</button>
+        <button class="btn" onclick="exportPDF('bowel-change-rectal-bleeding')">تصدير PDF</button>
+      </div>
+      <div class="result mt" id="bowel-res"></div>
+    </div>
+
+    <!-- 5) Upper GI -->
+    <div class="card hide" id="sec-uppergi">
+      <h2>عُسرة بلع/حرقة مزمنة + نقص وزن</h2>
+      <div class="row">
+        <div><label>عسرة بلع تزداد (صلب ثم سوائل)</label><select id="ugDys"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>نقص وزن/قيء</label><select id="ugWl"><option value="0">لا</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="row">
+        <div><label>حرقة/ارتجاع &gt; 3 أشهر</label><select id="ugRefl"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>براز أسود/إقياء دم</label><select id="ugBleed"><option value="0">لا</option><option value="1">نعم/إنذار</option></select></div>
+      </div>
+      <div class="actions">
+        <button class="btn primary" onclick="calcUpperGI()">تقييم علوي هضمي</button>
+        <button class="btn" onclick="exportPDF('dysphagia-upper-gi')">تصدير PDF</button>
+      </div>
+      <div class="result mt" id="uppergi-res"></div>
+    </div>
+
+    <!-- 6) Jaundice -->
+    <div class="card hide" id="sec-jaundice">
+      <h2>يرقان غير مُفسَّر</h2>
+      <div class="row">
+        <div><label>بول غامق/براز فاتح</label><select id="jaCol"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>حكّة معمّمة</label><select id="jaItch"><option value="0">لا</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="row">
+        <div><label>ألم في الربع العلوي الأيمن/حمّى</label><select id="jaPainF"><option value="0">لا</option><option value="1">نعم/إنذار</option></select></div>
+        <div><label>نقص وزن/عمر ≥ 50</label><select id="jaWlAge"><option value="0">لا</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="actions">
+        <button class="btn primary" onclick="calcJaundice()">تقييم اليرقان</button>
+        <button class="btn" onclick="exportPDF('painless-jaundice')">تصدير PDF</button>
+      </div>
+      <div class="result mt" id="jaundice-res"></div>
+    </div>
+
+    <!-- 7) Gyn bleeding -->
+    <div class="card hide" id="sec-gynbleed">
+      <h2>نزف مهبلي بعد سن اليأس/بين الدورات</h2>
+      <div class="row">
+        <div><label>بعد سن اليأس</label><select id="gyPost"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>نزف بين الدورات/بعد الجماع</label><select id="gyIMB"><option value="0">لا</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="row">
+        <div><label>إفرازات كريهة/ألم حوض</label><select id="gyPelv"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>عوامل خطر (بدانة/سكري/علاجات هرمونية)</label><select id="gyRisk"><option value="0">لا</option><option value="1">نعم/محتمل</option></select></div>
+      </div>
+      <div class="actions">
+        <button class="btn primary" onclick="calcGynBleed()">تقييم النسائية</button>
+        <button class="btn" onclick="exportPDF('postmenopausal-bleeding')">تصدير PDF</button>
+      </div>
+      <div class="result mt" id="gynbleed-res"></div>
+    </div>
+
+    <!-- 8) Breast -->
+    <div class="card hide" id="sec-breast">
+      <h2>كتلة/تغيّرات في الثدي</h2>
+      <div class="row">
+        <div><label>كتلة قاسية/ثابتة</label><select id="brHard"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>انكماش جلد/تراجع حلمة</label><select id="brSkin"><option value="0">لا</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="row">
+        <div><label>إفراز دموي من الحلمة</label><select id="brDisc"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>قصة عائلية/حمل أول متأخر</label><select id="brRisk"><option value="0">لا</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="actions">
+        <button class="btn primary" onclick="calcBreast()">تقييم الثدي</button>
+        <button class="btn" onclick="exportPDF('breast-lump-changes')">تصدير PDF</button>
+      </div>
+      <div class="result mt" id="breast-res"></div>
+    </div>
+
+    <!-- 9) Hematuria -->
+    <div class="card hide" id="sec-hematuria">
+      <h2>دم في البول</h2>
+      <div class="row">
+        <div><label>دم مرئي (ماكروسكوبي)</label><select id="heVis"><option value="0">لا/مجهري</option><option value="1">نعم</option></select></div>
+        <div><label>جلطات/ألم خاصرة</label><select id="heClotFlank"><option value="0">لا</option><option value="1">نعم/إنذار</option></select></div>
+      </div>
+      <div class="row">
+        <div><label>أعراض بولية سفلية/التهاب</label><select id="heLuts"><option value="0">لا</option><option value="1">نعم/محتمل</option></select></div>
+        <div><label>عمر ≥ 45/مدخّن</label><select id="heRisk"><option value="0">لا</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="actions">
+        <button class="btn primary" onclick="calcHematuria()">تقييم البيلة الدموية</button>
+        <button class="btn" onclick="exportPDF('hematuria')">تصدير PDF</button>
+      </div>
+      <div class="result mt" id="hematuria-res"></div>
+    </div>
+
+    <!-- 10) Skin -->
+    <div class="card hide" id="sec-skin">
+      <h2>شامة متغيّرة/قرحة لا تلتئم</h2>
+      <div class="row">
+        <div><label>عدم تناظر/حواف غير منتظمة</label><select id="skAB"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>تعدّد ألوان/قطر &gt; 6 مم</label><select id="skCD"><option value="0">لا</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="row">
+        <div><label>تطوّر/نزف/حكّة</label><select id="skEvo"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>قرحة &gt; 3 أسابيع</label><select id="skUlcer"><option value="0">لا</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="actions">
+        <button class="btn primary" onclick="calcSkin()">تقييم الجلد</button>
+        <button class="btn" onclick="exportPDF('suspicious-skin-lesion')">تصدير PDF</button>
+      </div>
+      <div class="result mt" id="skin-res"></div>
+    </div>
+
+    <!-- 11) Nodes -->
+    <div class="card hide" id="sec-nodes">
+      <h2>عقد لمفية متضخّمة</h2>
+      <div class="row">
+        <div><label>مدة &gt; 4 أسابيع/تزايد</label><select id="ndDur"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>قاسية/ثابتة/فوق ترقوة</label><select id="ndHardSupra"><option value="0">لا</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="row">
+        <div><label>معمّمة &gt; منطقتين</label><select id="ndGen"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>أعراض B (نقص وزن/حمّى/تعرّق)</label><select id="ndB"><option value="0">لا</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="actions">
+        <button class="btn primary" onclick="calcNodes()">تقييم العقد</button>
+        <button class="btn" onclick="exportPDF('lymphadenopathy')">تصدير PDF</button>
+      </div>
+      <div class="result mt" id="nodes-res"></div>
+    </div>
+
+    <!-- 12) Bone -->
+    <div class="card hide" id="sec-bone">
+      <h2>ألم عظم مستمر/كسور هشّة</h2>
+      <div class="row">
+        <div><label>ألم ليلي/موضّع مستمر</label><select id="boNight"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>كسور قليلة الرض</label><select id="boFx"><option value="0">لا</option><option value="1">نعم/سابقًا</option></select></div>
+      </div>
+      <div class="row">
+        <div><label>أعراض فرط كالسيوم (عطش/إمساك/تشوّش)</label><select id="boCa"><option value="0">لا</option><option value="1">نعم/محتمل</option></select></div>
+        <div><label>سوابق سرطان</label><select id="boHx"><option value="0">لا</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="actions">
+        <button class="btn primary" onclick="calcBone()">تقييم العظام</button>
+        <button class="btn" onclick="exportPDF('bone-pain-metastasis')">تصدير PDF</button>
+      </div>
+      <div class="result mt" id="bone-res"></div>
+    </div>
+
+    <!-- 13) Emergencies -->
+    <div class="card hide" id="sec-emerg">
+      <h2>طوارئ أورام/أعراض إسعافية</h2>
+      <div class="row-3">
+        <div><label>ألم ظهر + ضعف/خدر/سلس</label><select id="emCord"><option value="0">لا</option><option value="1">نعم (انضغاط نخاع)</option></select></div>
+        <div><label>تورّم وجه/عنق/أوردة بارزة</label><select id="emSVC"><option value="0">لا</option><option value="1">نعم (SVC)</option></select></div>
+        <div><label>عطش/ارتباك/إمساك شديد</label><select id="emCa"><option value="0">لا</option><option value="1">نعم (فرط كالسيوم)</option></select></div>
+      </div>
+      <div class="row">
+        <div><label>ضيق نفس مفاجئ/ألم صدري</label><select id="emPE"><option value="0">لا</option><option value="1">نعم (خثرة؟)</option></select></div>
+        <div><label>نفث دم غزير/نزف لا يتوقف</label><select id="emBleed"><option value="0">لا</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="actions">
+        <button class="btn primary" onclick="calcEmerg()">تقييم إسعافي</button>
+        <button class="btn" onclick="exportPDF('oncologic-emergencies')">تصدير PDF</button>
+      </div>
+      <div class="result mt" id="emerg-res"></div>
+    </div>
+
+    <!-- 14) Neutropenic fever -->
+    <div class="card hide" id="sec-neutro">
+      <h2>حمّى مع علاج كيميائي (قِلّة عدلات)</h2>
+      <div class="row">
+        <div><label>تلقّى كيمياوي آخر 6 أسابيع</label><select id="neChemo"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>حرارة ≥ 38°</label><select id="neFever"><option value="0">لا</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="row">
+        <div><label>قشع/إسهال/حرقة تبول/سعال</label><select id="neInf"><option value="0">لا</option><option value="1">نعم/محتمل</option></select></div>
+        <div><label>هبوط ضغط/دوخة</label><select id="neShock"><option value="0">لا</option><option value="1">نعم/إنذار</option></select></div>
+      </div>
+      <div class="actions">
+        <button class="btn primary" onclick="calcNeutro()">تقييم قِلّة عدلات حموية</button>
+        <button class="btn" onclick="exportPDF('neutropenic-fever')">تصدير PDF</button>
+      </div>
+      <div class="result mt" id="neutro-res"></div>
+    </div>
+  </section>
+
+  <section class="glass mt">
+    <p class="hint">تذكير: التشخيص النهائي يعتمد على الفحص السريري والصور والتحاليل (خزعة/تنظير/تصوير). لا تبدأ/توقِف أي دواء دون استشارة طبيب مختص.</p>
+  </section>
+</main>
+
+<footer>© <span id="year"></span> حكيم — جميع الحقوق محفوظة.</footer>
+
+<script>
+  // ====== عام ======
+  document.getElementById('year').textContent = new Date().getFullYear();
+  document.querySelectorAll('#chooser .opt').forEach(el=>{
+    el.addEventListener('click', ()=>{
+      document.querySelectorAll('.card').forEach(c=>c.classList.add('hide'));
+      const sec = document.getElementById('sec-'+el.getAttribute('data-target'));
+      if (sec){ sec.classList.remove('hide'); sec.scrollIntoView({behavior:'smooth', block:'start'}); }
+    });
+  });
+
+  // ====== بيانات المستخدم ======
+  function nameVal(){ return document.getElementById('pat-name').value?.trim() || 'بدون اسم'; }
+  function ageVal(){ const n=parseInt(document.getElementById('pat-age').value,10); return isNaN(n)? null : Math.min(110, Math.max(1,n)); }
+  function sexVal(){ const v=document.getElementById('pat-sex').value; return {code:v, label:(v==='male'?'ذكر':'أنثى')}; }
+  function famRisk(){ return document.getElementById('fam').value==='1'; }
+  function userContext(){
+    const age=ageVal(), sex=sexVal();
+    return { name:nameVal(), age, sex, older: age!=null && age>=50, fam:famRisk() };
+  }
+  function yes(id){ return document.getElementById(id).value==='1'; }
+  function lines(arr){ return `<ul>${arr.map(x=>`<li>${x}</li>`).join('')}</ul>`; }
+  function setLast(obj){ window._last = obj; }
+
+  // ====== صانع الخطط — الأورام ======
+  function buildPlanOnco(domain, ctx, u){
+    const plan=[], rec=[], pharm=[], flags=[];
+    switch(domain){
+      case 'mass': {
+        if (ctx.hard || ctx.fast || ctx.size || ctx.b || ctx.dur) rec.push('إحالة عاجلة للتصوير (إيكو/CT/MRI) وتقييم خزعة وفق المكان.');
+        if (ctx.hard && ctx.size) flags.push('كتلة صلبة ≥2 سم وثابتة — أولوية تقييم.');
+        plan.push('تجنّب الرضّ/الضغط على الكتلة؛ توثيق التغيّرات بالزمن.');
+        pharm.push('مسكنات بسيطة للألم (قرار الطبيب).');
+        return {plan, rec, pharm, flags, assess:'كتلة غير مفسّرة — يلزم تصوير/± خزعة'};
+      }
+      case 'bsx': {
+        if (ctx.wl || ctx.ns || ctx.fev) rec.push('تحاليل أولية (CBC/ESR/CRP، وظائف كبد/كلية)، صورة صدر، تقييم تغذوي.');
+        if (u.older || u.fam) rec.push('فحص سريري شامل مع تصوير موجّه حسب الأعراض.');
+        plan.push('تتبّع الوزن أسبوعيًا وتوثيق الأعراض.');
+        pharm.push('دعم غذائي/مكمّلات وفق خطة الطبيب.');
+        return {plan, rec, pharm, flags, assess:'أعراض عامة B — تقصٍّ منهجي مطلوب'};
+      }
+      case 'lung': {
+        if (ctx.hem==='1') flags.push('نفث دم — تقييم عاجل؛ في الغزير إسعاف.');
+        if (ctx.dur || ctx.red || ctx.smk) rec.push('صورة صدر/CT منخفض الجرعة حسب العمر والخطر؛ إحالة صدرية.');
+        plan.push('إيقاف التدخين ودعم الإقلاع.');
+        pharm.push('معالجة داعمة للسعال/الالتهاب وفق تقييم الطبيب.');
+        return {plan, rec, pharm, flags, assess:'سعال مزمن/نفث دم — يلزم تصوير'};
+      }
+      case 'bowel': {
+        if (ctx.bleed || ctx.chg || ctx.an || ctx.agefam) rec.push('اختبار دم خفي/‎FIT‎ وتنظير قولون؛ إحالة جهاز هضمي.');
+        flags.push('نزف أسود/دوار — طوارئ احتمالية.');
+        plan.push('ألياف سوية وسوائل، لكن لا تؤخر التنظير عند الإنذار.');
+        pharm.push('حديد فموي عند تأكيد فقر الدم — قرار الطبيب.');
+        return {plan, rec, pharm, flags, assess:'أعراض قولونية — فحص تنظيري مبرَّر'};
+      }
+      case 'uppergi': {
+        if (ctx.dys || ctx.wl || ctx.bleed) flags.push('إنذارات علويّة (عسرة بلع/نقص وزن/نزف) — تنظير عاجل خلال أسبوعين.');
+        rec.push('اختبار جرثومة المعدة وعلاجها عند اللزوم — قرار الطبيب.');
+        pharm.push('مثبّط مضخة بروتون مؤقّتًا لأعراض الارتجاع — قرار الطبيب.');
+        return {plan, rec, pharm, flags, assess:'مرجّح مرض علوي يحتاج تنظير'};
+      }
+      case 'jaundice': {
+        if (ctx.painf) flags.push('يرقان مع حمّى/ألم — التهاب أقنية صفراوية محتمل (إسعاف).');
+        if (ctx.col || ctx.itch || ctx.wlage) rec.push('تحاليل وظائف كبد/بيلة، تصوير (إيكو كبد/طرق صفراوية ± CT/MRCP).');
+        plan.push('ترطيب وتجنّب الكحول والأدوية السميّة للكبد.');
+        return {plan, rec, pharm, flags, assess:'يرقان انسدادي/كَبدي — يلزم تصوير وتحاليل'};
+      }
+      case 'gynbleed': {
+        if (ctx.post || ctx.imb) flags.push('نزف بعد سن اليأس/بين الدورات — إحالة نسائية عاجلة (≤ أسبوعين).');
+        rec.push('إيكو عبر المهبل لتقييم سماكة بطانة الرحم + مسحة/خزعة حسب الرأي الطبي.');
+        pharm.push('حديد عند فقر دم؛ مميّعات تُراجع مع الطبيب.');
+        return {plan, rec, pharm, flags, assess:'نزف غير طبيعي — تقصّي سرطان بطانة/عنق الرحم'};
+      }
+      case 'breast': {
+        if (ctx.hard || ctx.skin || ctx.disc) flags.push('تغيّرات مُنذرة بالثدي — تقييم عاجل (فحص + تصوير + خزعة).');
+        rec.push('التقييم الثلاثي: فحص سريري + تصوير (ماموغرام/إيكو) + خزعة.');
+        plan.push('تجنّب الضغط المتكرر على الكتلة؛ توثيق التاريخ العائلي.');
+        return {plan, rec, pharm, flags, assess:'كتلة/تغيّرات ثدي — التقييم الثلاثي مطلوب'};
+      }
+      case 'hematuria': {
+        if (ctx.vis || ctx.clotflank || ctx.risk) flags.push('بيلة دموية مرئية/مع عوامل خطر — إحالة مسالك + تصوير (CTU) + تنظير مثانة.');
+        if (ctx.luts) rec.push('استبعاد التهاب بول بتحليل وزرع، ثم المتابعة وفق النتائج.');
+        pharm.push('مضاد حيوي عند إثبات التهاب — قرار الطبيب.');
+        return {plan, rec, pharm, flags, assess:'بيلة دموية — مسار تشخيصي مسالكي'};
+      }
+      case 'skin': {
+        if (ctx.ab || ctx.cd || ctx.evo || ctx.ulc) flags.push('آفة جلدية مشتبهة (معايير ABCDE/قرحة) — استئصال تشخيصي/إحالة جلدية.');
+        plan.push('تجنّب الشمس نهار الذروة واستخدام واقٍ شَمسي.');
+        return {plan, rec, pharm, flags, assess:'آفة جلدية مشتبهة — أخذ خزعة/استئصال'};
+      }
+      case 'nodes': {
+        if (ctx.dur || ctx.hardsupra || ctx.gen || ctx.b) flags.push('عقد مُنذرة (فوق ترقوة/صلبة/معمّمة/أعراض B) — تصوير + خزعة.');
+        rec.push('تحاليل CBC/LDH وفيروسات شائعة، تصوير بحسب المنطقة.');
+        return {plan, rec, pharm, flags, assess:'اعتلال عقد لمفية — استقصاء خبيث محتمل'};
+      }
+      case 'bone': {
+        if (ctx.night || ctx.fx || ctx.ca || ctx.hx) flags.push('ألم عظم ليلي/كسور هشة/فرط كالسيوم/سوابق سرطان — تقصي نقائل/أورام عظم.');
+        rec.push('صورة بسيطة ثم MRI/مسح عظمي حسب الحاجة، كالسيوم/فوسفات/ALP.');
+        pharm.push('مسكنات وفق سلّم الألم؛ بيفوسفونات/دينوسوماب بعهدة الاختصاصي.');
+        return {plan, rec, pharm, flags, assess:'ألَم عظمي — احتمال نقائل/ورم عظم'};
+      }
+      case 'emerg': {
+        if (ctx.cord || ctx.svc || ctx.caCrisis || ctx.pe || ctx.bleed) flags.push('واحد أو أكثر من إنذارات الأورام — توجه إلى الطوارئ فورًا.');
+        plan.push('عدم تأخير طلب المساعدة الطبية، حمل قائمة الأدوية وملف العلاج.');
+        pharm.push('تدابير إسعافية يقررها الطبيب (ستيرويد لانضغاط نخاع، سوائل/مدرّات لفرط كالسيوم، مضاد تخثّر، أكسجين…).');
+        return {plan, rec, pharm, flags, assess:'طوارئ أورام — أولوية إسعاف'};
+      }
+      case 'neutro': {
+        if (ctx.chemo && (ctx.fever || ctx.shock)) flags.push('قِلّة عدلات حموية محتملة — دخول مستشفى ومضادات وريدية فورية.');
+        rec.push('زرع دم/بول/بلغم قبل المضاد إن أمكن دون تأخير، سوائل وريدية، قياس عدلات.');
+        pharm.push('مضادات واسعة وريدية + عوامل نمو عدلات حسب البروتوكول — قرار اختصاصي.');
+        return {plan, rec, pharm, flags, assess:'حمّى مع كيمياوي — طارئ'};
+      }
+    }
+    return {plan, rec, pharm, flags, assess:'غير محدد'};
+  }
+
+  // ====== عرض موحّد ======
+  function showResult(elId, obj){
+    const u = userContext();
+    const header = `<p>الاسم: <b>${u.name}</b>${u.age!=null? ` — العمر: <b>${u.age}</b>`:''} — الجنس: <b>${u.sex.label}</b>${u.older?' — ≥50 سنة':''}${u.fam?' — قصة عائلية':''}</p>`;
+    const assess = obj.assess ? `<p><b>التقييم:</b> ${obj.assess}</p>` : '';
+    const flagsHtml = obj.flags?.length? `<p><b>تنبيهات:</b></p>${lines(obj.flags)}` : '';
+    const planHtml = obj.plan?.length? `<p><b>خطة عامة:</b></p>${lines(obj.plan)}` : '';
+    const recHtml = obj.rec?.length? `<p><b>توصيات موجّهة:</b></p>${lines(obj.rec)}` : '';
+    const pharmHtml = obj.pharm?.length? `<p><b>أمثلة أدوية (قرار الطبيب):</b></p>${lines(obj.pharm)}<p class="hint">لا تبدأ/توقف أي دواء دون طبيب. تختلف الخيارات حسب العمر والحمل والأمراض المزمنة.</p>` : '';
+    document.getElementById(elId).innerHTML = header + assess + flagsHtml + planHtml + recHtml + pharmHtml;
+    setLast({...obj, user:u});
+  }
+
+  // ====== الحسابات ======
+  function calcMass(){
+    const dur=yes('msDur'), size=yes('msSize'), hard=yes('msHard'), fast=yes('msFast'), b=yes('msB');
+    const {plan, rec, pharm, flags, assess} = buildPlanOnco('mass', {dur,size,hard,fast,b}, userContext());
+    showResult('mass-res', {title:'كتلة/تورّم', assess, plan, rec, pharm, flags});
+  }
+  function calcBSX(){
+    const wl=yes('bsWl'), ns=yes('bsNs'), fev=yes('bsFev');
+    const {plan, rec, pharm, flags, assess} = buildPlanOnco('bsx', {wl,ns,fev}, userContext());
+    showResult('bsx-res', {title:'أعراض B', assess, plan, rec, pharm, flags});
+  }
+  function calcLung(){
+    const dur=yes('lgDur'), hem=document.getElementById('lgHem').value, smk=yes('lgSmk'), red=yes('lgRed');
+    const {plan, rec, pharm, flags, assess} = buildPlanOnco('lung', {dur,hem,smk,red}, userContext());
+    showResult('lung-res', {title:'الرئة', assess, plan, rec, pharm, flags});
+  }
+  function calcBowel(){
+    const chg=yes('bwChg'), bleed=yes('bwBleed'), an=yes('bwAn'), agefam=yes('bwAgeFam');
+    const {plan, rec, pharm, flags, assess} = buildPlanOnco('bowel', {chg,bleed,an,agefam}, userContext());
+    showResult('bowel-res', {title:'القولون والمستقيم', assess, plan, rec, pharm, flags});
+  }
+  function calcUpperGI(){
+    const dys=yes('ugDys'), wl=yes('ugWl'), refl=yes('ugRefl'), bleed=yes('ugBleed');
+    const {plan, rec, pharm, flags, assess} = buildPlanOnco('uppergi', {dys,wl,refl,bleed}, userContext());
+    showResult('uppergi-res', {title:'الهضمي العلوي', assess, plan, rec, pharm, flags});
+  }
+  function calcJaundice(){
+    const col=yes('jaCol'), itch=yes('jaItch'), painf=yes('jaPainF'), wlage=yes('jaWlAge');
+    const {plan, rec, pharm, flags, assess} = buildPlanOnco('jaundice', {col,itch,painf,wlage}, userContext());
+    showResult('jaundice-res', {title:'يرقان', assess, plan, rec, pharm, flags});
+  }
+  function calcGynBleed(){
+    const post=yes('gyPost'), imb=yes('gyIMB'), pelv=yes('gyPelv'), risk=yes('gyRisk');
+    const {plan, rec, pharm, flags, assess} = buildPlanOnco('gynbleed', {post,imb,pelv,risk}, userContext());
+    showResult('gynbleed-res', {title:'نزف مهبلي', assess, plan, rec, pharm, flags});
+  }
+  function calcBreast(){
+    const hard=yes('brHard'), skin=yes('brSkin'), disc=yes('brDisc'), risk=yes('brRisk');
+    const {plan, rec, pharm, flags, assess} = buildPlanOnco('breast', {hard,skin,disc,risk}, userContext());
+    showResult('breast-res', {title:'الثدي', assess, plan, rec, pharm, flags});
+  }
+  function calcHematuria(){
+    const vis=yes('heVis'), clotflank=yes('heClotFlank'), luts=yes('heLuts'), risk=yes('heRisk');
+    const {plan, rec, pharm, flags, assess} = buildPlanOnco('hematuria', {vis,clotflank,luts,risk}, userContext());
+    showResult('hematuria-res', {title:'بيلة دموية', assess, plan, rec, pharm, flags});
+  }
+  function calcSkin(){
+    const ab=yes('skAB'), cd=yes('skCD'), evo=yes('skEvo'), ulc=yes('skUlcer');
+    const {plan, rec, pharm, flags, assess} = buildPlanOnco('skin', {ab,cd,evo,ulc}, userContext());
+    showResult('skin-res', {title:'جلد', assess, plan, rec, pharm, flags});
+  }
+  function calcNodes(){
+    const dur=yes('ndDur'), hardsupra=yes('ndHardSupra'), gen=yes('ndGen'), b=yes('ndB');
+    const {plan, rec, pharm, flags, assess} = buildPlanOnco('nodes', {dur,hardsupra,gen,b}, userContext());
+    showResult('nodes-res', {title:'عقد لمفية', assess, plan, rec, pharm, flags});
+  }
+  function calcBone(){
+    const night=yes('boNight'), fx=yes('boFx'), ca=yes('boCa'), hx=yes('boHx');
+    const {plan, rec, pharm, flags, assess} = buildPlanOnco('bone', {night,fx,ca,hx}, userContext());
+    showResult('bone-res', {title:'عظام', assess, plan, rec, pharm, flags});
+  }
+  function calcEmerg(){
+    const cord=yes('emCord'), svc=yes('emSVC'), caCrisis=yes('emCa'), pe=yes('emPE'), bleed=yes('emBleed');
+    const {plan, rec, pharm, flags, assess} = buildPlanOnco('emerg', {cord,svc,caCrisis,pe,bleed}, userContext());
+    showResult('emerg-res', {title:'طوارئ أورام', assess, plan, rec, pharm, flags});
+  }
+  function calcNeutro(){
+    const chemo=yes('neChemo'), fever=yes('neFever'), inf=yes('neInf'), shock=yes('neShock');
+    const {plan, rec, pharm, flags, assess} = buildPlanOnco('neutro', {chemo,fever,inf,shock}, userContext());
+    showResult('neutro-res', {title:'قِلّة عدلات حموية', assess, plan, rec, pharm, flags});
+  }
+
+  // ====== PDF ======
+  async function exportPDF(section){
+    const { jsPDF } = window.jspdf;
+    const m = window._last || {title:section, user:userContext(), plan:[], rec:[], pharm:[], flags:[]};
+    const u = m.user || userContext();
+
+    const box = document.createElement('div');
+    box.dir = 'rtl';
+    box.style.cssText = 'width:800px;padding:24px;background:#fff;color:#111;font-family:Cairo,Arial,sans-serif;line-height:1.9;border:1px solid #ddd;border-radius:12px';
+    box.innerHTML = `
+      <h2 style="margin:0 0 10px;font-weight:800">حكيم — ${m.title||section}</h2>
+      <p><b>الاسم:</b> ${u.name || 'بدون اسم'}${u.age!=null? ` — <b>العمر:</b> ${u.age}`:''} — <b>الجنس:</b> ${u.sex? u.sex.label : 'غير محدد'}${u.older?' — ≥50 سنة':''}${u.fam?' — قصة عائلية':''}</p>
+      ${m.assess? `<p><b>التقييم:</b> ${m.assess}</p>`:''}
+      ${m.flags && m.flags.length? `<p><b>تنبيهات:</b></p><ul>${m.flags.map(x=>`<li>${x}</li>`).join('')}</ul>`:''}
+      ${m.plan && m.plan.length? `<p><b>خطة عامة:</b></p><ul>${m.plan.map(x=>`<li>${x}</li>`).join('')}</ul>`:''}
+      ${m.rec && m.rec.length? `<p><b>توصيات موجّهة:</b></p><ul>${m.rec.map(x=>`<li>${x}</li>`).join('')}</ul>`:''}
+      ${m.pharm && m.pharm.length? `<p><b>أمثلة دوائية (قرار الطبيب):</b></p><ul>${m.pharm.map(x=>`<li>${x}</li>`).join('')}</ul><p style="font-size:12px;color:#555">تنبيه: لا تبدأ/توقف أي دواء دون طبيب.</p>`:''}
+      <hr style="margin:12px 0;border:0;border-top:1px solid #ddd"/>
+      <p style="font-size:13px;color:#444">ملف تثقيفي — لا يُغني عن تقييم الطبيب المختص. في الطوارئ يُرجى التواصل الفوري مع الإسعاف.</p>
+    `;
+    document.body.appendChild(box);
+    const canvas = await html2canvas(box, {scale:2, backgroundColor:'#ffffff', useCORS:true});
+    document.body.removeChild(box);
+
+    const pdf = new jsPDF({orientation:'p', unit:'pt', format:'a4'});
+    const pageW = pdf.internal.pageSize.getWidth(), pageH = pdf.internal.pageSize.getHeight(), margin=40;
+    let imgW = pageW - margin*2, imgH = canvas.height * imgW / canvas.width;
+    if (imgH > pageH - margin*2){ const r = (pageH - margin*2) / imgH; imgH*=r; imgW*=r; }
+    pdf.addImage(canvas.toDataURL('image/png'), 'PNG', (pageW-imgW)/2, (pageH-imgH)/2, imgW, imgH);
+    pdf.save(`Hakim-Oncology-${(m.title||section).replace(/\s+/g,'_')}-${Date.now()}.pdf`);
+  }
+</script>
+
+<!--
+  الحالات المغطّاة (14):
+  - كتلة/تورّم، أعراض B، سعال مزمن/نفث دم، تبدّل عادات الأمعاء/نزف،
+    عسرة بلع/ارتجاع + نقص وزن، يرقان، نزف مهبلي بعد سن اليأس/IMB،
+    تغيّرات الثدي، بيلة دموية، آفة جلدية مشتبهة، عقد لمفية، ألم عظم،
+    طوارئ أورام، قلة عدلات حموية.
+  - أمثلة الأدوية بلا جرعات وبصيغة "قرار الطبيب" التزامًا بالسلامة.
+-->
+</body>
+</html>

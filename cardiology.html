@@ -1,0 +1,812 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>حكيم — القلب والشرايين + ECG | تقييمات ذكية + PDF</title>
+  <meta name="description" content="حكيم — القلب والشرايين: ألم الصدر، قصور القلب، الرجفان الأذيني، الخفقان، الضغط، الدهون (وقاية ثانوية)، PAD، VTE، وتحليل ECG مع QTc وSTEMI. تصدير PDF بالعربية.">
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;800&display=swap" rel="stylesheet">
+  <!-- PDF -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" referrerpolicy="no-referrer"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js" referrerpolicy="no-referrer"></script>
+
+  <style>
+    :root{
+      --bg:#07090f; --txt:#e8ecff; --muted:#aab2d8;
+      --primary:#7aa2ff; --primary-2:#00e0ff; --accent:#a855f7;
+      --glass:rgba(255,255,255,.06); --border:rgba(255,255,255,.12);
+    }
+    *{box-sizing:border-box}
+    body{margin:0; font-family:'Cairo',system-ui,'Noto Sans Arabic',sans-serif; background:#07090f; color:var(--txt); line-height:1.9}
+    header{position:sticky; top:0; z-index:50; display:flex; align-items:center; justify-content:space-between; padding:14px 20px; backdrop-filter:saturate(140%) blur(8px); background:linear-gradient(180deg, rgba(15,16,40,.85), rgba(15,16,40,.45)); border-bottom:1px solid var(--border)}
+    .brand{display:flex; gap:12px; align-items:center}
+    .logo{width:42px; height:42px; border-radius:12px; display:grid; place-items:center; font-weight:800; background: radial-gradient(120% 120% at 0% 0%, var(--primary), var(--accent)); box-shadow: 0 0 24px rgba(122,162,255,.35), inset 0 0 18px rgba(255,255,255,.15)}
+    .brand-text strong{display:block; font-size:18px}
+    .brand-text span{display:block; font-size:12px; color:var(--muted)}
+    .container{width:min(1180px,94vw); margin-inline:auto}
+    h1{font-size:clamp(22px,4vw,34px); margin:22px 0 6px}
+    .sub{color:#cfd6ff; margin:0 0 12px}
+    .glass{background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03)); border:1px solid var(--border); border-radius:22px; padding:22px; box-shadow:0 30px 60px rgba(0,10,40,.35)}
+    .grid{display:grid; gap:16px}
+    .grid-2{grid-template-columns:1fr}
+    @media(min-width:980px){.grid-2{grid-template-columns:1fr 1fr}}
+    .choose{display:grid; gap:12px; grid-template-columns:repeat(2,1fr)}
+    @media(min-width:860px){.choose{grid-template-columns:repeat(4,1fr)}}
+    .opt{background:rgba(255,255,255,.04); border:1px solid var(--border); border-radius:16px; padding:14px; text-align:center; cursor:pointer; transition:transform .18s ease, border-color .18s ease; min-height:100px; display:grid; place-items:center; font-weight:700}
+    .opt:hover{transform:translateY(-3px); border-color:rgba(122,162,255,.6)}
+    .card{border:1px solid var(--border); border-radius:18px; background:rgba(255,255,255,0.04); padding:18px}
+    label{font-weight:600}
+    select, input[type="number"], input[type="text"], input[type="file"]{width:100%; padding:10px 12px; border-radius:12px; border:1px solid var(--border); background:rgba(255,255,255,0.03); color:var(--txt)}
+    .row{display:grid; gap:12px; grid-template-columns:1fr}
+    @media(min-width:680px){.row{grid-template-columns:repeat(2,1fr)}}
+    .row-6{display:grid; gap:8px; grid-template-columns:repeat(6,1fr)}
+    .actions{display:flex; gap:10px; flex-wrap:wrap; margin-top:12px}
+    .btn{padding:10px 14px; border-radius:12px; border:1px solid var(--border); background:var(--glass); color:var(--txt); cursor:pointer; font-weight:700; transition:transform .2s ease, background .2s ease}
+    .btn.primary{background:linear-gradient(135deg, var(--primary), var(--primary-2)); border-color:transparent}
+    .btn:hover{transform:translateY(-2px)}
+    .result{padding:14px; border:1px solid var(--border); border-radius:14px; background:rgba(255,255,255,.03)}
+    .hint{font-size:13px; color:#b8c0ef}
+    footer{text-align:center; padding:22px; color:#aab2d8; font-size:13px; border-top:1px solid var(--border); margin-top:24px}
+    .mt{margin-top:10px}.hide{display:none}
+  </style>
+</head>
+<body>
+  <header>
+    <div class="brand">
+      <div class="logo">حكيم</div>
+      <div class="brand-text">
+        <strong>حكيم — القلب والشرايين</strong>
+        <span>تقييمات سريعة مؤتمتة + PDF</span>
+      </div>
+    </div>
+    <nav class="actions" style="margin:0">
+      <a class="btn" href="index.html">الصفحة الرئيسية</a>
+    </nav>
+  </header>
+
+  <main class="container">
+    <section class="glass">
+      <h1>القلب والشرايين — اختر القسم</h1>
+      <p class="sub">أدخل البيانات ثم اختر أحد الأقسام. الخطة العلاجية تشمل <b>أمثلة دوائية (بدون جرعات)</b> للمناقشة مع طبيبك.</p>
+
+      <div class="row">
+        <div><label>الاسم:</label><input id="pat-name" type="text" placeholder="مثال: محمد أحمد"></div>
+        <div><label>العمر (سنوات):</label><input id="pat-age" type="number" min="10" max="120" placeholder="مثال: 55"></div>
+      </div>
+      <div class="row">
+        <div>
+          <label>الجنس:</label>
+          <select id="pat-sex">
+            <option value="male">ذكر</option>
+            <option value="female">أنثى</option>
+            <option value="pregnant">حامل/يُحتمل الحمل</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="choose" id="chooser">
+        <div class="opt" data-target="cp">ألم الصدر/الذبحة</div>
+        <div class="opt" data-target="hf">قصور القلب</div>
+        <div class="opt" data-target="af">الرجفان الأذيني (CHA₂DS₂-VASc)</div>
+        <div class="opt" data-target="palp">الخفقان/لخبطة النظم</div>
+        <div class="opt" data-target="htn">ارتفاع الضغط (قلبي)</div>
+        <div class="opt" data-target="lipid">الدهون — وقاية ثانوية</div>
+        <div class="opt" data-target="pad">المرض الشرياني المحيطي (PAD)</div>
+        <div class="opt" data-target="vte">تورم الساق/مشتبه خثار وريدي (VTE)</div>
+        <div class="opt" data-target="ecg">تحليل تخطيط القلب ECG</div>
+      </div>
+      <p class="hint mt">أعلام الخطر (ألم صدري ضاغط مع تعرّق/غثيان، ضيق نفس شديد، إغماء، أعراض عصبية، خفقان مع دوخة شديدة) ⇒ إسعاف فوري.</p>
+    </section>
+
+    <section class="grid grid-2 mt">
+      <!-- 1) Chest Pain / Angina -->
+      <div class="card hide" id="sec-cp">
+        <h2>ألم الصدر/الذبحة — ترجيح سريع</h2>
+        <div class="row">
+          <div><label>ألم ضاغط/عاصر؟</label><select id="cpPressure"><option value="no">لا</option><option value="yes">نعم</option></select></div>
+          <div><label>مع الجهد ويتحسن بالراحة؟</label><select id="cpExert"><option value="no">لا</option><option value="yes">نعم</option></select></div>
+        </div>
+        <div class="row">
+          <div><label>يمتد للذراع/الفك/الظهر؟</label><select id="cpRadiation"><option value="no">لا</option><option value="yes">نعم</option></select></div>
+          <div><label>تعرّق/غثيان/دوار؟</label><select id="cpAssoc"><option value="no">لا</option><option value="yes">نعم</option></select></div>
+        </div>
+        <div class="row">
+          <div><label>مدة النوبة (دقائق)</label><input id="cpDur" type="number" min="1" max="120" placeholder="10"></div>
+          <div><label>عوامل خطر (تدخين/سكري/ضغط/دهون)؟</label><select id="cpRF"><option value="no">لا</option><option value="yes">نعم</option></select></div>
+        </div>
+        <div class="actions">
+          <button class="btn primary" onclick="calcCP()">احسب الترجيح</button>
+          <button class="btn" onclick="exportPDF('cp')">تصدير PDF</button>
+        </div>
+        <div class="result mt" id="cp-res"></div>
+      </div>
+
+      <!-- 2) Heart Failure -->
+      <div class="card hide" id="sec-hf">
+        <h2>قصور القلب — مؤشرات وشدة</h2>
+        <div class="row">
+          <div><label>زلة تنفسية عند الجهد/الاستلقاء؟</label><select id="hfDysp"><option value="no">لا</option><option value="yes">نعم</option></select></div>
+          <div><label>تورّم الكاحل/الساق؟</label><select id="hfEdema"><option value="no">لا</option><option value="yes">نعم</option></select></div>
+        </div>
+        <div class="row">
+          <div><label>زيادة وزن سريعة (&gt;2 كغ/3 أيام)؟</label><select id="hfWt"><option value="no">لا</option><option value="yes">نعم</option></select></div>
+          <div><label>ضيق نفس وقت الراحة/ألم صدري؟</label><select id="hfRed"><option value="no">لا</option><option value="yes">نعم</option></select></div>
+        </div>
+        <div class="actions">
+          <button class="btn primary" onclick="calcHF()">احسب التقييم</button>
+          <button class="btn" onclick="exportPDF('hf')">تصدير PDF</button>
+        </div>
+        <div class="result mt" id="hf-res"></div>
+      </div>
+
+      <!-- 3) AF / CHA2DS2-VASc -->
+      <div class="card hide" id="sec-af">
+        <h2>الرجفان الأذيني — CHA₂DS₂-VASc (تقريبي)</h2>
+        <div class="row">
+          <div><label>تشخيص AF سابق؟</label><select id="afKnown"><option value="no">لا/غير مؤكد</option><option value="yes">نعم</option></select></div>
+          <div><label>قصور قلب/اعتلال بطين أيسر؟</label><select id="afCHF"><option value="no">لا</option><option value="yes">نعم</option></select></div>
+        </div>
+        <div class="row">
+          <div><label>ارتفاع ضغط؟</label><select id="afHTN"><option value="no">لا</option><option value="yes">نعم</option></select></div>
+          <div><label>سكري؟</label><select id="afDM"><option value="no">لا</option><option value="yes">نعم</option></select></div>
+        </div>
+        <div class="row">
+          <div><label>سكتة/ TIA / خثرة سابقة؟</label><select id="afStroke"><option value="no">لا</option><option value="yes">نعم</option></select></div>
+          <div><label>مرض وعائي (احتشاء/PAD/شريان تاجي مُثبت)؟</label><select id="afVasc"><option value="no">لا</option><option value="yes">نعم</option></select></div>
+        </div>
+        <div class="actions">
+          <button class="btn primary" onclick="calcAF()">احسب CHA₂DS₂-VASc</button>
+          <button class="btn" onclick="exportPDF('af')">تصدير PDF</button>
+        </div>
+        <div class="result mt" id="af-res"></div>
+      </div>
+
+      <!-- 4) Palpitations -->
+      <div class="card hide" id="sec-palp">
+        <h2>الخفقان/لخبطة النظم — فرز أولي</h2>
+        <div class="row">
+          <div><label>بداية/نهاية فجائية للنوبة؟</label><select id="paSudden"><option value="no">لا</option><option value="yes">نعم</option></select></div>
+          <div><label>دوخة/إغماء/ألم صدري مع النوبة؟</label><select id="paRed"><option value="no">لا</option><option value="yes">نعم</option></select></div>
+        </div>
+        <div class="row">
+          <div><label>محرّضات (كافيين/منبّهات/سهر)؟</label><select id="paTrig"><option value="no">لا</option><option value="yes">نعم</option></select></div>
+          <div><label>تواتر النوبات (بالأسبوع)</label><input id="paFreq" type="number" min="0" max="70" placeholder="2"></div>
+        </div>
+        <div class="actions">
+          <button class="btn primary" onclick="calcPalp()">احسب التقييم</button>
+          <button class="btn" onclick="exportPDF('palp')">تصدير PDF</button>
+        </div>
+        <div class="result mt" id="palp-res"></div>
+      </div>
+
+      <!-- 5) Hypertension (cardio) -->
+      <div class="card hide" id="sec-htn">
+        <h2>ارتفاع الضغط — تصنيف قلبي سريع</h2>
+        <div class="row">
+          <div><label>الانقباضي SBP (mmHg)</label><input id="sbp" type="number" min="70" max="260" placeholder="140"></div>
+          <div><label>الانبساطي DBP (mmHg)</label><input id="dbp" type="number" min="40" max="160" placeholder="90"></div>
+        </div>
+        <div class="row">
+          <div><label>أعراض خطرة (ألم صدر/ضيق نفس/عصبية)؟</label><select id="bpSymptoms"><option value="no">لا</option><option value="yes">نعم</option></select></div>
+          <div><label>قراءات متعددة بأيام مختلفة؟</label><input id="bpReads" type="number" min="1" max="30" placeholder="3"></div>
+        </div>
+        <div class="actions">
+          <button class="btn primary" onclick="calcHTN()">احسب التصنيف</button>
+          <button class="btn" onclick="exportPDF('htn')">تصدير PDF</button>
+        </div>
+        <div class="result mt" id="htn-res"></div>
+      </div>
+
+      <!-- 6) Lipids Secondary Prevention -->
+      <div class="card hide" id="sec-lipid">
+        <h2>الدهون — وقاية ثانوية</h2>
+        <div class="row">
+          <div><label>تشخيص سابق بمرض قلبي وعائي (احتشاء/ذبحـة/سكتة/‏PAD)؟</label><select id="lipASCVD"><option value="no">لا</option><option value="yes">نعم</option></select></div>
+          <div><label>LDL (mg/dL) أخيرًا إن وُجد</label><input id="ldl" type="number" min="30" max="400" placeholder="110"></div>
+        </div>
+        <div class="row">
+          <div><label>سكر نوع 2؟</label><select id="lipDM"><option value="no">لا</option><option value="yes">نعم</option></select></div>
+          <div><label>تدخين حالي؟</label><select id="lipSmoke"><option value="no">لا</option><option value="yes">نعم</option></select></div>
+        </div>
+        <div class="actions">
+          <button class="btn primary" onclick="calcLipid()">احسب التوجيه</button>
+          <button class="btn" onclick="exportPDF('lipid')">تصدير PDF</button>
+        </div>
+        <div class="result mt" id="lipid-res"></div>
+      </div>
+
+      <!-- 7) PAD -->
+      <div class="card hide" id="sec-pad">
+        <h2>المرض الشرياني المحيطي (PAD) — اشتباه</h2>
+        <div class="row">
+          <div><label>ألم بربلة الساق عند المشي يزول بالراحة؟</label><select id="padClaud"><option value="no">لا</option><option value="yes">نعم</option></select></div>
+          <div><label>ألم أثناء الراحة/قروح قدم/برودة شديدة؟</label><select id="padRed"><option value="no">لا</option><option value="yes">نعم</option></select></div>
+        </div>
+        <div class="row">
+          <div><label>تدخين/سكري/دهون/ضغط؟</label><select id="padRF"><option value="no">لا</option><option value="yes">نعم</option></select></div>
+          <div><label>قدرة المشي قبل الألم (متر تقريبًا)</label><input id="padWalk" type="number" min="10" max="5000" placeholder="200"></div>
+        </div>
+        <div class="actions">
+          <button class="btn primary" onclick="calcPAD()">احسب التوجيه</button>
+          <button class="btn" onclick="exportPDF('pad')">تصدير PDF</button>
+        </div>
+        <div class="result mt" id="pad-res"></div>
+      </div>
+
+      <!-- 8) VTE (DVT/PE) suspicion -->
+      <div class="card hide" id="sec-vte">
+        <h2>تورم الساق/مشتبه خثار وريدي (VTE) — فرز</h2>
+        <div class="row">
+          <div><label>تورم ساق أحادي/ألم على مسار الوريد؟</label><select id="vteUnilat"><option value="no">لا</option><option value="yes">نعم</option></select></div>
+          <div><label>ضيق نفس/ألم صدري حاد/نفث دموي؟</label><select id="vtePE"><option value="no">لا</option><option value="yes">نعم</option></select></div>
+        </div>
+        <div class="row">
+          <div><label>عوامل خطر (جراحة/راحة طويلة/سرطان/حمل)؟</label><select id="vteRF"><option value="no">لا</option><option value="yes">نعم</option></select></div>
+          <div><label>محيط الساق المتأثرة أكبر ≥3 سم؟</label><select id="vteSize"><option value="no">لا/غير معروف</option><option value="yes">نعم</option></select></div>
+        </div>
+        <div class="actions">
+          <button class="btn primary" onclick="calcVTE()">احسب الاشتباه</button>
+          <button class="btn" onclick="exportPDF('vte')">تصدير PDF</button>
+        </div>
+        <div class="result mt" id="vte-res"></div>
+      </div>
+
+      <!-- 9) ECG Assistant -->
+      <div class="card hide" id="sec-ecg">
+        <h2>تحليل تخطيط القلب (ECG) — تقييم آلي</h2>
+
+        <div class="row">
+          <div><label>النبض HR (نبضة/د)</label><input id="ecgHR" type="number" min="20" max="220" placeholder="75"></div>
+          <div>
+            <label>الاسم الإيقاعي</label>
+            <select id="ecgRhythm">
+              <option value="sinus">Sinus</option>
+              <option value="af">AF</option>
+              <option value="flutter">Flutter</option>
+              <option value="paced">Paced</option>
+              <option value="unknown">غير محدد</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="row">
+          <div><label>PR (ms)</label><input id="ecgPR" type="number" min="60" max="400" placeholder="160"></div>
+          <div><label>QRS (ms)</label><input id="ecgQRS" type="number" min="60" max="300" placeholder="90"></div>
+        </div>
+
+        <div class="row">
+          <div><label>QT (ms)</label><input id="ecgQT" type="number" min="200" max="700" placeholder="400"></div>
+          <div>
+            <label>المحور Axis</label>
+            <select id="ecgAxis">
+              <option value="normal">طبيعي</option>
+              <option value="lad">انحراف أيسر</option>
+              <option value="rad">انحراف أيمن</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="row">
+          <div>
+            <label>حصار حزمة؟</label>
+            <select id="ecgBBB">
+              <option value="none">لا</option>
+              <option value="rbbb">RBBB</option>
+              <option value="lbbb">LBBB</option>
+            </select>
+          </div>
+          <div>
+            <label>ارفع صورة ECG (اختياري)</label>
+            <input id="ecg-file" type="file" accept="image/*">
+          </div>
+        </div>
+
+        <div class="card" style="margin-top:10px">
+          <label style="display:block;margin-bottom:8px">ST لكل اشتقاق (مم) — موجب=ارتفاع، سالب=انخفاض</label>
+          <div class="row-6">
+            <div><small>I</small><input id="st_I" type="number" step="0.5" placeholder="0"></div>
+            <div><small>II</small><input id="st_II" type="number" step="0.5" placeholder="0"></div>
+            <div><small>III</small><input id="st_III" type="number" step="0.5" placeholder="0"></div>
+            <div><small>aVR</small><input id="st_aVR" type="number" step="0.5" placeholder="0"></div>
+            <div><small>aVL</small><input id="st_aVL" type="number" step="0.5" placeholder="0"></div>
+            <div><small>aVF</small><input id="st_aVF" type="number" step="0.5" placeholder="0"></div>
+
+            <div><small>V1</small><input id="st_V1" type="number" step="0.5" placeholder="0"></div>
+            <div><small>V2</small><input id="st_V2" type="number" step="0.5" placeholder="0"></div>
+            <div><small>V3</small><input id="st_V3" type="number" step="0.5" placeholder="0"></div>
+            <div><small>V4</small><input id="st_V4" type="number" step="0.5" placeholder="0"></div>
+            <div><small>V5</small><input id="st_V5" type="number" step="0.5" placeholder="0"></div>
+            <div><small>V6</small><input id="st_V6" type="number" step="0.5" placeholder="0"></div>
+          </div>
+        </div>
+
+        <div class="actions">
+          <button class="btn primary" onclick="analyzeECG()">تحليل ECG</button>
+          <button class="btn" onclick="exportPDF('ecg')">تصدير PDF</button>
+        </div>
+
+        <div class="result mt" id="ecg-res"></div>
+        <div id="ecg-preview-wrap" class="mt hide">
+          <p class="hint">معاينة الصورة (ستُضمّ للـPDF)</p>
+          <img id="ecg-preview" alt="ECG preview" style="max-width:100%;border:1px solid var(--border);border-radius:12px"/>
+        </div>
+      </div>
+    </section>
+
+    <section class="glass mt">
+      <p class="hint">هذه الصفحة للتثقيف والفرز الأولي ولا تغني عن تقييم الطبيب. للحمل، أعمار &lt;18 أو ≥65 عامًا، أو وجود أمراض مرافقة: يفضّل تقييم شخصي متخصص.</p>
+    </section>
+  </main>
+
+  <footer>© <span id="year"></span> حكيم — جميع الحقوق محفوظة.</footer>
+
+  <script>
+    // ====== عام ======
+    document.getElementById('year').textContent = new Date().getFullYear();
+    document.querySelectorAll('#chooser .opt').forEach(el=>{
+      el.addEventListener('click', ()=>{
+        document.querySelectorAll('.card').forEach(c=>c.classList.add('hide'));
+        const sec = document.getElementById('sec-'+el.getAttribute('data-target'));
+        if (sec){ sec.classList.remove('hide'); sec.scrollIntoView({behavior:'smooth', block:'start'}); }
+      });
+    });
+
+    function nameVal(){ return document.getElementById('pat-name').value?.trim() || 'بدون اسم'; }
+    function ageVal(){ const n=parseInt(document.getElementById('pat-age').value,10); return isNaN(n)? null : Math.min(120, Math.max(10,n)); }
+    function sexVal(){ const v=document.getElementById('pat-sex').value; return {code:v, label:(v==='male'?'ذكر':(v==='female'?'أنثى':'حامل/محتمل الحمل'))}; }
+    function userContext(){ const age=ageVal(), sex=sexVal(); return {name:nameVal(), age, sex, minor: age!=null && age<18, older: age!=null && age>=65, pregnant: sex.code==='pregnant'}; }
+    function lines(arr){ return `<ul>${arr.map(x=>`<li>${x}</li>`).join('')}</ul>`; }
+    function setLast(obj){ window._last = obj; }
+    function parseNum(id){ const el=document.getElementById(id); if(!el || el.value==='') return null; const v=parseFloat(String(el.value).replace(',','.')); return isNaN(v)? null : v; }
+
+    // ====== مولّد الخطة القلبية ======
+    function buildPlanC(domain, ctx, u){
+      const plan=[], rec=[], pharm=[], flags = ctx.flags? [...ctx.flags] : [];
+      if (u.minor) rec.push('العمر أقل من 18: الصفحة موجّهة للبالغين — يُفضّل تقييم اختصاص أطفال.');
+      if (u.older) rec.push('العمر ≥65: خطط محافظة، مراقبة ضغط/وظائف كلوية والتداخلات، والانتباه للدوخة/السقوط.');
+      if (u.pregnant) rec.push('حمل/احتمال حمل: توجد أدوية محظورة؛ المراجعة مع اختصاصي نسائية/قلب.');
+
+      switch(domain){
+        case 'cp': {
+          plan.push('تجنّب الجهد العنيف حتى استكمال التقييم إن كانت الأعراض نمطية.');
+          plan.push('تتبع النوبات: زمن البداية/المدة/المحرّضات للاستعراض مع الطبيب.');
+          if (ctx.red) flags.push('ألم صدري ضاغط مطوّل مع تعرق/غثيان/ضيق نفس ⇒ طوارئ.');
+          if (ctx.typical==='نموذجي/مرتفع') rec.push('يُشتبه ذبحة؛ يلزم تقييم قلبي (ECG/إنزيمات/اختبار جهد/تصوير).');
+          else if (ctx.typical==='متوسط/ملامح جزئية') rec.push('احتمال متوسط — يناقَش اختبار جهد/تقييم عوامل خطر.');
+          else rec.push('احتمال منخفض؛ راقب الأعراض وعالج المحرّضات غير القلبية بعد استبعاد القلبي.');
+          if (!u.pregnant){
+            pharm.push('Statin عند ملاءمة الخطورة/التشخيص.');
+            pharm.push('Aspirin للوقاية الثانوية بعد تأكيد ASCVD — قرار طبي.');
+            pharm.push('Beta-blocker للذبحة/بعد احتشاء — قرار طبي.');
+            pharm.push('ACEi/ARB لتحسين الإنذار في حالات محددة — قرار طبي.');
+          } else {
+            pharm.push('الحمل: تجنّب الستاتينات وACEi/ARB؛ تقييم اختصاصي.');
+          }
+          break;
+        }
+        case 'hf': {
+          if (ctx.red) flags.push('ضيق نفس أثناء الراحة/وذمة رئوية/ألم صدري ⇒ طوارئ.');
+          plan.push('تتبّع الوزن اليومي وتقليل الملح/السوائل حسب توجيه طبي، ورفع الرأس أثناء النوم.');
+          plan.push('مراجعة محفزات التفاقم: ملح زائد، عدم الالتزام بالدواء، عدوى، NSAIDs.');
+          if (!u.pregnant){
+            pharm.push('ACEi/ARB أو ARNI (sacubitril/valsartan) لقصور القلب HFrEF.');
+            pharm.push('Beta-blocker (carvedilol/bisoprolol/metoprolol succinate).');
+            pharm.push('MRA (spironolactone/eplerenone).');
+            pharm.push('SGLT2i (dapagliflozin/empagliflozin) لفئات محددة حتى دون سكري.');
+            pharm.push('Loop diuretics (furosemide/torsemide) للأعراض — ضبط الجرعة طبيًا.');
+          } else {
+            pharm.push('الحمل: تجنّب ACEi/ARB/ARNI؛ تعديلات فردية بحذر.');
+          }
+          rec.push('قد يلزم CRT/ICD حسب الكسر القذفي واضطراب التوصيل.');
+          break;
+        }
+        case 'af': {
+          plan.push('تأكيد التشخيص بـECG؛ مناقشة التحكم بالمعدل أو الإيقاع.');
+          if (ctx.chads!=null){
+            if (ctx.riskCat==='منخفض') rec.push('خطر سكتة منخفض — قد لا يلزم مضاد تخثر (حسب الطبيب).');
+            else if (ctx.riskCat==='متوسط') rec.push('خطر متوسط — ناقش مضاد تخثر بعد تقدير خطر النزف.');
+            else rec.push('خطر عالٍ — غالبًا يُوصى بمضاد تخثر ما لم توجد موانع.');
+          }
+          if (!u.pregnant){
+            pharm.push('Rate: Beta-blocker أو NDHP-CCB (diltiazem/verapamil).');
+            pharm.push('Rhythm: amiodarone/propafenone/flecainide (قرار اختصاصي).');
+            pharm.push('Anticoagulation: DOACs (apixaban/rivaroxaban/dabigatran/edoxaban) أو warfarin.');
+          } else {
+            pharm.push('الحمل: تُفضَّل LMWH؛ تُمنع DOACs؛ وارفارين مُشوِّه للأجنة.');
+          }
+          break;
+        }
+        case 'palp': {
+          if (ctx.red) flags.push('خفقان مع إغماء/ألم صدري ⇒ تقييم إسعافي.');
+          plan.push('تقليل المنبهات (كافيين/طاقة)، تنظيم النوم، ترطيب جيد.');
+          rec.push('قد يلزم هولتر 24–48 ساعة أو مراقبة مطوّلة إذا النوبات متقطعة.');
+          if (!u.pregnant){ pharm.push('Beta-blocker أو NDHP-CCB لبعض نوبات SVT/الخفقان — قرار طبي.'); }
+          else { pharm.push('الحمل: تُناقش الخيارات بعناية مع اختصاصي.'); }
+          break;
+        }
+        case 'htn': {
+          if (ctx.stage==='أزمة ضغط محتملة') flags.push('ضغط ≥180/120 مع أعراض خطرة ⇒ طوارئ.');
+          rec.push('قياس منزلي صحيح ومتوسط قراءات على أيام، وتعديل نمط الحياة (ملح/وزن/نشاط).');
+          if (!u.pregnant){
+            pharm.push('Thiazide-like (indapamide/chlorthalidone).');
+            pharm.push('ACEi/ARB (enalapril/losartan).');
+            pharm.push('Calcium channel blockers (amlodipine…).');
+            pharm.push('Beta-blockers لاستطبابات محددة.');
+          } else {
+            pharm.push('الحمل: labetalol أو nifedipine أو methyldopa؛ يُمنع ACEi/ARB.');
+          }
+          break;
+        }
+        case 'lipid': {
+          plan.push('نمط متوسطي، تقليل الدهون المتحوّلة/المشبعة، وزيادة الألياف.');
+          if (ctx.ascvd) rec.push('وقاية ثانوية: عادةً ستاتين شديد الكثافة ما لم توجد موانع.');
+          if (ctx.ldl!=null && ctx.ldl>=190) rec.push('LDL ≥190 mg/dL: غالبًا يحتاج علاجًا خافضًا قويًا بعد نفي الأسباب الثانوية.');
+          if (!u.pregnant){
+            pharm.push('Statins (atorvastatin/rosuvastatin…).');
+            pharm.push('Ezetimibe عند عدم كفاية الستاتين أو عدم تحمّله.');
+            pharm.push('PCSK9i لبعض المخاطر العالية/فرط كوليسترول عائلي — قرار اختصاصي.');
+          } else {
+            pharm.push('الحمل: الستاتينات مضادّة استطباب؛ تُناقش بدائل آمنة/توقيت العلاج.');
+          }
+          break;
+        }
+        case 'pad': {
+          if (ctx.red) flags.push('ألم راحي/قروح/برودة شديدة بالقدم ⇒ تقييم وعائي عاجل.');
+          plan.push('برنامج مشي تدريجي بإشراف؛ إيقاف التدخين؛ عناية قدمين.');
+          rec.push('قياس مؤشر الكاحل/العضد (ABI) وتقييم وعائي.');
+          if (!u.pregnant){
+            pharm.push('Antiplatelet (aspirin أو clopidogrel) للوقاية الوعائية — قرار طبي.');
+            pharm.push('Statin لجميع مرضى PAD غالبًا.');
+          } else {
+            pharm.push('الحمل: تقييم فردي؛ مناقشة الفائدة/المخاطر للدواء.');
+          }
+          break;
+        }
+        case 'vte': {
+          if (ctx.pe) flags.push('ضيق نفس حاد/ألم صدري/نفث دم — اشتباه PE ⇒ إسعاف.');
+          if (ctx.leg) rec.push('اشتباه DVT بالساق: يُنصح بتقييم فوري (دوبلر/‏D-dimer وفق البروتوكول).');
+          plan.push('تجنّب التدليك العنيف للساق المصابة، وتشجيع الحركة اللطيفة إن لم تُمنع.');
+          if (!u.pregnant){
+            pharm.push('Anticoagulation عند تثبيت التشخيص (DOACs أو heparins/warfarin) — قرار طبي.');
+          } else {
+            pharm.push('الحمل: LMWH الخيار المفضّل؛ تُمنع DOACs؛ وارفارين مُشوّه للأجنّة.');
+          }
+          break;
+        }
+        case 'ecg': {
+          plan.push('مراجعة إلكتروليتات (K/Mg) وأدوية مطيلة للـQT عند اللزوم.');
+          plan.push('ربط نتائج ECG بالأعراض والسياق (ألم صدري/زلة/إغماء).');
+          break;
+        }
+      }
+      return {plan, rec, pharm, flags};
+    }
+
+    // ====== عرض موحّد ======
+    function showResult(elId, obj){
+      const u = userContext();
+      const flags = obj.flags || [];
+      const header = `<p>الاسم: <b>${u.name}</b>${u.age? ` — العمر: <b>${u.age}</b>`:''} — الجنس: <b>${u.sex.label}</b></p>`;
+      const assess = obj.assess ? `<p><b>التقييم:</b> ${obj.assess}</p>` : '';
+      const sev = obj.severity ? `<p><b>الشدة:</b> ${obj.severity}</p>` : '';
+      const score = (obj.score!==undefined) ? `<p><b>قيمة/درجة:</b> ${obj.score}</p>` : '';
+      const flagsHtml = flags.length? `<p><b>تنبيهات:</b></p>${lines(flags)}` : '';
+      const planHtml = obj.plan?.length? `<p><b>خطة عامة:</b></p>${lines(obj.plan)}` : '';
+      const recHtml = obj.rec?.length? `<p><b>توصيات موجّهة:</b></p>${lines(obj.rec)}` : '';
+      const pharmHtml = obj.pharm?.length? `<p><b>أمثلة دوائية (قرار الطبيب):</b></p>${lines(obj.pharm)}<p class="hint">لا تبدأ/توقف أي دواء دون طبيب. توجد موانع وتداخلات خاصة بالحمل وكبار السن والأمراض المرافقة.</p>` : '';
+      document.getElementById(elId).innerHTML = header + score + sev + assess + flagsHtml + planHtml + recHtml + pharmHtml;
+      setLast({...obj, user:u});
+    }
+
+    // ====== حاسبات الأقسام ======
+    function calcCP(){
+      const u = userContext();
+      const press = document.getElementById('cpPressure').value==='yes';
+      const exert = document.getElementById('cpExert').value==='yes';
+      const radi = document.getElementById('cpRadiation').value==='yes';
+      const assoc = document.getElementById('cpAssoc').value==='yes';
+      const dur = parseNum('cpDur');
+      const rf = document.getElementById('cpRF').value==='yes';
+
+      const triad = (press?1:0) + (exert?1:0) + (dur!=null && dur>=5 && dur<=30 ? 1:0);
+      let typical='منخفض/غير نمطي';
+      if (triad===3) typical='نموذجي/مرتفع';
+      else if (triad===2) typical='متوسط/ملامح جزئية';
+
+      const red = (assoc && (dur!=null && dur>=20)) || (u.older && press && exert) || radi;
+
+      const {plan, rec, pharm, flags} = buildPlanC('cp', {typical, red}, u);
+      showResult('cp-res', {title:'ألم الصدر/الذبحة', assess:`الترجيح: <b>${typical}</b>${rf?' — مع عوامل خطر':''}${radi?' — امتداد للأطراف/الفك':''}`, plan, rec, pharm, flags});
+    }
+
+    function calcHF(){
+      const u = userContext();
+      const dysp = document.getElementById('hfDysp').value==='yes';
+      const edema = document.getElementById('hfEdema').value==='yes';
+      const wt = document.getElementById('hfWt').value==='yes';
+      const red = document.getElementById('hfRed').value==='yes';
+
+      let severity='محتمل منخفض';
+      const sum = [dysp,edema,wt].filter(Boolean).length;
+      if (sum>=2) severity='محتمل متوسط/عالٍ';
+      const {plan, rec, pharm, flags} = buildPlanC('hf', {red}, u);
+      showResult('hf-res', {title:'قصور القلب', severity, plan, rec, pharm, flags});
+    }
+
+    function calcAF(){
+      const u = userContext();
+      const CHF = document.getElementById('afCHF').value==='yes';
+      const HTN = document.getElementById('afHTN').value==='yes';
+      const DM = document.getElementById('afDM').value==='yes';
+      const Stroke = document.getElementById('afStroke').value==='yes';
+      const Vasc = document.getElementById('afVasc').value==='yes';
+      const age = u.age || 0;
+      let score = 0;
+      if (CHF) score += 1;
+      if (HTN) score += 1;
+      if (age>=75) score += 2; else if (age>=65) score += 1;
+      if (DM) score += 1;
+      if (Stroke) score += 2;
+      if (Vasc) score += 1;
+      if (u.sex.code==='female') score += 1;
+
+      let riskCat='منخفض';
+      const male = (u.sex.code==='male');
+      if ((male && score===0) || (!male && score<=1)) riskCat='منخفض';
+      else if ((male && score===1) || (!male && score===2)) riskCat='متوسط';
+      else riskCat='عالٍ';
+
+      const {plan, rec, pharm, flags} = buildPlanC('af', {chads:score, riskCat}, u);
+      showResult('af-res', {title:'الرجفان الأذيني', score, assess:`فئة خطر سكتة: <b>${riskCat}</b>`, plan, rec, pharm, flags});
+    }
+
+    function calcPalp(){
+      const u = userContext();
+      const sudden = document.getElementById('paSudden').value==='yes';
+      const red = document.getElementById('paRed').value==='yes';
+      const trig = document.getElementById('paTrig').value==='yes';
+      const freq = parseNum('paFreq')||0;
+
+      let assess='خفقان متقطع';
+      if (sudden && freq>=1) assess='نوبات متكررة سريعة (اشتباه SVT/AF متقطع)';
+      if (red) assess+=' — مع أعلام خطر';
+      const {plan, rec, pharm, flags} = buildPlanC('palp', {red}, u);
+      showResult('palp-res', {title:'الخفقان/لخبطة النظم', assess, plan, rec, pharm, flags});
+    }
+
+    function calcHTN(){
+      const u = userContext();
+      const sbp = parseNum('sbp'), dbp = parseNum('dbp');
+      const symptomatic = document.getElementById('bpSymptoms').value==='yes';
+      if (sbp==null || dbp==null){ document.getElementById('htn-res').innerHTML='<p>الرجاء إدخال SBP و DBP.</p>'; return; }
+      let stage=''; let emergency=false;
+      if (sbp>=180 || dbp>=120){ stage='أزمة ضغط محتملة'; emergency=symptomatic; }
+      else if (sbp>=140 || dbp>=90) stage='مرحلة 2';
+      else if (sbp>=130 || dbp>=80) stage='مرحلة 1';
+      else if (sbp>=120 && dbp<80) stage='مرتفع-حدّي';
+      else stage='طبيعي';
+      const {plan, rec, pharm, flags} = buildPlanC('htn', {stage, flags: emergency?['ضغط ≥180/120 مع أعراض خطرة ⇒ طوارئ.']:[]}, u);
+      showResult('htn-res', {title:'ارتفاع الضغط', assess:stage, plan, rec, pharm, flags});
+    }
+
+    function calcLipid(){
+      const u = userContext();
+      const ascvd = document.getElementById('lipASCVD').value==='yes';
+      const ldl = parseNum('ldl');
+      const dm = document.getElementById('lipDM').value==='yes';
+      const {plan, rec, pharm, flags} = buildPlanC('lipid', {ascvd, ldl, dm}, u);
+      let assess = ascvd ? 'وقاية ثانوية مطلوبة على الأرجح' : 'تقييم مخاطر شامل لتحديد الحاجة';
+      if (ldl!=null && ldl>=190) assess += ' — LDL مرتفع جدًا (≥190)';
+      showResult('lipid-res', {title:'الدهون — وقاية ثانوية', assess, plan, rec, pharm, flags, score:ldl});
+    }
+
+    function calcPAD(){
+      const u = userContext();
+      const claud = document.getElementById('padClaud').value==='yes';
+      const red = document.getElementById('padRed').value==='yes';
+      const rf = document.getElementById('padRF').value==='yes';
+      const walk = parseNum('padWalk');
+      let assess='اشتباه منخفض';
+      if (claud) assess='اشتباه PAD (عرج متقطع)';
+      if (red) assess+=' — مع أعلام خطر';
+      const {plan, rec, pharm, flags} = buildPlanC('pad', {red}, u);
+      showResult('pad-res', {title:'PAD — اشتباه', assess: assess + (rf?' — مع عوامل خطر':'' ) + (walk? ` — مسافة قبل الألم ≈ ${walk}م` : ''), plan, rec, pharm, flags});
+    }
+
+    function calcVTE(){
+      const u = userContext();
+      const leg = document.getElementById('vteUnilat').value==='yes';
+      const pe = document.getElementById('vtePE').value==='yes';
+      const rf = document.getElementById('vteRF').value==='yes';
+      const size = document.getElementById('vteSize').value==='yes';
+
+      let assess='اشتباه منخفض';
+      let flags=[];
+      if (leg && (rf || size)) assess='اشتباه DVT متوسط/عالٍ';
+      if (pe) { assess='اشتباه PE عالٍ'; flags.push('ضيق نفس/ألم صدري/نفث دم — طوارئ'); }
+      const {plan, rec, pharm, flags:moreF} = buildPlanC('vte', {leg, pe, flags}, u);
+      showResult('vte-res', {title:'مشتبه خثار وريدي (VTE)', assess: assess + (rf?' — عوامل خطر موجودة':''), plan, rec, pharm, flags:[...flags, ...(moreF||[])]});
+    }
+
+    // ====== ECG ======
+    window._ecgPreviewDataURL = null;
+    (function(){
+      const file = document.getElementById('ecg-file');
+      if (!file) return;
+      file.addEventListener('change', (e)=>{
+        const f = e.target.files?.[0]; if (!f) return;
+        const reader = new FileReader();
+        reader.onload = () => {
+          window._ecgPreviewDataURL = reader.result;
+          const wrap = document.getElementById('ecg-preview-wrap');
+          const img = document.getElementById('ecg-preview');
+          if (img && wrap){ img.src = reader.result; wrap.classList.remove('hide'); }
+        };
+        reader.readAsDataURL(f);
+      });
+    })();
+
+    function stThresholdForLead(lead, u){
+      if (lead==='V2' || lead==='V3'){
+        if (u.sex.code==='female') return 1.5;
+        if (u.age!=null && u.age<40) return 2.5;
+        return 2.0; // رجال ≥40
+      }
+      return 1.0;
+    }
+    function getST(){
+      const leads = ['I','II','III','aVR','aVL','aVF','V1','V2','V3','V4','V5','V6'];
+      const st = {};
+      leads.forEach(L=>{
+        const v = parseFloat((document.getElementById('st_'+L).value || '0').replace(',','.'));
+        st[L] = isNaN(v)? 0 : v;
+      });
+      return st;
+    }
+    function hasTwoContiguousInPrecordial(st, u){
+      const seq = ['V1','V2','V3','V4','V5','V6'];
+      for (let i=0;i<seq.length-1;i++){
+        const a=seq[i], b=seq[i+1];
+        if (st[a] >= stThresholdForLead(a,u) && st[b] >= stThresholdForLead(b,u)) return true;
+      }
+      return false;
+    }
+    function countAtOrAbove(st, leads, u){
+      return leads.filter(L => st[L] >= stThresholdForLead(L,u)).length;
+    }
+    function detectSTEMI(st, u){
+      const inferior = ['II','III','aVF'];
+      const lateral  = ['I','aVL','V5','V6'];
+      const isInferior = countAtOrAbove(st, inferior, u) >= 2;
+      const isPrecord = hasTwoContiguousInPrecordial(st, u);
+      const isHighLat = (st['I'] >= stThresholdForLead('I',u) && st['aVL'] >= stThresholdForLead('aVL',u));
+      const territory=[];
+      if (isInferior) territory.push('سفلي (II/III/aVF)');
+      if (isPrecord) territory.push('أمامي/أنتروليترال (V2–V6)');
+      if (isHighLat) territory.push('جانبي علوي (I/aVL)');
+      const postSusp = (st['V1']<=-1 || st['V2']<=-1 || st['V3']<=-1);
+      return {isSTEMI: territory.length>0, territory, postSusp};
+    }
+
+    function analyzeECG(){
+      const u = userContext();
+      const hr = parseNum('ecgHR');
+      const pr = parseNum('ecgPR');
+      const qrs = parseNum('ecgQRS');
+      const qt = parseNum('ecgQT');
+      const rhythm = document.getElementById('ecgRhythm').value;
+      const axis = document.getElementById('ecgAxis').value;
+      const bbb = document.getElementById('ecgBBB').value;
+      const st = getST();
+
+      // QTc
+      let qtcB=null, qtcF=null;
+      if (qt!=null && hr!=null && hr>0){
+        const RR = 60/hr; // ثواني
+        qtcB = Math.round(qt / Math.sqrt(RR));
+        qtcF = Math.round(qt / Math.cbrt(RR));
+      }
+
+      const flags=[], rec=[], plan=[], pharm=[];
+      // HR
+      if (hr!=null){ if (hr<50) flags.push('بطء قلب (<50 bpm) — راجع الأعراض/الأدوية/الشوارد.'); if (hr>100) flags.push('تسرّع قلب (>100 bpm) — حدِّد السبب.'); }
+      // PR
+      if (pr!=null && pr>200) rec.push('PR >200ms: حصار أذيني بطيني أول محتمل — غالبًا حميد دون أعراض.');
+      // QRS
+      if (qrs!=null && qrs>120) rec.push('QRS >120ms: حصار حزمة/إبطاء توصيل — فسِّر النظم وفق ذلك.');
+      if (bbb==='lbbb') rec.push('LBBB: قد يحجب علامات STEMI؛ عند ألم صدري نمطي اتبع مسار إسعافي.');
+      // QTc
+      if (qtcB!=null){
+        const thresh = (u.sex.code==='female') ? 470 : 450;
+        if ((qtcB>=500) || (qtcF!=null && qtcF>=500)) flags.push('QTc ≥500ms — خطر اضطراب نظم بطيني؛ تقييم عاجل للشوارد/الأدوية.');
+        else if (qtcB>thresh || (qtcF!=null && qtcF>thresh)) rec.push('QTc مطوّل — راجع أدوية مطيلة للـQT واضبط الشوارد.');
+      }
+
+      // STEMI/NSTEMI/Posterior
+      const {isSTEMI, territory, postSusp} = detectSTEMI(st, u);
+      if (isSTEMI){
+        flags.push('معايير STEMI مستوفاة في اشتقاقات متجاورة: ' + territory.join(' + '));
+        plan.push('الاتصال بالإسعاف/مسار قلبي إسعافي (إعادة تروية مبكّرة).');
+        if (!u.pregnant){
+          pharm.push('(قرار طبي) مضاد صفيحات/مضاد خثرة/نترات/حاصر بيتا/ستاتين بحسب البروتوكول.');
+        }
+      } else {
+        const anySTD = Object.values(st).some(v => v<=-1);
+        if (anySTD) rec.push('اكتئاب ST في عدة اشتقاقات — اشتباه إقفار/‏NSTEMI؛ تقييم عاجل.');
+      }
+      if (postSusp) rec.push('ST منخفض في V1–V3 — اشتباه احتشاء خلفي؛ قد تفيد اشتقاقات V7–V9.');
+
+      // Rhythm مساعد
+      if (rhythm==='af') rec.push('إيقاع AF: راجع قسم الرجفان الأذيني لحساب CHA₂DS₂-VASc وتقييم مضاد التخثر.');
+      if (rhythm==='flutter') rec.push('Flutter: قد يلزم تحكم بالمعدل/الإيقاع وتقييم مضاد تخثر.');
+      if (rhythm==='paced') rec.push('إيقاع مُنظّم: تفسير ST/T قد لا يكون موثوقًا.');
+
+      const {plan:basePlan, rec:baseRec, pharm:basePharm, flags:baseFlags} = buildPlanC('ecg', {}, u);
+
+      const assessParts=[];
+      assessParts.push(`HR: ${hr??'—'} bpm`);
+      assessParts.push(`PR: ${pr??'—'} ms`);
+      assessParts.push(`QRS: ${qrs??'—'} ms`);
+      assessParts.push(`QT: ${qt??'—'} ms`);
+      if (qtcB!=null) assessParts.push(`QTc(B): ${qtcB} ms`);
+      if (qtcF!=null) assessParts.push(`QTc(F): ${qtcF} ms`);
+      assessParts.push(`Rhythm: ${document.querySelector('#ecgRhythm option:checked').textContent}`);
+      assessParts.push(`Axis: ${document.querySelector('#ecgAxis option:checked').textContent}`);
+      assessParts.push(`BBB: ${document.querySelector('#ecgBBB option:checked').textContent}`);
+      const assess = assessParts.join(' — ');
+
+      document.getElementById('ecg-res').innerHTML =
+        `<p>${assess}</p>` +
+        (flags.length||baseFlags.length? `<p><b>تنبيهات:</b></p>${lines([...baseFlags, ...flags])}`:'') +
+        ((basePlan.length)? `<p><b>خطة عامة:</b></p>${lines(basePlan)}`:'') +
+        (rec.length||baseRec.length? `<p><b>توصيات موجّهة:</b></p>${lines([...baseRec, ...rec])}`:'') +
+        (pharm.length||basePharm.length? `<p><b>أمثلة دوائية (قرار الطبيب):</b></p>${lines([...basePharm, ...pharm])}<p class="hint">لا تبدأ/توقف دواء دون طبيب.</p>`:'');
+
+      setLast({title:'ECG — تحليل', assess, plan:[...basePlan], rec:[...baseRec, ...rec], pharm:[...basePharm, ...pharm], flags:[...baseFlags, ...flags], user: userContext()});
+    }
+
+    // ====== PDF (يدعم صورة ECG) ======
+    async function exportPDF(section){
+      const { jsPDF } = window.jspdf;
+      const m = window._last || {title:section, user:userContext(), plan:[], rec:[], pharm:[], flags:[]};
+      const u = m.user || userContext();
+
+      const box = document.createElement('div');
+      box.dir = 'rtl';
+      box.style.cssText = 'width:800px;padding:24px;background:#fff;color:#111;font-family:Cairo,Arial,sans-serif;line-height:1.9;border:1px solid #ddd;border-radius:12px';
+      box.innerHTML = `
+        <h2 style="margin:0 0 10px;font-weight:800">حكيم — ${m.title||section}</h2>
+        <p><b>الاسم:</b> ${u.name || 'بدون اسم'}${u.age? ` — <b>العمر:</b> ${u.age}`:''} — <b>الجنس:</b> ${u.sex? u.sex.label : 'غير محدد'}</p>
+        ${m.score!==undefined? `<p><b>قيمة/درجة:</b> ${m.score}</p>`:''}
+        ${m.severity? `<p><b>الشدة:</b> ${m.severity}</p>`:''}
+        ${m.assess? `<p><b>التقييم:</b> ${m.assess}</p>`:''}
+        ${m.flags && m.flags.length? `<p><b>تنبيهات:</b></p><ul>${m.flags.map(x=>`<li>${x}</li>`).join('')}</ul>`:''}
+        ${m.plan && m.plan.length? `<p><b>خطة عامة:</b></p><ul>${m.plan.map(x=>`<li>${x}</li>`).join('')}</ul>`:''}
+        ${m.rec && m.rec.length? `<p><b>توصيات موجّهة:</b></p><ul>${m.rec.map(x=>`<li>${x}</li>`).join('')}</ul>`:''}
+        ${m.pharm && m.pharm.length? `<p><b>أمثلة دوائية (قرار الطبيب):</b></p><ul>${m.pharm.map(x=>`<li>${x}</li>`).join('')}</ul><p style="font-size:12px;color:#555">تنبيه: لا تبدأ/توقف أي دواء دون طبيب. قد توجد موانع/تداخلات خاصة بالحمل وكبار السن.</p>`:''}
+        ${section==='ecg' && window._ecgPreviewDataURL ? `<hr style="margin:12px 0;border:0;border-top:1px solid #ddd"/><p><b>صورة ECG المرفوعة:</b></p><img src="${window._ecgPreviewDataURL}" style="max-width:100%;border:1px solid #ccc;border-radius:8px"/>`:''}
+        <hr style="margin:12px 0;border:0;border-top:1px solid #ddd"/>
+        <p style="font-size:13px;color:#444">ملف تثقيفي — لا يُغني عن تقييم الطبيب المختص. في الطوارئ يُرجى التواصل الفوري مع الإسعاف.</p>
+      `;
+      document.body.appendChild(box);
+      const canvas = await html2canvas(box, {scale:2, backgroundColor:'#ffffff', useCORS:true});
+      document.body.removeChild(box);
+
+      const pdf = new jsPDF({orientation:'p', unit:'pt', format:'a4'});
+      const pageW = pdf.internal.pageSize.getWidth(), pageH = pdf.internal.pageSize.getHeight(), margin=40;
+      let imgW = pageW - margin*2, imgH = canvas.height * imgW / canvas.width;
+      if (imgH > pageH - margin*2){ const r = (pageH - margin*2) / imgH; imgH*=r; imgW*=r; }
+      pdf.addImage(canvas.toDataURL('image/png'), 'PNG', (pageW-imgW)/2, (pageH-imgH)/2, imgW, imgH);
+      pdf.save(`Hakim-Cardio-${(m.title||section).replace(/\s+/g,'_')}-${Date.now()}.pdf`);
+    }
+  </script>
+
+  <!--
+    ملاحظات مطوّر مختصرة:
+    - ECG: QTc (Bazett/Fridericia)، كشف STEMI مع استثناء V2–V3 (رجال ≥40: 2 مم، رجال <40: 2.5 مم، نساء: 1.5 مم)، اشتباه posterior عند ST↓ في V1–V3.
+    - تضمين صورة ECG إلى PDF إن وُجدت.
+    - الأدوية أمثلة عامة بلا جرعات؛ القرار للطبيب. للحمل وكبار السن تُراجع الموانع.
+  -->
+</body>
+</html>

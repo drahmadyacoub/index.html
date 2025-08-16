@@ -1,0 +1,234 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>حكيم — التنويه الطبي</title>
+  <meta name="description" content="التنويه الطبي لمنصة حكيم: حدود الاستخدام، خصوصية البيانات، وحالات الطوارئ.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;800&display=swap" rel="stylesheet">
+
+  <!-- للتصدير PDF (يدعم العربية عبر التقاط صورة من DOM) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" referrerpolicy="no-referrer"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js" referrerpolicy="no-referrer"></script>
+
+  <style>
+    :root{
+      --bg:#05060b; --panel:#0a0f1e; --txt:#edf1ff; --muted:#aab2d8;
+      --primary:#76a8ff; --primary-2:#00e0ff; --accent:#a855f7;
+      --glass:rgba(255,255,255,0.06); --border:rgba(255,255,255,0.12);
+      --ring:0 0 0 1px rgba(122,162,255,.35), 0 10px 30px rgba(0,0,0,.35);
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0; font-family:'Cairo',system-ui,-apple-system,Segoe UI,Roboto,'Helvetica Neue',Arial,'Noto Sans Arabic','Noto Sans',sans-serif;
+      background: radial-gradient(1200px 700px at 20% -10%, #0d1430, #05060b 60%);
+      color:var(--txt); line-height:1.9; overflow-x:hidden;
+    }
+    a{color:inherit;text-decoration:none}
+    .container{width:min(1100px,92vw); margin-inline:auto}
+
+    /* Header */
+    .site-header{position:sticky; top:0; z-index:50; display:flex; align-items:center; justify-content:space-between;
+      padding:14px 24px; backdrop-filter:saturate(140%) blur(8px);
+      background:linear-gradient(180deg, rgba(10,16,36,.85), rgba(10,16,36,.45)); border-bottom:1px solid var(--border)}
+    .brand{display:flex; gap:14px; align-items:center}
+    .logo{width:46px; height:46px; border-radius:14px; display:grid; place-items:center; font-weight:800;
+      background: radial-gradient(120% 120% at 0% 0%, var(--primary), var(--accent)); box-shadow: 0 0 28px rgba(122,162,255,.45), inset 0 0 22px rgba(255,255,255,.15)}
+    .brand-text strong{display:block; font-size:18px}
+    .brand-text span{display:block; font-size:12px; color:var(--muted)}
+    .flag-badge{display:flex; align-items:center; gap:8px; padding:6px 10px; border-radius:999px; border:1px solid var(--border); background:var(--glass)}
+    .flag-badge img{width:24px; height:16px; border-radius:3px; box-shadow:0 0 0 1px rgba(255,255,255,.25)}
+    .site-actions{display:flex; gap:10px}
+    .btn{padding:10px 14px; border-radius:12px; border:1px solid var(--border); background:var(--glass); color:var(--txt); cursor:pointer; transition:transform .2s ease, border-color .2s ease; box-shadow:var(--ring)}
+    .btn:hover{transform:translateY(-2px); border-color:rgba(122,162,255,.45)}
+    .btn.primary{border-color:transparent; background:linear-gradient(135deg, var(--primary), var(--primary-2)); font-weight:800}
+    .btn.ghost{background:transparent}
+
+    /* Hero */
+    .hero{position:relative; padding:72px 0 20px}
+    .hero .glass{background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03)); border:1px solid var(--border); border-radius:26px; padding:28px; box-shadow:0 30px 60px rgba(0,10,40,.45)}
+    .title{font-size:clamp(26px,4.5vw,44px); margin:0 0 8px}
+    .subtitle{color:#d3dbff; margin:0}
+
+    /* Content */
+    .content{padding:16px 0 60px}
+    .card{background:linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02)); border:1px solid var(--border); border-radius:18px; padding:18px 18px}
+    .grid{display:grid; gap:14px; grid-template-columns:1fr}
+    @media(min-width:900px){ .grid{grid-template-columns:1fr 1fr} }
+    h3{margin:.2rem 0 .6rem 0; font-size:20px}
+    ul{margin:.2rem 0 .8rem 1rem}
+    .muted{color:#b9c2ea; font-size:14px}
+    .tag{display:inline-block; padding:6px 10px; border-radius:999px; border:1px solid var(--border); background:var(--glass); margin-inline-start:8px}
+
+    /* Reveal */
+    .reveal{opacity:0; transform:translateY(16px) scale(.98); transition:opacity .6s ease, transform .6s cubic-bezier(.22,.75,.2,1)}
+    .reveal.in{opacity:1; transform:none}
+
+    /* Footer */
+    footer{text-align:center; padding:26px 16px; color:#a9b1da; font-size:14px; border-top:1px solid var(--border)}
+    footer .note{opacity:.85; margin-top:6px}
+
+    /* Decorations */
+    .bg-grid{position:fixed; inset:0; z-index:-2;
+      background-image: radial-gradient(800px 400px at 80% -10%, rgba(0,224,255,.08), transparent 60%),
+                        linear-gradient(to right, rgba(255,255,255,.05) 1px, transparent 1px),
+                        linear-gradient(to bottom, rgba(255,255,255,.05) 1px, transparent 1px);
+      background-size:auto, 40px 40px, 40px 40px; mask-image: radial-gradient(70% 60% at 50% 20%, black, transparent 70%)}
+  </style>
+</head>
+<body>
+  <div class="bg-grid"></div>
+
+  <header class="site-header">
+    <div class="brand">
+      <div class="logo">حكيم</div>
+      <div class="brand-text">
+        <strong>حكيم</strong>
+        <span>أول طبيب ذكاء اصطناعي في سوريا</span>
+      </div>
+      <div class="flag-badge" title="Syria">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/b/b8/Flag_of_Syria_%281930%E2%80%931958%2C_1961%E2%80%931963%29.svg" alt="علم سوريا">
+        <small>SY</small>
+      </div>
+    </div>
+    <nav class="site-actions">
+      <a class="btn ghost" href="index.html">الصفحة الرئيسية</a>
+      <button class="btn primary" id="downloadPdfBtn">تحميل PDF</button>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero container">
+      <div class="glass reveal">
+        <h1 class="title">التنويه الطبي</h1>
+        <p class="subtitle">استخدامك لمنصة <b>حكيم</b> يعني موافقتك على البنود التالية.</p>
+      </div>
+    </section>
+
+    <section class="content container">
+      <!-- الغلاف المراد تصديره PDF -->
+      <div id="disclaimerBox" class="reveal" style="display:contents">
+        <div class="grid">
+          <div class="card reveal">
+            <h3>١) للاستخدام التثقيفي فقط</h3>
+            <p>المحتوى المُقدَّم داخل “حكيم” هو لأغراض <b>التثقيف والتوجيه الأولي</b>، ولا يُعد تشخيصًا نهائيًا أو بديلًا عن الاستشارة الطبية المهنية.</p>
+            <ul>
+              <li>القرارات العلاجية النهائية (وخاصة الأدوية والجرعات) يتخذها <b>الطبيب المختص</b> بعد فحص سريري وفحوصات ملائمة.</li>
+              <li>لا تبدأ أو توقِف أي دواء بناءً على “حكيم” دون مراجعة طبية.</li>
+            </ul>
+          </div>
+
+          <div class="card reveal">
+            <h3>٢) حالات الطوارئ</h3>
+            <p>عند ظهور أي من <b>أعلام الخطر</b> (ألم صدري شديد، ضيق نفس حاد، إغماء، نزف شديد، أعراض سكتة... إلخ) يجب الاتصال بخدمات الطوارئ المحلية فورًا.</p>
+            <p class="muted">في سوريا: اتصل بالإسعاف المحلي/توجّه لأقرب مشفى طوارئ.</p>
+          </div>
+
+          <div class="card reveal">
+            <h3>٣) حدود النظام</h3>
+            <ul>
+              <li>النتائج تعتمد على <b>دقّة المعلومات</b> التي يقدّمها المستخدم، وقد تتأثر بالأمراض المرافقة أو الأدوية الحالية.</li>
+              <li>الخوارزميات قد تخطئ، ولا تغطي كل الحالات الطبية أو النادرة.</li>
+              <li>المنصة موجّهة أساسًا للبالغين (+18). للأطفال تُفضّل مراجعة اختصاص طب الأطفال.</li>
+            </ul>
+          </div>
+
+          <div class="card reveal">
+            <h3>٤) الأدوية والمكملات</h3>
+            <ul>
+              <li>أي جرعات أو أسماء تُذكر داخل الصفحات هي <b>أمثلة تعليمية عامة</b> وليست وصفات شخصية.</li>
+              <li>تداخلات الأدوية، الحساسية، ووظائف الكلى/الكبد أمور تُقيَّم حصراً من قِبل الطبيب.</li>
+            </ul>
+          </div>
+
+          <div class="card reveal">
+            <h3>٥) الخصوصية والبيانات</h3>
+            <ul>
+              <li>هذه النسخة تعمل <b>بدون خادم</b> (Static): الحسابات على جهازك، ولا تُرسل بيانات شخصية إلى خوادمنا.</li>
+              <li>إن فعّلت مزايا مستقبلية للحفظ السحابي، ستظهر سياسة الخصوصية المحدثة بوضوح.</li>
+            </ul>
+          </div>
+
+          <div class="card reveal">
+            <h3>٦) المصادر والإرشادات</h3>
+            <p>تعتمد “حكيم” في منطقها العام على مبادئ إرشادات مهنية حديثة من جمعيات علمية مرموقة (مثل جمعيات القلب والباطنة والطب النفسي عالميًا). ورغم الحرص، قد تختلف التفاصيل المحلية/التحديثات، لذا يُرجى الاعتماد على الطبيب المختص في منطقتك.</p>
+          </div>
+
+          <div class="card reveal">
+            <h3>٧) المسؤولية</h3>
+            <p>باستخدامك “حكيم” تقر بأنك تفهم الحدود المذكورة وأنك لن تعتبر المنصة أو مطوريها مسؤولين عن أي أذى مباشر أو غير مباشر ناتج عن سوء الفهم أو الاستخدام.</p>
+          </div>
+
+          <div class="card reveal">
+            <h3>٨) تواصل واقتراحات</h3>
+            <p>يسعدنا تلقي الملاحظات التقنية والعلمية لتحسين الدقّة وتجربة الاستخدام. (أضف وسيلة التواصل/رابط GitHub هنا عند الجاهزية).</p>
+          </div>
+        </div>
+
+        <div class="card reveal" style="margin-top:14px">
+          <h3>تاريخ آخر تحديث</h3>
+          <p>سيتم تحديث هذا التنويه دوريًا. <span id="lastUpdated" class="tag"></span></p>
+          <p class="muted">إصدار المنصة: <b>Hakim v1</b></p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>© <span id="year"></span> حكيم — جميع الحقوق محفوظة.</p>
+    <p class="note">هذه الصفحة جزء من نظام “حكيم” — الغاية تثقيفية وليست بديلاً عن الاستشارة الطبية.</p>
+  </footer>
+
+  <script>
+  (function(){
+    // سنة وتاريخ
+    document.getElementById('year').textContent = new Date().getFullYear();
+    document.getElementById('lastUpdated').textContent = new Date().toLocaleDateString('ar-SY', {year:'numeric', month:'long', day:'numeric'});
+
+    // كشف تدريجي عند التمرير
+    const io = new IntersectionObserver((entries)=>{
+      entries.forEach(ent=>{
+        if(ent.isIntersecting){ ent.target.classList.add('in'); io.unobserve(ent.target); }
+      });
+    }, {threshold:.12, rootMargin:'0px 0px -10% 0px'});
+    document.querySelectorAll('.reveal').forEach(el=> io.observe(el));
+
+    // تصدير PDF يدعم العربية عبر html2canvas
+    document.getElementById('downloadPdfBtn').addEventListener('click', async ()=>{
+      const target = document.getElementById('disclaimerBox');
+      // نبني غلاف نظيف للطباعة
+      const wrap = document.createElement('div');
+      wrap.dir = 'rtl';
+      wrap.style.cssText = 'width:800px;padding:24px;background:#fff;color:#111;font-family:Cairo,Arial,sans-serif;line-height:1.9';
+      wrap.innerHTML = `
+        <h2 style="margin:0 0 10px;font-weight:800">حكيم — التنويه الطبي</h2>
+        ${document.querySelector('.content .grid').outerHTML}
+        <div style="margin-top:12px;border-top:1px solid #ddd;padding-top:10px;font-size:13px;color:#444">
+          © ${new Date().getFullYear()} حكيم — ملف تثقيفي للتنويه الطبي.
+        </div>
+      `;
+      document.body.appendChild(wrap);
+      const canvas = await html2canvas(wrap, {scale:2, backgroundColor:'#ffffff', useCORS:true});
+      document.body.removeChild(wrap);
+
+      const { jsPDF } = window.jspdf;
+      const pdf = new jsPDF({orientation:'p', unit:'pt', format:'a4'});
+      const margin = 36;
+      const pageW = pdf.internal.pageSize.getWidth();
+      const pageH = pdf.internal.pageSize.getHeight();
+      let imgW = pageW - margin*2;
+      let imgH = canvas.height * imgW / canvas.width;
+      if (imgH > pageH - margin*2){
+        const ratio = (pageH - margin*2) / imgH;
+        imgH *= ratio; imgW *= ratio;
+      }
+      pdf.addImage(canvas.toDataURL('image/png'), 'PNG', (pageW-imgW)/2, (pageH-imgH)/2, imgW, imgH);
+      pdf.save(`Hakim-Disclaimer-${Date.now()}.pdf`);
+    });
+  })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,619 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>حكيم — الباطنية | فحوصات + خطط علاجية + PDF</title>
+  <meta name="description" content="الباطنية: سكري، ضغط، دهون، قصور/فرط الدرق، فقر الدم، CKD، GERD — أسئلة مؤتمتة، خطة علاجية إرشادية مع أمثلة دوائية، وتصدير PDF بالعربية.">
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;800&display=swap" rel="stylesheet">
+
+  <!-- PDF عبر التقاط DOM -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" referrerpolicy="no-referrer"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js" referrerpolicy="no-referrer"></script>
+
+  <style>
+    :root{
+      --bg:#07090f; --txt:#e8ecff; --muted:#aab2d8;
+      --primary:#7aa2ff; --primary-2:#00e0ff; --accent:#a855f7;
+      --glass:rgba(255,255,255,.06); --border:rgba(255,255,255,.12);
+    }
+    *{box-sizing:border-box}
+    body{margin:0; font-family:'Cairo',system-ui,'Noto Sans Arabic',sans-serif; background:#07090f; color:var(--txt); line-height:1.9}
+    header{position:sticky; top:0; z-index:50; display:flex; align-items:center; justify-content:space-between; padding:14px 20px; backdrop-filter:saturate(140%) blur(8px); background:linear-gradient(180deg, rgba(15,16,40,.85), rgba(15,16,40,.45)); border-bottom:1px solid var(--border)}
+    .brand{display:flex; gap:12px; align-items:center}
+    .logo{width:42px; height:42px; border-radius:12px; display:grid; place-items:center; font-weight:800; background: radial-gradient(120% 120% at 0% 0%, var(--primary), var(--accent)); box-shadow: 0 0 24px rgba(122,162,255,.35), inset 0 0 18px rgba(255,255,255,.15)}
+    .brand-text strong{display:block; font-size:18px}
+    .brand-text span{display:block; font-size:12px; color:var(--muted)}
+    .container{width:min(1180px,94vw); margin-inline:auto}
+    h1{font-size:clamp(22px,4vw,34px); margin:22px 0 6px}
+    .sub{color:#cfd6ff; margin:0 0 12px}
+    .glass{background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03)); border:1px solid var(--border); border-radius:22px; padding:22px; box-shadow:0 30px 60px rgba(0,10,40,.35)}
+    .grid{display:grid; gap:16px}
+    .grid-2{grid-template-columns:1fr}
+    @media(min-width:980px){.grid-2{grid-template-columns:1fr 1fr}}
+    .choose{display:grid; gap:12px; grid-template-columns:repeat(2,1fr)}
+    @media(min-width:860px){.choose{grid-template-columns:repeat(4,1fr)}}
+    .opt{background:rgba(255,255,255,.04); border:1px solid var(--border); border-radius:16px; padding:14px; text-align:center; cursor:pointer; transition:transform .18s ease, border-color .18s ease; min-height:100px; display:grid; place-items:center; font-weight:700}
+    .opt:hover{transform:translateY(-3px); border-color:rgba(122,162,255,.6)}
+    .card{border:1px solid var(--border); border-radius:18px; background:rgba(255,255,255,0.04); padding:18px}
+    label{font-weight:600}
+    select, input[type="number"], input[type="text"]{width:100%; padding:10px 12px; border-radius:12px; border:1px solid var(--border); background:rgba(255,255,255,0.03); color:var(--txt)}
+    .row{display:grid; gap:12px; grid-template-columns:1fr}
+    @media(min-width:680px){.row{grid-template-columns:repeat(2,1fr)}}
+    .actions{display:flex; gap:10px; flex-wrap:wrap; margin-top:12px}
+    .btn{padding:10px 14px; border-radius:12px; border:1px solid var(--border); background:var(--glass); color:var(--txt); cursor:pointer; font-weight:700; transition:transform .2s ease, background .2s ease}
+    .btn.primary{background:linear-gradient(135deg, var(--primary), var(--primary-2)); border-color:transparent}
+    .btn:hover{transform:translateY(-2px)}
+    .result{padding:14px; border:1px solid var(--border); border-radius:14px; background:rgba(255,255,255,.03)}
+    .hint{font-size:13px; color:#b8c0ef}
+    footer{text-align:center; padding:22px; color:#aab2d8; font-size:13px; border-top:1px solid var(--border); margin-top:24px}
+    .mt{margin-top:10px}.hide{display:none}
+  </style>
+</head>
+<body>
+  <header>
+    <div class="brand">
+      <div class="logo">حكيم</div>
+      <div class="brand-text">
+        <strong>حكيم — الباطنية</strong>
+        <span>فحوصات سريعة + خطط علاجية + PDF</span>
+      </div>
+    </div>
+    <nav class="actions" style="margin:0">
+      <a class="btn" href="index.html">الصفحة الرئيسية</a>
+    </nav>
+  </header>
+
+  <main class="container">
+    <section class="glass">
+      <h1>الباطنية — اختر القسم</h1>
+      <p class="sub">أدخل البيانات ثم اختر القسم. الخطة العلاجية تتضمن **أمثلة دوائية** (بدون جرعات) لتُناقش مع طبيبك.</p>
+      <div class="row">
+        <div><label>الاسم:</label><input id="pat-name" type="text" placeholder="مثال: محمد أحمد"></div>
+        <div><label>العمر (سنوات):</label><input id="pat-age" type="number" min="10" max="120" placeholder="مثال: 45"></div>
+      </div>
+      <div class="row">
+        <div>
+          <label>الجنس:</label>
+          <select id="pat-sex">
+            <option value="male">ذكر</option>
+            <option value="female">أنثى</option>
+            <option value="pregnant">حامل/يُحتمل الحمل</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="choose" id="chooser">
+        <div class="opt" data-target="dm">سكر الدم (T2DM/الخطورة والضبط)</div>
+        <div class="opt" data-target="htn">ارتفاع الضغط</div>
+        <div class="opt" data-target="lipid">اضطرابات الدهون</div>
+        <div class="opt" data-target="hypo">قصور الدرق</div>
+        <div class="opt" data-target="hyper">فرط الدرق</div>
+        <div class="opt" data-target="anemia">فقر الدم</div>
+        <div class="opt" data-target="ckd">اعتلال الكلى المزمن (CKD)</div>
+        <div class="opt" data-target="gerd">ارتجاع/عسر الهضم (GERD)</div>
+      </div>
+      <p class="hint mt">أعلام الخطر (ألم صدري شديد، ضيق نفس حاد، نزف ظاهر، إغماء…) تتطلّب إسعافًا فوريًا.</p>
+    </section>
+
+    <section class="grid grid-2 mt">
+      <!-- 1) Diabetes -->
+      <div class="card hide" id="sec-dm">
+        <h2>سكر الدم — فحص خطورة/ضبط</h2>
+        <div class="row">
+          <div>
+            <label>هل تم تشخيصك بالسكري مسبقًا؟</label>
+            <select id="dmKnown"><option value="no">لا</option><option value="yes">نعم</option></select>
+          </div>
+          <div>
+            <label>تاريخ عائلي للسكري من الدرجة الأولى؟</label>
+            <select id="dmFH"><option value="no">لا</option><option value="yes">نعم</option></select>
+          </div>
+        </div>
+        <div class="row" id="dmRiskBox">
+          <div><label>الوزن (كغ)</label><input id="wKg" type="number" min="20" max="300" placeholder="70"></div>
+          <div><label>الطول (سم)</label><input id="hCm" type="number" min="120" max="220" placeholder="170"></div>
+          <div><label>نشاط بدني ≥ 150 دقيقة/أسبوع؟</label><select id="dmPA"><option value="yes">نعم</option><option value="no">لا</option></select></div>
+          <div><label>ضغط مرتفع مُشخّص؟</label><select id="dmHTN"><option value="no">لا</option><option value="yes">نعم</option></select></div>
+        </div>
+        <div class="row hide" id="dmControlBox">
+          <div><label>آخر HbA1c (%) إن وجد</label><input id="a1c" type="number" step="0.1" min="4" max="20" placeholder="7.2"></div>
+          <div><label>سكر صائم (mg/dL) إن وجد</label><input id="fpg" type="number" min="50" max="600" placeholder="120"></div>
+        </div>
+        <div class="actions">
+          <button class="btn primary" onclick="calcDM()">احسب النتيجة</button>
+          <button class="btn" onclick="exportPDF('dm')">تصدير PDF</button>
+        </div>
+        <div class="result mt" id="dm-res"></div>
+      </div>
+
+      <!-- 2) Hypertension -->
+      <div class="card hide" id="sec-htn">
+        <h2>ارتفاع الضغط — تصنيف سريع</h2>
+        <div class="row">
+          <div><label>الضغط الانقباضي SBP (mmHg)</label><input id="sbp" type="number" min="70" max="260" placeholder="135"></div>
+          <div><label>الضغط الانبساطي DBP (mmHg)</label><input id="dbp" type="number" min="40" max="160" placeholder="85"></div>
+        </div>
+        <div class="row">
+          <div><label>عدد القراءات المختلفة خلال أيام</label><input id="bpReads" type="number" min="1" max="30" placeholder="3"></div>
+          <div><label>أعراض مقلقة (ألم صدر، ضيق نفس، عصبية)</label><select id="bpSymptoms"><option value="no">لا</option><option value="yes">نعم</option></select></div>
+        </div>
+        <div class="actions">
+          <button class="btn primary" onclick="calcHTN()">احسب التصنيف</button>
+          <button class="btn" onclick="exportPDF('htn')">تصدير PDF</button>
+        </div>
+        <div class="result mt" id="htn-res"></div>
+      </div>
+
+      <!-- 3) Dyslipidemia -->
+      <div class="card hide" id="sec-lipid">
+        <h2>اضطرابات الدهون — تقييم مبسّط</h2>
+        <div class="row">
+          <div><label>LDL (mg/dL) إن وجد</label><input id="ldl" type="number" min="30" max="400" placeholder="160"></div>
+          <div><label>HDL (mg/dL) إن وجد</label><input id="hdl" type="number" min="10" max="120" placeholder="45"></div>
+        </div>
+        <div class="row">
+          <div><label>Triglycerides TG (mg/dL) إن وجد</label><input id="tg" type="number" min="30" max="1500" placeholder="170"></div>
+          <div><label>تدخين حالي؟</label><select id="smoke"><option value="no">لا</option><option value="yes">نعم</option></select></div>
+        </div>
+        <div class="actions">
+          <button class="btn primary" onclick="calcLipid()">احسب التقييم</button>
+          <button class="btn" onclick="exportPDF('lipid')">تصدير PDF</button>
+        </div>
+        <div class="result mt" id="lipid-res"></div>
+      </div>
+
+      <!-- 4) Hypothyroidism -->
+      <div class="card hide" id="sec-hypo">
+        <h2>قصور الدرق — فحص مبسّط</h2>
+        <div class="row">
+          <div><label>TSH مرتفع؟ (إن وُجد)</label><select id="hypoTSH"><option value="unknown">غير معروف</option><option value="no">لا</option><option value="yes">نعم</option></select></div>
+          <div><label>FT4 منخفض؟ (إن وُجد)</label><select id="hypoFT4"><option value="unknown">غير معروف</option><option value="no">لا</option><option value="yes">نعم</option></select></div>
+        </div>
+        <div class="row">
+          <div><label>أعراض: زيادة وزن/إمساك/برودة/إرهاق</label><select id="hypoSx"><option value="no">لا</option><option value="yes">نعم</option></select></div>
+          <div><label>تاريخ مناعي/درقي</label><select id="hypoHx"><option value="no">لا</option><option value="yes">نعم</option></select></div>
+        </div>
+        <div class="actions">
+          <button class="btn primary" onclick="calcHypo()">احسب التقييم</button>
+          <button class="btn" onclick="exportPDF('hypo')">تصدير PDF</button>
+        </div>
+        <div class="result mt" id="hypo-res"></div>
+      </div>
+
+      <!-- 5) Hyperthyroidism -->
+      <div class="card hide" id="sec-hyper">
+        <h2>فرط الدرق — فحص مبسّط</h2>
+        <div class="row">
+          <div><label>TSH منخفض؟</label><select id="hyperTSH"><option value="unknown">غير معروف</option><option value="no">لا</option><option value="yes">نعم</option></select></div>
+          <div><label>FT4 مرتفع؟</label><select id="hyperFT4"><option value="unknown">غير معروف</option><option value="no">لا</option><option value="yes">نعم</option></select></div>
+        </div>
+        <div class="row">
+          <div><label>أعراض: خفقان/نقص وزن/حرارة/رجفان</label><select id="hyperSx"><option value="no">لا</option><option value="yes">نعم</option></select></div>
+          <div><label>ألم/ضغط صدري أو تسرّع شديد؟</label><select id="hyperRed"><option value="no">لا</option><option value="yes">نعم</option></select></div>
+        </div>
+        <div class="actions">
+          <button class="btn primary" onclick="calcHyper()">احسب التقييم</button>
+          <button class="btn" onclick="exportPDF('hyper')">تصدير PDF</button>
+        </div>
+        <div class="result mt" id="hyper-res"></div>
+      </div>
+
+      <!-- 6) Anemia -->
+      <div class="card hide" id="sec-anemia">
+        <h2>فقر الدم — فحص مبسّط</h2>
+        <div class="row">
+          <div><label>Hb (g/dL) إن وُجد</label><input id="hb" type="number" step="0.1" min="4" max="20" placeholder="11.5"></div>
+          <div><label>MCV (fL) إن وُجد</label><input id="mcv" type="number" step="0.1" min="60" max="120" placeholder="76"></div>
+        </div>
+        <div class="row">
+          <div><label>أعراض: تعب/شحوب/خفقان</label><select id="anSx"><option value="no">لا</option><option value="yes">نعم</option></select></div>
+          <div><label>نزف ظاهر (طمث غزير/براز أسود/دموي)؟</label><select id="anBleed"><option value="no">لا</option><option value="yes">نعم</option></select></div>
+        </div>
+        <div class="actions">
+          <button class="btn primary" onclick="calcAnemia()">احسب التقييم</button>
+          <button class="btn" onclick="exportPDF('anemia')">تصدير PDF</button>
+        </div>
+        <div class="result mt" id="anemia-res"></div>
+      </div>
+
+      <!-- 7) CKD -->
+      <div class="card hide" id="sec-ckd">
+        <h2>اعتلال الكلى المزمن (CKD) — تقدير eGFR</h2>
+        <div class="row">
+          <div><label>كرياتينين المصل (mg/dL)</label><input id="scr" type="number" step="0.01" min="0.3" max="12" placeholder="1.0"></div>
+          <div><label>نسبة ألبومين/كرياتينين بول ACR (mg/g) إن وُجد</label><input id="acr" type="number" step="1" min="0" max="5000" placeholder="20"></div>
+        </div>
+        <div class="actions">
+          <button class="btn primary" onclick="calcCKD()">احسب eGFR والتصنيف</button>
+          <button class="btn" onclick="exportPDF('ckd')">تصدير PDF</button>
+        </div>
+        <div class="result mt" id="ckd-res"></div>
+      </div>
+
+      <!-- 8) GERD -->
+      <div class="card hide" id="sec-gerd">
+        <h2>ارتجاع/عسر الهضم (GERD) — فحص مبسّط</h2>
+        <div class="row">
+          <div><label>حرقة/ارتجاع كم مرّة بالأسبوع؟</label>
+            <select id="geFreq">
+              <option value="0">نادرًا</option><option value="1">≤1</option><option value="2">2</option><option value="3">≥3</option>
+            </select></div>
+          <div><label>ألم/عسرة بلع، نزف هضمي، نقص وزن؟</label><select id="geRed"><option value="no">لا</option><option value="yes">نعم</option></select></div>
+        </div>
+        <div class="row">
+          <div><label>علاقة بالأطعمة الدسمة/المبهّرة/الكافيين؟</label><select id="geDiet"><option value="no">لا</option><option value="yes">نعم</option></select></div>
+          <div><label>أعراض ليلية/عند الاستلقاء؟</label><select id="geNight"><option value="no">لا</option><option value="yes">نعم</option></select></div>
+        </div>
+        <div class="actions">
+          <button class="btn primary" onclick="calcGERD()">احسب التقييم</button>
+          <button class="btn" onclick="exportPDF('gerd')">تصدير PDF</button>
+        </div>
+        <div class="result mt" id="gerd-res"></div>
+      </div>
+    </section>
+
+    <section class="glass mt">
+      <p class="hint">هذه الصفحة للتثقيف والفرز الأولي ولا تغني عن تقييم الطبيب. للحمل، أعمار &lt;18 أو ≥65 عامًا، أو وجود أمراض مرافقة: يفضّل تقييم شخصي متخصص.</p>
+    </section>
+  </main>
+
+  <footer>© <span id="year"></span> حكيم — جميع الحقوق محفوظة.</footer>
+
+  <script>
+    // ====== إعدادات عامة ======
+    document.getElementById('year').textContent = new Date().getFullYear();
+    document.querySelectorAll('#chooser .opt').forEach(el=>{
+      el.addEventListener('click', ()=>{
+        document.querySelectorAll('.card').forEach(c=>c.classList.add('hide'));
+        const sec = document.getElementById('sec-'+el.getAttribute('data-target'));
+        if (sec){ sec.classList.remove('hide'); sec.scrollIntoView({behavior:'smooth', block:'start'}); }
+      });
+    });
+
+    // إدخال المستخدم
+    function nameVal(){ return document.getElementById('pat-name').value?.trim() || 'بدون اسم'; }
+    function ageVal(){ const n=parseInt(document.getElementById('pat-age').value,10); return isNaN(n)? null : Math.min(120, Math.max(10,n)); }
+    function sexVal(){ const v=document.getElementById('pat-sex').value; return {code:v, label: v==='male'?'ذكر':(v==='female'?'أنثى':'حامل/محتمل الحمل')}; }
+    function userContext(){ const age=ageVal(), sex=sexVal(); return {name:nameVal(), age, sex, minor: age!=null && age<18, older: age!=null && age>=65, pregnant: sex.code==='pregnant'}; }
+    function lines(arr){ return `<ul>${arr.map(x=>`<li>${x}</li>`).join('')}</ul>`; }
+    function setLast(obj){ window._last = obj; }
+
+    // ====== مُولِّد خطة: عام + أمثلة دوائية ======
+    // يعيد: {plan[], rec[], pharm[], flags[]}
+    function buildPlanIM(domain, ctx, u){
+      const plan=[], rec=[], pharm=[], flags = ctx.flags? [...ctx.flags]:[];
+
+      // قواعد عامة
+      if (u.minor) rec.push('العمر أقل من 18: موجّه للبالغين — يلزم تقييم اختصاص أطفال عند اللزوم.');
+      if (u.older) rec.push('العمر ≥65: خطط محافظة، مراجعة التداخلات والآثار الجانبية، والحذر من انخفاض الضغط والسقوط.');
+      if (u.pregnant) rec.push('حمل/احتمال حمل: تُعدَّل الخيارات الدوائية؛ تجنّب أدوية محظورة، واستشارة نسائية/باطنية ضرورية.');
+
+      // نمط حياة أساسي
+      plan.push('نشاط بدني معتدل ≥150 دقيقة/أسبوع وتمارين مقاومة 2×/أسبوع إن أمكن.');
+      plan.push('غذاء متوازن (خضار/حبوب كاملة/بروتين معتدل)، تقليل السكريات والدهون المتحوّلة والملح الزائد.');
+      plan.push('نوم كافٍ، إدارة توتّر، الامتناع عن التدخين والكحول.');
+
+      switch(domain){
+        case 'dm': {
+          // سكري نوع 2
+          if (ctx.state==='risk'){
+            if (ctx.riskScore>=5) rec.push('خطورة مرتفعة للإصابة بالسكري — يُنصح بفحوص HbA1c وسكر صائم لدى مختبر.');
+            else rec.push('خطورة منخفضة/متوسطة — الاستمرار على نمط حياة صحي وفحوص دورية.');
+            // لا أدوية عند "خطورة" فقط
+          } else {
+            if (ctx.a1c!=null){
+              if (ctx.a1c<7) rec.push('ضبط جيد لمعظم البالغين — متابعة دورية.');
+              else if (ctx.a1c<8) rec.push('ضبط مقبول — تحسين نمط الحياة وقد تُعدَّل الخطة.');
+              else rec.push('ضبط غير كافٍ — مناقشة تكثيف العلاج مع اختصاصي.');
+            }
+            // أمثلة دوائية (يقررها الطبيب)
+            if (!u.pregnant){
+              pharm.push('Metformin (إن لم توجد موانع).');
+              pharm.push('SGLT2 inhibitors (مثال: dapagliflozin/empa…): فائدة قلبية/كلوية لبعض المرضى.');
+              pharm.push('GLP-1 RA (semaglutide/lira…): فائدة وزن/قلبية لدى فئات محددة.');
+              pharm.push('Insulin: يُبحث عند ارتفاع شديد/أعراض/فشل الضبط.');
+            } else {
+              pharm.push('في الحمل غالبًا الأنسولين هو الخيار الدوائي الأساسي الآمن؛ تُراجع الخيارات مع نسائية/غدد.');
+            }
+          }
+          break;
+        }
+        case 'htn': {
+          if (ctx.stage==='أزمة ضغط محتملة') flags.push('ضغط ≥180/120 مع أعراض خطرة ⇒ إسعاف فورًا.');
+          if (ctx.stage==='مرحلة 1') rec.push('نمط حياة + تُناقَش المعالجة بحسب المخاطر القلبية الوعائية.');
+          if (ctx.stage==='مرحلة 2') rec.push('غالبًا يلزم علاج دوائي مع نمط حياة وتقييم الأسباب الثانوية.');
+          if (!u.pregnant){
+            pharm.push('Thiazide-like diuretics (مثال: indapamide/chlorthalidone).');
+            pharm.push('ACE inhibitors (مثال: enalapril)/ARBs (مثال: losartan) — حسب الحالة.');
+            pharm.push('Calcium channel blockers (amlodipine…).');
+            pharm.push('Beta blockers عند استطبابات محددة (إقفار/نظم…).');
+          } else {
+            pharm.push('في الحمل: يُفضّل labetalol، nifedipine، methyldopa حسب الحالة.');
+            pharm.push('يُمنَع: ACEi/ARB أثناء الحمل.');
+          }
+          break;
+        }
+        case 'lipid': {
+          if (ctx.ldl!=null && ctx.ldl>=190) rec.push('LDL ≥190 mg/dL عادةً يحتاج خافض دهون بعد نفي أسباب ثانوية.');
+          if (ctx.tg!=null && ctx.tg>=500) flags.push('TG ≥500 mg/dL يرفع خطر التهاب بنكرياس ⇒ تقييم قريب.');
+          rec.push('حساب مخاطر شاملة لدى الطبيب لتحديد شدة الخافضات.');
+          if (!u.pregnant){
+            pharm.push('Statins (أتورفاستاتين/روسوفاستاتين…): أساس خفض LDL.');
+            pharm.push('Ezetimibe عند عدم كفاية الستاتين أو عدم تحمّله.');
+            pharm.push('Fibrate/أوميغا-3 لفرط ثلاثي الغليسريد الشديد (قرار طبي).');
+          } else {
+            pharm.push('الستاتينات مُضادّة استطباب في الحمل؛ تُناقَش بدائل آمنة/تأجيل العلاج وفق الحالة.');
+          }
+          break;
+        }
+        case 'hypo': {
+          rec.push('إن كان TSH مرتفعًا وFT4 منخفضًا مع أعراض ⇒ يُرجّح قصور درق ويستلزم علاجًا تحت إشراف طبي.');
+          pharm.push('Levothyroxine: العلاج القياسي لقصور الدرق (تُحدد الجرعة ومتابعة TSH لدى الطبيب).');
+          if (u.pregnant) rec.push('في الحمل، ضبط TSH دقيق مهم لسلامة الأم والجنين.');
+          break;
+        }
+        case 'hyper': {
+          if (ctx.red) flags.push('خفقان شديد/ألم صدري/عدم انتظام نظم ⇒ تقييم إسعافي.');
+          rec.push('إن كان TSH منخفضًا وFT4 مرتفعًا مع أعراض ⇒ يُشتبه فرط درق؛ تُناقَش خيارات علاجية لدى اختصاصي.');
+          pharm.push('Beta-blockers للأعراض (خفقان/رعشة) متى لزم.');
+          if (!u.pregnant){
+            pharm.push('Antithyroid (Methimazole/Carbimazole أو PTU وفق الحالة).');
+          } else {
+            pharm.push('الحمل: غالبًا PTU بالثلث الأول ثم يمكن التحويل تحت إشراف اختصاصي.');
+          }
+          break;
+        }
+        case 'anemia': {
+          if (ctx.severity==='شديد') flags.push('هبوط Hb شديد أو أعراض نقص أكسجة ⇒ قد يتطلب تقييمًا عاجلًا.');
+          if (ctx.micro) rec.push('ميكروسيتي (MCV<80): يُشتبه نقص الحديد ⇒ تحرّي سبب وخطة تعويض تحت إشراف طبي.');
+          if (ctx.macro) rec.push('ماكروسيتي (MCV>100): تحرّي نقص B12/فولات أو أسباب أخرى.');
+          // أمثلة دوائية حسب النوع (قرار طبي)
+          pharm.push('نقص الحديد: أملاح الحديد الفموية/الوريدية حسب الشدة والتحمل.');
+          pharm.push('نقص B12: سيانوكوبالامين/هيدروكسوكوبالامين حسب السبب.');
+          pharm.push('نقص فولات: فوليك أسيد بعد تحرّي B12.');
+          pharm.push('نقل دم: في حالات محددة يقررها الطبيب.');
+          if (u.pregnant) rec.push('الحمل: يُتابع Hb دوريًا وقد تحتاج مكملات يحددها الطبيب.');
+          break;
+        }
+        case 'ckd': {
+          rec.push('السيطرة على الضغط والسكر، تقليل الملح، ترطيب مناسب ما لم يُمنع طبيًا.');
+          if (ctx.stageNum>=3) rec.push('CKD ≥3: متابعة نفروولوجي وخطة حماية كلوية.');
+          // أمثلة دوائية داعمة (قرار طبي)
+          pharm.push('ACEi/ARB عند وجود ألبومينية لحماية الكلية (مع مراقبة بوتاسيوم/كرياتينين).');
+          pharm.push('SGLT2 inhibitors لمرضى السكري/الكلية وفق الملاءمة السريرية.');
+          pharm.push('تعديل جرعات الأدوية حسب eGFR؛ تجنّب NSAIDs متى أمكن.');
+          break;
+        }
+        case 'gerd': {
+          if (ctx.red) flags.push('عسرة/ألم بلع، نزف، نقص وزن، قيء مستمر ⇒ يُفضّل تنظير/تقييم عاجل.');
+          rec.push('رفع رأس السرير، تجنب وجبات ليلية/الدسم/الكافيين/الحمضيات، إنقاص وزن عند زيادة.');
+          if (!u.pregnant){
+            pharm.push('Antacids عند اللزوم، H2-blockers (famotidine…) أو PPIs (omeprazole/esomeprazole…) لفترات محدودة حسب إرشاد طبي.');
+          } else {
+            pharm.push('في الحمل: تُفضّل التعديلات الحياتية ومضادات الحموضة الآمنة؛ تُراجع الأدوية الأخرى مع نسائية.');
+          }
+          break;
+        }
+      }
+      return {plan, rec, pharm, flags};
+    }
+
+    // ====== عرض موحّد ======
+    function showResult(elId, obj){
+      const u = userContext();
+      const flags = obj.flags || [];
+      const header = `<p>الاسم: <b>${u.name}</b>${u.age? ` — العمر: <b>${u.age}</b>`:''} — الجنس: <b>${u.sex.label}</b></p>`;
+      const assess = obj.assess ? `<p><b>التقييم:</b> ${obj.assess}</p>` : '';
+      const sev = obj.severity ? `<p><b>الشدة:</b> ${obj.severity}</p>` : '';
+      const score = (obj.score!==undefined) ? `<p><b>قيمة/درجة:</b> ${obj.score}</p>` : '';
+      const flagsHtml = flags.length? `<p><b>تنبيهات:</b></p>${lines(flags)}` : '';
+      const planHtml = obj.plan?.length? `<p><b>خطة عامة:</b></p>${lines(obj.plan)}` : '';
+      const recHtml = obj.rec?.length? `<p><b>توصيات موجّهة:</b></p>${lines(obj.rec)}` : '';
+      const pharmHtml = obj.pharm?.length? `<p><b>أمثلة دوائية (قرار الطبيب):</b></p>${lines(obj.pharm)}<p class="hint">لا تبدأ/توقف أي دواء دون مراجعة طبيبك. توجد موانع وتداخلات دوائية خاصة بالحمل وكبار السن والأمراض المرافقة.</p>` : '';
+
+      document.getElementById(elId).innerHTML = header + score + sev + assess + flagsHtml + planHtml + recHtml + pharmHtml;
+      setLast({...obj, user:u});
+    }
+
+    // ====== Utilities ======
+    (function(){ // DM toggle boxes
+      const known = document.getElementById('dmKnown');
+      const riskBox = document.getElementById('dmRiskBox');
+      const ctrlBox = document.getElementById('dmControlBox');
+      const toggle = ()=> { if (known.value==='yes'){ riskBox.classList.add('hide'); ctrlBox.classList.remove('hide'); } else { ctrlBox.classList.add('hide'); riskBox.classList.remove('hide'); } };
+      known.addEventListener('change', toggle); toggle();
+    })();
+
+    function parseNum(id){ const el=document.getElementById(id); if(!el || el.value==='') return null; const v=parseFloat(String(el.value).replace(',','.')); return isNaN(v)? null : v; }
+
+    // ====== الحسابات ======
+    function calcDM(){
+      const u = userContext();
+      const known = document.getElementById('dmKnown').value==='yes';
+      if (!known){
+        const w = parseNum('wKg'), h = parseNum('hCm');
+        const bmi = (w && h)? (w / Math.pow(h/100,2)) : null;
+        let score = 0;
+        const age = u.age||0;
+        if (age>=45 && age<55) score+=1; else if (age<65 && age>=55) score+=2; else if (age>=65) score+=3;
+        if (bmi!=null){ if (bmi>=25 && bmi<30) score+=1; else if (bmi>=30) score+=3; } else { score+=1; }
+        if (u.sex.code==='male') score+=1;
+        if (document.getElementById('dmHTN').value==='yes') score+=1;
+        if (document.getElementById('dmPA').value==='no') score+=1;
+        if (document.getElementById('dmFH').value==='yes') score+=1;
+
+        const risk = score>=5 ? 'مرتفع' : (score>=3 ? 'متوسط' : 'منخفض');
+        const {plan, rec, pharm, flags} = buildPlanIM('dm', {state:'risk', riskScore:score}, u);
+        const bmiStr = bmi? ` — BMI: <b>${bmi.toFixed(1)}</b>`:'';
+        showResult('dm-res', {title:'سكر الدم — خطورة', score:score, assess:`${risk}`, plan, rec, pharm, flags});
+      } else {
+        const a1c = parseNum('a1c'); const fpg = parseNum('fpg');
+        let assess='تقييم ضبط بالمتاح';
+        if (a1c!=null){ if (a1c<7) assess='ضبط جيد'; else if (a1c<8) assess='ضبط مقبول'; else assess='ضبط غير كافٍ'; }
+        const {plan, rec, pharm, flags} = buildPlanIM('dm', {state:'control', a1c, fpg}, u);
+        showResult('dm-res', {title:'سكر الدم — ضبط', score:a1c??fpg, assess, plan, rec, pharm, flags});
+      }
+    }
+
+    function calcHTN(){
+      const u = userContext();
+      const sbp = parseNum('sbp'), dbp = parseNum('dbp');
+      const reads = parseNum('bpReads') || 1;
+      const symptomatic = document.getElementById('bpSymptoms').value==='yes';
+      if (sbp==null || dbp==null){ document.getElementById('htn-res').innerHTML='<p>الرجاء إدخال SBP و DBP.</p>'; return; }
+      let stage=''; let emergency=false;
+      if (sbp>=180 || dbp>=120){ stage='أزمة ضغط محتملة'; emergency=symptomatic; }
+      else if (sbp>=140 || dbp>=90) stage='مرحلة 2';
+      else if (sbp>=130 || dbp>=80) stage='مرحلة 1';
+      else if (sbp>=120 && dbp<80) stage='مرتفع-حدّي';
+      else stage='طبيعي';
+      const ctx={stage, flags: emergency? ['ضغط ≥180/120 مع أعراض خطرة ⇒ طوارئ حالًا.']:[]};
+      const {plan, rec, pharm, flags} = buildPlanIM('htn', ctx, u);
+      showResult('htn-res', {title:'ارتفاع الضغط', assess:stage, plan, rec, pharm, flags});
+    }
+
+    function calcLipid(){
+      const u = userContext();
+      const ldl = parseNum('ldl'), hdl = parseNum('hdl'), tg = parseNum('tg');
+      const smoker = document.getElementById('smoke').value==='yes';
+      let assess='تقييم معطيات متوفرة فقط';
+      if (ldl!=null && ldl>=190) assess='LDL مرتفع جدًا (≥190)';
+      else if (tg!=null && tg>=500) assess='TG عالية جدًا (≥500)';
+      else if (hdl!=null && hdl<40) assess='HDL منخفض (عامل خطورة)';
+      const {plan, rec, pharm, flags} = buildPlanIM('lipid', {ldl,hdl,tg}, u);
+      showResult('lipid-res', {title:'اضطرابات الدهون', assess: assess + (smoker?' — مع تدخين حالي':''), plan, rec, pharm, flags, score: ldl??tg??hdl});
+    }
+
+    function calcHypo(){
+      const u = userContext();
+      const tsh = document.getElementById('hypoTSH').value==='yes';
+      const ft4low = document.getElementById('hypoFT4').value==='yes';
+      const sx = document.getElementById('hypoSx').value==='yes';
+      let assess='مؤشرات قليلة لقصور درق';
+      if (tsh && ft4low && sx) assess='اشتباه قصور درق واضح — يلزم تقييم وعلاج.';
+      else if (tsh && sx) assess='قصور درق تحت سريري محتمل — متابعة وتحاليل.';
+      const {plan, rec, pharm, flags} = buildPlanIM('hypo', {}, u);
+      showResult('hypo-res', {title:'قصور الدرق', assess, plan, rec, pharm, flags});
+    }
+
+    function calcHyper(){
+      const u = userContext();
+      const tshLow = document.getElementById('hyperTSH').value==='yes';
+      const ft4High = document.getElementById('hyperFT4').value==='yes';
+      const sx = document.getElementById('hyperSx').value==='yes';
+      const red = document.getElementById('hyperRed').value==='yes';
+      let assess='مؤشرات قليلة لفرط درق';
+      if (tshLow && ft4High && sx) assess='اشتباه فرط درق — يلزم تقييم اختصاصي.';
+      const {plan, rec, pharm, flags} = buildPlanIM('hyper', {red}, u);
+      showResult('hyper-res', {title:'فرط الدرق', assess: assess + (red?' — مع أعراض مقلقة':''), plan, rec, pharm, flags});
+    }
+
+    function calcAnemia(){
+      const u = userContext();
+      const hb = parseNum('hb'); const mcv = parseNum('mcv');
+      const sx = document.getElementById('anSx').value==='yes';
+      const bleed = document.getElementById('anBleed').value==='yes';
+      let threshold = 13; if (u.sex.code!=='male') threshold = (u.pregnant? 11 : 12);
+      let severity='غير محدد', assess='لا تتوفر بيانات كفاية';
+      const flags=[];
+      if (hb!=null){
+        if (hb < threshold){
+          if (hb>=10) severity='خفيف'; else if (hb>=8) severity='متوسط'; else { severity='شديد'; flags.push('Hb < 8 g/dL ⇒ قد يتطلب تقييمًا عاجلًا.'); }
+          assess = `فقر دم ${severity}`;
+        } else { assess='لا يوجد فقر دم بحسب الحد الأدنى المرجعي المتاح.'; }
+      }
+      if (bleed) flags.push('علامات نزف (طمث غزير/براز أسود/دموي) — يلزم تقييم سبب النزف.');
+      const ctx={severity, micro:(mcv!=null && mcv<80), macro:(mcv!=null && mcv>100), flags};
+      const {plan, rec, pharm, flags:moreF} = buildPlanIM('anemia', ctx, u);
+      const allFlags = [...flags, ...(moreF||[])];
+      showResult('anemia-res', {title:'فقر الدم', assess, plan, rec, pharm, flags:allFlags, score:hb});
+    }
+
+    // CKD-EPI 2021
+    function eGFR_CKDEPI_2021(scr, age, female){
+      const k = female? 0.7 : 0.9;
+      const alpha = female? -0.241 : -0.302;
+      const min = Math.min(scr/k, 1);
+      const max = Math.max(scr/k, 1);
+      const multSex = female? 1.012 : 1.0;
+      return 142 * Math.pow(min, alpha) * Math.pow(max, -1.200) * Math.pow(0.9938, age) * multSex;
+    }
+    function calcCKD(){
+      const u = userContext();
+      const scr = parseNum('scr'); if (scr==null || u.age==null){ document.getElementById('ckd-res').innerHTML='<p>الرجاء إدخال الكرياتينين والعمر.</p>'; return; }
+      const female = (u.sex.code!=='male');
+      let egfr = eGFR_CKDEPI_2021(scr, u.age, female); egfr = Math.max(egfr,1);
+      const acr = parseNum('acr');
+      let stage='G1 (≥90)', stageNum=1;
+      if (egfr<15){ stage='G5 (<15)'; stageNum=5; }
+      else if (egfr<30){ stage='G4 (15–29)'; stageNum=4; }
+      else if (egfr<45){ stage='G3b (30–44)'; stageNum=3.5; }
+      else if (egfr<60){ stage='G3a (45–59)'; stageNum=3; }
+      else if (egfr<90){ stage='G2 (60–89)'; stageNum=2; }
+      let albumCat='A1 (<30 mg/g)'; if (acr!=null){ if (acr>300) albumCat='A3 (>300 mg/g)'; else if (acr>=30) albumCat='A2 (30–300 mg/g)'; }
+      const {plan, rec, pharm, flags} = buildPlanIM('ckd', {egfr, stage, stageNum, albumCat}, u);
+      showResult('ckd-res', {title:'اعتلال الكلى المزمن (CKD)', assess:`مرحلة ${stage}${acr!=null? ' — '+albumCat:''}`, plan, rec, pharm, flags, score:egfr.toFixed(0)});
+    }
+
+    function calcGERD(){
+      const u = userContext();
+      const freq = parseInt(document.getElementById('geFreq').value,10);
+      const red = document.getElementById('geRed').value==='yes';
+      const diet = document.getElementById('geDiet').value==='yes';
+      const night = document.getElementById('geNight').value==='yes';
+      let assess='حرقة/عسر هضم متقطع'; if (freq>=3) assess='أعراض متكررة (≥3/أسبوع)';
+      const {plan, rec, pharm, flags} = buildPlanIM('gerd', {red}, u);
+      showResult('gerd-res', {title:'ارتجاع/عسر الهضم (GERD)', assess: assess + (red?' — مع أعلام خطر':'' ) + (night?' — ليلية':'' ) + (diet?' — مرتبطة بالغذاء':''), plan, rec, pharm, flags});
+    }
+
+    // ====== PDF ======
+    async function exportPDF(section){
+      const { jsPDF } = window.jspdf;
+      const m = window._last || {title:section, user:userContext(), plan:[], rec:[], pharm:[], flags:[]};
+      const u = m.user || userContext();
+
+      const box = document.createElement('div');
+      box.dir = 'rtl';
+      box.style.cssText = 'width:800px;padding:24px;background:#fff;color:#111;font-family:Cairo,Arial,sans-serif;line-height:1.9;border:1px solid #ddd;border-radius:12px';
+      box.innerHTML = `
+        <h2 style="margin:0 0 10px;font-weight:800">حكيم — ${m.title||section}</h2>
+        <p><b>الاسم:</b> ${u.name || 'بدون اسم'}${u.age? ` — <b>العمر:</b> ${u.age}`:''} — <b>الجنس:</b> ${u.sex? u.sex.label : 'غير محدد'}</p>
+        ${m.score!==undefined? `<p><b>قيمة/درجة:</b> ${m.score}</p>`:''}
+        ${m.severity? `<p><b>الشدة:</b> ${m.severity}</p>`:''}
+        ${m.assess? `<p><b>التقييم:</b> ${m.assess}</p>`:''}
+        ${m.flags && m.flags.length? `<p><b>تنبيهات:</b></p><ul>${m.flags.map(x=>`<li>${x}</li>`).join('')}</ul>`:''}
+        ${m.plan && m.plan.length? `<p><b>خطة عامة:</b></p><ul>${m.plan.map(x=>`<li>${x}</li>`).join('')}</ul>`:''}
+        ${m.rec && m.rec.length? `<p><b>توصيات موجّهة:</b></p><ul>${m.rec.map(x=>`<li>${x}</li>`).join('')}</ul>`:''}
+        ${m.pharm && m.pharm.length? `<p><b>أمثلة دوائية (قرار الطبيب):</b></p><ul>${m.pharm.map(x=>`<li>${x}</li>`).join('')}</ul><p style="font-size:12px;color:#555">تحذير: لا تبدأ/توقف أي دواء دون طبيب. قد توجد موانع/تداخلات وخاصة في الحمل وكبار السن.</p>`:''}
+        <hr style="margin:12px 0;border:0;border-top:1px solid #ddd"/>
+        <p style="font-size:13px;color:#444">ملف تثقيفي — لا يُغني عن تقييم الطبيب المختص. في الطوارئ يُرجى التواصل الفوري مع الإسعاف.</p>
+      `;
+      document.body.appendChild(box);
+      const canvas = await html2canvas(box, {scale:2, backgroundColor:'#ffffff', useCORS:true});
+      document.body.removeChild(box);
+
+      const pdf = new jsPDF({orientation:'p', unit:'pt', format:'a4'});
+      const pageW = pdf.internal.pageSize.getWidth(), pageH = pdf.internal.pageSize.getHeight(), margin=40;
+      let imgW = pageW - margin*2, imgH = canvas.height * imgW / canvas.width;
+      if (imgH > pageH - margin*2){ const r = (pageH - margin*2) / imgH; imgH*=r; imgW*=r; }
+      pdf.addImage(canvas.toDataURL('image/png'), 'PNG', (pageW-imgW)/2, (pageH-imgH)/2, imgW, imgH);
+      pdf.save(`Hakim-IM-${(m.title||section).replace(/\s+/g,'_')}-${Date.now()}.pdf`);
+    }
+  </script>
+
+  <!--
+    ملاحظات مطوّر:
+    - أُدرجت أمثلة دوائية لكل قسم كمرجع منظم (بدون جرعات)، مع تحذيرات الحمل/كبار السن/التداخلات.
+    - سكري: Metformin / SGLT2 / GLP-1 / Insulin حسب الحالة.
+    - ضغط: Thiazide / ACEi-ARB / CCB / Beta-blockers؛ في الحمل Labetalol/Nifedipine/Methyldopa، ومنع ACEi/ARB.
+    - دهون: Statins / Ezetimibe / Fibrate / Omega-3؛ الستاتينات ممنوعة في الحمل.
+    - قصور الدرق: Levothyroxine.
+    - فرط الدرق: Beta-blocker للأعراض + Antithyroid (حسب الحالة؛ حمل: PTU أول الثلث).
+    - فقر الدم: حديد/B12/فولات/نقل دم حسب النوع والشدة.
+    - CKD: ACEi/ARB للحماية الكلوية عند الألبومينية + SGLT2 إن لائم؛ تعديل الجرعات وتجنّب NSAIDs.
+    - GERD: مضادات حموضة/H2/PPIs وفق الحاجة وتحت إشراف طبي؛ للحمل تُفضّل حلول نمط الحياة ومضادات الحموضة الآمنة.
+  -->
+</body>
+</html>

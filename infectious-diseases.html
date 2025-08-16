@@ -1,0 +1,636 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>حكيم — الأمراض المعدية | تقييمات ذكية + PDF</title>
+  <meta name="description" content="حكيم — الأمراض المعدية: إنتان/تعفن دم، التهاب رئوي، إنفلونزا/كوفيد، عدوى بولية بسيطة/معقدة، التهاب معدة وأمعاء، إسهال دموي/مسافر، التهاب سحايا، التهاب جلد ونسيج خلوي/دُمّل، عضّات وجروح ملوثة، سلّ رئوي مشتبه، التهاب كبد فيروسي حاد، حُمّى بعد سفر (ملاريا/ضنك)، داء وحيدات النوى.">
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;800&display=swap" rel="stylesheet">
+  <!-- PDF libs -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" referrerpolicy="no-referrer"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js" referrerpolicy="no-referrer"></script>
+
+  <style>
+    :root{
+      --bg:#07090f; --txt:#e8ecff; --muted:#aab2d8;
+      --primary:#7aa2ff; --primary-2:#00e0ff; --accent:#a855f7;
+      --glass:rgba(255,255,255,.06); --border:rgba(255,255,255,.12);
+    }
+    *{box-sizing:border-box}
+    body{margin:0; font-family:'Cairo',system-ui,'Noto Sans Arabic',sans-serif; background:#07090f; color:var(--txt); line-height:1.9}
+    header{position:sticky; top:0; z-index:50; display:flex; align-items:center; justify-content:space-between; padding:14px 20px; backdrop-filter:saturate(140%) blur(8px); background:linear-gradient(180deg, rgba(15,16,40,.85), rgba(15,16,40,.45)); border-bottom:1px solid var(--border)}
+    .brand{display:flex; gap:12px; align-items:center}
+    .logo{width:42px; height:42px; border-radius:12px; display:grid; place-items:center; font-weight:800; background: radial-gradient(120% 120% at 0% 0%, var(--primary), var(--accent)); box-shadow: 0 0 24px rgba(122,162,255,.35), inset 0 0 18px rgba(255,255,255,.15)}
+    .brand-text strong{display:block; font-size:18px}
+    .brand-text span{display:block; font-size:12px; color:var(--muted)}
+    .container{width:min(1180px,94vw); margin-inline:auto}
+    h1{font-size:clamp(22px,4vw,34px); margin:22px 0 6px}
+    .sub{color:#cfd6ff; margin:0 0 12px}
+    .glass{background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03)); border:1px solid var(--border); border-radius:22px; padding:22px; box-shadow:0 30px 60px rgba(0,10,40,.35)}
+    .grid{display:grid; gap:16px}
+    .grid-2{grid-template-columns:1fr}
+    @media(min-width:1000px){.grid-2{grid-template-columns:1fr 1fr}}
+    .choose{display:grid; gap:12px; grid-template-columns:repeat(2,1fr)}
+    @media(min-width:1000px){.choose{grid-template-columns:repeat(4,1fr)}}
+    .opt{background:rgba(255,255,255,.04); border:1px solid var(--border); border-radius:16px; padding:14px; text-align:center; cursor:pointer; transition:transform .18s ease, border-color .18s ease; min-height:110px; display:grid; place-items:center; font-weight:700}
+    .opt:hover{transform:translateY(-3px); border-color:rgba(122,162,255,.6)}
+    .card{border:1px solid var(--border); border-radius:18px; background:rgba(255,255,255,0.04); padding:18px}
+    label{font-weight:600}
+    select, input[type="number"], input[type="text"]{width:100%; padding:10px 12px; border-radius:12px; border:1px solid var(--border); background:rgba(255,255,255,0.03); color:var(--txt)}
+    .row{display:grid; gap:12px; grid-template-columns:1fr}
+    @media(min-width:680px){.row{grid-template-columns:repeat(2,1fr)}}
+    .row-3{display:grid; gap:12px; grid-template-columns:repeat(3,1fr)}
+    .actions{display:flex; gap:10px; flex-wrap:wrap; margin-top:12px}
+    .btn{padding:10px 14px; border-radius:12px; border:1px solid var(--border); background:var(--glass); color:var(--txt); cursor:pointer; font-weight:700; transition:transform .2s ease, background .2s ease}
+    .btn.primary{background:linear-gradient(135deg, var(--primary), var(--primary-2)); border-color:transparent}
+    .btn:hover{transform:translateY(-2px)}
+    .result{padding:14px; border:1px solid var(--border); border-radius:14px; background:rgba(255,255,255,.03)}
+    .hint{font-size:13px; color:#b8c0ef}
+    footer{text-align:center; padding:22px; color:#aab2d8; font-size:13px; border-top:1px solid var(--border); margin-top:24px}
+    .mt{margin-top:10px}.hide{display:none}
+  </style>
+</head>
+<body>
+<header>
+  <div class="brand">
+    <div class="logo">حكيم</div>
+    <div class="brand-text">
+      <strong>حكيم — الأمراض المعدية</strong>
+      <span>تقييمات مؤتمتة دقيقة + PDF</span>
+    </div>
+  </div>
+  <nav class="actions" style="margin:0">
+    <a class="btn" href="index.html">الصفحة الرئيسية</a>
+  </nav>
+</header>
+
+<main class="container">
+  <section class="glass">
+    <h1>الأمراض المعدية — اختر الحالة</h1>
+    <p class="sub">أدخل بياناتك ثم اختر الحالة. ستظهر <b>خطة إرشادية + أمثلة أدوية (بدون جرعات)</b> للمراجعة مع الطبيب. تختلف الخيارات حسب العمر والحمل والأمراض المزمنة.</p>
+
+    <div class="row">
+      <div><label>الاسم:</label><input id="pat-name" type="text" placeholder="مثال: يمان"/></div>
+      <div><label>العمر (سنوات):</label><input id="pat-age" type="number" min="1" max="110" placeholder="35"/></div>
+    </div>
+    <div class="row">
+      <div>
+        <label>الجنس:</label>
+        <select id="pat-sex"><option value="male">ذكر</option><option value="female">أنثى</option></select>
+      </div>
+      <div>
+        <label>حمل (للإناث):</label>
+        <select id="preg"><option value="0">غير حامل/لا ينطبق</option><option value="1">حامل</option></select>
+      </div>
+    </div>
+
+    <div class="choose" id="chooser">
+      <div class="opt" data-target="sepsis">إنتان/تعفن دم مشتبه (Sepsis)</div>
+      <div class="opt" data-target="cap">التهاب رئوي مكتسب من المجتمع (CAP)</div>
+      <div class="opt" data-target="ari">متلازمة تنفسية حادة (إنفلونزا/كوفيد)</div>
+      <div class="opt" data-target="utiSimple">عدوى بولية غير معقدة (التهاب مثانة)</div>
+      <div class="opt" data-target="utiComp">عدوى بولية معقدة/حُمّى/حمل</div>
+      <div class="opt" data-target="age">التهاب معدة وأمعاء حاد</div>
+      <div class="opt" data-target="dysentery">إسهال دموي/إسهال المسافر</div>
+      <div class="opt" data-target="meningitis">التهاب سحايا/دماغ مشتبه</div>
+      <div class="opt" data-target="ssti">التهاب جلد ونسيج خلوي/دُمّل</div>
+      <div class="opt" data-target="bites">عضّات/جرح ملوّث</div>
+      <div class="opt" data-target="tb">سلّ رئوي مشتبه</div>
+      <div class="opt" data-target="hepatitis">التهاب كبد فيروسي حاد (A/E مشتبه)</div>
+      <div class="opt" data-target="travel">حُمّى بعد سفر (ملاريا/ضنك…)</div>
+      <div class="opt" data-target="mono">داء وحيدات النوى (EBV/CMV) مشتبه</div>
+    </div>
+
+    <p class="hint mt">
+      تدبير المضادات الحيوية يختلف حسب **الحساسية الميكروبية المحلية، العمر، الحمل، الأمراض المزمنة، قصور الكلى/الكبد** — الأمثلة أدناه للتثقيف فقط وقرار وصفها للطبيب حصراً.
+    </p>
+  </section>
+
+  <section class="grid grid-2 mt">
+    <!-- 1) Sepsis -->
+    <div class="card hide" id="sec-sepsis">
+      <h2>إنتان/تعفن دم مشتبه (qSOFA مبسّط)</h2>
+      <div class="row-3">
+        <div><label>تنفّس سريع (≥ 22/دقيقة)</label><select id="spRR"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>ضغط انقباضي ≤ 100</label><select id="spBP"><option value="0">لا</option><option value="1">نعم/غير معروف</option></select></div>
+        <div><label>تخليط ذهني/نعاس</label><select id="spMent"><option value="0">لا</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="row">
+        <div><label>حمّى/قشعريرة</label><select id="spFever"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>بول قليل/منعدم</label><select id="spUrine"><option value="0">لا</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="actions">
+        <button class="btn primary" onclick="calcSepsis()">تقييم الإنتان</button>
+        <button class="btn" onclick="exportPDF('sepsis')">تصدير PDF</button>
+      </div>
+      <div class="result mt" id="sepsis-res"></div>
+    </div>
+
+    <!-- 2) CAP -->
+    <div class="card hide" id="sec-cap">
+      <h2>التهاب رئوي مكتسب من المجتمع (CRB-65 مبسّط)</h2>
+      <div class="row-3">
+        <div><label>تشوّش ذهني</label><select id="cpConf"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>تنفّس ≥ 30/د</label><select id="cpRR"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>ضغط منخفض (SBP&lt;90 أو DBP≤60)</label><select id="cpBP"><option value="0">لا</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="row">
+        <div><label>سعال/بلغم/ألم صدري/حمّى</label><select id="cpClassic"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>أكسجة منخفضة/زرقة</label><select id="cpHypox"><option value="0">لا</option><option value="1">نعم/غير معروف</option></select></div>
+      </div>
+      <div class="actions">
+        <button class="btn primary" onclick="calcCAP()">حساب CRB-65</button>
+        <button class="btn" onclick="exportPDF('community-acquired-pneumonia')">تصدير PDF</button>
+      </div>
+      <div class="result mt" id="cap-res"></div>
+    </div>
+
+    <!-- 3) ARI -->
+    <div class="card hide" id="sec-ari">
+      <h2>متلازمة تنفسية حادة (إنفلونزا/كوفيد)</h2>
+      <div class="row">
+        <div><label>بداية مفاجئة/ألم عضلي/قشعريرة</label><select id="arFlu"><option value="0">لا</option><option value="1">نعم (يشير للإنفلونزا)</option></select></div>
+        <div><label>فقد شم/تذوق/سعال جاف</label><select id="arCovid"><option value="0">لا</option><option value="1">نعم (يشير لكوفيد)</option></select></div>
+      </div>
+      <div class="row">
+        <div><label>عمر ≥ 60/حمل/أمراض مزمنة</label><select id="arRisk"><option value="0">لا</option><option value="1">نعم/عالي الخطورة</option></select></div>
+        <div><label>ضيق نفس/أكسجة منخفضة</label><select id="arRed"><option value="0">لا</option><option value="1">نعم (إنذار)</option></select></div>
+      </div>
+      <div class="actions">
+        <button class="btn primary" onclick="calcARI()">تقييم المتلازمة التنفسية</button>
+        <button class="btn" onclick="exportPDF('influenza-covid-ari')">تصدير PDF</button>
+      </div>
+      <div class="result mt" id="ari-res"></div>
+    </div>
+
+    <!-- 4) UTI simple -->
+    <div class="card hide" id="sec-utiSimple">
+      <h2>عدوى بولية غير معقدة (التهاب مثانة)</h2>
+      <div class="row">
+        <div><label>حرقة تبول وتكرار</label><select id="usDysFreq"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>بدون إفرازات مهبلية/حكة</label><select id="usNoVag"><option value="0">لا</option><option value="1">نعم (يرجّح UTI)</option></select></div>
+      </div>
+      <div class="row">
+        <div><label>حمّى/ألم خاصرة</label><select id="usFeverFlank"><option value="0">لا</option><option value="1">نعم (اشتباه حويضة)</option></select></div>
+        <div><label>ذكر/حمل/سكري/قسطرة</label><select id="usCompR"><option value="0">لا</option><option value="1">نعم (ينفي البساطة)</option></select></div>
+      </div>
+      <div class="actions">
+        <button class="btn primary" onclick="calcUTISimple()">تقييم UTI البسيط</button>
+        <button class="btn" onclick="exportPDF('uncomplicated-cystitis')">تصدير PDF</button>
+      </div>
+      <div class="result mt" id="utiSimple-res"></div>
+    </div>
+
+    <!-- 5) UTI complicated -->
+    <div class="card hide" id="sec-utiComp">
+      <h2>عدوى بولية معقدة/حُمّى/حمل</h2>
+      <div class="row">
+        <div><label>حرارة ≥ 38/قشعريرة</label><select id="ucFever"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>ألم خاصرة/غثيان</label><select id="ucFlank"><option value="0">لا</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="row">
+        <div><label>حمل</label><select id="ucPreg"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>ذكر/قسطرة/تحصّي/سكري</label><select id="ucComp"><option value="0">لا</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="actions">
+        <button class="btn primary" onclick="calcUTIComp()">تقييم UTI المعقد</button>
+        <button class="btn" onclick="exportPDF('complicated-uti-pyelonephritis')">تصدير PDF</button>
+      </div>
+      <div class="result mt" id="utiComp-res"></div>
+    </div>
+
+    <!-- 6) AGE -->
+    <div class="card hide" id="sec-age">
+      <h2>التهاب معدة وأمعاء حاد</h2>
+      <div class="row">
+        <div><label>قيء/إسهال &lt; 7 أيام</label><select id="agAcute"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>دم بالبراز/حمّى عالية</label><select id="agBloody"><option value="0">لا</option><option value="1">نعم (إنذار جرثومي)</option></select></div>
+      </div>
+      <div class="row">
+        <div><label>علامات جفاف (عطش/دوخة/بول قليل)</label><select id="agDehyd"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>سفر/أكل خارج المنزل</label><select id="agTravelFood"><option value="0">لا</option><option value="1">نعم/محتمل</option></select></div>
+      </div>
+      <div class="actions">
+        <button class="btn primary" onclick="calcAGE()">تقييم الهضمي الحاد</button>
+        <button class="btn" onclick="exportPDF('acute-gastroenteritis')">تصدير PDF</button>
+      </div>
+      <div class="result mt" id="age-res"></div>
+    </div>
+
+    <!-- 7) Dysentery/Travelers -->
+    <div class="card hide" id="sec-dysentery">
+      <h2>إسهال دموي/إسهال المسافر</h2>
+      <div class="row">
+        <div><label>دم/مخاط/تشجنات بطنية</label><select id="dyBloody"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>حمّى مرتفعة</label><select id="dyFever"><option value="0">لا</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="row">
+        <div><label>سفر حديث/طعام ملوث</label><select id="dyTravel"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>حمل/كِلى/مناعة ضعيفة</label><select id="dyRisk"><option value="0">لا</option><option value="1">نعم/معرّض</option></select></div>
+      </div>
+      <div class="actions">
+        <button class="btn primary" onclick="calcDysentery()">تقييم الإسهال الدموي/المسافر</button>
+        <button class="btn" onclick="exportPDF('dysentery-travelers-diarrhea')">تصدير PDF</button>
+      </div>
+      <div class="result mt" id="dysentery-res"></div>
+    </div>
+
+    <!-- 8) Meningitis -->
+    <div class="card hide" id="sec-meningitis">
+      <h2>التهاب سحايا/دماغ مشتبه</h2>
+      <div class="row">
+        <div><label>حمّى + صداع شديد</label><select id="mnFeverHead"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>تيبّس رقبة/رُهاب ضوء</label><select id="mnNeck"><option value="0">لا</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="row">
+        <div><label>طفح نخري/بنفسجي</label><select id="mnRash"><option value="0">لا</option><option value="1">نعم (إنذار شديد)</option></select></div>
+        <div><label>تخليط ذهني/نوبات</label><select id="mnAMS"><option value="0">لا</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="actions">
+        <button class="btn primary" onclick="calcMeningitis()">تقييم السحايا</button>
+        <button class="btn" onclick="exportPDF('suspected-meningitis-encephalitis')">تصدير PDF</button>
+      </div>
+      <div class="result mt" id="meningitis-res"></div>
+    </div>
+
+    <!-- 9) SSTI -->
+    <div class="card hide" id="sec-ssti">
+      <h2>التهاب جلد ونسيج خلوي/دُمّل</h2>
+      <div class="row">
+        <div><label>احمرار/حرارة/ألم موضّع</label><select id="ssSigns"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>كتلة متذبذبة/صديد (خُراج)</label><select id="ssAbs"><option value="0">لا</option><option value="1">نعم (يلزم تفجير)</option></select></div>
+      </div>
+      <div class="row">
+        <div><label>حمّى/امتداد سريع</label><select id="ssFever"><option value="0">لا</option><option value="1">نعم/إنذار</option></select></div>
+        <div><label>سكري/وذمة/جروح قدم</label><select id="ssRisk"><option value="0">لا</option><option value="1">نعم/عالي الخطورة</option></select></div>
+      </div>
+      <div class="actions">
+        <button class="btn primary" onclick="calcSSTI()">تقييم الجلد والأنسجة</button>
+        <button class="btn" onclick="exportPDF('cellulitis-abscess')">تصدير PDF</button>
+      </div>
+      <div class="result mt" id="ssti-res"></div>
+    </div>
+
+    <!-- 10) Bites/Wounds -->
+    <div class="card hide" id="sec-bites">
+      <h2>عضّات/جرح ملوّث</h2>
+      <div class="row">
+        <div><label>عضة كلب/قط/بشري</label><select id="btType"><option value="0">لا</option><option value="dog">كلب/قط</option><option value="human">بشري</option></select></div>
+        <div><label>موقع الوجه/اليد/الأعضاء التناسلية</label><select id="btSite"><option value="0">لا</option><option value="1">نعم (خطورة أعلى)</option></select></div>
+      </div>
+      <div class="row">
+        <div><label>مرور &gt; 12 ساعة دون تنظيف</label><select id="btDelay"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>حالة الكزاز غير معروفة</label><select id="btTet"><option value="0">لا</option><option value="1">نعم/غير معروف</option></select></div>
+      </div>
+      <div class="actions">
+        <button class="btn primary" onclick="calcBites()">تقييم العضّات</button>
+        <button class="btn" onclick="exportPDF('bites-contaminated-wounds')">تصدير PDF</button>
+      </div>
+      <div class="result mt" id="bites-res"></div>
+    </div>
+
+    <!-- 11) TB -->
+    <div class="card hide" id="sec-tb">
+      <h2>سلّ رئوي مشتبه</h2>
+      <div class="row">
+        <div><label>سعال &gt; 2–3 أسابيع</label><select id="tbCough"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>نقص وزن/تعرّق ليلي/حمّى</label><select id="tbB"><option value="0">لا</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="row">
+        <div><label>تماس مع مريض سلّ</label><select id="tbContact"><option value="0">لا</option><option value="1">نعم/محتمل</option></select></div>
+        <div><label>نفث دم/ألم صدري</label><select id="tbHem"><option value="0">لا</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="actions">
+        <button class="btn primary" onclick="calcTB()">تقييم السلّ</button>
+        <button class="btn" onclick="exportPDF('tuberculosis-suspected')">تصدير PDF</button>
+      </div>
+      <div class="result mt" id="tb-res"></div>
+    </div>
+
+    <!-- 12) Hepatitis -->
+    <div class="card hide" id="sec-hepatitis">
+      <h2>التهاب كبد فيروسي حاد (A/E)</h2>
+      <div class="row">
+        <div><label>يرقان/بول غامق/براز فاتح</label><select id="hpJaund"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>غثيان/وهن/قَهم</label><select id="hpProd"><option value="0">لا</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="row">
+        <div><label>اختلاط مياه/طعام/سفر</label><select id="hpExpo"><option value="0">لا</option><option value="1">نعم/محتمل</option></select></div>
+        <div><label>حمّى/ألم في الربع العلوي الأيمن</label><select id="hpPain"><option value="0">لا</option><option value="1">نعم/إنذار</option></select></div>
+      </div>
+      <div class="actions">
+        <button class="btn primary" onclick="calcHepatitis()">تقييم التهاب الكبد</button>
+        <button class="btn" onclick="exportPDF('acute-viral-hepatitis')">تصدير PDF</button>
+      </div>
+      <div class="result mt" id="hepatitis-res"></div>
+    </div>
+
+    <!-- 13) Travel fever -->
+    <div class="card hide" id="sec-travel">
+      <h2>حُمّى بعد سفر (ملاريا/ضنك…)</h2>
+      <div class="row">
+        <div><label>سفر خلال 30 يومًا لمناطق متوطنة</label><select id="trRecent"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>قشعريرة دورية/تعرّق/صداع شديد</label><select id="trMal"><option value="0">لا</option><option value="1">نعم (ملاريا محتملة)</option></select></div>
+      </div>
+      <div class="row">
+        <div><label>طفح/آلام مفصلية/نزف لثوي</label><select id="trDen"><option value="0">لا</option><option value="1">نعم (ضنك/متلازمات أخرى)</option></select></div>
+        <div><label>إسهال/قيء شديد/جفاف</label><select id="trGI"><option value="0">لا</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="actions">
+        <button class="btn primary" onclick="calcTravel()">تقييم حُمّى السفر</button>
+        <button class="btn" onclick="exportPDF('post-travel-fever')">تصدير PDF</button>
+      </div>
+      <div class="result mt" id="travel-res"></div>
+    </div>
+
+    <!-- 14) Mononucleosis -->
+    <div class="card hide" id="sec-mono">
+      <h2>داء وحيدات النوى (EBV/CMV) مشتبه</h2>
+      <div class="row">
+        <div><label>التهاب حلق شديد/ضخامة لوز/غشاء أبيض</label><select id="moThroat"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>ضخامة عقد خلفية/إبطية</label><select id="moNodes"><option value="0">لا</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="row">
+        <div><label>تعب شديد/وهن</label><select id="moFatigue"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>ألم في الربع العلوي الأيسر (طحال)</label><select id="moSpl"><option value="0">لا</option><option value="1">نعم/إنذار</option></select></div>
+      </div>
+      <div class="actions">
+        <button class="btn primary" onclick="calcMono()">تقييم وحيدات النوى</button>
+        <button class="btn" onclick="exportPDF('infectious-mononucleosis')">تصدير PDF</button>
+      </div>
+      <div class="result mt" id="mono-res"></div>
+    </div>
+  </section>
+
+  <section class="glass mt">
+    <p class="hint">هذه أداة تثقيف وفرز أولي. لا تُغني عن زيارة الطبيب. لا تبدأ/توقِف أي دواء دون استشارة. تختلف القرارات حسب البلد والبروتوكولات المحلية.</p>
+  </section>
+</main>
+
+<footer>© <span id="year"></span> حكيم — جميع الحقوق محفوظة.</footer>
+
+<script>
+  // ====== عام ======
+  document.getElementById('year').textContent = new Date().getFullYear();
+  document.querySelectorAll('#chooser .opt').forEach(el=>{
+    el.addEventListener('click', ()=>{
+      document.querySelectorAll('.card').forEach(c=>c.classList.add('hide'));
+      const sec = document.getElementById('sec-'+el.getAttribute('data-target'));
+      if (sec){ sec.classList.remove('hide'); sec.scrollIntoView({behavior:'smooth', block:'start'}); }
+    });
+  });
+
+  // ====== بيانات المستخدم ======
+  function nameVal(){ return document.getElementById('pat-name').value?.trim() || 'بدون اسم'; }
+  function ageVal(){ const n=parseInt(document.getElementById('pat-age').value,10); return isNaN(n)? null : Math.min(110, Math.max(1,n)); }
+  function sexVal(){ const v=document.getElementById('pat-sex').value; return {code:v, label:(v==='male'?'ذكر':'أنثى')}; }
+  function isPreg(){ return document.getElementById('preg').value==='1'; }
+  function userContext(){
+    const age=ageVal(), sex=sexVal();
+    return { name:nameVal(), age, sex, older: age!=null && age>=65, preg: isPreg() && sex.code==='female' };
+  }
+  function yes(id){ return document.getElementById(id).value==='1'; }
+  function lines(arr){ return `<ul>${arr.map(x=>`<li>${x}</li>`).join('')}</ul>`; }
+  function setLast(obj){ window._last = obj; }
+
+  // ====== صانع الخطط — الأمراض المعدية ======
+  function buildPlanID(domain, ctx, u){
+    const plan=[], rec=[], pharm=[], flags=[];
+    switch(domain){
+      case 'sepsis': {
+        const q = (ctx.rr?1:0) + (ctx.bp?1:0) + (ctx.ment?1:0);
+        if (q>=2 || ctx.urine || ctx.fever) flags.push('اشتبه إنتان/صدمة إنتانية — اطلب إسعاف/طوارئ فورًا.');
+        plan.push('لا تؤخّر الرعاية، راقب الوعي والتنفس والنبض.');
+        rec.push('في المستشفى: سوائل وريدية، مزروعات، مضادات واسعة طيف مبكرة وفق مصدر العدوى.');
+        pharm.push('مضادات وريدية واسعة (قرار الطبيب) + تدبير مصدر العدوى.');
+        return {plan, rec, pharm, flags, assess:`qSOFA مبسّط: ${q} من 3`, score:q};
+      }
+      case 'cap': {
+        // CRB-65: Confusion, Respiratory rate ≥30, low Blood pressure, Age ≥65
+        const score = (ctx.conf?1:0) + (ctx.rr?1:0) + (ctx.bp?1:0) + (u.older?1:0);
+        if (ctx.hypox) flags.push('نقص أكسجة — تقييم سريع للطوارئ/الأكسجين.');
+        rec.push('صورة صدر لتأكيد التشخيص، قياس أكسجة، مزروعات إذا شديدة.');
+        plan.push(score<=1 ? 'يمكن المعالجة المجتمعية إذا الاستقرار جيد.' : 'يلزم تقييم مشفى حسب الدرجة والاستقرار.');
+        pharm.push('أمثلة مجتمعية: ماكروليد أو بيتالاكتام + ماكروليد/دواء ملائم — قرار الطبيب.');
+        return {plan, rec, pharm, flags, assess:`CRB-65: ${score}`, score};
+      }
+      case 'ari': {
+        if (ctx.red) flags.push('ضيق نفس/أكسجة منخفضة — تقييم إسعافي.');
+        plan.push('عزل منزلي عند الأعراض التنفسية، كمامة، تهوية المكان.');
+        if (ctx.risk) rec.push('اختبار تأكيدي (PCR/AG) وتقييم لأدوية مضادة للفيروسات إن توفرت.');
+        pharm.push('إنفلونزا: أوسيلتاميفير خلال 48 ساعة — قرار الطبيب.');
+        pharm.push('كوفيد: مضاد فيروسات فموي/أجسام مضادة وفق إتاحة ومعايير — قرار الطبيب.');
+        return {plan, rec, pharm, flags, assess:'متلازمة تنفسية حادة — رعاية داعمة ± مضاد فيروسات'};
+      }
+      case 'utiSimple': {
+        const femaleSimple = (u.sex.code==='female') && !u.preg && !ctx.compR && !ctx.feverFlank && ctx.dysfreq && ctx.noVag;
+        if (!femaleSimple) rec.push('قد لا تكون عدوى بسيطة — راجع قسم UTI المعقد أو طبيبك.');
+        plan.push('شرب سوائل؛ مسكنات مناسبة؛ تحليل بول إذا تكررت الأعراض.');
+        pharm.push('خيارات شائعة لالتهاب مثانة بسيط لدى السيدات غير الحوامل — قرار الطبيب بحسب الحساسية المحلية.');
+        return {plan, rec, pharm, flags, assess: femaleSimple?'التهاب مثانة بسيط مرجّح':'غير نمطي — استبعد التعقيد'};
+      }
+      case 'utiComp': {
+        if (ctx.fever || ctx.flank) flags.push('اشتباه التهاب حويضة وكلية — يحتاج تقييماً سريعاً وربما علاجًا وريديًا.');
+        if (ctx.preg) flags.push('حمل — اختيار المضاد والمدة يتمان بدقة وتحت إشراف.');
+        rec.push('تحليل وزرع بول، تقييم كُلوي، تصوير عند الشك بإنسداد/حصيات.');
+        pharm.push('مضادات ملائمة حسب الزرع/الإرشاد الوطني — قرار الطبيب.');
+        return {plan, rec, pharm, flags, assess:'UTI معقد/حُمّى — يلزم تقييم موسع'};
+      }
+      case 'age': {
+        if (ctx.dehyd) flags.push('علامات جفاف — الإماهة أولوية وربما سوائل وريدية.');
+        if (ctx.bloody) rec.push('إرسال فحوص براز (زراعة/مستضدات) واستبعاد الزحار.');
+        plan.push('محاليل إماهة فموية (ORS)، وجبات خفيفة، تجنّب العصائر عالية السكر.');
+        pharm.push('مضاد قيء بإشراف طبي (أوندانسيترون) عند القيء الشديد.');
+        rec.push('للأطفال: الزنك قصير المدى بإشراف الطبيب.');
+        return {plan, rec, pharm, flags, assess:'التهاب معدة وأمعاء — رعاية داعمة أساس العلاج'};
+      }
+      case 'dysentery': {
+        flags.push('إسهال دموي/حمّى مرتفعة — احتمال زحار/سالمونيلا/شيغيلا؛ تجنّب مضاد الحركة بدون طبيب.');
+        rec.push('زرع براز، كريات دم، تروية؛ مضاد حيوي موجّه وفق الإرشاد المحلي.');
+        pharm.push('مضاد ميكروبي مناسب بعد تقييم — قرار الطبيب.');
+        plan.push('سلامة غذائية ونظافة يدين؛ عزل منزلي عند اللزوم.');
+        return {plan, rec, pharm, flags, assess:'إسهال دموي/مسافر — فحوص ومضاد موجّه'};
+      }
+      case 'meningitis': {
+        flags.push('إنذار سحايا/دماغ — إلى الإسعاف فورًا.');
+        rec.push('مضادات وريدية مبكرة تغطي الرئويات والنيسرية ± أسيكلوفير عند الشك بالتهاب دماغي — قرار الطبيب.');
+        pharm.push('ديكساميثازون وريدياً قبل/مع أول جرعة مضاد — قرار الطبيب.');
+        return {plan, rec, pharm, flags, assess:'التهاب سحايا/دماغ مشتبه — تدبير إسعافي'};
+      }
+      case 'ssti': {
+        if (ctx.abs) rec.push('الخُراج يحتاج تفجير وتنظيف؛ المضاد لوحده غير كافٍ.');
+        if (ctx.fever || ctx.risk) flags.push('انتشار سريع/سكري/قدم سكري — تقييم عاجل.');
+        plan.push('رفع الطرف المصاب، تحديد حدود الاحمرار بالقلَم للمتابعة.');
+        pharm.push('مضاد يغطي العقديات/المكورات العنقودية ± MRSA بحسب الخطورة — قرار الطبيب.');
+        return {plan, rec, pharm, flags, assess:'SSTI — تمييز خُراج/خلويّة وتدبير مناسب'};
+      }
+      case 'bites': {
+        if (ctx.type==='dog') rec.push('غسل فوري غزير بالصابون ≥ 15 دقيقة؛ تقييم داء الكلب وتطعيم الكزاز.');
+        if (ctx.type==='human') rec.push('عضة بشرية عالية التلوث — تغطية لاهوائيات ضرورية.');
+        if (ctx.tet) pharm.push('لقاح/مصل كزاز وفق الحالة — قرار الطبيب.');
+        plan.push('عدم إغلاق الجرح أوليًا في مواقع عالية التلوث (إلا بيد الطبيب).');
+        pharm.push('مضاد يغطي هوائيات/لاهوائيات لعضّات — قرار الطبيب.');
+        return {plan, rec, pharm, flags, assess:'عضّات/جروح — تطهير، لقاحات، مضاد مناسب'};
+      }
+      case 'tb': {
+        if (ctx.cough || ctx.b || ctx.contact || ctx.hem) flags.push('سلّ مشتبه — عزل رذاذي حتى يثبت العكس.');
+        rec.push('صورة صدر، اختبارات البلغم (لطاخة/زرع/NAAT)، إخطار البرنامج الوطني إن ثبت.');
+        pharm.push('العلاج النظامي المضاد للسلّ تحت إشراف البرنامج — لا يُوصف ذاتيًا.');
+        return {plan, rec, pharm, flags, assess:'سلّ رئوي مشتبه — فحوص وعزل أولي'};
+      }
+      case 'hepatitis': {
+        if (ctx.pain) flags.push('يرقان مع ألم/حمّى — احتمال التهاب أقنية صفراوية؛ تقييم إسعافي.');
+        plan.push('راحة وترطيب؛ تجنّب الكحول والباراسيتامول بجرعات عالية/أدوية سامة للكبد.');
+        rec.push('اختبارات وظائف كبد ومصلية HAV/HEV؛ تدبير داعم ومعايير دخول عند اللزوم.');
+        pharm.push('علاج داعم؛ مضادات فيروسية غير مطلوبة عادة في A/E — قرار الطبيب.');
+        return {plan, rec, pharm, flags, assess:'التهاب كبد حاد محتمل — داعم وفحوص مصلية'};
+      }
+      case 'travel': {
+        if (ctx.recent && (ctx.mal || ctx.den)) flags.push('حُمّى بعد سفر — فحوص عاجلة (ملاريا سريع/لطاخة، دِنغ).');
+        rec.push('لا تؤخّر فحص الملاريا خلال 24 ساعة من بدء الحُمّى في المناطق المتوطنة سابقًا.');
+        plan.push('ترطيب وعزل منزلي إن وُجدت أعراض تنفسية؛ تجنب مضادات دون إشراف.');
+        pharm.push('علاج ملاريا/ضنك بحسب البروتوكول الوطني — قرار الطبيب.');
+        return {plan, rec, pharm, flags, assess:'حُمّى ما بعد السفر — استبعاد ملاريا أولًا'};
+      }
+      case 'mono': {
+        if (ctx.spl) flags.push('اشتباه ضخامة طحال — تجنّب الرياضات التصادمية 3–4 أسابيع.');
+        rec.push('تحاليل: Monospot/أضداد EBV/CMV + CBC؛ استبعاد العقديات قبل المضاد.');
+        plan.push('راحة وترطيب ومسكنات؛ غرغرة ملحية.');
+        pharm.push('تجنّب أموكسيسيلين (طفح محتمل); ستيرويد عند انسداد هوائي فقط — قرار الطبيب.');
+        return {plan, rec, pharm, flags, assess:'داء وحيدات النوى محتمل — داعم وتحاليل نوعية'};
+      }
+    }
+    return {plan, rec, pharm, flags, assess:'غير محدد'};
+  }
+
+  // ====== عرض موحّد ======
+  function showResult(elId, obj){
+    const u = userContext();
+    const header = `<p>الاسم: <b>${u.name}</b>${u.age!=null? ` — العمر: <b>${u.age}</b>`:''} — الجنس: <b>${u.sex.label}</b>${u.older?' — ≥65 سنة':''}${u.preg?' — حامل':''}</p>`;
+    const assess = obj.assess ? `<p><b>التقييم:</b> ${obj.assess}</p>` : '';
+    const score = (obj.score!==undefined) ? `<p><b>قيمة/درجة:</b> ${obj.score}</p>` : '';
+    const flagsHtml = obj.flags?.length? `<p><b>تنبيهات:</b></p>${lines(obj.flags)}` : '';
+    const planHtml = obj.plan?.length? `<p><b>خطة عامة:</b></p>${lines(obj.plan)}` : '';
+    const recHtml = obj.rec?.length? `<p><b>توصيات موجّهة:</b></p>${lines(obj.rec)}` : '';
+    const pharmHtml = obj.pharm?.length? `<p><b>أمثلة أدوية (قرار الطبيب):</b></p>${lines(obj.pharm)}<p class="hint">لا تبدأ/توقف أي دواء دون طبيب. تختلف الخيارات حسب العمر والحمل والأمراض المزمنة والحساسية المحلية.</p>` : '';
+    document.getElementById(elId).innerHTML = header + score + assess + flagsHtml + planHtml + recHtml + pharmHtml;
+    setLast({...obj, user:u});
+  }
+
+  // ====== الحسابات ======
+  function calcSepsis(){
+    const rr=yes('spRR'), bp=yes('spBP'), ment=yes('spMent'), fever=yes('spFever'), urine=yes('spUrine');
+    const {plan, rec, pharm, flags, assess, score} = buildPlanID('sepsis', {rr,bp,ment,fever,urine}, userContext());
+    showResult('sepsis-res', {title:'إنتان/Sepsis', assess, plan, rec, pharm, flags, score});
+  }
+  function calcCAP(){
+    const conf=yes('cpConf'), rr=yes('cpRR'), bp=yes('cpBP'), classic=yes('cpClassic'), hypox=yes('cpHypox');
+    const {plan, rec, pharm, flags, assess, score} = buildPlanID('cap', {conf,rr,bp,classic,hypox}, userContext());
+    showResult('cap-res', {title:'التهاب رئوي (CAP)', assess, plan, rec, pharm, flags, score});
+  }
+  function calcARI(){
+    const flu=yes('arFlu'), covid=yes('arCovid'), risk=yes('arRisk'), red=yes('arRed');
+    const {plan, rec, pharm, flags, assess} = buildPlanID('ari', {flu,covid,risk,red}, userContext());
+    showResult('ari-res', {title:'إنفلونزا/كوفيد', assess, plan, rec, pharm, flags});
+  }
+  function calcUTISimple(){
+    const dysfreq=yes('usDysFreq'), noVag=yes('usNoVag'), feverFlank=yes('usFeverFlank'), compR=yes('usCompR');
+    const {plan, rec, pharm, flags, assess} = buildPlanID('utiSimple', {dysfreq,noVag,feverFlank,compR}, userContext());
+    showResult('utiSimple-res', {title:'UTI بسيط', assess, plan, rec, pharm, flags});
+  }
+  function calcUTIComp(){
+    const fever=yes('ucFever'), flank=yes('ucFlank'), preg=yes('ucPreg'), comp=yes('ucComp');
+    const {plan, rec, pharm, flags, assess} = buildPlanID('utiComp', {fever,flank,preg,comp}, userContext());
+    showResult('utiComp-res', {title:'UTI معقد/حويضة', assess, plan, rec, pharm, flags});
+  }
+  function calcAGE(){
+    const acute=yes('agAcute'), bloody=yes('agBloody'), dehyd=yes('agDehyd'), travelfood=yes('agTravelFood');
+    const {plan, rec, pharm, flags, assess} = buildPlanID('age', {acute,bloody,dehyd,travelfood}, userContext());
+    showResult('age-res', {title:'التهاب معدة وأمعاء', assess, plan, rec, pharm, flags});
+  }
+  function calcDysentery(){
+    const bloody=yes('dyBloody'), fever=yes('dyFever'), travel=yes('dyTravel'), risk=yes('dyRisk');
+    const {plan, rec, pharm, flags, assess} = buildPlanID('dysentery', {bloody,fever,travel,risk}, userContext());
+    showResult('dysentery-res', {title:'إسهال دموي/المسافر', assess, plan, rec, pharm, flags});
+  }
+  function calcMeningitis(){
+    const fh=yes('mnFeverHead'), neck=yes('mnNeck'), rash=yes('mnRash'), ams=yes('mnAMS');
+    const {plan, rec, pharm, flags, assess} = buildPlanID('meningitis', {fh,neck,rash,ams}, userContext());
+    showResult('meningitis-res', {title:'سحايا/دماغ', assess, plan, rec, pharm, flags});
+  }
+  function calcSSTI(){
+    const signs=yes('ssSigns'), abs=yes('ssAbs'), fever=yes('ssFever'), risk=yes('ssRisk');
+    const {plan, rec, pharm, flags, assess} = buildPlanID('ssti', {signs,abs,fever,risk}, userContext());
+    showResult('ssti-res', {title:'جلد ونسيج خلوي', assess, plan, rec, pharm, flags});
+  }
+  function calcBites(){
+    const type=document.getElementById('btType').value, site=yes('btSite'), delay=yes('btDelay'), tet=yes('btTet');
+    const {plan, rec, pharm, flags, assess} = buildPlanID('bites', {type,site,delay,tet}, userContext());
+    showResult('bites-res', {title:'عضّات/جروح', assess, plan, rec, pharm, flags});
+  }
+  function calcTB(){
+    const cough=yes('tbCough'), b=yes('tbB'), contact=yes('tbContact'), hem=yes('tbHem');
+    const {plan, rec, pharm, flags, assess} = buildPlanID('tb', {cough,b,contact,hem}, userContext());
+    showResult('tb-res', {title:'سلّ رئوي', assess, plan, rec, pharm, flags});
+  }
+  function calcHepatitis(){
+    const j=yes('hpJaund'), prod=yes('hpProd'), expo=yes('hpExpo'), pain=yes('hpPain');
+    const {plan, rec, pharm, flags, assess} = buildPlanID('hepatitis', {j,prod,expo,pain}, userContext());
+    showResult('hepatitis-res', {title:'التهاب كبد فيروسي', assess, plan, rec, pharm, flags});
+  }
+  function calcTravel(){
+    const recent=yes('trRecent'), mal=yes('trMal'), den=yes('trDen'), gi=yes('trGI');
+    const {plan, rec, pharm, flags, assess} = buildPlanID('travel', {recent,mal,den,gi}, userContext());
+    showResult('travel-res', {title:'حُمّى بعد سفر', assess, plan, rec, pharm, flags});
+  }
+  function calcMono(){
+    const throat=yes('moThroat'), nodes=yes('moNodes'), fatigue=yes('moFatigue'), spl=yes('moSpl');
+    const {plan, rec, pharm, flags, assess} = buildPlanID('mono', {throat,nodes,fatigue,spl}, userContext());
+    showResult('mono-res', {title:'داء وحيدات النوى', assess, plan, rec, pharm, flags});
+  }
+
+  // ====== PDF ======
+  async function exportPDF(section){
+    const { jsPDF } = window.jspdf;
+    const m = window._last || {title:section, user:userContext(), plan:[], rec:[], pharm:[], flags:[]};
+    const u = m.user || userContext();
+
+    const box = document.createElement('div');
+    box.dir = 'rtl';
+    box.style.cssText = 'width:800px;padding:24px;background:#fff;color:#111;font-family:Cairo,Arial,sans-serif;line-height:1.9;border:1px solid #ddd;border-radius:12px';
+    box.innerHTML = `
+      <h2 style="margin:0 0 10px;font-weight:800">حكيم — ${m.title||section}</h2>
+      <p><b>الاسم:</b> ${u.name || 'بدون اسم'}${u.age!=null? ` — <b>العمر:</b> ${u.age}`:''} — <b>الجنس:</b> ${u.sex? u.sex.label : 'غير محدد'}${u.older?' — ≥65 سنة':''}${u.preg?' — حامل':''}</p>
+      ${m.score!==undefined? `<p><b>قيمة/درجة:</b> ${m.score}</p>`:''}
+      ${m.assess? `<p><b>التقييم:</b> ${m.assess}</p>`:''}
+      ${m.flags && m.flags.length? `<p><b>تنبيهات:</b></p><ul>${m.flags.map(x=>`<li>${x}</li>`).join('')}</ul>`:''}
+      ${m.plan && m.plan.length? `<p><b>خطة عامة:</b></p><ul>${m.plan.map(x=>`<li>${x}</li>`).join('')}</ul>`:''}
+      ${m.rec && m.rec.length? `<p><b>توصيات موجّهة:</b></p><ul>${m.rec.map(x=>`<li>${x}</li>`).join('')}</ul>`:''}
+      ${m.pharm && m.pharm.length? `<p><b>أمثلة دوائية (قرار الطبيب):</b></p><ul>${m.pharm.map(x=>`<li>${x}</li>`).join('')}</ul><p style="font-size:12px;color:#555">تنبيه: لا تبدأ/توقف أي دواء دون طبيب. تختلف الخيارات حسب العمر والحمل والأمراض المزمنة والحساسية المحلية.</p>`:''}
+      <hr style="margin:12px 0;border:0;border-top:1px solid #ddd"/>
+      <p style="font-size:13px;color:#444">ملف تثقيفي — لا يُغني عن تقييم الطبيب المختص. في الطوارئ يُرجى التواصل الفوري مع الإسعاف.</p>
+    `;
+    document.body.appendChild(box);
+    const canvas = await html2canvas(box, {scale:2, backgroundColor:'#ffffff', useCORS:true});
+    document.body.removeChild(box);
+
+    const pdf = new jsPDF({orientation:'p', unit:'pt', format:'a4'});
+    const pageW = pdf.internal.pageSize.getWidth(), pageH = pdf.internal.pageSize.getHeight(), margin=40;
+    let imgW = pageW - margin*2, imgH = canvas.height * imgW / canvas.width;
+    if (imgH > pageH - margin*2){ const r = (pageH - margin*2) / imgH; imgH*=r; imgW*=r; }
+    pdf.addImage(canvas.toDataURL('image/png'), 'PNG', (pageW-imgW)/2, (pageH-imgH)/2, imgW, imgH);
+    pdf.save(`Hakim-Infectious-${(m.title||section).replace(/\s+/g,'_')}-${Date.now()}.pdf`);
+  }
+</script>
+
+<!--
+الحالات المغطّاة (14):
+- إنتان/Sepsis، CAP (CRB-65)، متلازمة تنفسية (إنفلونزا/كوفيد)،
+  UTI بسيط، UTI معقد/حويضة، التهاب معدة وأمعاء، إسهال دموي/مسافر،
+  التهاب سحايا/دماغ، SSTI (خلويّة/خُراج)، عضّات وجروح، سلّ رئوي،
+  التهاب كبد فيروسي A/E، حُمّى بعد سفر، داء وحيدات النوى.
+- أمثلة الأدوية بلا جرعات وبصيغة "قرار الطبيب" التزامًا بالسلامة.
+-->
+</body>
+</html>

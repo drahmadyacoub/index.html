@@ -1,0 +1,685 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>حكيم — الطوارئ والإسعاف | تقييمات ذكية + PDF</title>
+  <meta name="description" content="حكيم — الطوارئ: ألم صدري/سكتة/ضيق نفس/تأقّي/رضوض/إصابة رأس/نزف هضمي/بطن حاد/ارتفاع سكر حاد/اختلاجات/تبدّل وعي/ضربة حر/تسمّم/طوارئ نسائية/حمّى رضّع/حروق وكسور.">
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;800&display=swap" rel="stylesheet">
+  <!-- PDF libs -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" referrerpolicy="no-referrer"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js" referrerpolicy="no-referrer"></script>
+
+  <style>
+    :root{
+      --bg:#07090f; --txt:#e8ecff; --muted:#aab2d8;
+      --primary:#7aa2ff; --primary-2:#00e0ff; --accent:#a855f7;
+      --glass:rgba(255,255,255,.06); --border:rgba(255,255,255,.12);
+    }
+    *{box-sizing:border-box}
+    body{margin:0; font-family:'Cairo',system-ui,'Noto Sans Arabic',sans-serif; background:#07090f; color:var(--txt); line-height:1.9}
+    header{position:sticky; top:0; z-index:50; display:flex; align-items:center; justify-content:space-between; padding:14px 20px; backdrop-filter:saturate(140%) blur(8px); background:linear-gradient(180deg, rgba(15,16,40,.85), rgba(15,16,40,.45)); border-bottom:1px solid var(--border)}
+    .brand{display:flex; gap:12px; align-items:center}
+    .logo{width:42px; height:42px; border-radius:12px; display:grid; place-items:center; font-weight:800; background: radial-gradient(120% 120% at 0% 0%, var(--primary), var(--accent)); box-shadow: 0 0 24px rgba(122,162,255,.35), inset 0 0 18px rgba(255,255,255,.15)}
+    .brand-text strong{display:block; font-size:18px}
+    .brand-text span{display:block; font-size:12px; color:var(--muted)}
+    .container{width:min(1180px,94vw); margin-inline:auto}
+    h1{font-size:clamp(22px,4vw,34px); margin:22px 0 6px}
+    .sub{color:#cfd6ff; margin:0 0 12px}
+    .glass{background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03)); border:1px solid var(--border); border-radius:22px; padding:22px; box-shadow:0 30px 60px rgba(0,10,40,.35)}
+    .grid{display:grid; gap:16px}
+    .grid-2{grid-template-columns:1fr}
+    @media(min-width:1000px){.grid-2{grid-template-columns:1fr 1fr}}
+    .choose{display:grid; gap:12px; grid-template-columns:repeat(2,1fr)}
+    @media(min-width:1000px){.choose{grid-template-columns:repeat(4,1fr)}}
+    .opt{background:rgba(255,255,255,.04); border:1px solid var(--border); border-radius:16px; padding:14px; text-align:center; cursor:pointer; transition:transform .18s ease, border-color .18s ease; min-height:110px; display:grid; place-items:center; font-weight:700}
+    .opt:hover{transform:translateY(-3px); border-color:rgba(122,162,255,.6)}
+    .card{border:1px solid var(--border); border-radius:18px; background:rgba(255,255,255,0.04); padding:18px}
+    label{font-weight:600}
+    select, input[type="number"], input[type="text"]{width:100%; padding:10px 12px; border-radius:12px; border:1px solid var(--border); background:rgba(255,255,255,0.03); color:var(--txt)}
+    .row{display:grid; gap:12px; grid-template-columns:1fr}
+    @media(min-width:680px){.row{grid-template-columns:repeat(2,1fr)}}
+    .row-3{display:grid; gap:12px; grid-template-columns:repeat(3,1fr)}
+    .actions{display:flex; gap:10px; flex-wrap:wrap; margin-top:12px}
+    .btn{padding:10px 14px; border-radius:12px; border:1px solid var(--border); background:var(--glass); color:var(--txt); cursor:pointer; font-weight:700; transition:transform .2s ease, background .2s ease}
+    .btn.primary{background:linear-gradient(135deg, var(--primary), var(--primary-2)); border-color:transparent}
+    .btn:hover{transform:translateY(-2px)}
+    .result{padding:14px; border:1px solid var(--border); border-radius:14px; background:rgba(255,255,255,.03)}
+    .hint{font-size:13px; color:#b8c0ef}
+    footer{text-align:center; padding:22px; color:#aab2d8; font-size:13px; border-top:1px solid var(--border); margin-top:24px}
+    .mt{margin-top:10px}.hide{display:none}
+  </style>
+</head>
+<body>
+<header>
+  <div class="brand">
+   <a class="logo" href="index.html" aria-label="حكيم — العودة للرئيسية">
+  <img id="brandLogo"
+       src="logo-hakim-dark.png"
+       alt="شعار حكيم"
+       width="46" height="46"
+       decoding="async"
+       fetchpriority="high"
+       loading="eager">
+</a>
+    <div class="brand-text">
+      <strong>حكيم — الطوارئ والإسعاف</strong>
+      <span>تقييمات مؤتمتة دقيقة + PDF</span>
+    </div>
+  </div>
+  <nav class="actions" style="margin:0">
+    <a class="btn" href="index.html">الصفحة الرئيسية</a>
+  </nav>
+</header>
+
+<main class="container">
+  <section class="glass">
+    <h1>الطوارئ والإسعاف — اختر الحالة</h1>
+    <p class="sub">أدخل بياناتك واختر الحالة. ستحصل على <b>تقييم سريع + خطة إرشادية + أمثلة أدوية بلا جرعات</b> لمراجعتها مع الطبيب. في وجود علامات إنذار، الأولوية هي <b>الاتصال بالإسعاف فورًا</b>.</p>
+
+    <div class="row">
+      <div><label>الاسم:</label><input id="pat-name" type="text" placeholder="مثال: يمان"/></div>
+      <div><label>العمر (سنوات):</label><input id="pat-age" type="number" min="0" max="110" placeholder="40"/></div>
+    </div>
+    <div class="row">
+      <div>
+        <label>الجنس:</label>
+        <select id="pat-sex"><option value="male">ذكر</option><option value="female">أنثى</option></select>
+      </div>
+      <div>
+        <label>حمل (للإناث):</label>
+        <select id="preg"><option value="0">غير حامل/لا ينطبق</option><option value="1">حامل</option></select>
+      </div>
+    </div>
+
+    <div class="choose" id="chooser">
+      <div class="opt" data-target="acs">ألم صدري مشتبه بمتلازمة إكليلية (ACS)</div>
+      <div class="opt" data-target="stroke">سكتة دماغية مشتبهة (FAST)</div>
+      <div class="opt" data-target="dyspnea">ضيق نفس حاد (ربو/انسداد/وذمة رئة)</div>
+      <div class="opt" data-target="anaph">تحسس شديد/صدمة تأقية</div>
+      <div class="opt" data-target="trauma">رضوض/نزف شديد</div>
+      <div class="opt" data-target="headinj">إصابة رأس/ارتجاج + إنذارات</div>
+      <div class="opt" data-target="giBleed">نزف هضمي (قيء دم/براز أسود/أحمر)</div>
+      <div class="opt" data-target="acuteAbd">بطن حاد (ألم شديد/قيء/انقطاع غازات)</div>
+      <div class="opt" data-target="hyperGly">ارتفاع سكر حاد (DKA/HHS)</div>
+      <div class="opt" data-target="seizure">اختلاجات/حالة صرعية</div>
+      <div class="opt" data-target="amsShock">تبدّل وعي/هبوط ضغط</div>
+      <div class="opt" data-target="heat">إنهاك/ضربة حر</div>
+      <div class="opt" data-target="poison">تسمّم/جرعة مفرطة</div>
+      <div class="opt" data-target="obgyn">طوارئ نسائية (نزف/ألم حوض مع حمل | تسمم حملي)</div>
+      <div class="opt" data-target="infantFever">حُمّى رضيع &lt; 3 أشهر</div>
+      <div class="opt" data-target="burnFx">حروق/كسور/خلوع</div>
+    </div>
+
+    <p class="hint mt">لا تتناول أي دواء من تلقاء نفسك في الطوارئ. الأمثلة الدوائية المذكورة لاحقًا هي **للاستخدام الطبي بواسطة المختصين فقط**.</p>
+  </section>
+
+  <section class="grid grid-2 mt">
+    <!-- ACS -->
+    <div class="card hide" id="sec-acs">
+      <h2>ألم صدري — ACS</h2>
+      <div class="row">
+        <div><label>ألم ضاغط/عاصر &gt; 10 دقائق</label><select id="acPress"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>امتداد للذراع/فك/ظهر أو تعرّق/غثيان</label><select id="acRad"><option value="0">لا</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="row">
+        <div><label>ضيق نفس/إغماء/دوخة</label><select id="acSOB"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>عوامل خطر (عمر≥55/سكري/تدخين/سابق قلب)</label><select id="acRisk"><option value="0">لا</option><option value="1">نعم/متعدد</option></select></div>
+      </div>
+      <div class="actions">
+        <button class="btn primary" onclick="calcACS()">تقييم الألم الصدري</button>
+        <button class="btn" onclick="exportPDF('chest-pain-ACS')">تصدير PDF</button>
+      </div>
+      <div class="result mt" id="acs-res"></div>
+    </div>
+
+    <!-- Stroke -->
+    <div class="card hide" id="sec-stroke">
+      <h2>سكتة دماغية مشتبهة — FAST</h2>
+      <div class="row-3">
+        <div><label>اعوجاج فم/وجه</label><select id="stFace"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>ضعف/خَدَر بذراع/ساق</label><select id="stArm"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>ارتباك بالكلام/تلعثم</label><select id="stSpeech"><option value="0">لا</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="row">
+        <div><label>وقت البدء &lt; 4.5 ساعات</label><select id="stTime"><option value="0">لا/غير معروف</option><option value="1">نعم</option></select></div>
+        <div><label>صداع مفاجئ شديد/اختلاجات</label><select id="stHead"><option value="0">لا</option><option value="1">نعم/إنذار نزفي</option></select></div>
+      </div>
+      <div class="actions">
+        <button class="btn primary" onclick="calcStroke()">تقييم السكتة</button>
+        <button class="btn" onclick="exportPDF('suspected-stroke-FAST')">تصدير PDF</button>
+      </div>
+      <div class="result mt" id="stroke-res"></div>
+    </div>
+
+    <!-- Dyspnea -->
+    <div class="card hide" id="sec-dyspnea">
+      <h2>ضيق نفس حاد</h2>
+      <div class="row">
+        <div><label>صفير/سعال/زلة ليلية</label><select id="dyAsth"><option value="0">لا</option><option value="1">نعم (ربو/انسداد)</option></select></div>
+        <div><label>زُرقة/أكسجة منخفضة</label><select id="dyHyp"><option value="0">لا</option><option value="1">نعم/غير معروف</option></select></div>
+      </div>
+      <div class="row">
+        <div><label>وذمات/ألم صدري/خفقان</label><select id="dyCard"><option value="0">لا</option><option value="1">نعم (قلبي)</option></select></div>
+        <div><label>حساسية/سبيق تعرض لمثير</label><select id="dyAll"><option value="0">لا</option><option value="1">نعم (تحسّس)</option></select></div>
+      </div>
+      <div class="actions">
+        <button class="btn primary" onclick="calcDyspnea()">تقييم ضيق النفس</button>
+        <button class="btn" onclick="exportPDF('acute-dyspnea')">تصدير PDF</button>
+      </div>
+      <div class="result mt" id="dyspnea-res"></div>
+    </div>
+
+    <!-- Anaphylaxis -->
+    <div class="card hide" id="sec-anaph">
+      <h2>تحسس شديد/تأقّي</h2>
+      <div class="row">
+        <div><label>بدء سريع بعد تعرّض (طعام/دواء/لسعة)</label><select id="anExp"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>صفير/بُحّة/تورم شفاه/لسان</label><select id="anAir"><option value="0">لا</option><option value="1">نعم/إنذار</option></select></div>
+      </div>
+      <div class="row">
+        <div><label>شرى معمّم/حكة/احمرار</label><select id="anSkin"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>هبوط ضغط/دوخة/إغماء</label><select id="anBP"><option value="0">لا</option><option value="1">نعم/إنذار</option></select></div>
+      </div>
+      <div class="actions">
+        <button class="btn primary" onclick="calcAnaph()">تقييم التأقّي</button>
+        <button class="btn" onclick="exportPDF('anaphylaxis')">تصدير PDF</button>
+      </div>
+      <div class="result mt" id="anaph-res"></div>
+    </div>
+
+    <!-- Trauma -->
+    <div class="card hide" id="sec-trauma">
+      <h2>رضوض/نزف شديد</h2>
+      <div class="row">
+        <div><label>نزف لا يتوقف بالضغط المباشر</label><select id="trBleed"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>جروح عميقة/بتر/قذيفة</label><select id="trDeep"><option value="0">لا</option><option value="1">نعم/إنذار</option></select></div>
+      </div>
+      <div class="row">
+        <div><label>ألم صدر/بطن/ظهر شديد</label><select id="trTorso"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>آلام رقبة/خدر أطراف</label><select id="trNeck"><option value="0">لا</option><option value="1">نعم/اشتباه عمود</option></select></div>
+      </div>
+      <div class="actions">
+        <button class="btn primary" onclick="calcTrauma()">تقييم الرضوض</button>
+        <button class="btn" onclick="exportPDF('trauma-bleeding')">تصدير PDF</button>
+      </div>
+      <div class="result mt" id="trauma-res"></div>
+    </div>
+
+    <!-- Head injury -->
+    <div class="card hide" id="sec-headinj">
+      <h2>إصابة رأس/ارتجاج</h2>
+      <div class="row">
+        <div><label>فقد وعي/قيء متكرر</label><select id="hiLOC"><option value="0">لا</option><option value="1">نعم/إنذار</option></select></div>
+        <div><label>صداع شديد جدًّا/تفاقم</label><select id="hiHead"><option value="0">لا</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="row">
+        <div><label>اضطراب توازن/نوبات</label><select id="hiNeuro"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>مميعات دم/عمر ≥ 65</label><select id="hiRisk"><option value="0">لا</option><option value="1">نعم/عالي الخطورة</option></select></div>
+      </div>
+      <div class="actions">
+        <button class="btn primary" onclick="calcHeadInj()">تقييم إصابة الرأس</button>
+        <button class="btn" onclick="exportPDF('head-injury-concussion')">تصدير PDF</button>
+      </div>
+      <div class="result mt" id="headinj-res"></div>
+    </div>
+
+    <!-- GI bleed -->
+    <div class="card hide" id="sec-giBleed">
+      <h2>نزف هضمي</h2>
+      <div class="row">
+        <div><label>قيء دم/براز أسود</label><select id="giUp"><option value="0">لا</option><option value="1">نعم (علوي)</option></select></div>
+        <div><label>دم أحمر بالبراز</label><select id="giLow"><option value="0">لا</option><option value="1">نعم (سفلي)</option></select></div>
+      </div>
+      <div class="row">
+        <div><label>دوخة/هبوط ضغط/شحوب</label><select id="giShock"><option value="0">لا</option><option value="1">نعم/إنذار</option></select></div>
+        <div><label>مضادات تخثّر/قرحات سابقة</label><select id="giRisk"><option value="0">لا</option><option value="1">نعم/عالي الخطورة</option></select></div>
+      </div>
+      <div class="actions">
+        <button class="btn primary" onclick="calcGIBleed()">تقييم النزف الهضمي</button>
+        <button class="btn" onclick="exportPDF('gastrointestinal-bleeding')">تصدير PDF</button>
+      </div>
+      <div class="result mt" id="giBleed-res"></div>
+    </div>
+
+    <!-- Acute abdomen -->
+    <div class="card hide" id="sec-acuteAbd">
+      <h2>بطن حاد</h2>
+      <div class="row">
+        <div><label>ألم شديد مستمر/حراسة/توتر</label><select id="abGuard"><option value="0">لا</option><option value="1">نعم/إنذار</option></select></div>
+        <div><label>إقياء مستمر/انقطاع غازات/براز</label><select id="abObst"><option value="0">لا</option><option value="1">نعم (انسداد؟)</option></select></div>
+      </div>
+      <div class="row">
+        <div><label>حمّى/يرقان</label><select id="abInf"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>حمل محتمل/تأخر دورة</label><select id="abPreg"><option value="0">لا</option><option value="1">نعم (خارج رحم؟)</option></select></div>
+      </div>
+      <div class="actions">
+        <button class="btn primary" onclick="calcAcuteAbd()">تقييم البطن الحاد</button>
+        <button class="btn" onclick="exportPDF('acute-abdomen')">تصدير PDF</button>
+      </div>
+      <div class="result mt" id="acuteAbd-res"></div>
+    </div>
+
+    <!-- Hyperglycemia -->
+    <div class="card hide" id="sec-hyperGly">
+      <h2>ارتفاع سكر حاد (DKA/HHS)</h2>
+      <div class="row">
+        <div><label>سكر مرتفع جدًا بالفحص المنزلي</label><select id="hgHigh"><option value="0">لا/غير معروف</option><option value="1">نعم</option></select></div>
+        <div><label>عطش شديد/تبول زائد/تجفاف</label><select id="hgDehyd"><option value="0">لا</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="row">
+        <div><label>قيء/ألم بطن/نَفَس كيتوني</label><select id="hgDKA"><option value="0">لا</option><option value="1">نعم (DKA؟)</option></select></div>
+        <div><label>تخليط/نعاس</label><select id="hgAMS"><option value="0">لا</option><option value="1">نعم/إنذار</option></select></div>
+      </div>
+      <div class="actions">
+        <button class="btn primary" onclick="calcHyperGly()">تقييم فرط سكر</button>
+        <button class="btn" onclick="exportPDF('hyperglycemic-emergency')">تصدير PDF</button>
+      </div>
+      <div class="result mt" id="hyperGly-res"></div>
+    </div>
+
+    <!-- Seizure -->
+    <div class="card hide" id="sec-seizure">
+      <h2>اختلاجات/حالة صرعية</h2>
+      <div class="row">
+        <div><label>مدة &gt; 5 دقائق/نوبات متكررة</label><select id="szLong"><option value="0">لا</option><option value="1">نعم (حالة صرعية)</option></select></div>
+        <div><label>أول نوبة بالحياة/إصابة رأس حديثة</label><select id="szFirst"><option value="0">لا</option><option value="1">نعم/إنذار</option></select></div>
+      </div>
+      <div class="row">
+        <div><label>سحب كحول/مخدرات/حمّى</label><select id="szCause"><option value="0">لا</option><option value="1">نعم/محتمل</option></select></div>
+        <div><label>حمل/ما بعد الولادة</label><select id="szPreg"><option value="0">لا</option><option value="1">نعم (اشتباه تسمّم حملي)</option></select></div>
+      </div>
+      <div class="actions">
+        <button class="btn primary" onclick="calcSeizure()">تقييم الاختلاجات</button>
+        <button class="btn" onclick="exportPDF('seizure-status-epilepticus')">تصدير PDF</button>
+      </div>
+      <div class="result mt" id="seizure-res"></div>
+    </div>
+
+    <!-- AMS/ Shock -->
+    <div class="card hide" id="sec-amsShock">
+      <h2>تبدّل وعي/هبوط ضغط</h2>
+      <div class="row">
+        <div><label>سكر منخفض/مرتفع جدًا</label><select id="amGlu"><option value="0">لا/غير معروف</option><option value="1">نعم/إنذار</option></select></div>
+        <div><label>حمّى/عدوى/إنتان محتمل</label><select id="amInf"><option value="0">لا</option><option value="1">نعم/محتمل</option></select></div>
+      </div>
+      <div class="row">
+        <div><label>أدوية/سموم/سكتة</label><select id="amTox"><option value="0">لا</option><option value="1">نعم/محتمل</option></select></div>
+        <div><label>انخفاض ضغط/شحوب/تعرّق</label><select id="amHypo"><option value="0">لا</option><option value="1">نعم/صادم</option></select></div>
+      </div>
+      <div class="actions">
+        <button class="btn primary" onclick="calcAMS()">تقييم تبدّل الوعي</button>
+        <button class="btn" onclick="exportPDF('altered-mental-status-shock')">تصدير PDF</button>
+      </div>
+      <div class="result mt" id="amsShock-res"></div>
+    </div>
+
+    <!-- Heat -->
+    <div class="card hide" id="sec-heat">
+      <h2>إنهاك/ضربة حر</h2>
+      <div class="row">
+        <div><label>تعرض لحرارة/رطوبة عالية</label><select id="htExp"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>ارتباك/تشنجات/إغماء</label><select id="htAMS"><option value="0">لا</option><option value="1">نعم/إنذار</option></select></div>
+      </div>
+      <div class="row">
+        <div><label>حرارة جسم مرتفعة</label><select id="htTemp"><option value="0">لا/غير معروف</option><option value="1">نعم (&gt;= 40°؟)</option></select></div>
+        <div><label>قيء/تجفاف/تقلصات</label><select id="htDehyd"><option value="0">لا</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="actions">
+        <button class="btn primary" onclick="calcHeat()">تقييم ضربة الحر</button>
+        <button class="btn" onclick="exportPDF('heat-stroke-exhaustion')">تصدير PDF</button>
+      </div>
+      <div class="result mt" id="heat-res"></div>
+    </div>
+
+    <!-- Poisoning -->
+    <div class="card hide" id="sec-poison">
+      <h2>تسمّم/جرعة مفرطة</h2>
+      <div class="row">
+        <div><label>وقت التعرض &lt; 2 ساعة</label><select id="poTime"><option value="0">لا/غير معروف</option><option value="1">نعم</option></select></div>
+        <div><label>مادة مجهولة/متعددة</label><select id="poUnknown"><option value="0">لا</option><option value="1">نعم/غير معروف</option></select></div>
+      </div>
+      <div class="row">
+        <div><label>قيء/تشنجات/نعاس/اختناق</label><select id="poSev"><option value="0">لا</option><option value="1">نعم/إنذار</option></select></div>
+        <div><label>محاولة انتحار</label><select id="poSI"><option value="0">لا</option><option value="1">نعم (طارئ نفسي)</option></select></div>
+      </div>
+      <div class="actions">
+        <button class="btn primary" onclick="calcPoison()">تقييم التسمّم</button>
+        <button class="btn" onclick="exportPDF('poisoning-overdose')">تصدير PDF</button>
+      </div>
+      <div class="result mt" id="poison-res"></div>
+    </div>
+
+    <!-- OBGYN -->
+    <div class="card hide" id="sec-obgyn">
+      <h2>طوارئ نسائية</h2>
+      <div class="row">
+        <div><label>حمل مؤكد/محتمل</label><select id="obPreg"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>نزف مهبلي/جلطات</label><select id="obBleed"><option value="0">لا</option><option value="1">نعم/إنذار</option></select></div>
+      </div>
+      <div class="row">
+        <div><label>ألم حوض/كتف (خارج رحم؟)</label><select id="obPain"><option value="0">لا</option><option value="1">نعم/إنذار</option></select></div>
+        <div><label>صداع/تشوش رؤية/تورم (تسمم حملي)</label><select id="obPE"><option value="0">لا</option><option value="1">نعم/إنذار</option></select></div>
+      </div>
+      <div class="actions">
+        <button class="btn primary" onclick="calcOBGYN()">تقييم طوارئ نسائية</button>
+        <button class="btn" onclick="exportPDF('obstetric-gynecologic-emergencies')">تصدير PDF</button>
+      </div>
+      <div class="result mt" id="obgyn-res"></div>
+    </div>
+
+    <!-- Infant fever -->
+    <div class="card hide" id="sec-infantFever">
+      <h2>حُمّى رضيع &lt; 3 أشهر</h2>
+      <div class="row">
+        <div><label>حرارة ≥ 38°</label><select id="inFever"><option value="0">لا/غير معروف</option><option value="1">نعم</option></select></div>
+        <div><label>خمول/رضاعة ضعيفة/زرقة</label><select id="inRed"><option value="0">لا</option><option value="1">نعم/إنذار</option></select></div>
+      </div>
+      <div class="row">
+        <div><label>ولادة مبكرة/مشاكل خلقية</label><select id="inRisk"><option value="0">لا</option><option value="1">نعم</option></select></div>
+        <div><label>طفح/اختلاجات</label><select id="inRashSz"><option value="0">لا</option><option value="1">نعم</option></select></div>
+      </div>
+      <div class="actions">
+        <button class="btn primary" onclick="calcInfant()">تقييم حُمّى الرضيع</button>
+        <button class="btn" onclick="exportPDF('infant-fever-under-3-months')">تصدير PDF</button>
+      </div>
+      <div class="result mt" id="infantFever-res"></div>
+    </div>
+
+    <!-- Burns/Fractures -->
+    <div class="card hide" id="sec-burnFx">
+      <h2>حروق/كسور/خلوع</h2>
+      <div class="row">
+        <div><label>حرق واسع/وجه/يدين/أعضاء تناسلية</label><select id="bfArea"><option value="0">لا</option><option value="1">نعم/إنذار</option></select></div>
+        <div><label>استنشاق دخان/كربنة أنف</label><select id="bfSmoke"><option value="0">لا</option><option value="1">نعم/إنذار مجرى هوائي</option></select></div>
+      </div>
+      <div class="row">
+        <div><label>تشوّه واضح/عدم القدرة على التحميل</label><select id="bfFx"><option value="0">لا</option><option value="1">نعم (كسر/خلع؟)</option></select></div>
+        <div><label>ألم شديد/خدر/برودة بعُقب الإصابة</label><select id="bfComp"><option value="0">لا</option><option value="1">نعم/متلازمة حيز؟</option></select></div>
+      </div>
+      <div class="actions">
+        <button class="btn primary" onclick="calcBurnFx()">تقييم الحروق والكسور</button>
+        <button class="btn" onclick="exportPDF('burns-fractures-dislocations')">تصدير PDF</button>
+      </div>
+      <div class="result mt" id="burnFx-res"></div>
+    </div>
+  </section>
+
+  <section class="glass mt">
+    <p class="hint">هذه أداة تثقيف وفرز أولي. لا تُغني عن زيارة قسم الإسعاف. لا تبدأ/توقِف أي دواء دون استشارة. القرارات النهائية بيد الفريق الطبي المختص.</p>
+  </section>
+</main>
+
+<footer>© <span id="year"></span> حكيم — جميع الحقوق محفوظة.</footer>
+
+<script>
+  // ====== عام ======
+  document.getElementById('year').textContent = new Date().getFullYear();
+  document.querySelectorAll('#chooser .opt').forEach(el=>{
+    el.addEventListener('click', ()=>{
+      document.querySelectorAll('.card').forEach(c=>c.classList.add('hide'));
+      const sec = document.getElementById('sec-'+el.getAttribute('data-target'));
+      if (sec){ sec.classList.remove('hide'); sec.scrollIntoView({behavior:'smooth', block:'start'}); }
+    });
+  });
+
+  // ====== بيانات المستخدم ======
+  function nameVal(){ return document.getElementById('pat-name').value?.trim() || 'بدون اسم'; }
+  function ageVal(){ const n=parseInt(document.getElementById('pat-age').value,10); return isNaN(n)? null : Math.min(110, Math.max(0,n)); }
+  function sexVal(){ const v=document.getElementById('pat-sex').value; return {code:v, label:(v==='male'?'ذكر':'أنثى')}; }
+  function isPreg(){ return document.getElementById('preg').value==='1'; }
+  function userContext(){
+    const age=ageVal(), sex=sexVal();
+    return { name:nameVal(), age, sex, older: age!=null && age>=65, preg: isPreg() && sex.code==='female' };
+  }
+  function yes(id){ return document.getElementById(id).value==='1'; }
+  function lines(arr){ return `<ul>${arr.map(x=>`<li>${x}</li>`).join('')}</ul>`; }
+  function setLast(obj){ window._last = obj; }
+
+  // ====== صانع الخطط — الطوارئ ======
+  function buildPlanER(domain, ctx, u){
+    const plan=[], rec=[], pharm=[], flags=[];
+    switch(domain){
+      case 'acs': {
+        const red = ctx.press || ctx.rad || ctx.sob || ctx.risk;
+        if (red) flags.push('ألم صدري مرجّح لاحتشاء — اتصل بالإسعاف ولا تقد قاسيًا/لا تبذل مجهودًا.');
+        rec.push('مراقبة وضعية نصف جلوس، تهوية المكان، تجهيز قائمة الأدوية/الحساسيات.');
+        pharm.push('إجراءات EMS/مشفى: أكسجين عند نقص أكسجة، مضادات صفيحات، موسعات أوعية، مسكنات مناسبة — قرار الطبيب.');
+        return {plan, rec, pharm, flags, assess:'متلازمة إكليلية محتملة — أولوية إسعاف'};
+      }
+      case 'stroke': {
+        const fast = (ctx.face||ctx.arm||ctx.speech);
+        if (fast) flags.push('سكتة مشتبهة — نافذة علاج محدودة؛ احسب وقت البدء واتصل بالإسعاف فورًا.');
+        if (ctx.head) flags.push('صداع فجائي شديد/نوبات — احتمال نزف تحت عنكبوتية.');
+        rec.push('عدم تناول طعام/سوائل حتى تقييم البلع؛ إحضار أدوية الضغط/السكر.');
+        pharm.push('في المستشفى: علاج إعادة تروية/قسطرة دماغية وفق البروتوكول؛ ضبط الضغط/السكر — قرار الطبيب.');
+        return {plan, rec, pharm, flags, assess:'FAST إيجابي محتمل — أولوية إسعاف'};
+      }
+      case 'dyspnea': {
+        if (ctx.hyp) flags.push('نقص أكسجة — إسعاف عاجل.');
+        if (ctx.all) flags.push('قد يكون تحسّس/تأقّي — راجع قسم التأقّي إن وُجد طفح/هبوط ضغط.');
+        rec.push('جلسة أمامية/وضعية تسكين؛ فك الألبسة الضيقة؛ تهوية المكان.');
+        pharm.push('بخاخات موسّعة قصبية/ستيرويد استنشاقي/وريدي، مدرّات في وذمة رئة — قرار الطبيب.');
+        return {plan, rec, pharm, flags, assess:'ضيق نفس حاد — يلزم تقييم سريع'};
+      }
+      case 'anaph': {
+        if (ctx.exp && (ctx.air || ctx.bp || ctx.skin)) flags.push('تحسّس شديد/تأقّي — اتصل بالإسعاف. راقب مجرى الهواء.');
+        rec.push('أبعد المثير إن أمكن. استلقاء مع رفع ساقين عند هبوط الضغط.');
+        pharm.push('أدرينالين عضلي فوري + سوائل وريدية + مضادات هيستامين/ستيرويد + مراقبة — قرار الفريق الطبي.');
+        return {plan, rec, pharm, flags, assess:'تأقّي محتمل — تداخل إسعافي فوري'};
+      }
+      case 'trauma': {
+        if (ctx.bleed || ctx.deep || ctx.torso || ctx.neck) flags.push('رض عالي الخطورة/نزف — ثبّت النزف بضغط مباشر/ضماد وضعي حتى وصول الإسعاف.');
+        rec.push('لا تحرّك العنق/الظهر عند شكّ أذية عمود؛ إن أمكن ارفع الطرف المصاب.');
+        pharm.push('مسكنات/سوائل/نقل دم وفق البروتوكول؛ مضادات كزاز عند اللزوم — قرار الطبيب.');
+        return {plan, rec, pharm, flags, assess:'رضوض — أولوية السيطرة على النزف والهوائي'};
+      }
+      case 'headinj': {
+        if (ctx.loc || ctx.head || ctx.neuro || ctx.risk) flags.push('إصابة رأس منذرة — يلزم تصوير/مراقبة بالمشفى.');
+        rec.push('تجنّب النوم دون مرافق أول 6–8 ساعات؛ المراقبة لقيء متكرر/تفاقم صداع/اختلاجات.');
+        pharm.push('مسكنات ملائمة؛ تجنّب مميّعات إضافية دون طبيب — قرار الطبيب.');
+        return {plan, rec, pharm, flags, assess:'ارتجاج/إصابة رأس — تحرّي نزف داخل القحف'};
+      }
+      case 'giBleed': {
+        if (ctx.shock || ctx.up || ctx.low) flags.push('نزف هضمي — لا تأكل/تشرب؛ توجّه إسعاف.');
+        rec.push('اجلب قائمة الأدوية خاصة المميّعات/NSAIDs؛ مراقبة اللون والكمّية.');
+        pharm.push('سوائل/دم، مثبّطات مضخة بروتون وريدية، تنظير عاجل — قرار الطبيب.');
+        return {plan, rec, pharm, flags, assess:'نزف هضمي محتمل — إنعاش/تنظير'};
+      }
+      case 'acuteAbd': {
+        if (ctx.guard || ctx.obst) flags.push('بطن حاد/انسداد — امتنع عن الطعام والشراب؛ توجّه إسعاف.');
+        if (ctx.preg) flags.push('اشتباه حمل خارج الرحم عند ألم حوض/كتف مع نزف.');
+        rec.push('لا تتناول مسكنات/ملينات قبل التقييم؛ أحضر صور/تقارير قديمة.');
+        pharm.push('سوائل/مضادات/جراحة حسب السبب — قرار الطبيب.');
+        return {plan, rec, pharm, flags, assess:'بطن حاد — يحتاج تقييم تصويري/جراحي'};
+      }
+      case 'hyperGly': {
+        if (ctx.high && (ctx.dka || ctx.ams)) flags.push('طوارئ سكرية (DKA/HHS) — سوائل وريدية وضبط شوارد بالمشفى.');
+        rec.push('لا تمارس جهدًا؛ لا تقُد؛ راقب الوعي والتنفس حتى وصول الإسعاف.');
+        pharm.push('أنسولين وريدي/سوائل/تصحيح بوتاسيوم وفق بروتوكول — قرار الطبيب.');
+        return {plan, rec, pharm, flags, assess:'فرط سكر حاد — تدبير بروتوكولي داخل المشفى'};
+      }
+      case 'seizure': {
+        if (ctx.long || ctx.first || ctx.preg) flags.push('حالة صرعية/أول نوبة — إسعاف.');
+        rec.push('حماية الرأس، إبعاد الأجسام الخطرة، عدم وضع أي شيء في الفم.');
+        pharm.push('مضادات اختلاج إسعافية وريدية/أنفية حسب البروتوكول — قرار الطبيب.');
+        return {plan, rec, pharm, flags, assess:'اختلاجات — أمان بيئي وتدخّل طبي'};
+      }
+      case 'amsShock': {
+        if (ctx.hypo || ctx.inf || ctx.tox || ctx.glu) flags.push('تبدّل وعي/صدمة محتملة — إسعاف عاجل.');
+        rec.push('قياس سكر إن أمكن؛ وضعية استلقاء/رفع ساقين عند هبوط الضغط.');
+        pharm.push('سوائل/موسعات وعائية/مضادات حيوية/ترياق سموم بحسب السبب — قرار الطبيب.');
+        return {plan, rec, pharm, flags, assess:'تبدّل وعي/هبوط ضغط — إنعاش ABC'};
+      }
+      case 'heat': {
+        if (ctx.ams || ctx.temp) flags.push('ضربة حر — تبريد سريع ونقل إسعافي.');
+        rec.push('انقل للمكان المظلل، انزع الملابس الزائدة، تبريد بالتبخـير/كمادات باردة مع مراقبة.');
+        pharm.push('سوائل وريدية وضبط الشوارد بالمشفى — قرار الطبيب.');
+        return {plan, rec, pharm, flags, assess:'إجهاد/ضربة حر — تبريد فوري'};
+      }
+      case 'poison': {
+        if (ctx.sev || ctx.si) flags.push('تسمّم شديد/انتحاري — إسعاف وطوارئ نفسية.');
+        rec.push('لا تستحث القيء؛ حافظ على عبوة المادة/الاسم لإعطائها للطبيب؛ اتصل بمركز السموم إن توفر.');
+        pharm.push('ترياقات نوعية/فحم مفعل/غسيل — وفق نوع السم وتوقيت — قرار الطبيب.');
+        return {plan, rec, pharm, flags, assess:'تسمّم — تحديد المادة والتوقيت أساس التدبير'};
+      }
+      case 'obgyn': {
+        if ((ctx.preg && (ctx.bleed||ctx.pain)) || ctx.pe) flags.push('نزف/ألم مع حمل أو اشتباه تسمم حملي — إسعاف.');
+        rec.push('انتبهي للأعراض المرافقة (دوار شديد/ألم كتف/طمس رؤية).');
+        pharm.push('سوائل/أدوية ضغط/مغنيسيوم سلفات/تداخل نسائي وفق التقييم — قرار الطبيب.');
+        return {plan, rec, pharm, flags, assess:'طوارئ نسائية — تقييم فوري'};
+      }
+      case 'infantFever': {
+        if (ctx.fever || ctx.red) flags.push('رضيع &lt;3 أشهر مع حُمّى/إنذار — تقييم إسعافي وعدم إعطاء أدوية بدون طبيب.');
+        rec.push('لا تُعطِ سوائل زائدة أو أعشاب؛ حافظ على الدفء المعتدل وارصد التنفس.');
+        pharm.push('بروتوكول إنتان رضيع (تحاليل/مضادات) حسب الطبيب.');
+        return {plan, rec, pharm, flags, assess:'حُمّى رضيع — احتمال عدوى خطرة'};
+      }
+      case 'burnFx': {
+        if (ctx.area || ctx.smoke || ctx.fx || ctx.comp) flags.push('حرق واسع/استنشاق دخان أو كسر/خلع مع اختطار — إسعاف.');
+        rec.push('تبريد الحروق بالماء الفاتر 10–20 دقيقة، لا تستعمل الثلج، انزع الإكسسوارات، لا تفتح الفقاعات.');
+        pharm.push('مسكنات مناسبة، سوائل وفق معادلات، لقاح كزاز — قرار الطبيب.');
+        return {plan, rec, pharm, flags, assess:'حروق/كسور — تبريد/تثبيت ونقل آمن'};
+      }
+    }
+    return {plan, rec, pharm, flags, assess:'غير محدد'};
+  }
+
+  // ====== عرض موحّد ======
+  function showResult(elId, obj){
+    const u = userContext();
+    const header = `<p>الاسم: <b>${u.name}</b>${u.age!=null? ` — العمر: <b>${u.age}</b>`:''} — الجنس: <b>${u.sex.label}</b>${u.older?' — ≥65 سنة':''}${u.preg?' — حامل':''}</p>`;
+    const assess = obj.assess ? `<p><b>التقييم:</b> ${obj.assess}</p>` : '';
+    const flagsHtml = obj.flags?.length? `<p><b>تنبيهات عاجلة:</b></p>${lines(obj.flags)}` : '';
+    const planHtml = obj.plan?.length? `<p><b>إجراءات عامة فورية (غير دوائية):</b></p>${lines(obj.plan)}` : '';
+    const recHtml = obj.rec?.length? `<p><b>ما يُساعد الفريق الطبي عند الوصول:</b></p>${lines(obj.rec)}` : '';
+    const pharmHtml = obj.pharm?.length? `<p><b>إجراءات/أدوية إسعافية (قرار الطبيب):</b></p>${lines(obj.pharm)}<p class="hint">الأمثلة مخصّصة للمختصين — لا تتناول أدوية ذاتيًا.</p>` : '';
+    document.getElementById(elId).innerHTML = header + assess + flagsHtml + planHtml + recHtml + pharmHtml;
+    setLast({...obj, user:u});
+  }
+
+  // ====== الحسابات ======
+  function calcACS(){
+    const press=yes('acPress'), rad=yes('acRad'), sob=yes('acSOB'), risk=yes('acRisk');
+    const {plan, rec, pharm, flags, assess} = buildPlanER('acs', {press,rad,sob,risk}, userContext());
+    showResult('acs-res', {title:'ألم صدري (ACS)', assess, plan, rec, pharm, flags});
+  }
+  function calcStroke(){
+    const face=yes('stFace'), arm=yes('stArm'), speech=yes('stSpeech'), time=yes('stTime'), head=yes('stHead');
+    const {plan, rec, pharm, flags, assess} = buildPlanER('stroke', {face,arm,speech,time,head}, userContext());
+    showResult('stroke-res', {title:'سكتة دماغية', assess, plan, rec, pharm, flags});
+  }
+  function calcDyspnea(){
+    const asth=yes('dyAsth'), hyp=yes('dyHyp'), card=yes('dyCard'), all=yes('dyAll');
+    const {plan, rec, pharm, flags, assess} = buildPlanER('dyspnea', {asth,hyp,card,all}, userContext());
+    showResult('dyspnea-res', {title:'ضيق نفس', assess, plan, rec, pharm, flags});
+  }
+  function calcAnaph(){
+    const exp=yes('anExp'), air=yes('anAir'), skin=yes('anSkin'), bp=yes('anBP');
+    const {plan, rec, pharm, flags, assess} = buildPlanER('anaph', {exp,air,skin,bp}, userContext());
+    showResult('anaph-res', {title:'تأقّي', assess, plan, rec, pharm, flags});
+  }
+  function calcTrauma(){
+    const bleed=yes('trBleed'), deep=yes('trDeep'), torso=yes('trTorso'), neck=yes('trNeck');
+    const {plan, rec, pharm, flags, assess} = buildPlanER('trauma', {bleed,deep,torso,neck}, userContext());
+    showResult('trauma-res', {title:'رضوض/نزف', assess, plan, rec, pharm, flags});
+  }
+  function calcHeadInj(){
+    const loc=yes('hiLOC'), head=yes('hiHead'), neuro=yes('hiNeuro'), risk=yes('hiRisk');
+    const {plan, rec, pharm, flags, assess} = buildPlanER('headinj', {loc,head,neuro,risk}, userContext());
+    showResult('headinj-res', {title:'إصابة رأس', assess, plan, rec, pharm, flags});
+  }
+  function calcGIBleed(){
+    const up=yes('giUp'), low=yes('giLow'), shock=yes('giShock'), risk=yes('giRisk');
+    const {plan, rec, pharm, flags, assess} = buildPlanER('giBleed', {up,low,shock,risk}, userContext());
+    showResult('giBleed-res', {title:'نزف هضمي', assess, plan, rec, pharm, flags});
+  }
+  function calcAcuteAbd(){
+    const guard=yes('abGuard'), obst=yes('abObst'), inf=yes('abInf'), preg=yes('abPreg');
+    const {plan, rec, pharm, flags, assess} = buildPlanER('acuteAbd', {guard,obst,inf,preg}, userContext());
+    showResult('acuteAbd-res', {title:'بطن حاد', assess, plan, rec, pharm, flags});
+  }
+  function calcHyperGly(){
+    const high=yes('hgHigh'), dehyd=yes('hgDehyd'), dka=yes('hgDKA'), ams=yes('hgAMS');
+    const {plan, rec, pharm, flags, assess} = buildPlanER('hyperGly', {high,dehyd,dka,ams}, userContext());
+    showResult('hyperGly-res', {title:'طوارئ سكرية', assess, plan, rec, pharm, flags});
+  }
+  function calcSeizure(){
+    const long=yes('szLong'), first=yes('szFirst'), cause=yes('szCause'), preg=yes('szPreg');
+    const {plan, rec, pharm, flags, assess} = buildPlanER('seizure', {long,first,cause,preg}, userContext());
+    showResult('seizure-res', {title:'اختلاجات', assess, plan, rec, pharm, flags});
+  }
+  function calcAMS(){
+    const glu=yes('amGlu'), inf=yes('amInf'), tox=yes('amTox'), hypo=yes('amHypo');
+    const {plan, rec, pharm, flags, assess} = buildPlanER('amsShock', {glu,inf,tox,hypo}, userContext());
+    showResult('amsShock-res', {title:'تبدّل وعي/هبوط ضغط', assess, plan, rec, pharm, flags});
+  }
+  function calcHeat(){
+    const exp=yes('htExp'), ams=yes('htAMS'), temp=yes('htTemp'), dehyd=yes('htDehyd');
+    const {plan, rec, pharm, flags, assess} = buildPlanER('heat', {exp,ams,temp,dehyd}, userContext());
+    showResult('heat-res', {title:'ضربة حر', assess, plan, rec, pharm, flags});
+  }
+  function calcPoison(){
+    const time=yes('poTime'), unknown=yes('poUnknown'), sev=yes('poSev'), si=yes('poSI');
+    const {plan, rec, pharm, flags, assess} = buildPlanER('poison', {time,unknown,sev,si}, userContext());
+    showResult('poison-res', {title:'تسمّم/جرعة مفرطة', assess, plan, rec, pharm, flags});
+  }
+  function calcOBGYN(){
+    const preg=yes('obPreg'), bleed=yes('obBleed'), pain=yes('obPain'), pe=yes('obPE');
+    const {plan, rec, pharm, flags, assess} = buildPlanER('obgyn', {preg,bleed,pain,pe}, userContext());
+    showResult('obgyn-res', {title:'طوارئ نسائية', assess, plan, rec, pharm, flags});
+  }
+  function calcInfant(){
+    const fever=yes('inFever'), red=yes('inRed'), risk=yes('inRisk'), rashsz=yes('inRashSz');
+    const {plan, rec, pharm, flags, assess} = buildPlanER('infantFever', {fever,red,risk,rashsz}, userContext());
+    showResult('infantFever-res', {title:'حُمّى رضيع', assess, plan, rec, pharm, flags});
+  }
+  function calcBurnFx(){
+    const area=yes('bfArea'), smoke=yes('bfSmoke'), fx=yes('bfFx'), comp=yes('bfComp');
+    const {plan, rec, pharm, flags, assess} = buildPlanER('burnFx', {area,smoke,fx,comp}, userContext());
+    showResult('burnFx-res', {title:'حروق/كسور/خلوع', assess, plan, rec, pharm, flags});
+  }
+
+  // ====== PDF ======
+  async function exportPDF(section){
+    const { jsPDF } = window.jspdf;
+    const m = window._last || {title:section, user:userContext(), plan:[], rec:[], pharm:[], flags:[]};
+    const u = m.user || userContext();
+
+    const box = document.createElement('div');
+    box.dir = 'rtl';
+    box.style.cssText = 'width:800px;padding:24px;background:#fff;color:#111;font-family:Cairo,Arial,sans-serif;line-height:1.9;border:1px solid #ddd;border-radius:12px';
+    box.innerHTML = `
+      <h2 style="margin:0 0 10px;font-weight:800">حكيم — ${m.title||section}</h2>
+      <p><b>الاسم:</b> ${u.name || 'بدون اسم'}${u.age!=null? ` — <b>العمر:</b> ${u.age}`:''} — <b>الجنس:</b> ${u.sex? u.sex.label : 'غير محدد'}${u.older?' — ≥65 سنة':''}${u.preg?' — حامل':''}</p>
+      ${m.assess? `<p><b>التقييم:</b> ${m.assess}</p>`:''}
+      ${m.flags && m.flags.length? `<p><b>تنبيهات عاجلة:</b></p><ul>${m.flags.map(x=>`<li>${x}</li>`).join('')}</ul>`:''}
+      ${m.plan && m.plan.length? `<p><b>إجراءات عامة:</b></p><ul>${m.plan.map(x=>`<li>${x}</li>`).join('')}</ul>`:''}
+      ${m.rec && m.rec.length? `<p><b>ما يهم الفريق الطبي:</b></p><ul>${m.rec.map(x=>`<li>${x}</li>`).join('')}</ul>`:''}
+      ${m.pharm && m.pharm.length? `<p><b>إجراءات/أدوية إسعافية (قرار الطبيب):</b></p><ul>${m.pharm.map(x=>`<li>${x}</li>`).join('')}</ul><p style="font-size:12px;color:#555">تنبيه: لا تتناول أدوية ذاتيًا.</p>`:''}
+      <hr style="margin:12px 0;border:0;border-top:1px solid #ddd"/>
+      <p style="font-size:13px;color:#444">ملف تثقيفي وفرز أولي — لا يُغني عن تقييم الطوارئ.</p>
+    `;
+    document.body.appendChild(box);
+    const canvas = await html2canvas(box, {scale:2, backgroundColor:'#ffffff', useCORS:true});
+    document.body.removeChild(box);
+
+    const pdf = new jsPDF({orientation:'p', unit:'pt', format:'a4'});
+    const pageW = pdf.internal.pageSize.getWidth(), pageH = pdf.internal.pageSize.getHeight(), margin=40;
+    let imgW = pageW - margin*2, imgH = canvas.height * imgW / canvas.width;
+    if (imgH > pageH - margin*2){ const r = (pageH - margin*2) / imgH; imgH*=r; imgW*=r; }
+    pdf.addImage(canvas.toDataURL('image/png'), 'PNG', (pageW-imgW)/2, (pageH-imgH)/2, imgW, imgH);
+    pdf.save(`Hakim-Emergency-${(m.title||section).replace(/\s+/g,'_')}-${Date.now()}.pdf`);
+  }
+</script>
+
+<!--
+الحالات المغطّاة (16):
+- ACS، سكتة (FAST)، ضيق نفس حاد، تأقّي، رضوض/نزف، إصابة رأس، نزف هضمي،
+  بطن حاد، DKA/HHS، اختلاجات، تبدّل وعي/صدمة، ضربة حر، تسمّم/جرعة زائدة،
+  طوارئ نسائية، حُمّى رضيع <3 أشهر، حروق/كسور/خلوع.
+- أمثلة الأدوية بلا جرعات ومقصودة للمختصين فقط.
+-->
+</body>
+</html>
